@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.preferences
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -35,7 +36,22 @@ class UserPreferencesManager @Inject constructor(
         }
     }
 
+    fun needsOnboarding(): Flow<Boolean> {
+        return userDataStorePreferences.data.catch {
+            emptyPreferences()
+        }.map { preferences ->
+            preferences[KEY_NEEDS_ONBOARDING] ?: true
+        }
+    }
+
+    suspend fun setNeedsOnboarding(newNeedsOnboarding: Boolean) {
+        userDataStorePreferences.edit { preferences ->
+            preferences[KEY_NEEDS_ONBOARDING] = newNeedsOnboarding
+        }
+    }
+
     private companion object {
         val KEY_THEME = stringPreferencesKey(name = "preference_theme")
+        val KEY_NEEDS_ONBOARDING = booleanPreferencesKey(name = "needs_onboarding")
     }
 }

@@ -69,10 +69,28 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // room
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+
     // compose destinations
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+hilt {
+    enableAggregatingTask = true
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/src/main/assets/schemas")
+    arg("room.incremental"   , "true")
 }

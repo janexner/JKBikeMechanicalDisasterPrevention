@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.generated.destinations.WelcomeDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -113,19 +114,19 @@ private fun KJsTopBar(
                     }
                 )
                 HorizontalDivider()
-//                DropdownMenuItem(
-//                    enabled = destination != AboutDestination,
-//                    text = {
-//                        Text(
-//                            text = "About Activity Timer Companion",
-//                            style = MaterialTheme.typography.bodyLarge
-//                        )
-//                    },
-//                    onClick = {
-//                        displayMainMenu = false
-//                        destinationsNavigator.navigate(AboutDestination())
-//                    }
-//                )
+                DropdownMenuItem(
+                    enabled = destination != AboutDestination,
+                    text = {
+                        Text(
+                            text = "About Activity Timer Companion",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(AboutDestination())
+                    }
+                )
             }
         }
     )
