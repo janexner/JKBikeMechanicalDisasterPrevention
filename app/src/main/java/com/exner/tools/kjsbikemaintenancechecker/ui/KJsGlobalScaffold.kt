@@ -6,10 +6,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -23,6 +25,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
+import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.generated.destinations.WelcomeDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.rememberNavHostEngine
@@ -40,7 +43,9 @@ fun KJsGlobalScaffold(
     val destination = navController.currentDestinationAsState().value
 
     Scaffold(
-        topBar = {},
+        topBar = {
+            KJsTopBar(destination, destinationsNavigator)
+        },
         content = { innerPadding ->
             val newPadding = PaddingValues.Absolute(
                 innerPadding.calculateLeftPadding(LayoutDirection.Ltr),
@@ -99,14 +104,14 @@ private fun KJsTopBar(
                 expanded = displayMainMenu,
                 onDismissRequest = { displayMainMenu = false }
             ) {
-//                DropdownMenuItem(
-//                    enabled = destination != SettingsDestination,
-//                    text = { Text(text = "Settings", style = MaterialTheme.typography.bodyLarge) },
-//                    onClick = {
-//                        displayMainMenu = false
-//                        destinationsNavigator.navigate(SettingsDestination())
-//                    }
-//                )
+                DropdownMenuItem(
+                    enabled = destination != SettingsDestination,
+                    text = { Text(text = "Settings", style = MaterialTheme.typography.bodyLarge) },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(SettingsDestination())
+                    }
+                )
                 HorizontalDivider()
 //                DropdownMenuItem(
 //                    enabled = destination != AboutDestination,
