@@ -73,7 +73,7 @@ private fun KJsTopBar(
     var displayMainMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
-        title = { Text(text = "Activity Timer Companion") },
+        title = { Text(text = "KJs BMC") },
         navigationIcon = {
             when (destination) {
                 WelcomeDestination -> {
@@ -118,7 +118,7 @@ private fun KJsTopBar(
                     enabled = destination != AboutDestination,
                     text = {
                         Text(
-                            text = "About Activity Timer Companion",
+                            text = "About KJs BMC",
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },

@@ -6,14 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.exner.tools.kjsbikemaintenancechecker.preferences.UserPreferencesManager
 import com.exner.tools.kjsbikemaintenancechecker.state.ThemeStateHolder
 import com.exner.tools.kjsbikemaintenancechecker.ui.KJsGlobalScaffold
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.KJsBikeMaintenanceCheckerTheme
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     @Inject
     lateinit var userPreferencesManager: UserPreferencesManager // TODO
     @Inject

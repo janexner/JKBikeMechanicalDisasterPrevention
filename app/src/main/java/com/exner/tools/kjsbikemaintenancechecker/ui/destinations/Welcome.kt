@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
@@ -37,13 +38,14 @@ fun Welcome(
         content = { innerPadding ->
             Column(
                 modifier = Modifier
-                    .padding(innerPadding).padding(8.dp)
+                    .padding(innerPadding)
+                    .padding(8.dp)
                     .fillMaxWidth()
             ) {
                 Text(text = "Welcome to KJ's Bike Maintenance Checker!")
                 DefaultSpacer()
                 if (showOnboarding.value) {
-                    // TODO
+                    Text(text = "Please use the onboarding, or add bike(s) or components using the buttons below.")
                 } else {
                     // everyday UI
                     Button(onClick = { destinationsNavigator.navigate(HomeDestination()) }) {
@@ -57,17 +59,31 @@ fun Welcome(
                 actions = {
                 },
                 floatingActionButton = {
-                    ExtendedFloatingActionButton(
-                        text = { Text(text = "Add") },
-                        icon = {
-                            Icon(Icons.Default.AddCircle, "Add a bike or components")
-                        },
-                        onClick = {
-                            // destinationsNavigator.navigate(HomeDestination())
-                        },
-                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                    )
+                    if (showOnboarding.value) {
+                        ExtendedFloatingActionButton(
+                            text = { Text(text = "Onboarding") },
+                            icon = {
+                                Icon(Icons.Default.PlayArrow, "Go to onboarding")
+                            },
+                            onClick = {
+                                // destinationsNavigator.navigate(HomeDestination())
+                            },
+                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                        )
+                    } else {
+                        ExtendedFloatingActionButton(
+                            text = { Text(text = "Add") },
+                            icon = {
+                                Icon(Icons.Default.AddCircle, "Add a bike or component")
+                            },
+                            onClick = {
+//                                 destinationsNavigator.navigate(HomeDestination())
+                            },
+                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                        )
+                    }
                 }
             )
         }
