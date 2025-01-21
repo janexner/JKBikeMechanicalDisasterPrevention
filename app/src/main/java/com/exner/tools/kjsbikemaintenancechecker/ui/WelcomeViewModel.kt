@@ -12,14 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
-    userPreferencesManager: UserPreferencesManager
+    val userPreferencesManager: UserPreferencesManager
 ) : ViewModel() {
 
-    val needsOnboarding: StateFlow<Boolean> = userPreferencesManager.needsOnboarding().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-        initialValue = true
-    )
+    val needsOnboarding: StateFlow<Boolean> = userPreferencesManager.needsOnboardingThisTime
+
+    fun setNeedsOnboarding(needsOnboarding: Boolean) {
+        userPreferencesManager.setNeedsOnBoardingThisTime(needsOnboarding)
+    }
 
     val userSelectedTheme: StateFlow<Theme> = userPreferencesManager.theme().stateIn(
         scope = viewModelScope,

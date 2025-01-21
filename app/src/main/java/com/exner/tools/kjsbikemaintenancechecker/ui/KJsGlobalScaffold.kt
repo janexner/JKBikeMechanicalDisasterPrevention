@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
+import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.generated.destinations.WelcomeDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -106,11 +107,19 @@ private fun KJsTopBar(
                 onDismissRequest = { displayMainMenu = false }
             ) {
                 DropdownMenuItem(
+                    enabled = true,
+                    text = { Text(text = "Add Bike / Component", style = MaterialTheme.typography.bodyLarge) },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(AddComponentDestination)
+                    }
+                )
+                DropdownMenuItem(
                     enabled = destination != SettingsDestination,
                     text = { Text(text = "Settings", style = MaterialTheme.typography.bodyLarge) },
                     onClick = {
                         displayMainMenu = false
-                        destinationsNavigator.navigate(SettingsDestination())
+                        destinationsNavigator.navigate(SettingsDestination)
                     }
                 )
                 HorizontalDivider()
@@ -124,7 +133,7 @@ private fun KJsTopBar(
                     },
                     onClick = {
                         displayMainMenu = false
-                        destinationsNavigator.navigate(AboutDestination())
+                        destinationsNavigator.navigate(AboutDestination)
                     }
                 )
             }

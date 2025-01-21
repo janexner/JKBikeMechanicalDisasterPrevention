@@ -66,7 +66,7 @@ fun Welcome(
                                 Icon(Icons.Default.PlayArrow, "Go to onboarding")
                             },
                             onClick = {
-                                // destinationsNavigator.navigate(HomeDestination())
+                                destinationsNavigator.navigate(HomeDestination())
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

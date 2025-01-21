@@ -2,21 +2,19 @@ package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material.icons.outlined.ThumbUp
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,14 +24,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.exner.tools.kjsbikemaintenancechecker.database.Activity
-import com.exner.tools.kjsbikemaintenancechecker.ui.ButtonWithIconAndText
-import com.exner.tools.kjsbikemaintenancechecker.ui.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
+import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
@@ -49,7 +46,9 @@ fun Home(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val activities: List<Activity> by homeViewModel.observeActivitiesByDueDate.collectAsState(initial = emptyList())
+    val activities: List<Activity> by homeViewModel.observeActivitiesByDueDate.collectAsState(
+        initial = emptyList()
+    )
 
     Scaffold(
         content = { innerPadding ->
@@ -59,15 +58,11 @@ fun Home(
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
-                item {
-                    Text(text = "Welcome to KJ's Bike Maintenance Checker!")
-                }
-
                 stickyHeader {
-                    Text(text = "Upcoming tasks")
+                    Text(text = "TODOs")
                 }
 
-                items(activities) { activity ->
+                items(items = activities, key = { it.uid }) { activity ->
                     Surface(
                         modifier = Modifier
                             .clickable {
@@ -80,10 +75,18 @@ fun Home(
                     ) {
                         ListItem(
                             headlineContent = {
-                                Text(text = activity.title)
+                                Text(text = "${activity.dueDate} - ${activity.title}")
                             },
                             supportingContent = {
                                 Text(text = activity.description)
+                            },
+                            trailingContent = {
+                                Checkbox(
+                                    checked = activity.isCompleted,
+                                    onCheckedChange = {
+                                        homeViewModel.updateActivity(activity.copy(isCompleted = !activity.isCompleted))
+                                    }
+                                )
                             }
                         )
                     }
@@ -94,45 +97,48 @@ fun Home(
             }
         },
         bottomBar = {
-            BottomAppBar(
-                actions = {
-                    ButtonWithIconAndText(
-                        imageVector = Icons.Default.ThumbUp,
-                        contentDescription = "day out",
-                        onClick = {
-                            destinationsNavigator.navigate(PrepareDayOutDestination)
-                        }
-                    )
-                    ButtonWithIconAndText(
-                        imageVector = Icons.Default.ThumbUp,
-                        contentDescription = "bike holidays",
-                        onClick = {
-                            destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
-                        }
-                    )
-                    ButtonWithIconAndText(
-                        imageVector = Icons.Default.AddCircle,
-                        contentDescription = "add component",
-                        onClick = {
-                            // TODO
-                        }
-                    )
-
-                },
-                floatingActionButton = {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = "short ride") },
-                            icon = {
-                                Icon(Icons.Default.PlayArrow, "Prepare for a short ride")
-                            },
-                            onClick = {
-                                 destinationsNavigator.navigate(PrepareShortRideDestination)
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
-                }
-            )
+            NavigationBar {
+                NavigationBarItem(
+                    onClick = {
+                        destinationsNavigator.navigate(HomeDestination)
+                    },
+                    icon = {
+                        Icon(Icons.Default.Home, contentDescription = "home")
+                    },
+                    label = { Text(text = "home") },
+                    selected = true
+                )
+                NavigationBarItem(
+                    onClick = {
+                        destinationsNavigator.navigate(PrepareShortRideDestination)
+                    },
+                    icon = {
+                        Icon(Icons.Outlined.ThumbUp, contentDescription = "quick ride")
+                    },
+                    label = { Text(text = "quick ride") },
+                    selected = false
+                )
+                NavigationBarItem(
+                    onClick = {
+                        destinationsNavigator.navigate(PrepareDayOutDestination)
+                    },
+                    icon = {
+                        Icon(Icons.Outlined.ThumbUp, contentDescription = "day out")
+                    },
+                    label = { Text(text = "day out") },
+                    selected = false
+                )
+                NavigationBarItem(
+                    onClick = {
+                        destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
+                    },
+                    icon = {
+                        Icon(Icons.Outlined.ThumbUp, contentDescription = "holidays")
+                    },
+                    label = { Text(text = "holidays") },
+                    selected = false
+                )
+            }
         }
     )
 }

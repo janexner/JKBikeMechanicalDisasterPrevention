@@ -9,6 +9,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -48,6 +50,12 @@ class UserPreferencesManager @Inject constructor(
         userDataStorePreferences.edit { preferences ->
             preferences[KEY_NEEDS_ONBOARDING] = newNeedsOnboarding
         }
+    }
+
+    private val _needsOnboardingThisTime: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val needsOnboardingThisTime: StateFlow<Boolean> = _needsOnboardingThisTime
+    fun setNeedsOnBoardingThisTime(needsOnboardingThisTime: Boolean) {
+        _needsOnboardingThisTime.value = needsOnboardingThisTime
     }
 
     private companion object {
