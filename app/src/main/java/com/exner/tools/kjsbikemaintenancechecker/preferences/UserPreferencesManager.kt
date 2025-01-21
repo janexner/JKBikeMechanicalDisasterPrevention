@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
@@ -38,6 +39,20 @@ class UserPreferencesManager @Inject constructor(
         }
     }
 
+    fun defaultBikeUidShort(): Flow<Long> {
+        return userDataStorePreferences.data.catch {
+            emit(emptyPreferences())
+        }.map { preferences ->
+            preferences[KEY_DEFAULT_BIKE_UID_SHORT] ?: -1L
+        }
+    }
+
+    suspend fun setDefaultBikeUidShort(newUid: Long) {
+        userDataStorePreferences.edit { preferences ->
+            preferences[KEY_DEFAULT_BIKE_UID_SHORT] = newUid
+        }
+    }
+
     fun needsOnboarding(): Flow<Boolean> {
         return userDataStorePreferences.data.catch {
             emptyPreferences()
@@ -60,6 +75,7 @@ class UserPreferencesManager @Inject constructor(
 
     private companion object {
         val KEY_THEME = stringPreferencesKey(name = "preference_theme")
-        val KEY_NEEDS_ONBOARDING = booleanPreferencesKey(name = "needs_onboarding")
+        val KEY_NEEDS_ONBOARDING = booleanPreferencesKey(name = "preference_needs_onboarding")
+        val KEY_DEFAULT_BIKE_UID_SHORT = longPreferencesKey(name = "preference_default_bike_uid_short")
     }
 }

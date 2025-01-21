@@ -2,14 +2,18 @@ package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.ThumbUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -18,6 +22,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +35,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.Onboar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
+import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
@@ -52,48 +58,64 @@ fun Home(
 
     Scaffold(
         content = { innerPadding ->
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
-                stickyHeader {
-                    Text(text = "TODOs")
-                }
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    stickyHeader {
+                        Text(text = "TODOs")
+                    }
 
-                items(items = activities, key = { it.uid }) { activity ->
-                    Surface(
-                        modifier = Modifier
-                            .clickable {
-                                destinationsNavigator.navigate(
-                                    ActivityDetailsDestination(
-                                        activity.uid
+                    items(items = activities, key = { it.uid }) { activity ->
+                        Surface(
+                            modifier = Modifier
+                                .clickable {
+                                    destinationsNavigator.navigate(
+                                        ActivityDetailsDestination(
+                                            activity.uid
+                                        )
                                     )
-                                )
-                            },
-                    ) {
-                        ListItem(
-                            headlineContent = {
-                                Text(text = "${activity.dueDate} - ${activity.title}")
-                            },
-                            supportingContent = {
-                                Text(text = activity.description)
-                            },
-                            trailingContent = {
-                                Checkbox(
-                                    checked = activity.isCompleted,
-                                    onCheckedChange = {
-                                        homeViewModel.updateActivity(activity.copy(isCompleted = !activity.isCompleted))
-                                    }
-                                )
-                            }
-                        )
+                                },
+                        ) {
+                            ListItem(
+                                headlineContent = {
+                                    Text(text = "${activity.dueDate} - ${activity.title}")
+                                },
+                                supportingContent = {
+                                    Text(text = activity.description)
+                                },
+                                trailingContent = {
+                                    Checkbox(
+                                        checked = activity.isCompleted,
+                                        onCheckedChange = {
+                                            homeViewModel.updateActivity(activity.copy(isCompleted = !activity.isCompleted))
+                                        }
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
 
-                // more UI
+                Spacer(modifier = Modifier.weight(0.1f))
 
+                // more static UI
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        destinationsNavigator.navigate(AddComponentDestination)
+                    }
+                ) {
+                    Text(text = "Add Bike / Component")
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
         },
         bottomBar = {
