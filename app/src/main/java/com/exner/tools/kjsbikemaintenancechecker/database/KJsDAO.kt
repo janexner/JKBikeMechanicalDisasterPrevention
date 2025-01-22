@@ -8,6 +8,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,6 +18,12 @@ interface KJsDAO {
 
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
+
+    @Query("SELECT * from activitiesbybikes")
+    fun observeActivitiesByBikes(): Flow<List<ActivitiesByBikes>>
+
+    @Query("SELECT * FROM bike WHERE uid=:uid")
+    suspend fun getBikeByUid(uid: Long): Bike?
 
     @Update
     suspend fun updateActivity(activity: Activity)

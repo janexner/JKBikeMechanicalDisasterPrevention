@@ -7,13 +7,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination.invoke
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun TodoListItem(
-    activity: Activity,
+    activity: ActivitiesByBikes,
     destinationsNavigator: DestinationsNavigator,
     onCheckboxCallback: (Boolean) -> Unit
 ) {
@@ -22,23 +22,23 @@ fun TodoListItem(
             .clickable {
                 destinationsNavigator.navigate(
                     com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination(
-                        activity.uid
+                        activity.activityUid
                     )
                 )
             },
     ) {
         ListItem(
             headlineContent = {
-                Text(text = "${activity.dueDate.toLocalDate()} - ${activity.title}")
+                Text(text = "${activity.activityDueDate.toLocalDate()} - ${activity.activityTitle}")
             },
             supportingContent = {
-                Text(text = activity.description)
+                Text(text = activity.activityDescription)
             },
             trailingContent = {
                 Checkbox(
-                    checked = activity.isCompleted,
+                    checked = activity.activityIsCompleted,
                     onCheckedChange = {
-                        onCheckboxCallback(!activity.isCompleted)
+                        onCheckboxCallback(!activity.activityIsCompleted)
                     }
                 )
             }

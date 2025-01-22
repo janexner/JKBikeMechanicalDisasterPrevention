@@ -1,10 +1,8 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,15 +12,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
@@ -53,7 +47,7 @@ fun Home(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val activities: List<Activity> by homeViewModel.observeActivitiesByDueDate.collectAsState(
+    val activitiesByBikes: List<ActivitiesByBikes> by homeViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
     )
 
@@ -73,9 +67,17 @@ fun Home(
                         Text(text = "TODOs")
                     }
 
-                    items(items = activities, key = { it.uid }) { activity ->
+                    items(items = activitiesByBikes, key = { it.activityUid }) { activityByBike ->
+                        val activity = Activity(
+                            title = activityByBike.activityTitle,
+                            description = activityByBike.activityDescription,
+                            isCompleted = activityByBike.activityIsCompleted,
+                            createdDate = activityByBike.activityCreatedDate,
+                            dueDate = activityByBike.activityDueDate,
+                            uid = activityByBike.activityUid
+                        )
                         TodoListItem(
-                            activity = activity,
+                            activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
                                 homeViewModel.updateActivity(activity = activity.copy(isCompleted = result))

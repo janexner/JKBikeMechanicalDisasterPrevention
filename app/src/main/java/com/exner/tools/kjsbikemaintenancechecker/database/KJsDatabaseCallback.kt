@@ -70,5 +70,14 @@ class KJsDatabaseCallback(
             uid = 1
         )
         provider.get().insertBikeActivities(chargeBatteryOnVadoActivity)
+        val bottleActivity = Activity(
+            title = "Take Water",
+            description = "Take a bottle with fresh water",
+            isCompleted = false,
+            createdDate = LocalDateTime.now(),
+            dueDate = LocalDateTime.now(),
+            uid = 2
+        )
+        provider.get().insertActivity(bottleActivity)
     }
 }

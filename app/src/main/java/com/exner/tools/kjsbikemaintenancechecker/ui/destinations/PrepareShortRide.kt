@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Home
@@ -23,18 +24,29 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -44,7 +56,9 @@ import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDest
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalComposeUiApi::class
+)
 @Destination<RootGraph>(
     wrappers = [OnboardingWrapper::class]
 )
@@ -62,6 +76,10 @@ fun PrepareShortRide(
         initialValue = null
     )
 
+    val activitiesByBikes: List<ActivitiesByBikes> by prepareShortRideViewModel.observeActivitiesByBikes.collectAsState(
+        initial = emptyList()
+    )
+
     var modified by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -72,6 +90,7 @@ fun PrepareShortRide(
                     .padding(8.dp, 0.dp)
                     .fillMaxWidth()
             ) {
+                var offset = Offset.Zero
                 var bikesExpanded by remember {
                     mutableStateOf(false)
                 }
@@ -80,6 +99,10 @@ fun PrepareShortRide(
                         .fillMaxWidth()
                         .padding(8.dp, 0.dp)
                         .wrapContentSize(Alignment.TopEnd)
+                        .pointerInteropFilter {
+                            offset = Offset(it.x, it.y)
+                            false
+                        }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -95,8 +118,10 @@ fun PrepareShortRide(
                             }
                         }
                     }
+                    val density = LocalDensity.current
                     DropdownMenu(
                         expanded = bikesExpanded,
+                        offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
                         onDismissRequest = { bikesExpanded = false }) {
                         DropdownMenuItem(
                             text = { Text(text = "All bikes") },
@@ -121,12 +146,38 @@ fun PrepareShortRide(
                     }
                 }
                 DefaultSpacer()
+                // filter activities by bike
+                val filteredActivities = if (currentBike == null || currentBike!!.uid < 1) {
+                    activitiesByBikes
+                } else {
+                    activitiesByBikes.filter { activityByBike ->
+                        activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
+                    }
+                }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
                     stickyHeader {
                         Text(text = "TODOs for a quick ride:")
+                    }
+
+                    items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
+                        val activity = Activity(
+                            title = activityByBike.activityTitle,
+                            description = activityByBike.activityDescription,
+                            isCompleted = activityByBike.activityIsCompleted,
+                            createdDate = activityByBike.activityCreatedDate,
+                            dueDate = activityByBike.activityDueDate,
+                            uid = activityByBike.activityUid
+                        )
+                        TodoListItem(
+                            activity = activityByBike,
+                            destinationsNavigator = destinationsNavigator,
+                            onCheckboxCallback = { result ->
+                                prepareShortRideViewModel.updateActivity(activity = activity.copy(isCompleted = result))
+                            },
+                        )
                     }
                 }
             }
@@ -176,4 +227,9 @@ fun PrepareShortRide(
             }
         }
     )
+}
+
+fun pxToDp(pixels: Float, density: Density): Dp {
+    val dp = with(density) { pixels.toDp() }
+    return dp
 }
