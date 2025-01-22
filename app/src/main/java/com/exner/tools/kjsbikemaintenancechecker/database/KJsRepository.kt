@@ -18,4 +18,5 @@ class KJsRepository @Inject constructor(val kjsDAO: KJsDAO) {
     suspend fun updateActivity(activity: Activity) {
         kjsDAO.updateActivity(activity)
     }
+
 }

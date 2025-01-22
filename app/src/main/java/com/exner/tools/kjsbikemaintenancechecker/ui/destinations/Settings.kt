@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.ui.SettingsViewModel
-import com.exner.tools.kjsbikemaintenancechecker.ui.TextAndTriStateToggle
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndTriStateToggle
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph

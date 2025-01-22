@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.exner.tools.kjsbikemaintenancechecker.ui.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.WelcomeViewModel
 import com.ramcosta.composedestinations.scope.DestinationScope
 import com.ramcosta.composedestinations.wrapper.DestinationWrapper

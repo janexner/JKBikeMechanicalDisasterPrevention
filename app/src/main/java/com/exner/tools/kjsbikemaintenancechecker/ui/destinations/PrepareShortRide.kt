@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.ui.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
@@ -56,10 +56,6 @@ fun PrepareShortRide(
 
     val bikes: List<Bike> by prepareShortRideViewModel.observeBikesRaw.collectAsStateWithLifecycle(
         initialValue = emptyList()
-    )
-
-    val defaultBikeUidShort by prepareShortRideViewModel.defaultBikeUidShort.collectAsStateWithLifecycle(
-        initialValue = -1L
     )
 
     val currentBike: Bike? by prepareShortRideViewModel.currentBike.collectAsStateWithLifecycle(

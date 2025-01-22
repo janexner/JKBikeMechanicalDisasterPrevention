@@ -1,4 +1,4 @@
-package com.exner.tools.kjsbikemaintenancechecker.ui
+package com.exner.tools.kjsbikemaintenancechecker.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -73,33 +74,13 @@ fun Home(
                     }
 
                     items(items = activities, key = { it.uid }) { activity ->
-                        Surface(
-                            modifier = Modifier
-                                .clickable {
-                                    destinationsNavigator.navigate(
-                                        ActivityDetailsDestination(
-                                            activity.uid
-                                        )
-                                    )
-                                },
-                        ) {
-                            ListItem(
-                                headlineContent = {
-                                    Text(text = "${activity.dueDate} - ${activity.title}")
-                                },
-                                supportingContent = {
-                                    Text(text = activity.description)
-                                },
-                                trailingContent = {
-                                    Checkbox(
-                                        checked = activity.isCompleted,
-                                        onCheckedChange = {
-                                            homeViewModel.updateActivity(activity.copy(isCompleted = !activity.isCompleted))
-                                        }
-                                    )
-                                }
-                            )
-                        }
+                        TodoListItem(
+                            activity = activity,
+                            destinationsNavigator = destinationsNavigator,
+                            onCheckboxCallback = { result ->
+                                homeViewModel.updateActivity(activity = activity.copy(isCompleted = result))
+                            },
+                        )
                     }
                 }
 
