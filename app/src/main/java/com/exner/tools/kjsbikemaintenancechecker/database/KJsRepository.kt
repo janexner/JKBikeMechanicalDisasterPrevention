@@ -3,6 +3,7 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 import androidx.annotation.WorkerThread
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,6 +17,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     val observeBikes: Flow<List<Bike>> = kjsDAO.observeBikesOrderedByLastUsedDate()
 
     val observeActivitiesByBikes: Flow<List<ActivitiesByBikes>> = kjsDAO.observeActivitiesByBikes()
+
+    val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
 
     @WorkerThread
     suspend fun updateActivity(activity: Activity) {

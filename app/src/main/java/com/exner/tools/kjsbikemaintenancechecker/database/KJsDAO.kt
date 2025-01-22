@@ -19,8 +19,11 @@ interface KJsDAO {
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
 
-    @Query("SELECT * from activitiesbybikes")
+    @Query("SELECT * FROM activitiesbybikes")
     fun observeActivitiesByBikes(): Flow<List<ActivitiesByBikes>>
+
+    @Query("SELECT * FROM component ORDER BY name")
+    fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
 
     @Query("SELECT * FROM bike WHERE uid=:uid")
     suspend fun getBikeByUid(uid: Long): Bike?

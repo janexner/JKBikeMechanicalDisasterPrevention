@@ -27,6 +27,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.generated.destinations.WelcomeDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -112,6 +113,14 @@ private fun KJsTopBar(
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(AddComponentDestination)
+                    }
+                )
+                DropdownMenuItem(
+                    enabled = true,
+                    text = { Text(text = "Manage Bikes / Components", style = MaterialTheme.typography.bodyLarge) },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(ManageBikesAndComponentsDestination)
                     }
                 )
                 DropdownMenuItem(
