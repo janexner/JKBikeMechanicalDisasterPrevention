@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,13 +29,13 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.AddActivityDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Destination<RootGraph>(start = true)
@@ -91,10 +90,10 @@ fun Home(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        destinationsNavigator.navigate(AddComponentDestination)
+                        destinationsNavigator.navigate(AddActivityDestination)
                     }
                 ) {
-                    Text(text = "Add Bike / Component")
+                    Text(text = "Add activity")
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))

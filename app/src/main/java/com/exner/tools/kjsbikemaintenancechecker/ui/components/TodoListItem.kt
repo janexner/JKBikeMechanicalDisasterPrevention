@@ -3,19 +3,21 @@ package com.exner.tools.kjsbikemaintenancechecker.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
-import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination.invoke
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun TodoListItem(
     activity: ActivitiesByBikes,
     destinationsNavigator: DestinationsNavigator,
-    onCheckboxCallback: (Boolean) -> Unit
+    onCheckboxCallback: (Boolean) -> Unit,
+    suppressBikeBadge: Boolean = false,
+    suppressDueDate: Boolean = false
 ) {
     Surface(
         modifier = Modifier
@@ -28,11 +30,16 @@ fun TodoListItem(
             },
     ) {
         ListItem(
+            overlineContent = {
+                if (activity.bikeName != null && !suppressBikeBadge) {
+                    Text(text = activity.bikeName, color = MaterialTheme.colorScheme.tertiary)
+                }
+            },
             headlineContent = {
-                val headline = if (activity.activityDueDate != null) {
+                val headline = if (activity.activityDueDate != null && !suppressDueDate) {
                     "${activity.activityDueDate.toLocalDate()} - ${activity.activityTitle}"
                 } else {
-                    "before the ride - ${activity.activityTitle}"
+                    activity.activityTitle
                 }
                 Text(text = headline)
             },

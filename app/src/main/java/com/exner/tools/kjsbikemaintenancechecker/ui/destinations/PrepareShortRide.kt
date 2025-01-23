@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -69,9 +70,7 @@ fun PrepareShortRide(
         initialValue = emptyList()
     )
 
-    val currentBike: Bike? by prepareShortRideViewModel.currentBike.collectAsStateWithLifecycle(
-        initialValue = null
-    )
+    var currentBike: Bike? by remember { mutableStateOf(null) }
 
     val activitiesByBikes: List<ActivitiesByBikes> by prepareShortRideViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
@@ -123,7 +122,7 @@ fun PrepareShortRide(
                         DropdownMenuItem(
                             text = { Text(text = "All bikes") },
                             onClick = {
-                                prepareShortRideViewModel.updateCurrentBike(null)
+                                currentBike = null
                                 modified = true
                                 bikesExpanded = false
                             },
@@ -133,7 +132,7 @@ fun PrepareShortRide(
                             DropdownMenuItem(
                                 text = { Text(text = bike.name) },
                                 onClick = {
-                                    prepareShortRideViewModel.updateCurrentBike(bike)
+                                    currentBike = bike
                                     modified = true
                                     bikesExpanded = false
                                 },
@@ -144,6 +143,7 @@ fun PrepareShortRide(
                 }
                 DefaultSpacer()
                 // filter activities by bike
+                val suppressBikeBadge = (currentBike != null && currentBike!!.uid > 0)
                 val filteredActivities = if (currentBike == null || currentBike!!.uid < 1) {
                     activitiesByBikes
                 } else {
@@ -174,6 +174,8 @@ fun PrepareShortRide(
                             onCheckboxCallback = { result ->
                                 prepareShortRideViewModel.updateActivity(activity = activity.copy(isCompleted = result))
                             },
+                            suppressBikeBadge = suppressBikeBadge,
+                            suppressDueDate = true
                         )
                     }
                 }
