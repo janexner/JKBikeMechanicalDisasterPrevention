@@ -27,9 +27,9 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
+import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
-import com.ramcosta.composedestinations.generated.destinations.WelcomeDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.rememberNavHostEngine
 import com.ramcosta.composedestinations.spec.DestinationSpec
@@ -78,7 +78,7 @@ private fun KJsTopBar(
         title = { Text(text = "KJs BMC") },
         navigationIcon = {
             when (destination) {
-                WelcomeDestination -> {
+                HomeDestination -> {
                     // no back button here
                 }
 

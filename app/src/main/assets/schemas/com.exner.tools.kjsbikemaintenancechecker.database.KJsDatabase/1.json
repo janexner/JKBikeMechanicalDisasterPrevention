@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "053e458ba8704d91db5eb278fbef0a9a",
+    "identityHash": "839a9e9c5bab9a449c16e3ac8b54ad5d",
     "entities": [
       {
         "tableName": "Activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `created_date` TEXT NOT NULL, `due_date` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `created_date` TEXT NOT NULL, `due_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -36,7 +36,7 @@
             "fieldPath": "dueDate",
             "columnName": "due_date",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "uid",
@@ -291,7 +291,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '053e458ba8704d91db5eb278fbef0a9a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '839a9e9c5bab9a449c16e3ac8b54ad5d')"
     ]
   }
 }

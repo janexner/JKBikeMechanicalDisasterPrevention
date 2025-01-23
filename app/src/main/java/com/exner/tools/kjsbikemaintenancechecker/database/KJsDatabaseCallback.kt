@@ -6,6 +6,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -70,12 +71,18 @@ class KJsDatabaseCallback(
             uid = 1
         )
         provider.get().insertBikeActivities(chargeBatteryOnVadoActivity)
+        val chargeBatteryComponentActivity = ComponentActivities(
+            componentUid = 1,
+            activityUid = 1,
+            uid = 1
+        )
+        provider.get().insertComponentActivity(chargeBatteryComponentActivity)
         val bottleActivity = Activity(
             title = "Take Water",
-            description = "Take a bottle with fresh water",
+            description = "Take a bottle of fresh water",
             isCompleted = false,
             createdDate = LocalDateTime.now(),
-            dueDate = LocalDateTime.now(),
+            dueDate = null,
             uid = 2
         )
         provider.get().insertActivity(bottleActivity)

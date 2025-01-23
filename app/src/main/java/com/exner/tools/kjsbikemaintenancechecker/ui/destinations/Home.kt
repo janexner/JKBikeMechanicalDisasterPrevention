@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,7 +28,6 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
-import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
@@ -36,11 +36,10 @@ import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolida
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
-@Destination<RootGraph>(
-    wrappers = [OnboardingWrapper::class]
-)
+@Destination<RootGraph>(start = true)
 @Composable
 fun Home(
     homeViewModel: HomeViewModel = hiltViewModel(),

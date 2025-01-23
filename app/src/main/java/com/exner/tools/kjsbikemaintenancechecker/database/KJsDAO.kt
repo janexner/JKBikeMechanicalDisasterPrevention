@@ -8,6 +8,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import kotlinx.coroutines.flow.Flow
 
@@ -42,4 +43,7 @@ interface KJsDAO {
 
     @Insert
     suspend fun insertBikeActivities(bikeActivities: BikeActivities)
+
+    @Insert
+    suspend fun insertComponentActivity(componentActivities: ComponentActivities)
 }

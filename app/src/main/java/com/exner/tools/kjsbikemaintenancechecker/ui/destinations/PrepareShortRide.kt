@@ -47,7 +47,6 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBike
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
-import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
@@ -59,9 +58,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
     ExperimentalComposeUiApi::class
 )
-@Destination<RootGraph>(
-    wrappers = [OnboardingWrapper::class]
-)
+@Destination<RootGraph>
 @Composable
 fun PrepareShortRide(
     prepareShortRideViewModel: PrepareShortRideViewModel = hiltViewModel(),

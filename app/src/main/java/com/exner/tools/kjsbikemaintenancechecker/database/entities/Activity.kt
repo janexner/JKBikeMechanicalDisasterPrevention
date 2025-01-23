@@ -12,7 +12,7 @@ data class Activity(
     @ColumnInfo(name = "is_completed") val isCompleted: Boolean = false,
 
     @ColumnInfo(name = "created_date") val createdDate: LocalDateTime,
-    @ColumnInfo(name = "due_date") val dueDate: LocalDateTime,
+    @ColumnInfo(name = "due_date") val dueDate: LocalDateTime?,
 
     @PrimaryKey(autoGenerate = true) val uid: Long = 0
 )

@@ -24,6 +24,6 @@ data class ActivitiesByBikes(
     @ColumnInfo(name = "activity_description") val activityDescription: String,
     @ColumnInfo(name = "activity_is_completed") val activityIsCompleted: Boolean,
     @ColumnInfo(name = "activity_created_date") val activityCreatedDate: LocalDateTime,
-    @ColumnInfo(name = "activity_due_date") val activityDueDate: LocalDateTime,
+    @ColumnInfo(name = "activity_due_date") val activityDueDate: LocalDateTime?,
     @ColumnInfo(name = "activity_uid") val activityUid: Long
 )

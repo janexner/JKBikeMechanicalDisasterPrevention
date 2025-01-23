@@ -29,7 +29,12 @@ fun TodoListItem(
     ) {
         ListItem(
             headlineContent = {
-                Text(text = "${activity.activityDueDate.toLocalDate()} - ${activity.activityTitle}")
+                val headline = if (activity.activityDueDate != null) {
+                    "${activity.activityDueDate.toLocalDate()} - ${activity.activityTitle}"
+                } else {
+                    "before the ride - ${activity.activityTitle}"
+                }
+                Text(text = headline)
             },
             supportingContent = {
                 Text(text = activity.activityDescription)

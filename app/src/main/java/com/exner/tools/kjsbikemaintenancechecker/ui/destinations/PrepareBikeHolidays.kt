@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.wrappers.OnboardingWrapper
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
@@ -26,9 +25,7 @@ import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideD
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalFoundationApi::class)
-@Destination<RootGraph>(
-    wrappers = [OnboardingWrapper::class]
-)
+@Destination<RootGraph>
 @Composable
 fun PrepareBikeHolidays(
     destinationsNavigator: DestinationsNavigator
