@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -131,7 +132,6 @@ fun ManageBikesAndComponents(
                             ) {
                                 Text(
                                     text = component.name,
-                                    modifier = Modifier.weight(1f)
                                 )
                                 DefaultSpacer()
                                 Text(
@@ -141,29 +141,29 @@ fun ManageBikesAndComponents(
                         }
                     }
                 }
-
-                Spacer(modifier = Modifier.weight(0.5f))
-
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        destinationsNavigator.navigate(AddBikeDestination)
-                    }
-                ) {
-                    Text(text = "Add Bike")
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        destinationsNavigator.navigate(AddComponentDestination)
-                    }
-                ) {
-                    Text(text = "Add Component")
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
+//
+//                Spacer(modifier = Modifier.weight(0.5f))
+//
+//                Button(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    onClick = {
+//                        destinationsNavigator.navigate(AddBikeDestination)
+//                    }
+//                ) {
+//                    Text(text = "Add Bike")
+//                }
+//
+//                Spacer(modifier = Modifier.height(8.dp))
+//                Button(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    onClick = {
+//                        destinationsNavigator.navigate(AddComponentDestination)
+//                    }
+//                ) {
+//                    Text(text = "Add Component")
+//                }
+//
+//                Spacer(modifier = Modifier.height(8.dp))
             }
         },
         bottomBar = {
@@ -175,6 +175,17 @@ fun ManageBikesAndComponents(
                         Icon(
                             imageVector = Icons.Default.Home,
                             contentDescription = "Home"
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            destinationsNavigator.navigate(AddBikeDestination)
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add Bike"
                         )
                     }
                 },

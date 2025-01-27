@@ -15,7 +15,7 @@ class HomeViewModel @Inject constructor(
     private val repository: KJsRepository
 ) : ViewModel() {
 
-    val observeActivitiesByBikes = repository.observeActivitiesByBikes
+    val observeActivitiesByBikesWithDueDate = repository.observeActivitiesByBikesWithDueDate
 
     fun updateActivity(activity: Activity) {
         viewModelScope.launch {

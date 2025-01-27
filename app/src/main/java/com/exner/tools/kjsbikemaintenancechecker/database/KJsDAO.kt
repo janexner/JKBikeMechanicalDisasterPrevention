@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface KJsDAO {
+    //
+    // OBSERVERS - return tables
+    //
     @Query("SELECT * FROM activity ORDER BY due_date DESC")
     fun observeActivitiesOrderedByDueDate(): Flow<List<Activity>>
 
@@ -26,9 +29,18 @@ interface KJsDAO {
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
 
+    @Query("SELECT * FROM activitiesbybikes WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
+    fun observeActivitiesByBikeWithDateOrderedByDueDate(): Flow<List<ActivitiesByBikes>>
+
+    //
+    // GETTERS - return individual lines
+    //
     @Query("SELECT * FROM bike WHERE uid=:uid")
     suspend fun getBikeByUid(uid: Long): Bike?
 
+    //
+    // UPDATE/INSERT/DELETE
+    //
     @Update
     suspend fun updateActivity(activity: Activity)
 

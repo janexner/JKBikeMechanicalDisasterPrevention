@@ -63,10 +63,11 @@ dependencies {
 
     // more
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.material)
+    implementation(libs.androidx.runtime.livedata)
 
     // hilt
     implementation(libs.hilt.android)
-    implementation(libs.material)
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

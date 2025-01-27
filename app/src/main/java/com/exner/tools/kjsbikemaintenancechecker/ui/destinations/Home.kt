@@ -45,7 +45,7 @@ fun Home(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val activitiesByBikes: List<ActivitiesByBikes> by homeViewModel.observeActivitiesByBikes.collectAsState(
+    val activitiesByBikes: List<ActivitiesByBikes> by homeViewModel.observeActivitiesByBikesWithDueDate.collectAsState(
         initial = emptyList()
     )
 

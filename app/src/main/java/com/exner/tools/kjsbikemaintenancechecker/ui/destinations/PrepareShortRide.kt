@@ -28,7 +28,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -45,8 +44,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
