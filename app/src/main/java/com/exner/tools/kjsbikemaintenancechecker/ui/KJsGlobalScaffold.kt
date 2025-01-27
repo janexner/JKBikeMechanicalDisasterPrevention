@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
+import com.ramcosta.composedestinations.generated.destinations.AddBikeDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
@@ -109,7 +110,15 @@ private fun KJsTopBar(
             ) {
                 DropdownMenuItem(
                     enabled = true,
-                    text = { Text(text = "Add Bike / Component", style = MaterialTheme.typography.bodyLarge) },
+                    text = { Text(text = "Add Bike", style = MaterialTheme.typography.bodyLarge) },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(AddBikeDestination)
+                    }
+                )
+                DropdownMenuItem(
+                    enabled = true,
+                    text = { Text(text = "Add Component", style = MaterialTheme.typography.bodyLarge) },
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(AddComponentDestination)

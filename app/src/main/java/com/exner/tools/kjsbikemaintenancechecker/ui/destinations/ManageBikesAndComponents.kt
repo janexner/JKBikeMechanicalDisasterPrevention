@@ -1,23 +1,22 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PedalBike
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -29,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,9 +37,9 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ManageBikesAndComponentsViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.AddBikeDestination
 import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
 import com.ramcosta.composedestinations.generated.destinations.EditBikeDestination
 import com.ramcosta.composedestinations.generated.destinations.EditComponentDestination
@@ -61,6 +61,8 @@ fun ManageBikesAndComponents(
         initial = emptyList()
     )
 
+    val currentBike by manageBikesAndComponentsViewModel.currentBike.collectAsState()
+
     Scaffold(
         content = { innerPadding ->
             Column(
@@ -69,7 +71,7 @@ fun ManageBikesAndComponents(
                     .padding(8.dp)
                     .fillMaxSize()
             ) {
-                Text(text = "Tap bike or component to edit or delete.")
+                Text(text = "Tap bike or component to edit or delete. Long press bike to select it.")
                 DefaultSpacer()
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
@@ -78,7 +80,7 @@ fun ManageBikesAndComponents(
                         Text(
                             text = "Bikes",
                             style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 4.dp),
+                            modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.secondary,
                         )
@@ -86,14 +88,27 @@ fun ManageBikesAndComponents(
 
                     items(bikes, key = { "bike.${it.uid}" }) { bike ->
                         Surface(
-                            onClick = {
-                                destinationsNavigator.navigate(EditBikeDestination(bike.uid))
-                            },
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier.combinedClickable(
+                                onClick = {
+                                    destinationsNavigator.navigate(EditBikeDestination(bike.uid))
+                                },
+                                onLongClick = {
+                                    if (currentBike == bike.uid) {
+                                        manageBikesAndComponentsViewModel.updateCurrentBike(-1L) // no bike
+                                    } else {
+                                        manageBikesAndComponentsViewModel.updateCurrentBike(bike.uid)
+                                    }
+                                }
+                            ).padding(4.dp)
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
+                                    contentDescription = "Bike",
+                                )
+                                IconSpacer()
                                 Text(
                                     text = bike.name,
                                     modifier = Modifier.weight(1f)
@@ -114,56 +129,48 @@ fun ManageBikesAndComponents(
                         Text(
                             text = "Components",
                             style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth().padding(0.dp, 8.dp, 0.dp, 4.dp),
+                            modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
 
-                    items(components, key = { "component.${it.uid}" }) { component ->
+                    val filteredComponents = if (currentBike > 0) {
+                        components.filter { component ->
+                            component.bikeUid == currentBike
+                        }
+                    } else {
+                        components
+                    }
+
+                    items(filteredComponents, key = { "component.${it.uid}" }) { component ->
                         Surface(
                             onClick = {
                                 destinationsNavigator.navigate(EditComponentDestination(component.uid))
                             },
-                            modifier = Modifier.padding(4.dp)
                         ) {
                             Row(
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    text = component.name,
+                                Icon(
+                                    imageVector = Icons.Default.Dataset, // TODO
+                                    contentDescription = "Component",
                                 )
-                                DefaultSpacer()
-                                Text(
-                                    text = component.description,
-                                )
+                                IconSpacer()
+                                Column() {
+                                    Text(
+                                        text = component.name,
+                                    )
+                                    Text(
+                                        text = component.description,
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
                             }
                         }
                     }
                 }
-//
-//                Spacer(modifier = Modifier.weight(0.5f))
-//
-//                Button(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    onClick = {
-//                        destinationsNavigator.navigate(AddBikeDestination)
-//                    }
-//                ) {
-//                    Text(text = "Add Bike")
-//                }
-//
-//                Spacer(modifier = Modifier.height(8.dp))
-//                Button(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    onClick = {
-//                        destinationsNavigator.navigate(AddComponentDestination)
-//                    }
-//                ) {
-//                    Text(text = "Add Component")
-//                }
-//
-//                Spacer(modifier = Modifier.height(8.dp))
             }
         },
         bottomBar = {
@@ -175,17 +182,6 @@ fun ManageBikesAndComponents(
                         Icon(
                             imageVector = Icons.Default.Home,
                             contentDescription = "Home"
-                        )
-                    }
-
-                    IconButton(
-                        onClick = {
-                            destinationsNavigator.navigate(AddBikeDestination)
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Add Bike"
                         )
                     }
                 },

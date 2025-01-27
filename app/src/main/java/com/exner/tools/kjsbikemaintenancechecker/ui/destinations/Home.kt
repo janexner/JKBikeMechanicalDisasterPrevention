@@ -2,6 +2,7 @@ package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,10 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddTask
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Hail
+import androidx.compose.material.icons.outlined.Luggage
 import androidx.compose.material.icons.outlined.ThumbUp
+import androidx.compose.material.icons.outlined.TripOrigin
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -20,12 +26,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -93,7 +101,16 @@ fun Home(
                         destinationsNavigator.navigate(AddActivityDestination)
                     }
                 ) {
-                    Text(text = "Add activity")
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AddTask,
+                            contentDescription = "Add activity"
+                        )
+                        IconSpacer()
+                        Text(text = "Add activity")
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -126,7 +143,7 @@ fun Home(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = "day out")
+                        Icon(Icons.Outlined.Hail, contentDescription = "day out")
                     },
                     label = { Text(text = "day out") },
                     selected = false
@@ -136,7 +153,7 @@ fun Home(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = "holidays")
+                        Icon(Icons.Outlined.Luggage, contentDescription = "holidays")
                     },
                     label = { Text(text = "holidays") },
                     selected = false
