@@ -14,7 +14,6 @@ import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PedalBike
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -99,7 +98,12 @@ fun ManageBikesAndComponents(
                                         manageBikesAndComponentsViewModel.updateCurrentBike(bike.uid)
                                     }
                                 }
-                            ).padding(4.dp)
+                            ).padding(4.dp),
+                            color = if (currentBike == bike.uid) {
+                                MaterialTheme.colorScheme.surfaceVariant
+                            } else {
+                                MaterialTheme.colorScheme.surface
+                            }
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
@@ -158,7 +162,7 @@ fun ManageBikesAndComponents(
                                     contentDescription = "Component",
                                 )
                                 IconSpacer()
-                                Column() {
+                                Column {
                                     Text(
                                         text = component.name,
                                     )
