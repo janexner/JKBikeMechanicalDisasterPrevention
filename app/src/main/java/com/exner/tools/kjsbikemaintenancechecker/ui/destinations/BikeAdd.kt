@@ -42,6 +42,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -182,6 +183,8 @@ fun BikeAdd(
                                 )
                                 modified = false
                                 created = true
+                                destinationsNavigator.popBackStack(
+                                    ManageBikesAndComponentsDestination, inclusive = false)
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

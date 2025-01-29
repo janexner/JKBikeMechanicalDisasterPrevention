@@ -40,6 +40,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeDeleteDestination
 import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
@@ -146,7 +147,8 @@ fun BikeEdit(
                             onClick = {
                                 bikeEditViewModel.commitBike()
                                 modified = false
-                                destinationsNavigator.navigateUp()
+                                destinationsNavigator.popBackStack(
+                                    ManageBikesAndComponentsDestination, inclusive = false)
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

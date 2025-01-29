@@ -68,7 +68,7 @@ fun BikeDelete(
                     if (activityCount != null && activityCount!! > 0) {
                         DefaultSpacer()
                         TextAndSwitch(
-                            text = "Delete attached activities ($activityCount)",
+                            text = "Delete activities for this bike ($activityCount)",
                             checked = deleteAttachedActivities
                         ) {
                             deleteAttachedActivities = it
