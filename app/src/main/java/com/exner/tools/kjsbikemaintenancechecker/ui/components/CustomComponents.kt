@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -33,6 +34,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
+
+@Composable
+fun TextAndSwitch(
+    text: String,
+    checked: Boolean,
+    onCheckedChange: ((Boolean) -> Unit)?
+) {
+    ListItem(
+        headlineContent = {
+            Text(
+                text = text,
+                maxLines = 3,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        },
+        trailingContent = {
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+                modifier = Modifier
+            )
+        },
+    )
+}
 
 @Composable
 fun TextAndTriStateToggle(

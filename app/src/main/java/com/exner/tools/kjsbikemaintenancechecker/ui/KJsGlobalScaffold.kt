@@ -1,6 +1,8 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -15,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +35,7 @@ import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
@@ -39,7 +43,7 @@ import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 
 @Composable
 fun KJsGlobalScaffold(
-
+    windowSizeClass: WindowSizeClass
 ) {
     val engine = rememberNavHostEngine()
     val navController = engine.rememberNavController()
@@ -60,7 +64,13 @@ fun KJsGlobalScaffold(
             DestinationsNavHost(
                 navController = navController,
                 navGraph = NavGraphs.root,
-                modifier = Modifier.padding(newPadding)
+                dependenciesContainerBuilder = {
+                    dependency(windowSizeClass)
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(newPadding)
+                    .padding(newPadding)
             ) {
             }
         }
@@ -118,7 +128,12 @@ private fun KJsTopBar(
                 )
                 DropdownMenuItem(
                     enabled = true,
-                    text = { Text(text = "Add Component", style = MaterialTheme.typography.bodyLarge) },
+                    text = {
+                        Text(
+                            text = "Add Component",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(AddComponentDestination)
@@ -126,7 +141,12 @@ private fun KJsTopBar(
                 )
                 DropdownMenuItem(
                     enabled = true,
-                    text = { Text(text = "Manage Bikes / Components", style = MaterialTheme.typography.bodyLarge) },
+                    text = {
+                        Text(
+                            text = "Manage Bikes / Components",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(ManageBikesAndComponentsDestination)

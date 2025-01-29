@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
 import com.exner.tools.kjsbikemaintenancechecker.preferences.UserPreferencesManager
 import com.exner.tools.kjsbikemaintenancechecker.state.ThemeStateHolder
@@ -22,6 +24,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var themeStateHolder: ThemeStateHolder
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,10 +34,13 @@ class MainActivity : ComponentActivity() {
             // - force night mode setting may be on
             val userTheme = themeStateHolder.themeState.collectAsState()
 
+            // window size class
+            val windowSizeClass = calculateWindowSizeClass(this)
+
             KJsBikeMaintenanceCheckerTheme(
                 darkTheme = userTheme.value.userSelectedTheme == Theme.Dark || (userTheme.value.userSelectedTheme == Theme.Auto && isSystemInDarkTheme())
             )  {
-                KJsGlobalScaffold()
+                KJsGlobalScaffold(windowSizeClass)
             }
         }
     }

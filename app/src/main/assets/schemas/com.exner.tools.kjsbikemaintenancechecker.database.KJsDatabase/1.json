@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "839a9e9c5bab9a449c16e3ac8b54ad5d",
+    "identityHash": "a3742425fd08f39467cda9184f6e9a11",
     "entities": [
       {
         "tableName": "Activity",
@@ -114,7 +114,7 @@
       },
       {
         "tableName": "Bike",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `build_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `build_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
@@ -138,7 +138,7 @@
             "fieldPath": "lastUsedDate",
             "columnName": "last_used_date",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "uid",
@@ -190,7 +190,7 @@
       },
       {
         "tableName": "Component",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER NOT NULL, `parent_component_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER NOT NULL, `parent_component_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
@@ -232,7 +232,7 @@
             "fieldPath": "lastUsedDate",
             "columnName": "last_used_date",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "uid",
@@ -291,7 +291,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '839a9e9c5bab9a449c16e3ac8b54ad5d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a3742425fd08f39467cda9184f6e9a11')"
     ]
   }
 }

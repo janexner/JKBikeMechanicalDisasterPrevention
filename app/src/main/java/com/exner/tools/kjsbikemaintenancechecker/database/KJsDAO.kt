@@ -45,17 +45,17 @@ interface KJsDAO {
     suspend fun updateActivity(activity: Activity)
 
     @Insert
-    suspend fun insertBike(bike: Bike)
+    suspend fun insertBike(bike: Bike): Long
 
     @Insert
-    suspend fun insertComponent(component: Component)
+    suspend fun insertComponent(component: Component): Long
 
     @Insert
-    suspend fun insertActivity(activity: Activity)
+    suspend fun insertActivity(activity: Activity): Long
 
     @Insert
-    suspend fun insertBikeActivities(bikeActivities: BikeActivities)
+    suspend fun insertBikeActivities(bikeActivities: BikeActivities): Long
 
     @Insert
-    suspend fun insertComponentActivity(componentActivities: ComponentActivities)
+    suspend fun insertComponentActivity(componentActivities: ComponentActivities): Long
 }

@@ -2,7 +2,7 @@ package com.exner.tools.kjsbikemaintenancechecker.database.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDate
 
 @DatabaseView(
     "SELECT b.name as bike_name, " +
@@ -23,7 +23,7 @@ data class ActivitiesByBikes(
     @ColumnInfo(name = "activity_title") val activityTitle: String,
     @ColumnInfo(name = "activity_description") val activityDescription: String,
     @ColumnInfo(name = "activity_is_completed") val activityIsCompleted: Boolean,
-    @ColumnInfo(name = "activity_created_date") val activityCreatedDate: LocalDateTime,
-    @ColumnInfo(name = "activity_due_date") val activityDueDate: LocalDateTime?,
+    @ColumnInfo(name = "activity_created_date") val activityCreatedDate: LocalDate,
+    @ColumnInfo(name = "activity_due_date") val activityDueDate: LocalDate?,
     @ColumnInfo(name = "activity_uid") val activityUid: Long
 )

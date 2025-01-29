@@ -1,16 +1,16 @@
 package com.exner.tools.kjsbikemaintenancechecker.database
 
 import androidx.room.TypeConverter
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDate
 
 object DateConverter {
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDateTime? {
-        return value?.let { LocalDateTime.parse(it) }
+    fun fromTimestamp(value: String?): LocalDate? {
+        return value?.let { LocalDate.parse(it) }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDateTime?): String? {
+    fun dateToTimestamp(date: LocalDate?): String? {
         return date?.toString()
     }
 }

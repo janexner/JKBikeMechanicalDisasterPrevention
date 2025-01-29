@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.material)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.material3.windowsizeclass.android)
+    implementation(libs.kotlinx.datetime)
 
     // hilt
     implementation(libs.hilt.android)

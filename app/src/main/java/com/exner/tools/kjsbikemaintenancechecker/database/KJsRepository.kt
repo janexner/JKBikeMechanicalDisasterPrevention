@@ -30,4 +30,13 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
         return kjsDAO.getBikeByUid(uid)
     }
 
+    @WorkerThread
+    suspend fun insertBike(bike: Bike): Long {
+        return kjsDAO.insertBike(bike)
+    }
+
+    @WorkerThread
+    suspend fun insertComponent(component: Component): Long {
+        return kjsDAO.insertComponent(component)
+    }
 }

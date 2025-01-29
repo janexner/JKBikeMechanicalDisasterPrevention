@@ -87,18 +87,20 @@ fun ManageBikesAndComponents(
 
                     items(bikes, key = { "bike.${it.uid}" }) { bike ->
                         Surface(
-                            modifier = Modifier.combinedClickable(
-                                onClick = {
-                                    destinationsNavigator.navigate(EditBikeDestination(bike.uid))
-                                },
-                                onLongClick = {
-                                    if (currentBike == bike.uid) {
-                                        manageBikesAndComponentsViewModel.updateCurrentBike(-1L) // no bike
-                                    } else {
-                                        manageBikesAndComponentsViewModel.updateCurrentBike(bike.uid)
+                            modifier = Modifier
+                                .combinedClickable(
+                                    onClick = {
+                                        destinationsNavigator.navigate(EditBikeDestination(bike.uid))
+                                    },
+                                    onLongClick = {
+                                        if (currentBike == bike.uid) {
+                                            manageBikesAndComponentsViewModel.updateCurrentBike(-1L) // no bike
+                                        } else {
+                                            manageBikesAndComponentsViewModel.updateCurrentBike(bike.uid)
+                                        }
                                     }
-                                }
-                            ).padding(4.dp),
+                                )
+                                .padding(4.dp),
                             color = if (currentBike == bike.uid) {
                                 MaterialTheme.colorScheme.surfaceVariant
                             } else {
@@ -123,7 +125,11 @@ fun ManageBikesAndComponents(
                                 )
                                 DefaultSpacer()
                                 Text(
-                                    text = "${bike.lastUsedDate.toLocalDate()}",
+                                    text = if (bike.lastUsedDate != null) {
+                                        bike.lastUsedDate.toString()
+                                    } else {
+                                        "not yet used"
+                                    },
                                 )
                             }
                         }
