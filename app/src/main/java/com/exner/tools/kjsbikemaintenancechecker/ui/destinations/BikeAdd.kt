@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.ui.AddBikeViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.BikeAddViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DatePickerModal
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
@@ -49,8 +49,8 @@ import kotlinx.datetime.toLocalDateTime
 
 @Destination<RootGraph>
 @Composable
-fun AddBike(
-    addBikeViewModel: AddBikeViewModel = hiltViewModel(),
+fun BikeAdd(
+    bikeAddViewModel: BikeAddViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator
 ) {
 
@@ -176,7 +176,7 @@ fun AddBike(
                                     lastUsedDate = null,
                                     uid = 0 // autogenerate
                                 )
-                                addBikeViewModel.saveNewBike(
+                                bikeAddViewModel.saveNewBike(
                                     bike = bike,
                                     addComponents = addComponentsWhenSavingBike
                                 )

@@ -6,4 +6,4 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 
 @Destination<RootGraph>
 @Composable
-fun AddActivity() {}
+fun ActivityAdd() {}

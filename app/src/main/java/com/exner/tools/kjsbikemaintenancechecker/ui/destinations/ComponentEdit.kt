@@ -17,18 +17,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.exner.tools.kjsbikemaintenancechecker.ui.AddComponentViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentEditViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
 @Composable
-fun EditComponent(
-    uid: Long,
-    addComponentViewModel: AddComponentViewModel = hiltViewModel(),
+fun ComponentEdit(
+    componentUid: Long,
     destinationsNavigator: DestinationsNavigator
 ) {
+
+    val componentEditViewModel = hiltViewModel<ComponentEditViewModel, ComponentEditViewModel.ComponentEditViewModelFactory> { factory ->
+        factory.create(componentUid = componentUid)
+    }
 
     Scaffold (
         content = { innerPadding ->

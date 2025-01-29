@@ -6,6 +6,7 @@ import kotlinx.datetime.LocalDate
 
 @DatabaseView(
     "SELECT b.name as bike_name, " +
+            "b.uid as bike_uid, " +
             "a.title as activity_title, " +
             "a.description as activity_description, " +
             "a.is_completed as activity_is_completed, " +
@@ -20,6 +21,7 @@ import kotlinx.datetime.LocalDate
 )
 data class ActivitiesByBikes(
     @ColumnInfo(name = "bike_name") val bikeName: String?,
+    @ColumnInfo(name = "bike_uid") val bikeUid: Long?,
     @ColumnInfo(name = "activity_title") val activityTitle: String,
     @ColumnInfo(name = "activity_description") val activityDescription: String,
     @ColumnInfo(name = "activity_is_completed") val activityIsCompleted: Boolean,

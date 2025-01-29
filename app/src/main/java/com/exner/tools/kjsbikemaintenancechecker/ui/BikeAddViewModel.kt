@@ -10,10 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "AddBikeVM"
+private const val TAG = "BikeAddVM"
 
 @HiltViewModel
-class AddBikeViewModel @Inject constructor(
+class BikeAddViewModel @Inject constructor(
     val repository: KJsRepository
 ) : ViewModel() {
 

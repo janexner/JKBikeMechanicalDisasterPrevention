@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -38,17 +39,42 @@ interface KJsDAO {
     @Query("SELECT * FROM bike WHERE uid=:uid")
     suspend fun getBikeByUid(uid: Long): Bike?
 
+    @Query("SELECT * FROM component WHERE uid=:uid")
+    suspend fun getComponentByUid(uid: Long): Component?
+
+    //
+    // other helpers
+    //
+    @Query("SELECT COUNT(uid) FROM component WHERE bike_uid=:bikeUid")
+    suspend fun getComponentCountByBike(bikeUid: Long): Int
+
+    @Query("SELECT COUNT(activity_uid) FROM activitiesbybikes WHERE bike_uid=:bikeUid")
+    suspend fun getActivityCountByBike(bikeUid: Long): Int
+
+    @Query("SELECT * FROM ActivitiesByBikes WHERE bike_uid=:bikeUid")
+    suspend fun getActivitiesForBike(bikeUid: Long): List<ActivitiesByBikes>
+
     //
     // UPDATE/INSERT/DELETE
     //
-    @Update
-    suspend fun updateActivity(activity: Activity)
-
     @Insert
     suspend fun insertBike(bike: Bike): Long
 
+    @Update
+    suspend fun updateBike(bike: Bike)
+
+    @Delete
+    suspend fun deleteBike(bike: Bike)
+
+    //
+
     @Insert
     suspend fun insertComponent(component: Component): Long
+
+    @Query("DELETE FROM component WHERE bike_uid=:bikeUid")
+    suspend fun deleteComponentsForBike(bikeUid: Long)
+
+    //
 
     @Insert
     suspend fun insertActivity(activity: Activity): Long
@@ -58,4 +84,14 @@ interface KJsDAO {
 
     @Insert
     suspend fun insertComponentActivity(componentActivities: ComponentActivities): Long
+
+    @Update
+    suspend fun updateActivity(activity: Activity)
+
+    @Query("DELETE FROM Activity WHERE uid=:activityUid")
+    suspend fun deleteActivityByUid(activityUid: Long)
+
+    @Query("DELETE FROM BikeActivities WHERE bike_uid=:bikeUid")
+    suspend fun deleteBikeActivitiesByBike(bikeUid: Long)
+
 }

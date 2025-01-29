@@ -3,6 +3,7 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 import androidx.annotation.WorkerThread
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,26 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getActivityCountByBike(bikeUid: Long): Int {
+        return kjsDAO.getActivityCountByBike(bikeUid)
+    }
+
+    @WorkerThread
+    suspend fun getActivitiesForBike(bikeUid: Long): List<ActivitiesByBikes> {
+        return kjsDAO.getActivitiesForBike(bikeUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteActivityByUid(activityUid: Long) {
+        kjsDAO.deleteActivityByUid(activityUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteBikeActivitiesByBike(bikeUid: Long) {
+        kjsDAO.deleteBikeActivitiesByBike(bikeUid)
+    }
+
+    @WorkerThread
     suspend fun getBikeByUid(uid: Long) : Bike? {
         return kjsDAO.getBikeByUid(uid)
     }
@@ -36,7 +57,32 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun updateBike(bike: Bike) {
+        kjsDAO.updateBike(bike)
+    }
+
+    @WorkerThread
+    suspend fun deleteBike(bike: Bike) {
+        kjsDAO.deleteBike(bike)
+    }
+
+    @WorkerThread
     suspend fun insertComponent(component: Component): Long {
         return kjsDAO.insertComponent(component)
+    }
+
+    @WorkerThread
+    suspend fun getComponentByUid(uid: Long) : Component? {
+        return kjsDAO.getComponentByUid(uid)
+    }
+
+    @WorkerThread
+    suspend fun getComponentCountByBike(bikeUid: Long) : Int {
+        return kjsDAO.getComponentCountByBike(bikeUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteComponentsForBike(bikeUid: Long) {
+        kjsDAO.deleteComponentsForBike(bikeUid)
     }
 }

@@ -39,9 +39,9 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
-import com.ramcosta.composedestinations.generated.destinations.EditBikeDestination
-import com.ramcosta.composedestinations.generated.destinations.EditComponentDestination
+import com.ramcosta.composedestinations.generated.destinations.BikeEditDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -90,7 +90,7 @@ fun ManageBikesAndComponents(
                             modifier = Modifier
                                 .combinedClickable(
                                     onClick = {
-                                        destinationsNavigator.navigate(EditBikeDestination(bike.uid))
+                                        destinationsNavigator.navigate(BikeEditDestination(bike.uid))
                                     },
                                     onLongClick = {
                                         if (currentBike == bike.uid) {
@@ -156,7 +156,7 @@ fun ManageBikesAndComponents(
                     items(filteredComponents, key = { "component.${it.uid}" }) { component ->
                         Surface(
                             onClick = {
-                                destinationsNavigator.navigate(EditComponentDestination(component.uid))
+                                destinationsNavigator.navigate(ComponentEditDestination(component.uid))
                             },
                         ) {
                             Row(
@@ -205,7 +205,7 @@ fun ManageBikesAndComponents(
                             )
                         },
                         onClick = {
-                            destinationsNavigator.navigate(AddComponentDestination)
+                            destinationsNavigator.navigate(ComponentAddDestination(bikeUid = if (currentBike == -1L) { null } else { currentBike }))
                         },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

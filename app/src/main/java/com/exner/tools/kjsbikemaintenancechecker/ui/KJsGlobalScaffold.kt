@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
-import com.ramcosta.composedestinations.generated.destinations.AddBikeDestination
-import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
+import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
@@ -86,7 +86,7 @@ private fun KJsTopBar(
     var displayMainMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
-        title = { Text(text = "KJs BMC") },
+        title = { Text(text = "KJ's BMC") },
         navigationIcon = {
             when (destination) {
                 HomeDestination -> {
@@ -123,7 +123,7 @@ private fun KJsTopBar(
                     text = { Text(text = "Add Bike", style = MaterialTheme.typography.bodyLarge) },
                     onClick = {
                         displayMainMenu = false
-                        destinationsNavigator.navigate(AddBikeDestination)
+                        destinationsNavigator.navigate(BikeAddDestination)
                     }
                 )
                 DropdownMenuItem(
@@ -136,7 +136,7 @@ private fun KJsTopBar(
                     },
                     onClick = {
                         displayMainMenu = false
-                        destinationsNavigator.navigate(AddComponentDestination)
+                        destinationsNavigator.navigate(ComponentAddDestination(bikeUid = null))
                     }
                 )
                 DropdownMenuItem(

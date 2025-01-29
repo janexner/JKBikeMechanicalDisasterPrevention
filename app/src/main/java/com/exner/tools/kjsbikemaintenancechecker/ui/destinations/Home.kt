@@ -15,10 +15,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Hail
 import androidx.compose.material.icons.outlined.Luggage
 import androidx.compose.material.icons.outlined.ThumbUp
-import androidx.compose.material.icons.outlined.TripOrigin
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -37,8 +35,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.AddActivityDestination
-import com.ramcosta.composedestinations.generated.destinations.AddComponentDestination
+import com.ramcosta.composedestinations.generated.destinations.ActivityAddDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
@@ -98,7 +95,7 @@ fun Home(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        destinationsNavigator.navigate(AddActivityDestination)
+                        destinationsNavigator.navigate(ActivityAddDestination)
                     }
                 ) {
                     Row(

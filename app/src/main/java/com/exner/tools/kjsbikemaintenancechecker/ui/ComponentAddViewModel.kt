@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AddComponentViewModel @Inject constructor(
+class ComponentAddViewModel @Inject constructor(
     repository: KJsRepository
 ) : ViewModel() {
 

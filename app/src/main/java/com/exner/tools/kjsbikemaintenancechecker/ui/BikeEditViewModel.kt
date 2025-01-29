@@ -12,10 +12,10 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
-@HiltViewModel(assistedFactory = EditBikeViewModel.BikeEditViewModelFactory::class)
-class EditBikeViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = BikeEditViewModel.BikeEditViewModelFactory::class)
+class BikeEditViewModel @AssistedInject constructor(
     @Assisted val bikeUid: Long,
-    repository: KJsRepository
+    val repository: KJsRepository
 ) : ViewModel() {
 
     private val _bike: MutableLiveData<Bike?> = MutableLiveData()
@@ -29,7 +29,21 @@ class EditBikeViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateMileage(mileage: Int) {
+        if (bike.value != null) {
+            _bike.value = bike.value!!.copy(
+                mileage = mileage
+            )
+        }
+    }
 
+    fun commitBike() {
+        if (bike.value != null) {
+            viewModelScope.launch {
+                repository.updateBike(bike.value!!)
+            }
+        }
+    }
 
     init {
         if (bikeUid > 0) {
@@ -41,6 +55,6 @@ class EditBikeViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface BikeEditViewModelFactory {
-        fun create(bikeUid: Long): EditBikeViewModel
+        fun create(bikeUid: Long): BikeEditViewModel
     }
 }
