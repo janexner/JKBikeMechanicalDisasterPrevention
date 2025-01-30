@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "341e5635888669af4ea5b3f46290a035",
+    "identityHash": "385ebad8256f4790c30da0e887a41c42",
     "entities": [
       {
         "tableName": "Activity",
@@ -287,11 +287,15 @@
       {
         "viewName": "ActivitiesByBikes",
         "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.created_date as activity_created_date, a.due_date as activity_due_date, a.uid as activity_uid FROM Activity a LEFT JOIN BikeActivities ba ON a.uid = ba.activity_uid LEFT JOIN Bike b ON b.uid = ba.bike_uid ORDER BY a.due_date DESC;"
+      },
+      {
+        "viewName": "ShelvedComponents",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT * FROM Component WHERE bike_uid=NULL OR bike_uid<1;"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '341e5635888669af4ea5b3f46290a035')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '385ebad8256f4790c30da0e887a41c42')"
     ]
   }
 }

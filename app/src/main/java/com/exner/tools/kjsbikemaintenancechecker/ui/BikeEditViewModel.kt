@@ -51,14 +51,20 @@ class BikeEditViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateLastUsedDate(millis: Long) {
+    fun updateLastUsedDate(millis: Long?) {
         if (bike.value != null) {
-            val lastUsedDateInstant = Instant.fromEpochMilliseconds(millis)
-            val lastUsedDate =
-                lastUsedDateInstant.toLocalDateTime(TimeZone.currentSystemDefault()).date
-            _bike.value = bike.value!!.copy(
-                lastUsedDate = lastUsedDate
-            )
+            if (millis != null) {
+                val lastUsedDateInstant = Instant.fromEpochMilliseconds(millis)
+                val lastUsedDate =
+                    lastUsedDateInstant.toLocalDateTime(TimeZone.currentSystemDefault()).date
+                _bike.value = bike.value!!.copy(
+                    lastUsedDate = lastUsedDate
+                )
+            } else {
+                _bike.value = bike.value!!.copy(
+                    lastUsedDate = null
+                )
+            }
         }
     }
 

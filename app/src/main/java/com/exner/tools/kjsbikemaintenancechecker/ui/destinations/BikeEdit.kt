@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
@@ -174,13 +177,13 @@ fun BikeEdit(
                     DatePickerModal(
                         onDateSelected = {
                             selectedLastUsedDate = it
-                            if (it != null) {
-                                bikeEditViewModel.updateLastUsedDate(it)
-                            }
+                            bikeEditViewModel.updateLastUsedDate(it)
                         },
                         onDismiss = { showLastUsedDateModal = false }
                     )
                 }
+                DefaultSpacer()
+                // TODO list components
                 DefaultSpacer()
                 Button(
                     modifier = Modifier.fillMaxWidth(),
@@ -195,7 +198,7 @@ fun BikeEdit(
                             contentDescription = "Add component"
                         )
                         IconSpacer()
-                        Text(text = "Add component")
+                        Text(text = "Add a component")
                     }
                 }
             }
@@ -207,7 +210,7 @@ fun BikeEdit(
                         destinationsNavigator.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Clear,
+                            imageVector = Icons.Default.Cancel,
                             contentDescription = "Cancel"
                         )
                     }

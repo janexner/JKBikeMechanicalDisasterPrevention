@@ -158,6 +158,20 @@ suspend fun populateDatabaseWithSampleData(
         uid = 0
     )
     provider.get().insertActivity(bottleActivity)
+
+    // some things for the shelf
+    val extraCassette1 = Component(
+        name = "11psd 11-50 Cassette",
+        description = "Deore 11-50 Cassette",
+        bikeUid = 0,
+        parentComponentUid = null,
+        acquisitionDate = LocalDate(2024, 6,1),
+        mileage = 0,
+        lastUsedDate = null,
+        uid = 0,
+    )
+    provider.get().insertComponent(extraCassette1)
+    provider.get().insertComponent(extraCassette1) // I've got 2 of those
 }
 
 suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsRepository) {

@@ -11,6 +11,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Tag
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponents
 
 @Database(
     entities = [
@@ -22,7 +23,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBike
         Component::class,
         ComponentActivities::class,
     ],
-    views = [ActivitiesByBikes::class],
+    views = [ActivitiesByBikes::class, ShelvedComponents::class],
     version = 1,
     exportSchema = true
 )

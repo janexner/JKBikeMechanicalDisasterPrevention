@@ -33,6 +33,9 @@ interface KJsDAO {
     @Query("SELECT * FROM activitiesbybikes WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
     fun observeActivitiesByBikeWithDateOrderedByDueDate(): Flow<List<ActivitiesByBikes>>
 
+    @Query("SELECT * FROM shelvedcomponents ORDER BY name")
+    fun observeShelvedComponents(): Flow<List<Component>>
+
     //
     // GETTERS - return individual lines
     //

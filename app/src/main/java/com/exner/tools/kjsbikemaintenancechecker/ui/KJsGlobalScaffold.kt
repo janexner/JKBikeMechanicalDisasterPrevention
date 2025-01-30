@@ -34,6 +34,7 @@ import com.ramcosta.composedestinations.generated.destinations.ComponentAddDesti
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
+import com.ramcosta.composedestinations.generated.destinations.ShelfDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
@@ -150,6 +151,19 @@ private fun KJsTopBar(
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(ManageBikesAndComponentsDestination)
+                    }
+                )
+                DropdownMenuItem(
+                    enabled = true,
+                    text = {
+                        Text(
+                            text = "Component shelf",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(ShelfDestination)
                     }
                 )
                 DropdownMenuItem(

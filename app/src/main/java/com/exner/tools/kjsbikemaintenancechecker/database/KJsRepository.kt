@@ -21,6 +21,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
 
+    val observeShelvedComponents: Flow<List<Component>> = kjsDAO.observeShelvedComponents()
+
     @WorkerThread
     suspend fun updateActivity(activity: Activity) {
         kjsDAO.updateActivity(activity)
