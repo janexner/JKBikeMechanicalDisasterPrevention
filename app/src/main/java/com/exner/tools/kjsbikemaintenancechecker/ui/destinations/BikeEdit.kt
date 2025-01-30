@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
@@ -100,6 +101,8 @@ fun BikeEdit(
                     .padding(8.dp)
             ) {
                 OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     value = bike?.name ?: "Name",
                     onValueChange = {
                         bikeEditViewModel.updateName(it)
@@ -107,7 +110,6 @@ fun BikeEdit(
                     },
                     label = { Text(text = "Bike name") },
                     singleLine = true,
-                    modifier = Modifier.weight(0.75f)
                 )
                 DefaultSpacer()
                 OutlinedTextField(
@@ -223,7 +225,7 @@ fun BikeEdit(
                         destinationsNavigator.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Cancel,
+                            imageVector = Icons.Default.Clear,
                             contentDescription = "Cancel"
                         )
                     }

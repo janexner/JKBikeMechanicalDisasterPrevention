@@ -66,10 +66,14 @@ import kotlinx.datetime.todayIn
 @Destination<RootGraph>
 @Composable
 fun ComponentAdd(
-    componentAddViewModel: ComponentAddViewModel = hiltViewModel(),
     bikeUid: Long?,
     destinationsNavigator: DestinationsNavigator
 ) {
+
+    val componentAddViewModel =
+        hiltViewModel<ComponentAddViewModel, ComponentAddViewModel.ComponentAddViewModelFactory> { factory ->
+            factory.create(bikeUid = bikeUid ?: 0)
+        }
 
     // input fields
     var name by remember { mutableStateOf("") }

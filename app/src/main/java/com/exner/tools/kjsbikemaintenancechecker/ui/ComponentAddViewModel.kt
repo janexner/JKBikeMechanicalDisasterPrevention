@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.exner.tools.kjsbikemaintenancechecker.database.KJsRepository
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ComponentAddViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ComponentAddViewModel.ComponentAddViewModelFactory::class)
+class ComponentAddViewModel @AssistedInject constructor(
+    @Assisted val bikeUid: Long,
     val repository: KJsRepository
 ) : ViewModel() {
 
@@ -48,5 +51,18 @@ class ComponentAddViewModel @Inject constructor(
         viewModelScope.launch {
             repository.insertComponent(component)
         }
+    }
+
+    init {
+        if (bikeUid > 0) {
+            viewModelScope.launch {
+                _currentBike.value = repository.getBikeByUid(bikeUid)
+            }
+        }
+    }
+
+    @AssistedFactory
+    interface ComponentAddViewModelFactory {
+        fun create(bikeUid: Long): ComponentAddViewModel
     }
 }
