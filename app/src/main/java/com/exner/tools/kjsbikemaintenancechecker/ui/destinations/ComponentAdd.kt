@@ -74,7 +74,7 @@ fun ComponentAdd(
     // input fields
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var attachedBikeUid by remember { mutableStateOf<Long?>(bikeUid) }
+    var attachedBikeUid by remember { mutableStateOf(bikeUid) }
     var parentComponentUid by remember { mutableStateOf<Long?>(null) }
     var selectedAcquisitionDate by remember { mutableStateOf<Long?>(null) }
     var mileage by remember { mutableIntStateOf(0) }

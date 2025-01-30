@@ -232,7 +232,7 @@ fun ComponentEdit(
                             DropdownMenuItem(
                                 text = { Text(text = component.name) },
                                 onClick = {
-                                    componentEditViewModel.updateParentComponent(component.parentComponentUid)
+                                    componentEditViewModel.updateParentComponent(component.uid)
                                     modified = true
                                     parentComponentExpanded = false
                                 },
