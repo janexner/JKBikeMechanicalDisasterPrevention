@@ -74,6 +74,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun updateComponent(component: Component) {
+        kjsDAO.updateComponent(component)
+    }
+
+    @WorkerThread
     suspend fun getComponentByUid(uid: Long) : Component? {
         return kjsDAO.getComponentByUid(uid)
     }

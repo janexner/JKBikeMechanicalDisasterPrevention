@@ -74,6 +74,9 @@ interface KJsDAO {
     @Insert
     suspend fun insertComponent(component: Component): Long
 
+    @Update
+    suspend fun updateComponent(component: Component)
+
     @Query("DELETE FROM component WHERE bike_uid=:bikeUid")
     suspend fun deleteComponentsForBike(bikeUid: Long)
 

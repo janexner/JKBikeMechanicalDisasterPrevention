@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
@@ -62,40 +59,49 @@ fun BikeEdit(
     bikeUid: Long,
     destinationsNavigator: DestinationsNavigator
 ) {
-    val bikeEditViewModel = hiltViewModel<BikeEditViewModel, BikeEditViewModel.BikeEditViewModelFactory> { factory ->
-        factory.create(bikeUid = bikeUid)
-    }
+    val bikeEditViewModel =
+        hiltViewModel<BikeEditViewModel, BikeEditViewModel.BikeEditViewModelFactory> { factory ->
+            factory.create(bikeUid = bikeUid)
+        }
 
     val bike by bikeEditViewModel.bike.observeAsState()
-    val buildDateInstant = bike?.let { LocalDateTime(it.buildDate, LocalTime(12, 0, 0)).toInstant(
-        TimeZone.currentSystemDefault()) }
+    val buildDateInstant = bike?.let {
+        LocalDateTime(it.buildDate, LocalTime(12, 0, 0)).toInstant(
+            TimeZone.currentSystemDefault()
+        )
+    }
     var selectedBuildDate = buildDateInstant?.toEpochMilliseconds()
     var showBuildDateModal by remember { mutableStateOf(false) }
-    val lastUsedDateInstant = bike?.let { it.lastUsedDate?.let { it1 -> LocalDateTime(it1, LocalTime(12, 0, 0) ).toInstant(
-        TimeZone.currentSystemDefault()) } }
+    val lastUsedDateInstant = bike?.let {
+        it.lastUsedDate?.let { it1 ->
+            LocalDateTime(it1, LocalTime(12, 0, 0)).toInstant(
+                TimeZone.currentSystemDefault()
+            )
+        }
+    }
     var selectedLastUsedDate = lastUsedDateInstant?.toEpochMilliseconds()
     var showLastUsedDateModal by remember { mutableStateOf(false) }
 
     var modified by remember { mutableStateOf(false) }
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier.imePadding(),
         content = { innerPadding ->
             Column(
-                modifier = Modifier.padding(innerPadding).padding(8.dp)
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(8.dp)
             ) {
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    OutlinedTextField(
-                        value = bike?.name ?: "Name",
-                        onValueChange = {
-                            bikeEditViewModel.updateName(it)
-                            modified = true
-                        },
-                        label = { Text(text = "Bike name") },
-                        singleLine = true,
-                        modifier = Modifier.weight(0.75f)
-                    )
-                }
+                OutlinedTextField(
+                    value = bike?.name ?: "Name",
+                    onValueChange = {
+                        bikeEditViewModel.updateName(it)
+                        modified = true
+                    },
+                    label = { Text(text = "Bike name") },
+                    singleLine = true,
+                    modifier = Modifier.weight(0.75f)
+                )
                 DefaultSpacer()
                 OutlinedTextField(
                     value = selectedBuildDate?.let { convertMillisToDate(it) } ?: "",
@@ -239,7 +245,8 @@ fun BikeEdit(
                                 bikeEditViewModel.commitBike()
                                 modified = false
                                 destinationsNavigator.popBackStack(
-                                    ManageBikesAndComponentsDestination, inclusive = false)
+                                    ManageBikesAndComponentsDestination, inclusive = false
+                                )
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
