@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Hail
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Luggage
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -71,7 +73,7 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Filled.ThumbUp, contentDescription = "day out")
+                        Icon(Icons.Filled.Hail, contentDescription = "day out")
                     },
                     label = { Text(text = "day out") },
                     selected = true
@@ -81,7 +83,7 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = "holidays")
+                        Icon(Icons.Outlined.Luggage, contentDescription = "holidays")
                     },
                     label = { Text(text = "holidays") },
                     selected = false
