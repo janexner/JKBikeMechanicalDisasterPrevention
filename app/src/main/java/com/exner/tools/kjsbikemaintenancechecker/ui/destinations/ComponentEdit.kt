@@ -6,9 +6,14 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
@@ -103,9 +108,13 @@ fun ComponentEdit(
     var modified by remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = Modifier.imePadding(),
         content = { innerPadding ->
             Column(
                 modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxSize()
+                    .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
@@ -163,7 +172,7 @@ fun ComponentEdit(
                         DropdownMenuItem(
                             text = { Text(text = "None") },
                             onClick = {
-                                // TODO remove bike from component in VM
+                                componentEditViewModel.updateAttachedBike(null)
                                 modified = true
                                 bikeSelectorExpanded = false
                             },
@@ -173,7 +182,7 @@ fun ComponentEdit(
                             DropdownMenuItem(
                                 text = { Text(text = bike.name) },
                                 onClick = {
-                                    // TODO update bike on component via VM
+                                    componentEditViewModel.updateAttachedBike(bike.uid)
                                     modified = true
                                     bikeSelectorExpanded = false
                                 },
@@ -213,7 +222,7 @@ fun ComponentEdit(
                         DropdownMenuItem(
                             text = { Text(text = "None") },
                             onClick = {
-                                // TODO remove parent component from component in VM
+                                componentEditViewModel.updateParentComponent(null)
                                 modified = true
                                 parentComponentExpanded = false
                             },
@@ -223,7 +232,7 @@ fun ComponentEdit(
                             DropdownMenuItem(
                                 text = { Text(text = component.name) },
                                 onClick = {
-                                    // TODO update parent component on component via VM
+                                    componentEditViewModel.updateParentComponent(component.parentComponentUid)
                                     modified = true
                                     parentComponentExpanded = false
                                 },

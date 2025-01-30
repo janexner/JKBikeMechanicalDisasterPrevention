@@ -64,10 +64,6 @@ fun BikeAdd(
     var modified by remember { mutableStateOf(false) }
     var created by remember { mutableStateOf(false) }
 
-    val mileageFieldChange: (String) -> Unit = { it ->
-        mileage = it.toIntOrNull() ?: 0
-    }
-
     Scaffold(
         modifier = Modifier.imePadding(),
         content = { innerPadding ->
@@ -129,7 +125,9 @@ fun BikeAdd(
                 DefaultSpacer()
                 OutlinedTextField(
                     value = mileage.toString(),
-                    onValueChange = mileageFieldChange,
+                    onValueChange = {
+                        mileage = it.toIntOrNull() ?: 0
+                    },
                     label = { Text(text = "Mileage") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number

@@ -87,6 +87,26 @@ class ComponentEditViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateAttachedBike(bikeUid: Long?) {
+        if (bikeUid != null) {
+            viewModelScope.launch {
+                _currentBike.value = repository.getBikeByUid(bikeUid)
+            }
+        } else {
+            _currentBike.value = null
+        }
+    }
+
+    fun updateParentComponent(componentUid: Long?) {
+        if (componentUid != null) {
+            viewModelScope.launch {
+                _currentParentComponent.value = repository.getComponentByUid(componentUid)
+            }
+        } else {
+            _currentParentComponent.value = null
+        }
+    }
+
     fun commitComponent() {
         if (component.value != null) {
             viewModelScope.launch {
