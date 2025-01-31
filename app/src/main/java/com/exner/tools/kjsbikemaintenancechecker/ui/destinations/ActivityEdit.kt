@@ -40,6 +40,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ActivityDeleteDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -163,7 +164,7 @@ fun ActivityEdit(
 
                     IconSpacer()
                     IconButton(onClick = {
-                        // destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                         destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,

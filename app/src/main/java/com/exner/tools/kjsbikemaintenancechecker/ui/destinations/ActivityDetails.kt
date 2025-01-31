@@ -30,6 +30,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowActivityDetails
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ActivityDeleteDestination
 import com.ramcosta.composedestinations.generated.destinations.ActivityEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -74,7 +75,7 @@ fun ActivityDetails(
                     }
                     IconSpacer()
                     IconButton(onClick = {
-                        // destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                         destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
