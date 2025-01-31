@@ -64,16 +64,14 @@ class BikeDeleteViewModel @AssistedInject constructor(
                 Log.d(TAG, "Deleting activities...")
                 // delete activities first
                 viewModelScope.launch {
-                    val activitiesByBike = repository.getActivitiesForBike(bike.value!!.uid)
-                    activitiesByBike.forEach { activitiesByBikeRow ->
+                    val activities = repository.getActivitiesForBike(bike.value!!.uid)
+                    activities.forEach { activity ->
                         Log.d(
                             TAG,
-                            "  deleting activity ${activitiesByBikeRow.activityUid} / ${activitiesByBikeRow.activityTitle}"
+                            "  deleting activity ${activity.uid} / ${activity.title}"
                         )
-                        repository.deleteActivityByUid(activitiesByBikeRow.activityUid)
+                        repository.deleteActivityByUid(activity.uid)
                     }
-                    Log.d(TAG, "Deleting ActivitiesByBike...")
-                    repository.deleteBikeActivitiesByBike(bike.value!!.uid)
                 }
             }
             Log.d(TAG, "Now deleting bike itself...")

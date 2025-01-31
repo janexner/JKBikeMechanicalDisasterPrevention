@@ -8,12 +8,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
+import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun TodoListItem(
-    activity: ActivitiesByBikes,
+    activity: ActivityWithBikeData,
     destinationsNavigator: DestinationsNavigator,
     onCheckboxCallback: (Boolean) -> Unit,
     suppressBikeBadge: Boolean = false,
@@ -22,11 +23,13 @@ fun TodoListItem(
     Surface(
         modifier = Modifier
             .clickable {
-                destinationsNavigator.navigate(
-                    com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination(
-                        activity.activityUid
+                if (activity.bikeUid != null) {
+                    destinationsNavigator.navigate(
+                        ActivityDetailsDestination(
+                            activity.bikeUid
+                        )
                     )
-                )
+                }
             },
     ) {
         ListItem(

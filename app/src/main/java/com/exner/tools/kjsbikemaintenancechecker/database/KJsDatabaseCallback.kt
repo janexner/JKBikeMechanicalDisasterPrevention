@@ -4,7 +4,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import kotlinx.coroutines.CoroutineScope

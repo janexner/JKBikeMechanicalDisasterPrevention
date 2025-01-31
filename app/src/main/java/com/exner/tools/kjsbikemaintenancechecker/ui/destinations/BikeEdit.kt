@@ -1,8 +1,5 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -11,13 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
@@ -27,7 +21,6 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,14 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEventPass
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.BikeEditViewModel
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DatePickerModal
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorNullableWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -76,7 +69,6 @@ fun BikeEdit(
         )
     }
     var selectedBuildDate = buildDateInstant?.toEpochMilliseconds()
-    var showBuildDateModal by remember { mutableStateOf(false) }
     val lastUsedDateInstant = bike?.let {
         it.lastUsedDate?.let { it1 ->
             LocalDateTime(it1, LocalTime(12, 0, 0)).toInstant(
@@ -85,7 +77,6 @@ fun BikeEdit(
         }
     }
     var selectedLastUsedDate = lastUsedDateInstant?.toEpochMilliseconds()
-    var showLastUsedDateModal by remember { mutableStateOf(false) }
 
     var modified by remember { mutableStateOf(false) }
 
@@ -100,103 +91,43 @@ fun BikeEdit(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                DefaultTextFieldWithSpacer(
                     value = bike?.name ?: "Name",
                     onValueChange = {
                         bikeEditViewModel.updateName(it)
                         modified = true
                     },
-                    label = { Text(text = "Bike name") },
-                    singleLine = true,
+                    label = "Bike name",
                 )
-                DefaultSpacer()
-                OutlinedTextField(
-                    value = selectedBuildDate?.let { convertMillisToDate(it) } ?: "",
-                    onValueChange = { },
-                    label = { Text("Build date") },
-                    placeholder = { Text("YYYY-MM-DD") },
-                    trailingIcon = {
-                        Icon(Icons.Default.DateRange, contentDescription = "Select date")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .pointerInput(selectedBuildDate) {
-                            awaitEachGesture {
-                                // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
-                                // in the Initial pass to observe events before the text field consumes them
-                                // in the Main pass.
-                                awaitFirstDown(pass = PointerEventPass.Initial)
-                                val upEvent =
-                                    waitForUpOrCancellation(pass = PointerEventPass.Initial)
-                                if (upEvent != null) {
-                                    showBuildDateModal = true
-                                }
-                            }
+                DefaultDateSelectorWithSpacer(
+                    selectedDate = selectedBuildDate,
+                    label = "Build date",
+                    placeholder = "DD/MM/YYYY",
+                    onDateSelected = {
+                        selectedBuildDate = it
+                        if (it != null) {
+                            bikeEditViewModel.updateBuildDate(it)
                         }
+                    }
                 )
-
-                if (showBuildDateModal) {
-                    DatePickerModal(
-                        onDateSelected = {
-                            selectedBuildDate = it
-                            if (it != null) {
-                                bikeEditViewModel.updateBuildDate(it)
-                            }
-                        },
-                        onDismiss = { showBuildDateModal = false }
-                    )
-                }
-                DefaultSpacer()
-                OutlinedTextField(
+                DefaultNumberFieldWithSpacer(
                     value = bike?.mileage.toString(),
                     onValueChange = { value ->
                         bikeEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
                         modified = true
                     },
-                    label = { Text(text = "Mileage") },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number
-                    ),
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    label = "Mileage",
                 )
-                DefaultSpacer()
-                OutlinedTextField(
-                    value = selectedLastUsedDate?.let { convertMillisToDate(it) } ?: "",
-                    onValueChange = { },
-                    label = { Text("Last used date") },
-                    placeholder = { Text("YYYY-MM-DD") },
-                    trailingIcon = {
-                        Icon(Icons.Default.DateRange, contentDescription = "Select date")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .pointerInput(selectedLastUsedDate) {
-                            awaitEachGesture {
-                                // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
-                                // in the Initial pass to observe events before the text field consumes them
-                                // in the Main pass.
-                                awaitFirstDown(pass = PointerEventPass.Initial)
-                                val upEvent =
-                                    waitForUpOrCancellation(pass = PointerEventPass.Initial)
-                                if (upEvent != null) {
-                                    showLastUsedDateModal = true
-                                }
-                            }
-                        }
+                DefaultDateSelectorNullableWithSpacer(
+                    selectedDate = selectedLastUsedDate,
+                    label = "Last used date",
+                    placeholder = "DD/MM/YYYY",
+                    onDateSelected = {
+                        selectedLastUsedDate = it
+                        bikeEditViewModel.updateLastUsedDate(it)
+                    }
                 )
 
-                if (showLastUsedDateModal) {
-                    DatePickerModal(
-                        onDateSelected = {
-                            selectedLastUsedDate = it
-                            bikeEditViewModel.updateLastUsedDate(it)
-                        },
-                        onDismiss = { showLastUsedDateModal = false }
-                    )
-                }
                 DefaultSpacer()
                 // TODO list components
                 DefaultSpacer()

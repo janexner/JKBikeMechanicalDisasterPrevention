@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
@@ -50,7 +50,7 @@ fun Home(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val activitiesByBikes: List<ActivitiesByBikes> by homeViewModel.observeActivitiesByBikesWithDueDate.collectAsState(
+    val activitiesByBikes: List<ActivityWithBikeData> by homeViewModel.observeActivityWithBikeData.collectAsState(
         initial = emptyList()
     )
 
@@ -77,6 +77,7 @@ fun Home(
                             isCompleted = activityByBike.activityIsCompleted,
                             createdDate = activityByBike.activityCreatedDate,
                             dueDate = activityByBike.activityDueDate,
+                            bikeUid = activityByBike.bikeUid ?: 0,
                             uid = activityByBike.activityUid
                         )
                         TodoListItem(

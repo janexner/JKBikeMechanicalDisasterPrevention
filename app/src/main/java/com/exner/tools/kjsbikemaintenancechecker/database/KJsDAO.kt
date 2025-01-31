@@ -7,10 +7,9 @@ import androidx.room.Query
 import androidx.room.Update
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,14 +23,11 @@ interface KJsDAO {
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
 
-    @Query("SELECT * FROM activitiesbybikes")
-    fun observeActivitiesByBikes(): Flow<List<ActivitiesByBikes>>
-
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
 
-    @Query("SELECT * FROM activitiesbybikes WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
-    fun observeActivitiesByBikeWithDateOrderedByDueDate(): Flow<List<ActivitiesByBikes>>
+    @Query("SELECT * FROM activitywithbikedata WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
+    fun observeActivitiesByBikeWithDateOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
 
     @Query("SELECT * FROM shelvedcomponents ORDER BY name")
     fun observeShelvedComponents(): Flow<List<Component>>
@@ -39,6 +35,9 @@ interface KJsDAO {
     //
     // GETTERS - return individual lines
     //
+    @Query("SELECT * FROM activity WHERE uid=:uid")
+    suspend fun getActivityByUid(uid: Long): Activity?
+
     @Query("SELECT * FROM bike WHERE uid=:uid")
     suspend fun getBikeByUid(uid: Long): Bike?
 
@@ -51,11 +50,11 @@ interface KJsDAO {
     @Query("SELECT COUNT(uid) FROM component WHERE bike_uid=:bikeUid")
     suspend fun getComponentCountByBike(bikeUid: Long): Int
 
-    @Query("SELECT COUNT(activity_uid) FROM activitiesbybikes WHERE bike_uid=:bikeUid")
+    @Query("SELECT COUNT(uid) FROM activity WHERE bike_uid=:bikeUid")
     suspend fun getActivityCountByBike(bikeUid: Long): Int
 
-    @Query("SELECT * FROM ActivitiesByBikes WHERE bike_uid=:bikeUid")
-    suspend fun getActivitiesForBike(bikeUid: Long): List<ActivitiesByBikes>
+    @Query("SELECT * FROM activity WHERE bike_uid=:bikeUid")
+    suspend fun getActivitiesForBike(bikeUid: Long): List<Activity>
 
     //
     // UPDATE/INSERT/DELETE
@@ -86,9 +85,6 @@ interface KJsDAO {
     suspend fun insertActivity(activity: Activity): Long
 
     @Insert
-    suspend fun insertBikeActivities(bikeActivities: BikeActivities): Long
-
-    @Insert
     suspend fun insertComponentActivity(componentActivities: ComponentActivities): Long
 
     @Update
@@ -96,8 +92,5 @@ interface KJsDAO {
 
     @Query("DELETE FROM Activity WHERE uid=:activityUid")
     suspend fun deleteActivityByUid(activityUid: Long)
-
-    @Query("DELETE FROM BikeActivities WHERE bike_uid=:bikeUid")
-    suspend fun deleteBikeActivitiesByBike(bikeUid: Long)
 
 }

@@ -2,15 +2,12 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
-import java.time.Month
 import javax.inject.Provider
 
 suspend fun populateDatabaseWithSampleData(
@@ -122,15 +119,10 @@ suspend fun populateDatabaseWithSampleData(
         isCompleted = false,
         createdDate = nowDate,
         dueDate = nowDate,
+        bikeUid = vadoUid,
         uid = 0,
     )
     val chargeBatteryUid = provider.get().insertActivity(chargeBattery)
-    val chargeBatteryOnVadoActivity = BikeActivities(
-        bikeUid = vadoUid,
-        activityUid = chargeBatteryUid,
-        uid = 0
-    )
-    provider.get().insertBikeActivities(chargeBatteryOnVadoActivity)
     val chargeBatteryComponentActivity = ComponentActivities(
         componentUid = batteryUid,
         activityUid = chargeBatteryUid,
@@ -155,6 +147,7 @@ suspend fun populateDatabaseWithSampleData(
         isCompleted = false,
         createdDate = nowDate,
         dueDate = null,
+        bikeUid = 0,
         uid = 0
     )
     provider.get().insertActivity(bottleActivity)
@@ -165,7 +158,7 @@ suspend fun populateDatabaseWithSampleData(
         description = "Deore 11-50 Cassette",
         bikeUid = 0,
         parentComponentUid = null,
-        acquisitionDate = LocalDate(2024, 6,1),
+        acquisitionDate = LocalDate(2024, 6, 1),
         mileage = 0,
         lastUsedDate = null,
         uid = 0,

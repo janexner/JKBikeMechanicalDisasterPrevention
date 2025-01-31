@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
@@ -73,7 +73,7 @@ fun PrepareShortRide(
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
 
-    val activitiesByBikes: List<ActivitiesByBikes> by prepareShortRideViewModel.observeActivitiesByBikes.collectAsState(
+    val activitiesByBikes: List<ActivityWithBikeData> by prepareShortRideViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
     )
 
@@ -167,6 +167,7 @@ fun PrepareShortRide(
                             isCompleted = activityByBike.activityIsCompleted,
                             createdDate = activityByBike.activityCreatedDate,
                             dueDate = activityByBike.activityDueDate,
+                            bikeUid = activityByBike.bikeUid!!,
                             uid = activityByBike.activityUid
                         )
                         TodoListItem(

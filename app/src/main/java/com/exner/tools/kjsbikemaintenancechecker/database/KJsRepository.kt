@@ -3,9 +3,8 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 import androidx.annotation.WorkerThread
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -15,13 +14,22 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     // Observed Flow will notify the observer when the data has changed.
     val observeBikes: Flow<List<Bike>> = kjsDAO.observeBikesOrderedByLastUsedDate()
 
-    val observeActivitiesByBikes: Flow<List<ActivitiesByBikes>> = kjsDAO.observeActivitiesByBikes()
-
-    val observeActivitiesByBikesWithDueDate: Flow<List<ActivitiesByBikes>> = kjsDAO.observeActivitiesByBikeWithDateOrderedByDueDate()
+    val observeActivityWithBikeDataOrderedByDueDate: Flow<List<ActivityWithBikeData>> =
+        kjsDAO.observeActivitiesByBikeWithDateOrderedByDueDate()
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
 
     val observeShelvedComponents: Flow<List<Component>> = kjsDAO.observeShelvedComponents()
+
+    @WorkerThread
+    suspend fun getActivityByUid(activityUid: Long): Activity? {
+        return kjsDAO.getActivityByUid(activityUid)
+    }
+
+    @WorkerThread
+    suspend fun insertActivity(activity: Activity) {
+        kjsDAO.insertActivity(activity)
+    }
 
     @WorkerThread
     suspend fun updateActivity(activity: Activity) {
@@ -34,7 +42,7 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun getActivitiesForBike(bikeUid: Long): List<ActivitiesByBikes> {
+    suspend fun getActivitiesForBike(bikeUid: Long): List<Activity> {
         return kjsDAO.getActivitiesForBike(bikeUid)
     }
 
@@ -44,12 +52,7 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun deleteBikeActivitiesByBike(bikeUid: Long) {
-        kjsDAO.deleteBikeActivitiesByBike(bikeUid)
-    }
-
-    @WorkerThread
-    suspend fun getBikeByUid(uid: Long) : Bike? {
+    suspend fun getBikeByUid(uid: Long): Bike? {
         return kjsDAO.getBikeByUid(uid)
     }
 
@@ -79,12 +82,12 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun getComponentByUid(uid: Long) : Component? {
+    suspend fun getComponentByUid(uid: Long): Component? {
         return kjsDAO.getComponentByUid(uid)
     }
 
     @WorkerThread
-    suspend fun getComponentCountByBike(bikeUid: Long) : Int {
+    suspend fun getComponentCountByBike(bikeUid: Long): Int {
         return kjsDAO.getComponentCountByBike(bikeUid)
     }
 

@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -29,15 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentEditViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.ActivityEditViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFieldWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultParentComponentSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -48,43 +48,35 @@ import kotlinx.datetime.toInstant
 
 @Destination<RootGraph>
 @Composable
-fun ComponentEdit(
-    componentUid: Long,
-    destinationsNavigator: DestinationsNavigator
+fun ActivityEdit(
+    activityUid: Long,
+    destinationsNavigator: DestinationsNavigator,
 ) {
 
-    val componentEditViewModel =
-        hiltViewModel<ComponentEditViewModel, ComponentEditViewModel.ComponentEditViewModelFactory> { factory ->
-            factory.create(componentUid = componentUid)
+    val activityEditViewModel =
+        hiltViewModel<ActivityEditViewModel, ActivityEditViewModel.ActivityEditViewModelFactory> { factory ->
+            factory.create(activityUid = activityUid)
         }
 
-    val component by componentEditViewModel.component.observeAsState()
-    val buildDateInstant = component?.let {
-        LocalDateTime(it.acquisitionDate, LocalTime(12, 0, 0)).toInstant(
+    val activity by activityEditViewModel.activity.observeAsState()
+    val createdDateInstant = activity?.let {
+        LocalDateTime(it.createdDate, LocalTime(12, 0, 0)).toInstant(
             TimeZone.currentSystemDefault()
         )
     }
-    var selectedBuildDate = buildDateInstant?.toEpochMilliseconds()
-    val lastUsedDateInstant = component?.let {
-        it.lastUsedDate?.let { it1 ->
-            LocalDateTime(it1, LocalTime(12, 0, 0)).toInstant(
-                TimeZone.currentSystemDefault()
-            )
-        }
+    var selectedCreatedDate = createdDateInstant?.toEpochMilliseconds()
+    val dueDateInstant = activity?.dueDate?.let {
+        LocalDateTime(
+            it,
+            LocalTime(12, 0, 0)
+        ).toInstant(TimeZone.currentSystemDefault())
     }
-    var selectedLastUsedDate = lastUsedDateInstant?.toEpochMilliseconds()
+    var selectedDueDate = dueDateInstant?.toEpochMilliseconds()
 
-    val bikes: List<Bike> by componentEditViewModel.observeBikes.collectAsStateWithLifecycle(
+    val bikes: List<Bike> by activityEditViewModel.observeBikes.collectAsStateWithLifecycle(
         emptyList()
     )
-    val currentBike: Bike? by componentEditViewModel.currentBike.collectAsStateWithLifecycle(
-        initialValue = null
-    )
-
-    val components: List<Component> by componentEditViewModel.observeComponents.collectAsStateWithLifecycle(
-        emptyList()
-    )
-    val currentParentComponent: Component? by componentEditViewModel.currentParentComponent.collectAsStateWithLifecycle(
+    val currentBike: Bike? by activityEditViewModel.currentBike.collectAsStateWithLifecycle(
         initialValue = null
     )
 
@@ -102,65 +94,55 @@ fun ComponentEdit(
                     .padding(8.dp)
             ) {
                 DefaultTextFieldWithSpacer(
-                    value = component?.name ?: "Name",
+                    value = activity?.title ?: "",
+                    label = "Activity title",
+                    placeholder = "Title",
                     onValueChange = {
-                        componentEditViewModel.updateName(it)
+                        activityEditViewModel.updateTitle(it)
                         modified = true
                     },
-                    label = "Component name",
                 )
                 DefaultTextFieldWithSpacer(
-                    value = component?.description ?: "Description",
+                    value = activity?.description ?: "",
                     onValueChange = {
-                        componentEditViewModel.updateDescription(it)
+                        activityEditViewModel.updateDescription(it)
                         modified = true
                     },
                     label = "Description",
                 )
+                TextAndSwitch(
+                    text = "Completed",
+                    checked = activity?.isCompleted ?: false
+                ) {
+                    activityEditViewModel.updateIsCompleted(it)
+                    modified = true
+                }
                 DefaultBikeSelectorWithSpacer(
-                    value = if (currentBike == null) "None" else currentBike!!.name,
+                    value = if (currentBike != null) { currentBike!!.name } else { "None" },
                     label = "Attached to bike",
                     onMenuItemClick = {
-                        componentEditViewModel.updateAttachedBike(it)
-                        modified = true
+                        activityEditViewModel.updateAttachedBike(it)
                     },
                     bikes = bikes
                 )
-                DefaultParentComponentSelectorWithSpacer(
-                    value = if (currentParentComponent == null) "None" else currentParentComponent!!.name,
-                    label = "Part of component",
-                    onMenuItemClick = {
-                        componentEditViewModel.updateParentComponent(it)
-                        modified = true
-                    },
-                    components = components
-                )
                 DefaultDateSelectorWithSpacer(
-                    selectedDate = selectedBuildDate,
-                    label = "Acquisition date",
-                    placeholder = "YYYY-MM-DD",
+                    selectedDate = selectedCreatedDate,
+                    label = "Created date",
+                    placeholder = "DD/MM/YYYY",
                     onDateSelected = {
-                        selectedBuildDate = it
+                        selectedCreatedDate = it
                         if (it != null) {
-                            componentEditViewModel.updateAcquisitionDate(it)
+                            activityEditViewModel.updateCreatedDate(it)
                         }
                     }
                 )
-                DefaultNumberFieldWithSpacer(
-                    value = component?.mileage.toString(),
-                    onValueChange = { value ->
-                        componentEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
-                        modified = true
-                    },
-                    label = "Mileage",
-                )
                 DefaultDateSelectorNullableWithSpacer(
-                    selectedDate = selectedLastUsedDate,
-                    label = "Last used date",
-                    placeholder = "YYYY-MM-DD",
+                    selectedDate = selectedDueDate,
+                    label = "Due date",
+                    placeholder = "DD/MM/YYYY",
                     onDateSelected = {
-                        selectedLastUsedDate = it
-                        componentEditViewModel.updateLastUsedDate(it)
+                        selectedDueDate = it
+                        activityEditViewModel.updateDueDate(it)
                     }
                 )
                 DefaultSpacer()
@@ -178,23 +160,36 @@ fun ComponentEdit(
                             contentDescription = "Cancel"
                         )
                     }
+
+                    IconSpacer()
+                    IconButton(onClick = {
+                        // destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete"
+                        )
+                    }
                 },
                 floatingActionButton = {
-                    ExtendedFloatingActionButton(
-                        text = { Text(text = "Save") },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Save the component"
-                            )
-                        },
-                        onClick = {
-                            componentEditViewModel.commitComponent()
-                            destinationsNavigator.navigateUp()
-                        },
-                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                    )
+                    if (modified) {
+                        ExtendedFloatingActionButton(
+                            text = { Text(text = "Save") },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Filled.Done,
+                                    contentDescription = "Save the activity"
+                                )
+                            },
+                            onClick = {
+                                activityEditViewModel.commitActivity()
+                                modified = false
+                                destinationsNavigator.navigateUp()
+                            },
+                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                        )
+                    }
                 }
             )
         }

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "385ebad8256f4790c30da0e887a41c42",
+    "identityHash": "72fdbab3803473ddf6303aa11da3c325",
     "entities": [
       {
         "tableName": "Activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `created_date` TEXT NOT NULL, `due_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER NOT NULL, `created_date` TEXT NOT NULL, `due_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "isCompleted",
             "columnName": "is_completed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bikeUid",
+            "columnName": "bike_uid",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -157,38 +163,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "BikeActivities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bike_uid` INTEGER NOT NULL, `activity_uid` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "bikeUid",
-            "columnName": "bike_uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "activityUid",
-            "columnName": "activity_uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "uid",
-            "columnName": "uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "uid"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "Component",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER NOT NULL, `parent_component_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
@@ -285,8 +259,8 @@
     ],
     "views": [
       {
-        "viewName": "ActivitiesByBikes",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.created_date as activity_created_date, a.due_date as activity_due_date, a.uid as activity_uid FROM Activity a LEFT JOIN BikeActivities ba ON a.uid = ba.activity_uid LEFT JOIN Bike b ON b.uid = ba.bike_uid ORDER BY a.due_date DESC;"
+        "viewName": "ActivityWithBikeData",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.created_date as activity_created_date, a.due_date as activity_due_date, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;"
       },
       {
         "viewName": "ShelvedComponents",
@@ -295,7 +269,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '385ebad8256f4790c30da0e887a41c42')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72fdbab3803473ddf6303aa11da3c325')"
     ]
   }
 }

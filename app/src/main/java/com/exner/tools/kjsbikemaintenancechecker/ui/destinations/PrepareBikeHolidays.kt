@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Luggage
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Hail
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ThumbUp

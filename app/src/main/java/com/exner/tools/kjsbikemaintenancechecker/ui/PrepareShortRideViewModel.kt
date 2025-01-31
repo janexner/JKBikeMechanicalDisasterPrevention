@@ -9,8 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "ShortRideVM"
-
 @HiltViewModel
 class PrepareShortRideViewModel @Inject constructor(
     val userPreferencesManager: UserPreferencesManager,
@@ -19,12 +17,12 @@ class PrepareShortRideViewModel @Inject constructor(
 
     val observeBikesRaw = repository.observeBikes
 
+    val observeActivitiesByBikes = repository.observeActivityWithBikeDataOrderedByDueDate
+
     fun updateActivity(activity: Activity) {
         viewModelScope.launch {
             repository.updateActivity(activity)
         }
     }
-
-    val observeActivitiesByBikes = repository.observeActivitiesByBikes
 
 }

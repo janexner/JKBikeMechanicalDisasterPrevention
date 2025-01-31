@@ -6,11 +6,10 @@ import androidx.room.TypeConverters
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ActivityTags
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.BikeActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Tag
-import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivitiesByBikes
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponents
 
 @Database(
@@ -19,11 +18,10 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponent
         Tag::class,
         ActivityTags::class,
         Bike::class,
-        BikeActivities::class,
         Component::class,
         ComponentActivities::class,
     ],
-    views = [ActivitiesByBikes::class, ShelvedComponents::class],
+    views = [ActivityWithBikeData::class, ShelvedComponents::class],
     version = 1,
     exportSchema = true
 )
