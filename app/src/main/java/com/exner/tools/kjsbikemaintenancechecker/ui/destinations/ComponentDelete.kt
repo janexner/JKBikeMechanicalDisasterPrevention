@@ -27,30 +27,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.exner.tools.kjsbikemaintenancechecker.ui.BikeDeleteViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentDeleteViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
 @Composable
-fun BikeDelete(
-    bikeUid: Long,
+fun ComponentDelete(
+    componentUid: Long,
     destinationsNavigator: DestinationsNavigator
 ) {
-    val bikeDeleteViewModel =
-        hiltViewModel<BikeDeleteViewModel, BikeDeleteViewModel.BikeDeleteViewModelFactory> { factory ->
-            factory.create(bikeUid = bikeUid)
+
+    val componentDeleteViewModel =
+        hiltViewModel<ComponentDeleteViewModel, ComponentDeleteViewModel.ComponentDeleteViewModelFactory> { factory ->
+            factory.create(componentUid)
         }
 
-    val bike by bikeDeleteViewModel.bike.observeAsState()
-    val componentCount by bikeDeleteViewModel.componentCount.observeAsState()
+    val component by componentDeleteViewModel.component.observeAsState()
+    val componentCount by componentDeleteViewModel.componentCount.observeAsState()
     var deleteAttachedComponents by remember { mutableStateOf(false) }
-    val activityCount by bikeDeleteViewModel.activityCount.observeAsState()
-    var deleteAttachedActivities by remember { mutableStateOf(true) }
 
     Scaffold(
         modifier = Modifier.imePadding(),
@@ -63,8 +61,8 @@ fun BikeDelete(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                if (bike != null) {
-                    Text(text = "You are about to delete the bike ${bike!!.name}.")
+                if (component != null) {
+                    Text(text = "You are about to delete the component ${component!!.name}.")
                     if (componentCount != null && componentCount!! > 0) {
                         DefaultSpacer()
                         TextAndSwitch(
@@ -74,17 +72,8 @@ fun BikeDelete(
                             deleteAttachedComponents = it
                         }
                     }
-                    if (activityCount != null && activityCount!! > 0) {
-                        DefaultSpacer()
-                        TextAndSwitch(
-                            text = "Delete activities for this bike ($activityCount)",
-                            checked = deleteAttachedActivities
-                        ) {
-                            deleteAttachedActivities = it
-                        }
-                    }
                 } else {
-                    Text(text = "We did not find this bike.")
+                    Text(text = "We did not find this component.")
                 }
             }
         },
@@ -101,24 +90,23 @@ fun BikeDelete(
                     }
                 },
                 floatingActionButton = {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = "Delete") },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Done,
-                                    contentDescription = "Delete the bike"
-                                )
-                            },
-                            onClick = {
-                                bikeDeleteViewModel.commitDelete(
-                                    deleteAttachedComponents = deleteAttachedComponents,
-                                    deleteAttachedActivities = deleteAttachedActivities,
-                                )
-                                destinationsNavigator.popBackStack(ManageBikesAndComponentsDestination, inclusive = false)
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
+                    ExtendedFloatingActionButton(
+                        text = { Text(text = "Delete") },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.Done,
+                                contentDescription = "Delete the component"
+                            )
+                        },
+                        onClick = {
+                            componentDeleteViewModel.commitDelete(
+                                deleteAttachedComponents = deleteAttachedComponents,
+                            )
+                            destinationsNavigator.navigateUp()
+                        },
+                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                    )
                 }
             )
         }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -40,6 +41,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ComponentDeleteDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -176,6 +178,14 @@ fun ComponentEdit(
                         Icon(
                             imageVector = Icons.Default.Clear,
                             contentDescription = "Cancel"
+                        )
+                    }
+                    IconButton(onClick = {
+                        destinationsNavigator.navigate(ComponentDeleteDestination(componentUid))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete"
                         )
                     }
                 },

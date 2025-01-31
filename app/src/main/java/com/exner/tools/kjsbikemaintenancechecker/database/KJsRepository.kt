@@ -95,4 +95,19 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     suspend fun deleteComponentsForBike(bikeUid: Long) {
         kjsDAO.deleteComponentsForBike(bikeUid)
     }
+
+    @WorkerThread
+    suspend fun getComponentCountByParent(parentUid: Long): Int {
+        return kjsDAO.getComponentCountByParent(parentUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteComponentsForParent(parentUid: Long) {
+        kjsDAO.deleteComponentsForParent(parentUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteComponent(component: Component) {
+        kjsDAO.deleteComponent(component)
+    }
 }

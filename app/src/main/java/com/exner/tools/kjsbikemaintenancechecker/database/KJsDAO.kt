@@ -50,6 +50,9 @@ interface KJsDAO {
     @Query("SELECT COUNT(uid) FROM component WHERE bike_uid=:bikeUid")
     suspend fun getComponentCountByBike(bikeUid: Long): Int
 
+    @Query("SELECT COUNT(uid) FROM component WHERE parent_component_uid=:parentUid")
+    suspend fun getComponentCountByParent(parentUid: Long): Int
+
     @Query("SELECT COUNT(uid) FROM activity WHERE bike_uid=:bikeUid")
     suspend fun getActivityCountByBike(bikeUid: Long): Int
 
@@ -76,8 +79,14 @@ interface KJsDAO {
     @Update
     suspend fun updateComponent(component: Component)
 
+    @Delete
+    suspend fun deleteComponent(component: Component)
+
     @Query("DELETE FROM component WHERE bike_uid=:bikeUid")
     suspend fun deleteComponentsForBike(bikeUid: Long)
+
+    @Query("DELETE FROM component WHERE parent_component_uid=:parentUid")
+    suspend fun deleteComponentsForParent(parentUid: Long)
 
     //
 
