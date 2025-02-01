@@ -32,6 +32,14 @@ class BikeEditViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateIsElectric(isElectric: Boolean) {
+        if (bike.value != null) {
+            _bike.value = bike.value!!.copy(
+                isElectric = isElectric
+            )
+        }
+    }
+
     fun updateMileage(mileage: Int) {
         if (bike.value != null) {
             _bike.value = bike.value!!.copy(

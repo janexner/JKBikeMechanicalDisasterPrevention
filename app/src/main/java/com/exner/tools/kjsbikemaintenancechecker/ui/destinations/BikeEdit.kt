@@ -40,6 +40,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFiel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeDeleteDestination
@@ -99,6 +100,13 @@ fun BikeEdit(
                     },
                     label = "Bike name",
                 )
+                TextAndSwitch(
+                    text = "is an eBike",
+                    checked = bike?.isElectric ?: false
+                ) {
+                    bikeEditViewModel.updateIsElectric(it)
+                    modified = true
+                }
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedBuildDate,
                     label = "Build date",

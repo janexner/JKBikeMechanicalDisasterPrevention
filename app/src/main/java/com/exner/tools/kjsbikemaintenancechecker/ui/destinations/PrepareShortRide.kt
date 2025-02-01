@@ -4,11 +4,16 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Hail
@@ -80,13 +85,19 @@ fun PrepareShortRide(
     var modified by remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = Modifier.imePadding(),
         content = { innerPadding ->
             Column(
                 modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
-                    .padding(8.dp, 0.dp)
-                    .fillMaxWidth()
+                    .padding(8.dp)
             ) {
+                Text(text = "Activities that help avoid things that will either stop you from riding, or make your ride miserable if not right, but you are not so far away from a walk out that it is a disaster, or you can prob fix on the trail with a multi tool, even if best avoided.")
+                DefaultSpacer()
+                Text(text = "Best do these the night before!")
+                DefaultSpacer()
                 var offset = Offset.Zero
                 var bikesExpanded by remember {
                     mutableStateOf(false)

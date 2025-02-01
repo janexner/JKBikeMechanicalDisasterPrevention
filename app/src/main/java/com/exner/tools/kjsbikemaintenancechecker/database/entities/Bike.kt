@@ -13,5 +13,7 @@ data class Bike(
     @ColumnInfo(name = "mileage") val mileage: Int = 0,
     @ColumnInfo(name = "last_used_date") val lastUsedDate: LocalDate?,
 
+    @ColumnInfo(name = "is_electric") val isElectric: Boolean = false,
+
     @PrimaryKey(autoGenerate = true) val uid: Long = 0
 )

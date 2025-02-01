@@ -23,6 +23,7 @@ suspend fun populateDatabaseWithSampleData(
         buildDate = taigaBuildDate,
         mileage = 6395,
         lastUsedDate = nowDate,
+        isElectric = false,
         uid = 0,
     )
     val taigaUid = provider.get().insertBike(taiga)
@@ -99,6 +100,7 @@ suspend fun populateDatabaseWithSampleData(
         buildDate = LocalDate.parse("2023-05-20"),
         mileage = 6500,
         lastUsedDate = nowDate,
+        isElectric = true,
         uid = 0
     )
     val vadoUid = provider.get().insertBike(vado)
@@ -136,6 +138,7 @@ suspend fun populateDatabaseWithSampleData(
         buildDate = LocalDate.parse("2022-09-09"),
         mileage = 1388,
         lastUsedDate = LocalDate.parse("2025-01-16"),
+        isElectric = false,
         uid = 0
     )
     provider.get().insertBike(bike3)

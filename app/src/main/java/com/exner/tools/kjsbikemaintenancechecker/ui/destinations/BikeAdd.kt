@@ -51,6 +51,7 @@ fun BikeAdd(
     var name by remember { mutableStateOf("") }
     var selectedDate by remember { mutableStateOf<Long?>(null) }
     var mileage by remember { mutableIntStateOf(0) }
+    var isElectric by remember { mutableStateOf(false) }
     var addComponentsWhenSavingBike by remember { mutableStateOf(false) }
 
     var modified by remember { mutableStateOf(false) }
@@ -76,6 +77,12 @@ fun BikeAdd(
                     },
                     label = "Name",
                 )
+                TextAndSwitch(
+                    text = "is an eBike",
+                    checked = isElectric
+                ) {
+                    isElectric = it
+                }
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedDate,
                     label = "Build date",
@@ -131,6 +138,7 @@ fun BikeAdd(
                                         ).date,
                                     mileage = mileage,
                                     lastUsedDate = null,
+                                    isElectric = isElectric,
                                     uid = 0 // autogenerate
                                 )
                                 bikeAddViewModel.saveNewBike(
