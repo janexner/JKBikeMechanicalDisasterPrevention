@@ -17,7 +17,7 @@ class PrepareShortRideViewModel @Inject constructor(
 
     val observeBikesRaw = repository.observeBikes
 
-    val observeActivitiesByBikes = repository.observeActivityWithBikeDataOrderedByDueDate
+    val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
     fun updateActivity(activity: Activity) {
         viewModelScope.launch {

@@ -17,17 +17,17 @@ interface KJsDAO {
     //
     // OBSERVERS - return tables
     //
-    @Query("SELECT * FROM activity ORDER BY due_date DESC")
-    fun observeActivitiesOrderedByDueDate(): Flow<List<Activity>>
-
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
 
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
 
+    @Query("SELECT * FROM activitywithbikedata ORDER BY activity_due_date DESC")
+    fun observeActivitiesWithBikeDataOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
+
     @Query("SELECT * FROM activitywithbikedata WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
-    fun observeActivitiesByBikeWithDateOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
+    fun observeActivitiesWithBikeDataAndDueDateOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
 
     @Query("SELECT * FROM shelvedcomponents ORDER BY name")
     fun observeShelvedComponents(): Flow<List<Component>>

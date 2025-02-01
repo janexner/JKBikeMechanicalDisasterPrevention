@@ -14,7 +14,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Dataset
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -33,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cafe.adriel.bonsai.core.tree.Tree
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ManageBikesAndComponentsViewModel
@@ -62,6 +62,8 @@ fun ManageBikesAndComponents(
     )
 
     val currentBike by manageBikesAndComponentsViewModel.currentBike.collectAsState()
+
+    val tree: Tree<Bike>
 
     Scaffold(
         content = { innerPadding ->
@@ -206,7 +208,15 @@ fun ManageBikesAndComponents(
                             )
                         },
                         onClick = {
-                            destinationsNavigator.navigate(ComponentAddDestination(bikeUid = if (currentBike == -1L) { null } else { currentBike }))
+                            destinationsNavigator.navigate(
+                                ComponentAddDestination(
+                                    bikeUid = if (currentBike == -1L) {
+                                        null
+                                    } else {
+                                        currentBike
+                                    }
+                                )
+                            )
                         },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

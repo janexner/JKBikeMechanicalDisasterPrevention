@@ -15,7 +15,10 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     val observeBikes: Flow<List<Bike>> = kjsDAO.observeBikesOrderedByLastUsedDate()
 
     val observeActivityWithBikeDataOrderedByDueDate: Flow<List<ActivityWithBikeData>> =
-        kjsDAO.observeActivitiesByBikeWithDateOrderedByDueDate()
+        kjsDAO.observeActivitiesWithBikeDataOrderedByDueDate()
+
+    val observeActivityWithBikeDataAndDueDateOrderedByDueDate: Flow<List<ActivityWithBikeData>> =
+        kjsDAO.observeActivitiesWithBikeDataAndDueDateOrderedByDueDate()
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
 

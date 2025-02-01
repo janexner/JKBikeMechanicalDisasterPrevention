@@ -59,7 +59,11 @@ fun ActivityDetails(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                ShowActivityDetails(activity)
+                if (activity != null) {
+                    ShowActivityDetails(activity)
+                } else {
+                    Text(text = "We cannot find that activity.")
+                }
             }
         },
         bottomBar = {

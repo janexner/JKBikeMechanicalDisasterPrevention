@@ -23,13 +23,11 @@ fun TodoListItem(
     Surface(
         modifier = Modifier
             .clickable {
-                if (activity.bikeUid != null) {
-                    destinationsNavigator.navigate(
-                        ActivityDetailsDestination(
-                            activity.bikeUid
-                        )
+                destinationsNavigator.navigate(
+                    ActivityDetailsDestination(
+                        activity.activityUid
                     )
-                }
+                )
             },
     ) {
         ListItem(

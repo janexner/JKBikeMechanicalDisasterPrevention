@@ -176,10 +176,10 @@ fun ActivityAdd(
                                             TimeZone.currentSystemDefault()
                                         ).date,
                                     isCompleted = isCompleted,
-                                    dueDate = Instant.fromEpochMilliseconds(selectedDueDate!!)
+                                    dueDate = if (selectedDueDate != null) { Instant.fromEpochMilliseconds(selectedDueDate!!)
                                         .toLocalDateTime(
                                             TimeZone.currentSystemDefault()
-                                        ).date,
+                                        ).date } else { null },
                                     bikeUid = if (currentBike != null) { currentBike!!.uid } else { 0 }
                                 )
                                 activityAddViewModel.saveActivity(activity)
