@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.database
 
 import androidx.room.TypeConverter
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
 object DateConverter {
@@ -12,5 +13,21 @@ object DateConverter {
     @TypeConverter
     fun dateToTimestamp(date: LocalDate?): String? {
         return date?.toString()
+    }
+
+    @TypeConverter
+    fun fromEpochMillis(value: Long?): Instant? {
+        return value.let {
+            if (it != null) {
+                Instant.fromEpochMilliseconds(it)
+            } else {
+                null
+            }
+        }
+    }
+
+    @TypeConverter
+    fun instantToEpochMillis(instant: Instant?): Long? {
+        return instant?.toEpochMilliseconds()
     }
 }

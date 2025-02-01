@@ -1,9 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.database
 
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -114,23 +112,7 @@ suspend fun populateDatabaseWithSampleData(
         lastUsedDate = nowDate,
         uid = 0,
     )
-    val batteryUid = provider.get().insertComponent(bike2Battery)
-    val chargeBattery = Activity(
-        title = "Charge Battery",
-        description = "If battery is low, charge it",
-        isCompleted = false,
-        createdDate = nowDate,
-        dueDate = nowDate,
-        bikeUid = vadoUid,
-        uid = 0,
-    )
-    val chargeBatteryUid = provider.get().insertActivity(chargeBattery)
-    val chargeBatteryComponentActivity = ComponentActivities(
-        componentUid = batteryUid,
-        activityUid = chargeBatteryUid,
-        uid = 0
-    )
-    provider.get().insertComponentActivity(chargeBatteryComponentActivity)
+    provider.get().insertComponent(bike2Battery)
 
     // the Evolink
     val bike3 = Bike(
@@ -142,18 +124,6 @@ suspend fun populateDatabaseWithSampleData(
         uid = 0
     )
     provider.get().insertBike(bike3)
-
-    // every ride
-    val bottleActivity = Activity(
-        title = "Take Water",
-        description = "Take a bottle of fresh water",
-        isCompleted = false,
-        createdDate = nowDate,
-        dueDate = null,
-        bikeUid = 0,
-        uid = 0
-    )
-    provider.get().insertActivity(bottleActivity)
 
     // some things for the shelf
     val extraCassette1 = Component(

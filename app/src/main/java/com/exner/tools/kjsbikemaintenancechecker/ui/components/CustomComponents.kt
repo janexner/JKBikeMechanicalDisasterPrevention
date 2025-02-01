@@ -1,11 +1,16 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -480,4 +485,23 @@ fun DefaultDateSelectorNullableWithSpacer(
         )
     }
     DefaultSpacer()
+}
+
+@Composable
+fun ShowAnimatedText(
+    show: Boolean,
+    content: @Composable () -> Unit
+) {
+
+    AnimatedVisibility(
+        visible = show,
+        enter = fadeIn(animationSpec = tween(500)),
+        exit = fadeOut(animationSpec = tween(500))
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant)
+        ) {
+            content()
+        }
+    }
 }

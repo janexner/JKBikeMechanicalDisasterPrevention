@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,20 +13,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Hail
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Luggage
-import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -53,7 +54,9 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowAnimatedText
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TransientTodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
@@ -61,8 +64,10 @@ import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolida
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.datetime.Clock
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
+@OptIn(
+    ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
     ExperimentalComposeUiApi::class
 )
 @Destination<RootGraph>
@@ -82,6 +87,8 @@ fun PrepareShortRide(
         initial = emptyList()
     )
 
+    val shortRideActivities: List<Activity> = prepareShortRideViewModel.shortRideActivities
+
     var modified by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -94,10 +101,38 @@ fun PrepareShortRide(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                Text(text = "Activities that help avoid things that will either stop you from riding, or make your ride miserable if not right, but you are not so far away from a walk out that it is a disaster, or you can prob fix on the trail with a multi tool, even if best avoided.")
-                DefaultSpacer()
-                Text(text = "Best do these the night before!")
-                DefaultSpacer()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Quick ride", style = MaterialTheme.typography.headlineMedium)
+                    if (prepareShortRideViewModel.showIntroText.value) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropUp,
+                            contentDescription = "Collapse",
+                            modifier = Modifier.clickable {
+                                prepareShortRideViewModel.updateShowIntroText(false)
+                            }
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Expand",
+                            modifier = Modifier.clickable {
+                                prepareShortRideViewModel.updateShowIntroText(true)
+                            }
+                        )
+                    }
+                }
+                ShowAnimatedText(show = prepareShortRideViewModel.showIntroText.value) {
+                    DefaultSpacer()
+                    Text(text = "Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.")
+                    DefaultSpacer()
+                    Text(text = "These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.")
+                    DefaultSpacer()
+                    Text(text = "Best do these the night before!")
+                    DefaultSpacer()
+                }
                 var offset = Offset.Zero
                 var bikesExpanded by remember {
                     mutableStateOf(false)
@@ -168,7 +203,24 @@ fun PrepareShortRide(
                         .fillMaxWidth()
                 ) {
                     stickyHeader {
-                        Text(text = "TODOs for a quick ride:")
+                        Text(text = "Activities for a quick ride:")
+                    }
+
+                    items(items = shortRideActivities, key = { "temp-${it.uid}" }) { activity ->
+                        TransientTodoListItem(
+                            activity = activity,
+                            onCheckboxCallback = { checked ->
+                                prepareShortRideViewModel.updateRideActivity(
+                                    index = activity.uid.toInt(),
+                                    isCompleted = checked
+                                )
+                            },
+                            suppressDueDate = true
+                        )
+                    }
+
+                    stickyHeader {
+                        Text(text = "Activities that are due anyway:")
                     }
 
                     items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
@@ -178,6 +230,7 @@ fun PrepareShortRide(
                             isCompleted = activityByBike.activityIsCompleted,
                             createdDate = activityByBike.activityCreatedDate,
                             dueDate = activityByBike.activityDueDate,
+                            doneDate = activityByBike.activityDoneDate,
                             bikeUid = activityByBike.bikeUid!!,
                             uid = activityByBike.activityUid
                         )
@@ -185,7 +238,12 @@ fun PrepareShortRide(
                             activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
-                                prepareShortRideViewModel.updateActivity(activity = activity.copy(isCompleted = result))
+                                prepareShortRideViewModel.updateActivity(
+                                    activity = activity.copy(
+                                        isCompleted = result,
+                                        doneDate = if (result) { Clock.System.now() } else { null }
+                                    )
+                                )
                             },
                             suppressBikeBadge = suppressBikeBadge,
                             suppressDueDate = true

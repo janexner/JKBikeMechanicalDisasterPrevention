@@ -41,6 +41,7 @@ import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolida
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.datetime.Clock
 
 @OptIn(ExperimentalFoundationApi::class)
 @Destination<RootGraph>(start = true)
@@ -78,13 +79,17 @@ fun Home(
                             createdDate = activityByBike.activityCreatedDate,
                             dueDate = activityByBike.activityDueDate,
                             bikeUid = activityByBike.bikeUid ?: 0,
+                            doneDate = activityByBike.activityDoneDate,
                             uid = activityByBike.activityUid
                         )
                         TodoListItem(
                             activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
-                                homeViewModel.updateActivity(activity = activity.copy(isCompleted = result))
+                                homeViewModel.updateActivity(activity = activity.copy(
+                                    isCompleted = result,
+                                    doneDate = if (result) { Clock.System.now() } else { null }
+                                ))
                             },
                         )
                     }

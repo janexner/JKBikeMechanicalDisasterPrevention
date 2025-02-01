@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.material3.windowsizeclass.android)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.bonsai.core)
 
     // hilt
     implementation(libs.hilt.android)

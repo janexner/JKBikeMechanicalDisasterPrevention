@@ -180,6 +180,7 @@ fun ActivityAdd(
                                         .toLocalDateTime(
                                             TimeZone.currentSystemDefault()
                                         ).date } else { null },
+                                    doneDate = null,
                                     bikeUid = if (currentBike != null) { currentBike!!.uid } else { 0 }
                                 )
                                 activityAddViewModel.saveActivity(activity)
