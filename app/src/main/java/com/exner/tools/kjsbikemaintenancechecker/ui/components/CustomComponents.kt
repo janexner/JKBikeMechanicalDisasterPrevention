@@ -59,7 +59,7 @@ fun DefaultTextFieldWithSpacer(
     value: String = "",
     label: String = "",
     placeholder: String? = null,
-    onValueChange: ((String) -> Unit),
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val usablePlaceholder = placeholder ?: label
@@ -84,7 +84,7 @@ fun DefaultNumberFieldWithSpacer(
     value: String = "",
     label: String = "",
     placeholder: String? = null,
-    onValueChange: ((String) -> Unit),
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val usablePlaceholder = placeholder ?: label
@@ -277,7 +277,7 @@ fun DatePickerModal(
 fun DefaultBikeSelectorWithSpacer(
     value: String,
     label: String,
-    onMenuItemClick: ((Long?) -> Unit),
+    onMenuItemClick: (Long?) -> Unit,
     bikes: List<Bike>
 ) {
     var bikeSelectorExpanded by remember { mutableStateOf(false) }
@@ -335,7 +335,7 @@ fun DefaultBikeSelectorWithSpacer(
 fun DefaultParentComponentSelectorWithSpacer(
     value: String,
     label: String,
-    onMenuItemClick: ((Long?) -> Unit),
+    onMenuItemClick: (Long?) -> Unit,
     components: List<Component>,
 ) {
     var parentComponentExpanded by remember { mutableStateOf(false) }
