@@ -278,10 +278,10 @@ fun PrepareShortRide(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Clear and start anew"
+                            contentDescription = stringResource(R.string.clear_and_start_anew)
                         )
                         IconSpacer()
-                        Text(text = "Start new short ride")
+                        Text(text = stringResource(R.string.lbl_start_new_short_ride))
                     }
                 }
             }

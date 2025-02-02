@@ -80,4 +80,6 @@
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="we_can_not_find_this_component">We did not find this component.</string>
     <string name="which_bike">Which bike: </string>
+    <string name="lbl_start_new_short_ride">Start new short ride</string>
+    <string name="clear_and_start_anew">Clear and start anew</string>
 </resources>
