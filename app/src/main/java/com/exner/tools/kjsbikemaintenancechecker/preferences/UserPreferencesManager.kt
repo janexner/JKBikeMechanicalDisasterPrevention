@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.preferences
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.longPreferencesKey
@@ -50,8 +51,23 @@ class UserPreferencesManager @Inject constructor(
         }
     }
 
+    fun todoListsExpire(): Flow<Boolean> {
+        return userDataStorePreferences.data.catch {
+            emit(emptyPreferences())
+        }.map { preferences ->
+            preferences[KEY_TODO_LISTS_EXPIRE] ?: false
+        }
+    }
+
+    suspend fun setTodoListsExpire(newExpire: Boolean) {
+        userDataStorePreferences.edit { preferences ->
+            preferences[KEY_TODO_LISTS_EXPIRE] = newExpire
+        }
+    }
+
     private companion object {
         val KEY_THEME = stringPreferencesKey(name = "preference_theme")
         val KEY_DEFAULT_BIKE_UID_SHORT = longPreferencesKey(name = "preference_default_bike_uid_short")
+        val KEY_TODO_LISTS_EXPIRE = booleanPreferencesKey(name = "preference_todo_lists_expire")
     }
 }

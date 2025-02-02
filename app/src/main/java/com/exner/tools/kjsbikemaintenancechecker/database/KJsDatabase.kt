@@ -8,7 +8,10 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.ActivityTags
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Tag
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponents
 
@@ -20,6 +23,9 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponent
         Bike::class,
         Component::class,
         ComponentActivities::class,
+        Ride::class,
+        RideUidByRideLevel::class,
+        TemplateActivity::class,
     ],
     views = [ActivityWithBikeData::class, ShelvedComponents::class],
     version = 1,

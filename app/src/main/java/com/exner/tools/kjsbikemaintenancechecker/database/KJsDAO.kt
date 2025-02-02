@@ -9,6 +9,9 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import kotlinx.coroutines.flow.Flow
 
@@ -59,6 +62,12 @@ interface KJsDAO {
     @Query("SELECT * FROM activity WHERE bike_uid=:bikeUid")
     suspend fun getActivitiesForBike(bikeUid: Long): List<Activity>
 
+    @Query("SELECT * FROM activitywithbikedata WHERE activity_ride_uid=:rideUid ORDER BY activity_due_date DESC")
+    suspend fun getActivitiesWithBikeDataForRide(rideUid: Long): List<ActivityWithBikeData>
+
+    @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel ORDER BY due_date")
+    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity>
+
     //
     // UPDATE/INSERT/DELETE
     //
@@ -102,4 +111,24 @@ interface KJsDAO {
     @Query("DELETE FROM Activity WHERE uid=:activityUid")
     suspend fun deleteActivityByUid(activityUid: Long)
 
+    @Query("DELETE FROM Activity WHERE ride_uid=:rideUid")
+    suspend fun deleteActivitiesForRide(rideUid: Long)
+
+    //
+
+    @Insert
+    suspend fun insertRideUidByRideLevel(rideUidByRideLevel: RideUidByRideLevel): Long
+
+    @Query("select * from RideUidByRideLevel WHERE ride_level=:rideLevel order by rowid desc LIMIT 1")
+    suspend fun getLatestRideUidByRideLevel(rideLevel: Int): RideUidByRideLevel?
+
+    //
+
+    @Insert
+    suspend fun insertTemplateActivity(templateActivity: TemplateActivity): Long
+
+    //
+
+    @Insert
+    suspend fun insertRide(ride: Ride): Long
 }

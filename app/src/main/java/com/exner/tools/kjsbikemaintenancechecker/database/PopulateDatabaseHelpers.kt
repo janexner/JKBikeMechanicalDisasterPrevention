@@ -2,6 +2,7 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -403,4 +404,94 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         uid = 0
     )
     repository.insertComponent(rearRotor)
+}
+
+suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
+
+    val nowDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
+    // create activities for short ride - ride level = 1
+    val tyrePressureActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Check/fix tyre pressure",
+        description = "Check pressure on both tyres, and inflate if necessary.",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0,
+    )
+    provider.get().insertTemplateActivity(tyrePressureActivity)
+    val checkForKnocksActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Brake knock test",
+        description = "Pull both brakes and rock bike back and forth to test for knocks",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0,
+    )
+    provider.get().insertTemplateActivity(checkForKnocksActivity)
+    val checkAxlesActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Check axles",
+        description = "Check that both axles are properly installed and torqued",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0
+    )
+    provider.get().insertTemplateActivity(checkAxlesActivity)
+    val rearMechAttachedActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Check rear derailleur",
+        description = "Check that the rear mech is securely attached and not bent or damaged",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0
+    )
+    provider.get().insertTemplateActivity(rearMechAttachedActivity)
+    val dropperWorksActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Check dropper post",
+        description = "Check that dropper post moves up, down, and stays where it should",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0
+    )
+    provider.get().insertTemplateActivity(dropperWorksActivity)
+    val gearsIndexedActivity = TemplateActivity(
+        rideLevel = 1,
+        title = "Check gears",
+        description = "Check that gears are indexed properly and all gears can be used",
+        isCompleted = false,
+        bikeUid = 0,
+        isEBikeSpecific = false,
+        createdDate = nowDate,
+        dueDate = null,
+        doneDate = null,
+        uid = 0
+    )
+    provider.get().insertTemplateActivity(gearsIndexedActivity)
+
+    // create activities for day out - ride level = 2
+
+    // create template activities for holidays - ride level 3
+
 }

@@ -8,7 +8,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -62,27 +61,27 @@ fun TodoListItem(
 
 @Composable
 fun TransientTodoListItem(
-    activity: Activity,
+    activity: ActivityWithBikeData,
     onCheckboxCallback: (Boolean) -> Unit,
     suppressDueDate: Boolean = false
 ) {
     ListItem(
         headlineContent = {
-            val headline = if (activity.dueDate != null && !suppressDueDate) {
-                "${activity.dueDate} - ${activity.title}"
+            val headline = if (activity.activityDueDate != null && !suppressDueDate) {
+                "${activity.activityDueDate} - ${activity.activityTitle}"
             } else {
-                activity.title
+                activity.activityTitle
             }
             Text(text = headline)
         },
         supportingContent = {
-            Text(text = activity.description)
+            Text(text = activity.activityDescription)
         },
         trailingContent = {
             Checkbox(
-                checked = activity.isCompleted,
+                checked = activity.activityIsCompleted,
                 onCheckedChange = {
-                    onCheckboxCallback(!activity.isCompleted)
+                    onCheckboxCallback(!activity.activityIsCompleted)
                 }
             )
         }

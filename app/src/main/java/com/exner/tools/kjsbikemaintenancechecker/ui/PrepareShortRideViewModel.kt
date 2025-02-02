@@ -2,21 +2,37 @@ package com.exner.tools.kjsbikemaintenancechecker.ui
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exner.tools.kjsbikemaintenancechecker.database.KJsRepository
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
+import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
+import com.exner.tools.kjsbikemaintenancechecker.preferences.UserPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import javax.inject.Inject
+import kotlin.time.Duration
+
+private const val TAG = "PrepareShortRideVM"
 
 @HiltViewModel
 class PrepareShortRideViewModel @Inject constructor(
+    private val userPreferencesManager: UserPreferencesManager,
     private val repository: KJsRepository
 ) : ViewModel() {
 
@@ -24,20 +40,37 @@ class PrepareShortRideViewModel @Inject constructor(
 
     val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
+    private val rideLevelShortRide = MutableStateFlow(1)
+
+    val rideUid = MutableStateFlow(0L)
+
     fun updateActivity(activity: Activity) {
         viewModelScope.launch {
             repository.updateActivity(activity)
         }
     }
 
-    private var _shortRideActivities: MutableList<Activity> = mutableListOf()
-    val shortRideActivities: List<Activity> = _shortRideActivities
+    val observeActivitiesShortRide: StateFlow<List<ActivityWithBikeData>> =
+        repository.observeActivityWithBikeDataOrderedByDueDate
+            .combine(rideUid) { result, rideUid ->
+                result.filter { activityWithBikeData ->
+                    activityWithBikeData.rideUid == rideUid // short ride
+                }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList(),
+            )
 
-    fun updateRideActivity(index: Int, isCompleted: Boolean) {
-        _shortRideActivities[index] = shortRideActivities[index].copy(
-            isCompleted = isCompleted,
-            doneDate = if (isCompleted) { Clock.System.now() } else { null }
-        )
+    fun updateRideActivity(activityUid: Long, isCompleted: Boolean) {
+        viewModelScope.launch {
+            val activity = repository.getActivityByUid(activityUid)
+            if (activity != null) {
+                activity.isCompleted = isCompleted
+                repository.updateActivity(activity)
+            }
+        }
     }
 
     private val _showIntroText = mutableStateOf(true)
@@ -47,81 +80,77 @@ class PrepareShortRideViewModel @Inject constructor(
         _showIntroText.value = show
     }
 
+    fun endCurrentRideAndStartFromScratch() {
+        // delete the old ride
+        viewModelScope.launch {
+            repository.deleteActivitiesForRide(rideUid = rideUid.value)
+        }
+        // then create a new one
+        viewModelScope.launch {
+            rideUid.value = copyTemplateActivities()
+        }
+    }
+
     init {
-        val nowDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
-
-        // create activities for short ride
-        val tyrePressureActivity = Activity(
-            title = "Check/fix tyre pressure",
-            description = "Check pressure on both tyres, and inflate if necessary.",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 0,
-        )
-        _shortRideActivities.add(tyrePressureActivity)
-        val checkForKnocksActivity = Activity(
-            title = "Brake knock test",
-            description = "Pull both brakes and rock bike back and forth to test for knocks",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 1,
-        )
-        _shortRideActivities.add(checkForKnocksActivity)
-        val checkAxlesActivity = Activity(
-            title = "Check axles",
-            description = "Check that both axles are properly installed and torqued",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 2
-        )
-        _shortRideActivities.add(checkAxlesActivity)
-        val rearMechAttachedActivity = Activity(
-            title = "Check rear derailleur",
-            description = "Check that the rear mech is securely attached and not bent or damaged",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 3
-        )
-        _shortRideActivities.add(rearMechAttachedActivity)
-        val dropperWorksActivity = Activity(
-            title = "Check dropper post",
-            description = "Check that dropper post moves up, down, and stays where it should",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 4
-        )
-        _shortRideActivities.add(dropperWorksActivity)
-        val gearsIndexedActivity = Activity(
-            title = "Check gears",
-            description = "Check that gears are indexed properly and all gears can be used",
-            isCompleted = false,
-            bikeUid = 0,
-            createdDate = nowDate,
-            dueDate = null,
-            doneDate = null,
-            uid = 5
-        )
-        _shortRideActivities.add(gearsIndexedActivity)
-
+        // copy short trip template activities
+        viewModelScope.launch {
+            rideUid.value = copyTemplateActivities()
+        }
         // remove intro text in 2s
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             _showIntroText.value = false
         }, 2000)
+    }
+
+    private suspend fun copyTemplateActivities(): Long {
+        Log.d(TAG, "Will copy template activities...")
+        val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val currentShortRide = Ride(
+            name = "Short Ride $today",
+            createdInstant = Clock.System.now()
+        )
+        var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelShortRide.value)
+        Log.d(TAG, "Found potential old ride ${potentialOldRide?.rideUid}")
+        val oldTodoListsExpire = userPreferencesManager.todoListsExpire().firstOrNull()
+        Log.d(TAG, "User wishes old rides to expire after 2 days")
+        if (oldTodoListsExpire == true && potentialOldRide != null) {
+            val now = Clock.System.now()
+            val age: Duration = now - potentialOldRide.createdInstant
+            Log.d(TAG, "Potential old ride age is $age (${age.inWholeDays} days)")
+            if (age.isPositive() && age.inWholeDays > 2) {
+                // the one we found is old, so lets ditch it
+                Log.d(TAG, "Deleting old ride ${potentialOldRide.rideUid}")
+                repository.deleteActivitiesForRide(potentialOldRide.rideUid)
+                potentialOldRide = null
+            }
+        }
+        if (potentialOldRide == null) {
+            val newRideUid: Long = repository.insertRide(currentShortRide)
+            val rideUidByRideLevel = RideUidByRideLevel(
+                rideUid = newRideUid,
+                rideLevel = rideLevelShortRide.value,
+                createdInstant = Clock.System.now(),
+                uid = 0
+            )
+            repository.insertRideUidByRideLevel(rideUidByRideLevel = rideUidByRideLevel)
+            repository.getTemplateActivityForRideLevel(rideLevel = 1).forEach { templateActivity ->
+                val activity = Activity(
+                    title = templateActivity.title,
+                    description = templateActivity.description,
+                    isCompleted = templateActivity.isCompleted,
+                    bikeUid = templateActivity.bikeUid,
+                    isEBikeSpecific = templateActivity.isEBikeSpecific,
+                    rideUid = newRideUid,
+                    createdDate = templateActivity.createdDate,
+                    dueDate = templateActivity.dueDate,
+                    doneDate = templateActivity.doneDate,
+                    uid = 0,
+                )
+                repository.insertActivity(activity = activity)
+            }
+            return newRideUid
+        }
+        return potentialOldRide.rideUid
     }
 }

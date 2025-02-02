@@ -17,9 +17,8 @@ class KJsDatabaseCallback(
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
         applicationScope.launch(Dispatchers.IO) {
-            populateDatabaseWithSampleData(
-                provider = provider
-            )
+            populateDatabaseWithSampleData(provider = provider)
+            generatePreparationTemplateActivities(provider = provider)
         }
     }
 }

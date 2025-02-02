@@ -174,6 +174,7 @@ fun ActivityAdd(
                                 val activity = Activity(
                                     title = title,
                                     description = description,
+                                    rideUid = null,
                                     createdDate = Instant.fromEpochMilliseconds(selectedCreatedDate)
                                         .toLocalDateTime(
                                             TimeZone.currentSystemDefault()
@@ -184,7 +185,7 @@ fun ActivityAdd(
                                             TimeZone.currentSystemDefault()
                                         ).date } else { null },
                                     doneDate = null,
-                                    bikeUid = if (currentBike != null) { currentBike!!.uid } else { 0 }
+                                    bikeUid = currentBike?.uid
                                 )
                                 activityAddViewModel.saveActivity(activity)
                                 modified = false

@@ -2,6 +2,7 @@ package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Hail
 import androidx.compose.material.icons.outlined.Home
@@ -56,6 +58,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowAnimatedText
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TransientTodoListItem
@@ -89,7 +92,9 @@ fun PrepareShortRide(
         initial = emptyList()
     )
 
-    val shortRideActivities: List<Activity> = prepareShortRideViewModel.shortRideActivities
+    val shortRideActivities by prepareShortRideViewModel.observeActivitiesShortRide.collectAsStateWithLifecycle(
+        initialValue = emptyList()
+    )
 
     var modified by remember { mutableStateOf(false) }
 
@@ -107,7 +112,10 @@ fun PrepareShortRide(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.hdr_quick_ride), style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        text = stringResource(R.string.hdr_quick_ride),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
                     if (prepareShortRideViewModel.showIntroText.value) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropUp,
@@ -203,17 +211,20 @@ fun PrepareShortRide(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .weight(0.5f)
                 ) {
                     stickyHeader {
                         Text(text = stringResource(R.string.activities_for_a_quick_ride))
                     }
 
-                    items(items = shortRideActivities, key = { "temp-${it.uid}" }) { activity ->
+                    items(
+                        items = shortRideActivities,
+                        key = { "temp-${it.activityUid}" }) { activity ->
                         TransientTodoListItem(
                             activity = activity,
                             onCheckboxCallback = { checked ->
                                 prepareShortRideViewModel.updateRideActivity(
-                                    index = activity.uid.toInt(),
+                                    activityUid = activity.activityUid,
                                     isCompleted = checked
                                 )
                             },
@@ -230,6 +241,7 @@ fun PrepareShortRide(
                             title = activityByBike.activityTitle,
                             description = activityByBike.activityDescription,
                             isCompleted = activityByBike.activityIsCompleted,
+                            rideUid = null,
                             createdDate = activityByBike.activityCreatedDate,
                             dueDate = activityByBike.activityDueDate,
                             doneDate = activityByBike.activityDoneDate,
@@ -243,13 +255,33 @@ fun PrepareShortRide(
                                 prepareShortRideViewModel.updateActivity(
                                     activity = activity.copy(
                                         isCompleted = result,
-                                        doneDate = if (result) { Clock.System.now() } else { null }
+                                        doneDate = if (result) {
+                                            Clock.System.now()
+                                        } else {
+                                            null
+                                        }
                                     )
                                 )
                             },
                             suppressBikeBadge = suppressBikeBadge,
                             suppressDueDate = true
                         )
+                    }
+                }
+                DefaultSpacer()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(onClick = {
+                        prepareShortRideViewModel.endCurrentRideAndStartFromScratch()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = "Clear and start anew"
+                        )
+                        IconSpacer()
+                        Text(text = "Start new short ride")
                     }
                 }
             }
@@ -261,7 +293,10 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(HomeDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Home, contentDescription = stringResource(R.string.tab_home))
+                        Icon(
+                            Icons.Outlined.Home,
+                            contentDescription = stringResource(R.string.tab_home)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_home)) },
                     selected = false
@@ -271,7 +306,10 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareShortRideDestination)
                     },
                     icon = {
-                        Icon(Icons.Filled.ThumbUp, contentDescription = stringResource(R.string.tab_quick_ride))
+                        Icon(
+                            Icons.Filled.ThumbUp,
+                            contentDescription = stringResource(R.string.tab_quick_ride)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_quick_ride)) },
                     selected = true
@@ -281,7 +319,10 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Hail, contentDescription = stringResource(R.string.tab_day_out))
+                        Icon(
+                            Icons.Outlined.Hail,
+                            contentDescription = stringResource(R.string.tab_day_out)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_day_out)) },
                     selected = false
@@ -291,7 +332,10 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Luggage, contentDescription = stringResource(R.string.tab_holidays))
+                        Icon(
+                            Icons.Outlined.Luggage,
+                            contentDescription = stringResource(R.string.tab_holidays)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_holidays)) },
                     selected = false

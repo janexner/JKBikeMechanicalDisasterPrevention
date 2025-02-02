@@ -4,6 +4,9 @@ import androidx.annotation.WorkerThread
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -50,8 +53,28 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getActivityWithBikeDataForRide(rideUid: Long): List<ActivityWithBikeData> {
+        return kjsDAO.getActivitiesWithBikeDataForRide(rideUid)
+    }
+
+    @WorkerThread
+    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity> {
+        return kjsDAO.getTemplateActivityForRideLevel(rideLevel)
+    }
+
+    @WorkerThread
     suspend fun deleteActivityByUid(activityUid: Long) {
         kjsDAO.deleteActivityByUid(activityUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteActivitiesForRide(rideUid: Long) {
+        kjsDAO.deleteActivitiesForRide(rideUid)
+    }
+
+    @WorkerThread
+    suspend fun insertTemplateActivity(templateActivity: TemplateActivity) {
+        kjsDAO.insertTemplateActivity(templateActivity)
     }
 
     @WorkerThread
@@ -112,5 +135,20 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun deleteComponent(component: Component) {
         kjsDAO.deleteComponent(component)
+    }
+
+    @WorkerThread
+    suspend fun insertRide(ride: Ride): Long {
+        return kjsDAO.insertRide(ride)
+    }
+
+    @WorkerThread
+    suspend fun insertRideUidByRideLevel(rideUidByRideLevel: RideUidByRideLevel): Long {
+        return kjsDAO.insertRideUidByRideLevel(rideUidByRideLevel)
+    }
+
+    @WorkerThread
+    suspend fun getLatestRideUidByRideLevel(rideLevel: Int): RideUidByRideLevel? {
+        return kjsDAO.getLatestRideUidByRideLevel(rideLevel)
     }
 }
