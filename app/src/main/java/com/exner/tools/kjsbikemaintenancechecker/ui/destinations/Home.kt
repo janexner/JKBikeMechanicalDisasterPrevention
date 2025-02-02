@@ -26,8 +26,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
@@ -109,10 +111,10 @@ fun Home(
                     ) {
                         Icon(
                             imageVector = Icons.Default.AddTask,
-                            contentDescription = "Add activity"
+                            contentDescription = stringResource(R.string.add_activity)
                         )
                         IconSpacer()
-                        Text(text = "Add activity")
+                        Text(text = stringResource(R.string.add_activity))
                     }
                 }
 
@@ -126,9 +128,9 @@ fun Home(
                         destinationsNavigator.navigate(HomeDestination)
                     },
                     icon = {
-                        Icon(Icons.Default.Home, contentDescription = "home")
+                        Icon(Icons.Default.Home, contentDescription = stringResource(R.string.tab_home))
                     },
-                    label = { Text(text = "home") },
+                    label = { Text(text = stringResource(R.string.tab_home)) },
                     selected = true
                 )
                 NavigationBarItem(
@@ -136,9 +138,9 @@ fun Home(
                         destinationsNavigator.navigate(PrepareShortRideDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = "quick ride")
+                        Icon(Icons.Outlined.ThumbUp, contentDescription = stringResource(R.string.tab_quick_ride))
                     },
-                    label = { Text(text = "quick ride") },
+                    label = { Text(text = stringResource(R.string.tab_quick_ride)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -146,9 +148,9 @@ fun Home(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Hail, contentDescription = "day out")
+                        Icon(Icons.Outlined.Hail, contentDescription = stringResource(R.string.tab_day_out))
                     },
-                    label = { Text(text = "day out") },
+                    label = { Text(text = stringResource(R.string.tab_day_out)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -156,9 +158,9 @@ fun Home(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Luggage, contentDescription = "holidays")
+                        Icon(Icons.Outlined.Luggage, contentDescription = stringResource(R.string.tab_holidays))
                     },
-                    label = { Text(text = "holidays") },
+                    label = { Text(text = stringResource(R.string.tab_holidays)) },
                     selected = false
                 )
             }

@@ -51,9 +51,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.convertMillisToDate
@@ -265,7 +267,7 @@ fun DatePickerModal(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     ) {
@@ -313,7 +315,7 @@ fun DefaultBikeSelectorWithSpacer(
             expanded = bikeSelectorExpanded,
             onDismissRequest = { bikeSelectorExpanded = false }) {
             DropdownMenuItem(
-                text = { Text(text = "None") },
+                text = { Text(text = stringResource(R.string.none)) },
                 onClick = {
                     onMenuItemClick(null)
                     bikeSelectorExpanded = false
@@ -371,7 +373,7 @@ fun DefaultParentComponentSelectorWithSpacer(
             expanded = parentComponentExpanded,
             onDismissRequest = { parentComponentExpanded = false }) {
             DropdownMenuItem(
-                text = { Text(text = "None") },
+                text = { Text(text = stringResource(R.string.none)) },
                 onClick = {
                     onMenuItemClick(null)
                     parentComponentExpanded = false
@@ -408,7 +410,7 @@ fun DefaultDateSelectorWithSpacer(
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },
         trailingIcon = {
-            Icon(Icons.Default.DateRange, contentDescription = "Select date")
+            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -455,7 +457,7 @@ fun DefaultDateSelectorNullableWithSpacer(
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },
         trailingIcon = {
-            Icon(Icons.Default.DateRange, contentDescription = "Select date")
+            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -499,7 +501,9 @@ fun ShowAnimatedText(
         exit = fadeOut(animationSpec = tween(500))
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant)
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             content()
         }

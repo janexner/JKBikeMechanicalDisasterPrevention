@@ -24,8 +24,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
@@ -87,7 +89,7 @@ private fun KJsTopBar(
     var displayMainMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
-        title = { Text(text = "KJ's BMC") },
+        title = { Text(text = stringResource(R.string.top_bar_title)) },
         navigationIcon = {
             when (destination) {
                 HomeDestination -> {
@@ -98,7 +100,7 @@ private fun KJsTopBar(
                     IconButton(onClick = { destinationsNavigator.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 }
@@ -112,7 +114,7 @@ private fun KJsTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu"
+                    contentDescription = stringResource(R.string.menu)
                 )
             }
             DropdownMenu(
@@ -121,7 +123,12 @@ private fun KJsTopBar(
             ) {
                 DropdownMenuItem(
                     enabled = true,
-                    text = { Text(text = "Add Bike", style = MaterialTheme.typography.bodyLarge) },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.menu_item_add_bike),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(BikeAddDestination)
@@ -131,7 +138,7 @@ private fun KJsTopBar(
                     enabled = true,
                     text = {
                         Text(
-                            text = "Add Component",
+                            text = stringResource(R.string.menu_item_add_component),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },
@@ -144,7 +151,7 @@ private fun KJsTopBar(
                     enabled = true,
                     text = {
                         Text(
-                            text = "Manage Bikes / Components",
+                            text = stringResource(R.string.menu_item_manage_bikes_components),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },
@@ -157,7 +164,7 @@ private fun KJsTopBar(
                     enabled = true,
                     text = {
                         Text(
-                            text = "Component shelf",
+                            text = stringResource(R.string.menu_item_component_shelf),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },
@@ -168,7 +175,12 @@ private fun KJsTopBar(
                 )
                 DropdownMenuItem(
                     enabled = destination != SettingsDestination,
-                    text = { Text(text = "Settings", style = MaterialTheme.typography.bodyLarge) },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.menu_item_settings),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(SettingsDestination)
@@ -179,7 +191,7 @@ private fun KJsTopBar(
                     enabled = destination != AboutDestination,
                     text = {
                         Text(
-                            text = "About KJs BMC",
+                            text = stringResource(R.string.menu_item_about),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },

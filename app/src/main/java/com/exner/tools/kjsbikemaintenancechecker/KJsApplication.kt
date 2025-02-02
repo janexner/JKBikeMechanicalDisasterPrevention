@@ -14,6 +14,7 @@ import javax.inject.Inject
 class KJsApplication : Application() {
     @Inject
     lateinit var themeStateHolder: ThemeStateHolder
+
     @Inject
     lateinit var userPreferencesManager: UserPreferencesManager
 

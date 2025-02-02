@@ -22,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.ActivityDeleteViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowActivityDetails
@@ -61,7 +63,7 @@ fun ActivityDelete(
                     DefaultSpacer()
                     ShowActivityDetails(activity)
                 } else {
-                    Text(text = "We can not find this activity.")
+                    Text(text = stringResource(R.string.we_can_not_find_this_activity))
                 }
             }
         },
@@ -73,17 +75,17 @@ fun ActivityDelete(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Cancel"
+                            contentDescription = stringResource(R.string.cancel)
                         )
                     }
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
-                        text = { Text(text = "Delete") },
+                        text = { Text(text = stringResource(R.string.delete)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Filled.Done,
-                                contentDescription = "Delete the activity"
+                                contentDescription = stringResource(R.string.delete_the_activity)
                             )
                         },
                         onClick = {

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Hail
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Luggage
 import androidx.compose.material.icons.outlined.ThumbUp
@@ -17,7 +16,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
@@ -53,9 +54,9 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(HomeDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Home, contentDescription = "home")
+                        Icon(Icons.Outlined.Home, contentDescription = stringResource(R.string.tab_home))
                     },
-                    label = { Text(text = "home") },
+                    label = { Text(text = stringResource(R.string.tab_home)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -63,9 +64,9 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(PrepareShortRideDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = "quick ride")
+                        Icon(Icons.Outlined.ThumbUp, contentDescription = stringResource(R.string.tab_quick_ride))
                     },
-                    label = { Text(text = "quick ride") },
+                    label = { Text(text = stringResource(R.string.tab_quick_ride)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -73,9 +74,9 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Filled.Hail, contentDescription = "day out")
+                        Icon(Icons.Filled.Hail, contentDescription = stringResource(R.string.tab_day_out))
                     },
-                    label = { Text(text = "day out") },
+                    label = { Text(text = stringResource(R.string.tab_day_out)) },
                     selected = true
                 )
                 NavigationBarItem(
@@ -83,9 +84,9 @@ fun PrepareDayOut(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Luggage, contentDescription = "holidays")
+                        Icon(Icons.Outlined.Luggage, contentDescription = stringResource(R.string.tab_holidays))
                     },
-                    label = { Text(text = "holidays") },
+                    label = { Text(text = stringResource(R.string.tab_holidays)) },
                     selected = false
                 )
             }

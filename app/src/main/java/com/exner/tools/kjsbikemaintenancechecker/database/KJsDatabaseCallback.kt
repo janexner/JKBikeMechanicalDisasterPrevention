@@ -2,16 +2,10 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDateTime
-import java.time.Month
 import javax.inject.Provider
 
 class KJsDatabaseCallback(

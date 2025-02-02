@@ -25,8 +25,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.BikeDeleteViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
@@ -84,7 +86,7 @@ fun BikeDelete(
                         }
                     }
                 } else {
-                    Text(text = "We did not find this bike.")
+                    Text(text = stringResource(R.string.we_can_not_find_this_bike))
                 }
             }
         },
@@ -96,17 +98,17 @@ fun BikeDelete(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Cancel"
+                            contentDescription = stringResource(R.string.cancel)
                         )
                     }
                 },
                 floatingActionButton = {
                         ExtendedFloatingActionButton(
-                            text = { Text(text = "Delete") },
+                            text = { Text(text = stringResource(R.string.delete)) },
                             icon = {
                                 Icon(
                                     imageVector = Icons.Filled.Done,
-                                    contentDescription = "Delete the bike"
+                                    contentDescription = stringResource(R.string.delete_the_bike)
                                 )
                             },
                             onClick = {

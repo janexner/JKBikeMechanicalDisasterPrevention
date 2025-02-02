@@ -26,9 +26,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentEditViewModel
@@ -104,24 +106,24 @@ fun ComponentEdit(
                     .padding(8.dp)
             ) {
                 DefaultTextFieldWithSpacer(
-                    value = component?.name ?: "Name",
+                    value = component?.name ?: stringResource(R.string.placehldr_name),
                     onValueChange = {
                         componentEditViewModel.updateName(it)
                         modified = true
                     },
-                    label = "Component name",
+                    label = stringResource(R.string.lbl_component_name),
                 )
                 DefaultTextFieldWithSpacer(
-                    value = component?.description ?: "Description",
+                    value = component?.description ?: stringResource(R.string.placehldr_description),
                     onValueChange = {
                         componentEditViewModel.updateDescription(it)
                         modified = true
                     },
-                    label = "Description",
+                    label = stringResource(R.string.lbl_description),
                 )
                 DefaultBikeSelectorWithSpacer(
-                    value = if (currentBike == null) "None" else currentBike!!.name,
-                    label = "Attached to bike",
+                    value = if (currentBike == null) stringResource(R.string.none) else currentBike!!.name,
+                    label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
                         componentEditViewModel.updateAttachedBike(it)
                         modified = true
@@ -129,8 +131,8 @@ fun ComponentEdit(
                     bikes = bikes
                 )
                 DefaultParentComponentSelectorWithSpacer(
-                    value = if (currentParentComponent == null) "None" else currentParentComponent!!.name,
-                    label = "Part of component",
+                    value = if (currentParentComponent == null) stringResource(R.string.none) else currentParentComponent!!.name,
+                    label = stringResource(R.string.lbl_part_of_component),
                     onMenuItemClick = {
                         componentEditViewModel.updateParentComponent(it)
                         modified = true
@@ -139,8 +141,8 @@ fun ComponentEdit(
                 )
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedBuildDate,
-                    label = "Acquisition date",
-                    placeholder = "YYYY-MM-DD",
+                    label = stringResource(R.string.lbl_acquisition_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedBuildDate = it
                         if (it != null) {
@@ -154,12 +156,12 @@ fun ComponentEdit(
                         componentEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
                         modified = true
                     },
-                    label = "Mileage",
+                    label = stringResource(R.string.lbl_mileage),
                 )
                 DefaultDateSelectorNullableWithSpacer(
                     selectedDate = selectedLastUsedDate,
-                    label = "Last used date",
-                    placeholder = "YYYY-MM-DD",
+                    label = stringResource(R.string.lbl_last_used_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedLastUsedDate = it
                         componentEditViewModel.updateLastUsedDate(it)
@@ -177,7 +179,7 @@ fun ComponentEdit(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Cancel"
+                            contentDescription = stringResource(R.string.cancel)
                         )
                     }
                     IconButton(onClick = {
@@ -185,17 +187,17 @@ fun ComponentEdit(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete"
+                            contentDescription = stringResource(R.string.delete)
                         )
                     }
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
-                        text = { Text(text = "Save") },
+                        text = { Text(text = stringResource(R.string.save)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Filled.Done,
-                                contentDescription = "Save the component"
+                                contentDescription = stringResource(R.string.save_the_component)
                             )
                         },
                         onClick = {

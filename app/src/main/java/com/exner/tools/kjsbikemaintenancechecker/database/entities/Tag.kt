@@ -1,6 +1,5 @@
 package com.exner.tools.kjsbikemaintenancechecker.database.entities
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -26,9 +26,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.ui.ActivityEditViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultBikeSelectorWithSpacer
@@ -96,8 +98,8 @@ fun ActivityEdit(
             ) {
                 DefaultTextFieldWithSpacer(
                     value = activity?.title ?: "",
-                    label = "Activity title",
-                    placeholder = "Title",
+                    label = stringResource(R.string.lbl_activity_title),
+                    placeholder = stringResource(R.string.title),
                     onValueChange = {
                         activityEditViewModel.updateTitle(it)
                         modified = true
@@ -109,18 +111,19 @@ fun ActivityEdit(
                         activityEditViewModel.updateDescription(it)
                         modified = true
                     },
-                    label = "Description",
+                    label = stringResource(R.string.lbl_description),
                 )
                 TextAndSwitch(
-                    text = "Completed",
+                    text = stringResource(R.string.lbl_completed),
                     checked = activity?.isCompleted ?: false
                 ) {
                     activityEditViewModel.updateIsCompleted(it)
                     modified = true
                 }
                 DefaultBikeSelectorWithSpacer(
-                    value = if (currentBike != null) { currentBike!!.name } else { "None" },
-                    label = "Attached to bike",
+                    value = if (currentBike != null) { currentBike!!.name } else {
+                        stringResource(R.string.none) },
+                    label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
                         activityEditViewModel.updateAttachedBike(it)
                     },
@@ -128,8 +131,8 @@ fun ActivityEdit(
                 )
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedCreatedDate,
-                    label = "Created date",
-                    placeholder = "DD/MM/YYYY",
+                    label = stringResource(R.string.lbl_created_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedCreatedDate = it
                         if (it != null) {
@@ -139,8 +142,8 @@ fun ActivityEdit(
                 )
                 DefaultDateSelectorNullableWithSpacer(
                     selectedDate = selectedDueDate,
-                    label = "Due date",
-                    placeholder = "DD/MM/YYYY",
+                    label = stringResource(R.string.lbl_due_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedDueDate = it
                         activityEditViewModel.updateDueDate(it)
@@ -158,7 +161,7 @@ fun ActivityEdit(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Cancel"
+                            contentDescription = stringResource(R.string.cancel)
                         )
                     }
 
@@ -168,18 +171,18 @@ fun ActivityEdit(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete"
+                            contentDescription = stringResource(R.string.delete)
                         )
                     }
                 },
                 floatingActionButton = {
                     if (modified) {
                         ExtendedFloatingActionButton(
-                            text = { Text(text = "Save") },
+                            text = { Text(text = stringResource(R.string.save)) },
                             icon = {
                                 Icon(
                                     imageVector = Icons.Filled.Done,
-                                    contentDescription = "Save the activity"
+                                    contentDescription = stringResource(R.string.save_the_activity)
                                 )
                             },
                             onClick = {

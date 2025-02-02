@@ -28,8 +28,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ShelfViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
@@ -60,7 +62,7 @@ fun Shelf(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                Text(text = "This is your shelf. It contains components that are not currently attached to any bike.")
+                Text(text = stringResource(R.string.this_is_your_shelf_it_contains_components_that_are_not_currently_attached_to_any_bike))
                 DefaultSpacer()
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
@@ -77,7 +79,7 @@ fun Shelf(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Dataset, // TODO
-                                    contentDescription = "Component",
+                                    contentDescription = stringResource(R.string.component),
                                 )
                                 IconSpacer()
                                 Column {
@@ -103,17 +105,17 @@ fun Shelf(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
-                        text = { Text(text = "Add component") },
+                        text = { Text(text = stringResource(R.string.add_a_component)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Filled.Add,
-                                contentDescription = "Add component"
+                                contentDescription = stringResource(R.string.add_a_component)
                             )
                         },
                         onClick = {

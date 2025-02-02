@@ -29,9 +29,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ManageBikesAndComponentsViewModel
@@ -70,14 +72,14 @@ fun ManageBikesAndComponents(
                     .padding(8.dp)
                     .fillMaxSize()
             ) {
-                Text(text = "Tap bike or component to edit or delete. Long press bike to select it.")
+                Text(text = stringResource(R.string.tap_bike_or_component_to_edit_or_delete_long_press_bike_to_select_it))
                 DefaultSpacer()
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     stickyHeader {
                         Text(
-                            text = "Bikes",
+                            text = stringResource(R.string.hdr_bikes),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
@@ -112,7 +114,7 @@ fun ManageBikesAndComponents(
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
-                                    contentDescription = "Bike",
+                                    contentDescription = stringResource(R.string.bike),
                                 )
                                 IconSpacer()
                                 Text(
@@ -128,7 +130,7 @@ fun ManageBikesAndComponents(
                                     text = if (bike.lastUsedDate != null) {
                                         bike.lastUsedDate.toString()
                                     } else {
-                                        "not yet used"
+                                        stringResource(R.string.not_yet_used)
                                     },
                                 )
                             }
@@ -137,7 +139,7 @@ fun ManageBikesAndComponents(
 
                     stickyHeader {
                         Text(
-                            text = "Components",
+                            text = stringResource(R.string.hdr_components),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
@@ -165,7 +167,7 @@ fun ManageBikesAndComponents(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Dataset, // TODO
-                                    contentDescription = "Component",
+                                    contentDescription = stringResource(R.string.component),
                                 )
                                 IconSpacer()
                                 Column {
@@ -191,17 +193,17 @@ fun ManageBikesAndComponents(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
-                        text = { Text(text = "Add component") },
+                        text = { Text(text = stringResource(R.string.add_a_component)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Filled.Add,
-                                contentDescription = "Add component"
+                                contentDescription = stringResource(R.string.add_a_component)
                             )
                         },
                         onClick = {

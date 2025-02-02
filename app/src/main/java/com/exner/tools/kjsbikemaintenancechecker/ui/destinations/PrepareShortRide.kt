@@ -43,12 +43,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
@@ -105,11 +107,11 @@ fun PrepareShortRide(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Quick ride", style = MaterialTheme.typography.headlineMedium)
+                    Text(text = stringResource(R.string.hdr_quick_ride), style = MaterialTheme.typography.headlineMedium)
                     if (prepareShortRideViewModel.showIntroText.value) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropUp,
-                            contentDescription = "Collapse",
+                            contentDescription = stringResource(R.string.collapse),
                             modifier = Modifier.clickable {
                                 prepareShortRideViewModel.updateShowIntroText(false)
                             }
@@ -117,7 +119,7 @@ fun PrepareShortRide(
                     } else {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Expand",
+                            contentDescription = stringResource(R.string.expand),
                             modifier = Modifier.clickable {
                                 prepareShortRideViewModel.updateShowIntroText(true)
                             }
@@ -126,11 +128,11 @@ fun PrepareShortRide(
                 }
                 ShowAnimatedText(show = prepareShortRideViewModel.showIntroText.value) {
                     DefaultSpacer()
-                    Text(text = "Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.")
+                    Text(text = stringResource(R.string.quick_ride_you_are_not_so_far_away_from_a_walk_out_that_it_is_a_disaster_if_something_breaks))
                     DefaultSpacer()
-                    Text(text = "These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.")
+                    Text(text = stringResource(R.string.these_activities_help_avoid_things_that_will_either_stop_you_from_riding_or_make_your_ride_miserable_if_not_right))
                     DefaultSpacer()
-                    Text(text = "Best do these the night before!")
+                    Text(text = stringResource(R.string.best_do_these_the_night_before))
                     DefaultSpacer()
                 }
                 var offset = Offset.Zero
@@ -150,14 +152,14 @@ fun PrepareShortRide(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "Which bike: ")
+                        Text(text = stringResource(R.string.which_bike))
                         Button(
                             onClick = { bikesExpanded = true }
                         ) {
                             if (currentBike != null) {
                                 Text(text = currentBike!!.name)
                             } else {
-                                Text(text = "Select a bike")
+                                Text(text = stringResource(R.string.select_a_bike))
                             }
                         }
                     }
@@ -167,7 +169,7 @@ fun PrepareShortRide(
                         offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
                         onDismissRequest = { bikesExpanded = false }) {
                         DropdownMenuItem(
-                            text = { Text(text = "All bikes") },
+                            text = { Text(text = stringResource(R.string.all_bikes)) },
                             onClick = {
                                 currentBike = null
                                 modified = true
@@ -203,7 +205,7 @@ fun PrepareShortRide(
                         .fillMaxWidth()
                 ) {
                     stickyHeader {
-                        Text(text = "Activities for a quick ride:")
+                        Text(text = stringResource(R.string.activities_for_a_quick_ride))
                     }
 
                     items(items = shortRideActivities, key = { "temp-${it.uid}" }) { activity ->
@@ -220,7 +222,7 @@ fun PrepareShortRide(
                     }
 
                     stickyHeader {
-                        Text(text = "Activities that are due anyway:")
+                        Text(text = stringResource(R.string.activities_that_are_due_anyway))
                     }
 
                     items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
@@ -259,9 +261,9 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(HomeDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Home, contentDescription = "home")
+                        Icon(Icons.Outlined.Home, contentDescription = stringResource(R.string.tab_home))
                     },
-                    label = { Text(text = "home") },
+                    label = { Text(text = stringResource(R.string.tab_home)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -269,9 +271,9 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareShortRideDestination)
                     },
                     icon = {
-                        Icon(Icons.Filled.ThumbUp, contentDescription = "quick ride")
+                        Icon(Icons.Filled.ThumbUp, contentDescription = stringResource(R.string.tab_quick_ride))
                     },
-                    label = { Text(text = "quick ride") },
+                    label = { Text(text = stringResource(R.string.tab_quick_ride)) },
                     selected = true
                 )
                 NavigationBarItem(
@@ -279,9 +281,9 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Hail, contentDescription = "day out")
+                        Icon(Icons.Outlined.Hail, contentDescription = stringResource(R.string.tab_day_out))
                     },
-                    label = { Text(text = "day out") },
+                    label = { Text(text = stringResource(R.string.tab_day_out)) },
                     selected = false
                 )
                 NavigationBarItem(
@@ -289,9 +291,9 @@ fun PrepareShortRide(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Luggage, contentDescription = "holidays")
+                        Icon(Icons.Outlined.Luggage, contentDescription = stringResource(R.string.tab_holidays))
                     },
-                    label = { Text(text = "holidays") },
+                    label = { Text(text = stringResource(R.string.tab_holidays)) },
                     selected = false
                 )
             }

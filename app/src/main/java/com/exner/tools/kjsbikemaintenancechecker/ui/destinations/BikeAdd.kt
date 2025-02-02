@@ -23,8 +23,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.ui.BikeAddViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
@@ -67,7 +69,7 @@ fun BikeAdd(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                Text(text = "A new bike! Brilliant!")
+                Text(text = stringResource(R.string.a_new_bike_brilliant))
                 DefaultSpacer()
                 DefaultTextFieldWithSpacer(
                     value = name,
@@ -75,18 +77,18 @@ fun BikeAdd(
                         name = it
                         modified = true
                     },
-                    label = "Name",
+                    label = stringResource(R.string.lbl_name),
                 )
                 TextAndSwitch(
-                    text = "is an eBike",
+                    text = stringResource(R.string.lbl_is_an_ebike),
                     checked = isElectric
                 ) {
                     isElectric = it
                 }
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedDate,
-                    label = "Build date",
-                    placeholder = "DD/MM/YYYY",
+                    label = stringResource(R.string.lbl_build_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedDate = it
                     }
@@ -96,11 +98,11 @@ fun BikeAdd(
                     onValueChange = {
                         mileage = it.toIntOrNull() ?: 0
                     },
-                    label = "Mileage",
+                    label = stringResource(R.string.lbl_mileage),
                 )
                 DefaultSpacer()
                 TextAndSwitch(
-                    text = "Add set of components",
+                    text = stringResource(R.string.lbl_add_set_of_components),
                     checked = addComponentsWhenSavingBike
                 ) {
                     addComponentsWhenSavingBike = it
@@ -115,18 +117,18 @@ fun BikeAdd(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Cancel"
+                            contentDescription = stringResource(R.string.cancel)
                         )
                     }
                 },
                 floatingActionButton = {
                     if (name.isNotBlank() && selectedDate != null) {
                         ExtendedFloatingActionButton(
-                            text = { Text(text = "Save") },
+                            text = { Text(text = stringResource(R.string.save)) },
                             icon = {
                                 Icon(
                                     imageVector = Icons.Filled.Done,
-                                    contentDescription = "Save the bike"
+                                    contentDescription = stringResource(R.string.save_the_bike)
                                 )
                             },
                             onClick = {

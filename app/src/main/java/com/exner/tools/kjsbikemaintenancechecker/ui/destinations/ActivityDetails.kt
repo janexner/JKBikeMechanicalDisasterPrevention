@@ -23,8 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.ActivityDetailsViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowActivityDetails
@@ -62,7 +64,7 @@ fun ActivityDetails(
                 if (activity != null) {
                     ShowActivityDetails(activity)
                 } else {
-                    Text(text = "We cannot find that activity.")
+                    Text(text = stringResource(R.string.we_can_not_find_this_activity))
                 }
             }
         },
@@ -74,7 +76,7 @@ fun ActivityDetails(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                     IconSpacer()
@@ -83,17 +85,17 @@ fun ActivityDetails(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete"
+                            contentDescription = stringResource(R.string.delete)
                         )
                     }
                 },
                 floatingActionButton = {
                         ExtendedFloatingActionButton(
-                            text = { Text(text = "Edit") },
+                            text = { Text(text = stringResource(R.string.edit)) },
                             icon = {
                                 Icon(
                                     imageVector = Icons.Filled.Done,
-                                    contentDescription = "Edit the activity"
+                                    contentDescription = stringResource(R.string.edit_the_activity)
                                 )
                             },
                             onClick = {
