@@ -161,6 +161,7 @@ fun PrepareShortRide(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(text = stringResource(R.string.which_bike))
+                        DefaultSpacer()
                         Button(
                             onClick = { bikesExpanded = true }
                         ) {

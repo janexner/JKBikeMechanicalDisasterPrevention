@@ -8,6 +8,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -26,6 +27,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
 
     val observeShelvedComponents: Flow<List<Component>> = kjsDAO.observeShelvedComponents()
+
+    val observeTemplateActivity: Flow<List<TemplateActivity>> = kjsDAO.observeTemplateActivities()
 
     @WorkerThread
     suspend fun getActivityByUid(activityUid: Long): Activity? {
@@ -58,11 +61,6 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity> {
-        return kjsDAO.getTemplateActivityForRideLevel(rideLevel)
-    }
-
-    @WorkerThread
     suspend fun deleteActivityByUid(activityUid: Long) {
         kjsDAO.deleteActivityByUid(activityUid)
     }
@@ -73,8 +71,28 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getTemplateActivity(templateActivityUid: Long): TemplateActivity? {
+        return kjsDAO.getTemplateActivityByUid(templateActivityUid)
+    }
+
+    @WorkerThread
+    suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity> {
+        return kjsDAO.getTemplateActivityForRideLevel(rideLevel)
+    }
+
+    @WorkerThread
     suspend fun insertTemplateActivity(templateActivity: TemplateActivity) {
         kjsDAO.insertTemplateActivity(templateActivity)
+    }
+
+    @WorkerThread
+    suspend fun updateTemplateActivity(templateActivity: TemplateActivity) {
+        kjsDAO.updateTemplateActivity(templateActivity)
+    }
+
+    @WorkerThread
+    suspend fun deleteTemplateActivityByUid(templateActivityUid: Long) {
+        kjsDAO.deleteTemplateActivityByUid(templateActivityUid)
     }
 
     @WorkerThread

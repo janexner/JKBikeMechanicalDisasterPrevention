@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -85,5 +86,26 @@ fun TransientTodoListItem(
                 }
             )
         }
+    )
+}
+
+@Composable
+fun TemplateActivityListItem(
+    templateActivity: TemplateActivity,
+    onItemClick: (Long) -> Unit
+) {
+    ListItem(
+        modifier = Modifier.clickable { onItemClick(templateActivity.uid) },
+        overlineContent = {
+            if (templateActivity.isEBikeSpecific) {
+                Text(text = "eBike-specific")
+            }
+        },
+        headlineContent = {
+            Text(text = templateActivity.title)
+        },
+        supportingContent = {
+            Text(text = templateActivity.description)
+        },
     )
 }

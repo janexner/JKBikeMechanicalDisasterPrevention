@@ -13,6 +13,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.preferences.UserPreferencesManager
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -107,7 +108,7 @@ class PrepareShortRideViewModel @Inject constructor(
         Log.d(TAG, "Will copy template activities...")
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
         val currentShortRide = Ride(
-            name = "Short Ride $today",
+            name = "Quick Ride $today",
             createdInstant = Clock.System.now()
         )
         var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelShortRide.value)
@@ -133,22 +134,28 @@ class PrepareShortRideViewModel @Inject constructor(
                 createdInstant = Clock.System.now(),
                 uid = 0
             )
+            Log.d(TAG, "Adding ride to repository ${rideUidByRideLevel.uid}")
             repository.insertRideUidByRideLevel(rideUidByRideLevel = rideUidByRideLevel)
-            repository.getTemplateActivityForRideLevel(rideLevel = 1).forEach { templateActivity ->
-                val activity = Activity(
-                    title = templateActivity.title,
-                    description = templateActivity.description,
-                    isCompleted = templateActivity.isCompleted,
-                    bikeUid = templateActivity.bikeUid,
-                    isEBikeSpecific = templateActivity.isEBikeSpecific,
-                    rideUid = newRideUid,
-                    createdDate = templateActivity.createdDate,
-                    dueDate = templateActivity.dueDate,
-                    doneDate = templateActivity.doneDate,
-                    uid = 0,
-                )
-                repository.insertActivity(activity = activity)
-            }
+            Log.d(TAG, "Going to create activities from template activities...")
+            val rideLevelQuickRide = RideLevel.getRideLevelQuickRide()
+            repository.getTemplateActivityForRideLevel(rideLevel = rideLevelQuickRide)
+                .forEach { templateActivity ->
+                    val activity = Activity(
+                        title = templateActivity.title,
+                        description = templateActivity.description,
+                        isCompleted = false,
+                        bikeUid = null,
+                        isEBikeSpecific = templateActivity.isEBikeSpecific,
+                        rideUid = newRideUid,
+                        createdDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                        dueDate = null,
+                        doneDate = null,
+                        uid = 0,
+                    )
+                    Log.d(TAG, "Adding activity ${activity.title}...")
+                    repository.insertActivity(activity = activity)
+                }
+            Log.d(TAG, "Done adding activities.")
             return newRideUid
         }
         return potentialOldRide.rideUid

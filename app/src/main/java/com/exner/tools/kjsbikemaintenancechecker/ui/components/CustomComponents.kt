@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,10 +24,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -59,6 +62,7 @@ import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.convertMillisToDate
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 
 @Composable
@@ -508,4 +512,63 @@ fun ShowAnimatedText(
             content()
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun RideLevelSelector(
+    currentRideLevel: RideLevel?,
+    rideLevels: List<RideLevel>,
+    leftAlign: Boolean = false,
+    onItemSelected: (RideLevel?) -> Unit,
+) {
+    var levelsExpanded by remember {
+        mutableStateOf(false)
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp, 0.dp)
+            .wrapContentSize(Alignment.TopEnd)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = if (leftAlign) { Arrangement.Start } else { Arrangement.End }
+        ) {
+            Text(text = stringResource(R.string.ride_level_name))
+            DefaultSpacer()
+            Button(
+                onClick = { levelsExpanded = true }
+            ) {
+                if (currentRideLevel != null) {
+                    Text(text = currentRideLevel.name)
+                } else {
+                    Text(text = stringResource(R.string.select_a_level))
+                }
+            }
+        }
+        DropdownMenu(
+            expanded = levelsExpanded,
+            onDismissRequest = { levelsExpanded = false }) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.all_levels)) },
+                onClick = {
+                    onItemSelected(null)
+                    levelsExpanded = false
+                },
+                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+            )
+            rideLevels.forEach { level ->
+                DropdownMenuItem(
+                    text = { Text(text = level.name) },
+                    onClick = {
+                        onItemSelected(level)
+                        levelsExpanded = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                )
+            }
+        }
+    }
+    DefaultSpacer()
 }

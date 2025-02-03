@@ -32,7 +32,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponent
     exportSchema = true
 )
 @TypeConverters(
-    DateConverter::class
+    DataConverter::class
 )
 abstract class KJsDatabase : RoomDatabase() {
     abstract fun dataDAO(): KJsDAO

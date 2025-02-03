@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 
 
 @Composable
@@ -32,5 +33,20 @@ fun ShowActivityDetails(activity: Activity?) {
     } else {
         Text(text = stringResource(R.string.no_due_date))
     }
+    DefaultSpacer()
+}
+
+@Composable
+fun ShowTemplateActivityDetails(
+    templateActivity: TemplateActivity?
+) {
+    Text(text = "Ride Level: ${templateActivity?.rideLevel?.name}")
+    DefaultSpacer()
+    Text(
+        text = templateActivity?.title ?: stringResource(R.string.no_activity_title),
+        style = MaterialTheme.typography.headlineMedium
+    )
+    DefaultSpacer()
+    Text(text = templateActivity?.description ?: stringResource(R.string.placehldr_no_description))
     DefaultSpacer()
 }

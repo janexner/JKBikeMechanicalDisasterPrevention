@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3edf3b4be99ccaef947a16b801f4766e",
+    "identityHash": "334321b729192b75459a69892611976c",
     "entities": [
       {
         "tableName": "Activity",
@@ -352,13 +352,13 @@
       },
       {
         "tableName": "TemplateActivity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ride_level` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER NOT NULL, `is_ebike_specific` INTEGER NOT NULL, `created_date` TEXT NOT NULL, `due_date` TEXT, `done_date` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ride_level` TEXT, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_ebike_specific` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "rideLevel",
             "columnName": "ride_level",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title",
@@ -373,40 +373,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "isCompleted",
-            "columnName": "is_completed",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "bikeUid",
-            "columnName": "bike_uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "isEBikeSpecific",
             "columnName": "is_ebike_specific",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "createdDate",
-            "columnName": "created_date",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "dueDate",
-            "columnName": "due_date",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "doneDate",
-            "columnName": "done_date",
-            "affinity": "INTEGER",
-            "notNull": false
           },
           {
             "fieldPath": "uid",
@@ -437,7 +407,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3edf3b4be99ccaef947a16b801f4766e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '334321b729192b75459a69892611976c')"
     ]
   }
 }

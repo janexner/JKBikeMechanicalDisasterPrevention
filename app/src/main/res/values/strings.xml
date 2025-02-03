@@ -28,6 +28,7 @@
     <string name="hdr_quick_ride">Quick ride</string>
     <string name="lbl_acquisition_date">Acquisition date</string>
     <string name="lbl_activity_title">Activity title</string>
+    <string name="lbl_add_template_activity">Add template activity</string>
     <string name="lbl_add_set_of_components">Add set of components</string>
     <string name="lbl_attached_to_bike">Attached to bike</string>
     <string name="lbl_bike_name">Bike name</string>
@@ -79,7 +80,14 @@
     <string name="we_can_not_find_this_activity">We can not find this activity.</string>
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="we_can_not_find_this_component">We did not find this component.</string>
-    <string name="which_bike">Which bike: </string>
+    <string name="which_bike">Which bike</string>
     <string name="lbl_start_new_short_ride">Start new short ride</string>
     <string name="clear_and_start_anew">Clear and start anew</string>
+    <string name="ride_level_name">Ride Level</string>
+    <string name="select_a_level">Select a ride level</string>
+    <string name="all_levels">All levels</string>
+    <string name="is_ebike_specific">eBike-specific</string>
+    <string name="title_quick_ride">Quick ride</string>
+    <string name="title_day_out">Day out</string>
+    <string name="title_holidays">Holidays</string>
 </resources>

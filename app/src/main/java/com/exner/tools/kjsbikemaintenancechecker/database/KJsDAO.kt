@@ -13,6 +13,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -35,6 +36,9 @@ interface KJsDAO {
     @Query("SELECT * FROM shelvedcomponents ORDER BY name")
     fun observeShelvedComponents(): Flow<List<Component>>
 
+    @Query("SELECT * FROM templateactivity")
+    fun observeTemplateActivities(): Flow<List<TemplateActivity>>
+
     //
     // GETTERS - return individual lines
     //
@@ -46,6 +50,9 @@ interface KJsDAO {
 
     @Query("SELECT * FROM component WHERE uid=:uid")
     suspend fun getComponentByUid(uid: Long): Component?
+
+    @Query("SELECT * FROM templateactivity WHERE uid=:uid")
+    suspend fun getTemplateActivityByUid(uid: Long): TemplateActivity?
 
     //
     // other helpers
@@ -65,8 +72,8 @@ interface KJsDAO {
     @Query("SELECT * FROM activitywithbikedata WHERE activity_ride_uid=:rideUid ORDER BY activity_due_date DESC")
     suspend fun getActivitiesWithBikeDataForRide(rideUid: Long): List<ActivityWithBikeData>
 
-    @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel ORDER BY due_date")
-    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity>
+    @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel")
+    suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity>
 
     //
     // UPDATE/INSERT/DELETE
@@ -126,6 +133,12 @@ interface KJsDAO {
 
     @Insert
     suspend fun insertTemplateActivity(templateActivity: TemplateActivity): Long
+
+    @Update
+    suspend fun updateTemplateActivity(templateActivity: TemplateActivity)
+
+    @Query("DELETE FROM templateactivity WHERE uid=:uid")
+    suspend fun deleteTemplateActivityByUid(uid: Long)
 
     //
 
