@@ -26,8 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.SettingsViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndTriStateToggle
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -43,6 +45,7 @@ fun Settings(
 ) {
 
     val userSelectedTheme by settingsViewModel.userSelectedTheme.collectAsStateWithLifecycle()
+    val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
 
     // show vertically
     Scaffold(
@@ -59,11 +62,16 @@ fun Settings(
                     text = stringResource(R.string.lbl_theme),
                     currentTheme = userSelectedTheme,
                     updateTheme = { it: Theme ->
-                        settingsViewModel.updateUserSelectedTheme(
-                            it
-                        )
+                        settingsViewModel.updateUserSelectedTheme(it)
                     }
                 )
+                DefaultSpacer()
+                TextAndSwitch(
+                    text = "TODO lists / rides expire after 2 days",
+                    checked = todoListsExpire
+                ) {
+                    settingsViewModel.updateTodoListsExpire(it)
+                }
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),

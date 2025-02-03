@@ -88,7 +88,7 @@ class PrepareDayOutViewModel @Inject constructor(
         }
         // then create a new one
         viewModelScope.launch {
-            rideUid.value = copyTemplateActivities()
+            rideUid.value = copyTemplateActivities(force = true)
         }
     }
 
@@ -104,7 +104,7 @@ class PrepareDayOutViewModel @Inject constructor(
         }, 2000)
     }
 
-    private suspend fun copyTemplateActivities(): Long {
+    private suspend fun copyTemplateActivities(force: Boolean = false): Long {
         Log.d(TAG, "Will copy template activities...")
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
         val currentDayOut = Ride(
@@ -115,18 +115,18 @@ class PrepareDayOutViewModel @Inject constructor(
         Log.d(TAG, "Found potential old ride ${potentialOldRide?.rideUid}")
         val oldTodoListsExpire = userPreferencesManager.todoListsExpire().firstOrNull()
         Log.d(TAG, "User wishes old rides to expire after 2 days")
-        if (oldTodoListsExpire == true && potentialOldRide != null) {
+        if ((force || oldTodoListsExpire == true) && potentialOldRide != null) {
             val now = Clock.System.now()
             val age: Duration = now - potentialOldRide.createdInstant
             Log.d(TAG, "Potential old ride age is $age (${age.inWholeDays} days)")
-            if (age.isPositive() && age.inWholeDays > 2) {
+            if (force || (age.isPositive() && age.inWholeDays > 2)) {
                 // the one we found is old, so lets ditch it
                 Log.d(TAG, "Deleting old ride ${potentialOldRide.rideUid}")
                 repository.deleteActivitiesForRide(potentialOldRide.rideUid)
                 potentialOldRide = null
             }
         }
-        if (potentialOldRide == null) {
+        if (force || potentialOldRide == null) {
             val newRideUid: Long = repository.insertRide(currentDayOut)
             val rideUidByRideLevel = RideUidByRideLevel(
                 rideUid = newRideUid,
