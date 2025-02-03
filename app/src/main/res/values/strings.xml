@@ -35,7 +35,7 @@
     <string name="lbl_build_date">Build date</string>
     <string name="lbl_completed">Completed</string>
     <string name="lbl_component_name">Component name</string>
-    <string name="lbl_created_date">Created date</string>
+    <string name="lbl_created_at">Created at</string>
     <string name="lbl_description">Description</string>
     <string name="lbl_due_date">Due date</string>
     <string name="lbl_is_an_ebike">is an eBike</string>
@@ -60,6 +60,7 @@
     <string name="placehldr_name">Name</string>
     <string name="placehldr_no_description">No description</string>
     <string name="placehldr_yyyy_mm_dd">YYYY-MM-DD</string>
+    <string name="placehldr_yyyy_mm_dd_hh_mm_ss">YYYY-MM-DD hh:mm:ss</string>
     <string name="quick_ride_you_are_not_so_far_away_from_a_walk_out_that_it_is_a_disaster_if_something_breaks">Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.</string>
     <string name="save">Save</string>
     <string name="save_the_activity">Save the activity</string>

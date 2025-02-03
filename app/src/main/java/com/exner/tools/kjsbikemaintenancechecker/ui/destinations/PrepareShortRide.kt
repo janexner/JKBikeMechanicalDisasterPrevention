@@ -243,9 +243,9 @@ fun PrepareShortRide(
                             description = activityByBike.activityDescription,
                             isCompleted = activityByBike.activityIsCompleted,
                             rideUid = null,
-                            createdDate = activityByBike.activityCreatedDate,
+                            createdInstant = activityByBike.activityCreatedInstant,
                             dueDate = activityByBike.activityDueDate,
-                            doneDate = activityByBike.activityDoneDate,
+                            doneInstant = activityByBike.activityDoneDateInstant,
                             bikeUid = activityByBike.bikeUid!!,
                             uid = activityByBike.activityUid
                         )
@@ -256,7 +256,7 @@ fun PrepareShortRide(
                                 prepareShortRideViewModel.updateActivity(
                                     activity = activity.copy(
                                         isCompleted = result,
-                                        doneDate = if (result) {
+                                        doneInstant = if (result) {
                                             Clock.System.now()
                                         } else {
                                             null

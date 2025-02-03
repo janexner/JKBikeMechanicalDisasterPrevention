@@ -61,8 +61,9 @@ import androidx.compose.ui.unit.dp
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.ui.destinations.convertMillisToDate
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.convertMillisToDate
+import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.convertMillisToDateAndTime
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 
 @Composable
@@ -457,6 +458,53 @@ fun DefaultDateSelectorNullableWithSpacer(
     var showCreatedDateModal by remember { mutableStateOf(false) }
     OutlinedTextField(
         value = selectedDate?.let { convertMillisToDate(it) } ?: "",
+        onValueChange = { },
+        label = { Text(text = label) },
+        placeholder = { Text(text = realPlaceholder) },
+        trailingIcon = {
+            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .pointerInput(selectedDate) {
+                awaitEachGesture {
+                    // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
+                    // in the Initial pass to observe events before the text field consumes them
+                    // in the Main pass.
+                    awaitFirstDown(pass = PointerEventPass.Initial)
+                    val upEvent =
+                        waitForUpOrCancellation(pass = PointerEventPass.Initial)
+                    if (upEvent != null) {
+                        showCreatedDateModal = true
+                    }
+                }
+            }
+    )
+
+    if (showCreatedDateModal) {
+        DatePickerModal(
+            onDateSelected = {
+                if (it != null) {
+                    onDateSelected(it)
+                }
+            },
+            onDismiss = { showCreatedDateModal = false }
+        )
+    }
+    DefaultSpacer()
+}
+
+@Composable
+fun DefaultInstantSelectorWithSpacer(
+    selectedDate: Long?,
+    label: String,
+    placeholder: String?,
+    onDateSelected: (Long?) -> Unit
+) {
+    val realPlaceholder = placeholder ?: label
+    var showCreatedDateModal by remember { mutableStateOf(false) }
+    OutlinedTextField(
+        value = selectedDate?.let { convertMillisToDateAndTime(it) } ?: "",
         onValueChange = { },
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },

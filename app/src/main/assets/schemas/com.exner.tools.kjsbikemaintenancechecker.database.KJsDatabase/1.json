@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "334321b729192b75459a69892611976c",
+    "identityHash": "3a895f3225b5c819518c6c6313d6c2fd",
     "entities": [
       {
         "tableName": "Activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER, `is_ebike_specific` INTEGER NOT NULL, `ride_uid` INTEGER, `created_date` TEXT NOT NULL, `due_date` TEXT, `done_date` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER, `is_ebike_specific` INTEGER NOT NULL, `ride_uid` INTEGER, `created_instant` INTEGER NOT NULL, `due_date` TEXT, `done_instant` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -46,8 +46,8 @@
           },
           {
             "fieldPath": "createdDate",
-            "columnName": "created_date",
-            "affinity": "TEXT",
+            "columnName": "created_instant",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -57,8 +57,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "doneDate",
-            "columnName": "done_date",
+            "fieldPath": "doneInstant",
+            "columnName": "done_instant",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -398,7 +398,7 @@
     "views": [
       {
         "viewName": "ActivityWithBikeData",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_date as activity_created_date, a.due_date as activity_due_date, a.done_date as activity_done_date, a.is_ebike_specific as activity_is_ebike_specific, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;"
       },
       {
         "viewName": "ShelvedComponents",
@@ -407,7 +407,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '334321b729192b75459a69892611976c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a895f3225b5c819518c6c6313d6c2fd')"
     ]
   }
 }

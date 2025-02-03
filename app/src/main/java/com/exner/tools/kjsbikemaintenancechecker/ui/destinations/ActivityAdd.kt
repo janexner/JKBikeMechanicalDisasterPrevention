@@ -119,7 +119,7 @@ fun ActivityAdd(
                 )
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedCreatedDate,
-                    label = stringResource(R.string.lbl_created_date),
+                    label = stringResource(R.string.lbl_created_at),
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         if (it != null) {
@@ -175,16 +175,13 @@ fun ActivityAdd(
                                     title = title,
                                     description = description,
                                     rideUid = null,
-                                    createdDate = Instant.fromEpochMilliseconds(selectedCreatedDate)
-                                        .toLocalDateTime(
-                                            TimeZone.currentSystemDefault()
-                                        ).date,
+                                    createdInstant = Instant.fromEpochMilliseconds(selectedCreatedDate),
                                     isCompleted = isCompleted,
                                     dueDate = if (selectedDueDate != null) { Instant.fromEpochMilliseconds(selectedDueDate!!)
                                         .toLocalDateTime(
                                             TimeZone.currentSystemDefault()
                                         ).date } else { null },
-                                    doneDate = null,
+                                    doneInstant = null,
                                     bikeUid = currentBike?.uid
                                 )
                                 activityAddViewModel.saveActivity(activity)

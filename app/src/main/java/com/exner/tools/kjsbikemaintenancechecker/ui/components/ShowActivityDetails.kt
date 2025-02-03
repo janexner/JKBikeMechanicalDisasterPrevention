@@ -7,6 +7,8 @@ import androidx.compose.ui.res.stringResource
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 
 @Composable
@@ -26,7 +28,9 @@ fun ShowActivityDetails(activity: Activity?) {
         } + stringResource(R.string.completed)
     )
     DefaultSpacer()
-    Text(text = "Created on ${activity?.createdDate}")
+    val createdLocalDateTime =
+        activity?.createdInstant?.toLocalDateTime(TimeZone.currentSystemDefault())
+    Text(text = "Created at $createdLocalDateTime")
     DefaultSpacer()
     if (activity?.dueDate != null) {
         Text(text = "Due on ${activity.dueDate}")
@@ -34,6 +38,13 @@ fun ShowActivityDetails(activity: Activity?) {
         Text(text = stringResource(R.string.no_due_date))
     }
     DefaultSpacer()
+    if (activity != null) {
+        if (activity.isCompleted && activity.doneInstant != null) {
+            val doneLocalDateTime =
+                activity.doneInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+            Text(text = "Completed at $doneLocalDateTime")
+        }
+    }
 }
 
 @Composable

@@ -65,6 +65,9 @@ fun Home(
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
+                val filteredActivitiesByBikes: List<ActivityWithBikeData> = activitiesByBikes.filter { activityWithBikeData ->
+                    activityWithBikeData.rideUid == null || activityWithBikeData.rideUid < 0
+                }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -73,16 +76,16 @@ fun Home(
                         Text(text = "TODOs")
                     }
 
-                    items(items = activitiesByBikes, key = { it.activityUid }) { activityByBike ->
+                    items(items = filteredActivitiesByBikes, key = { it.activityUid }) { activityByBike ->
                         val activity = Activity(
                             title = activityByBike.activityTitle,
                             description = activityByBike.activityDescription,
                             isCompleted = activityByBike.activityIsCompleted,
                             rideUid = null,
-                            createdDate = activityByBike.activityCreatedDate,
+                            createdInstant = activityByBike.activityCreatedInstant,
                             dueDate = activityByBike.activityDueDate,
                             bikeUid = activityByBike.bikeUid ?: 0,
-                            doneDate = activityByBike.activityDoneDate,
+                            doneInstant = activityByBike.activityDoneDateInstant,
                             uid = activityByBike.activityUid
                         )
                         TodoListItem(
@@ -91,7 +94,7 @@ fun Home(
                             onCheckboxCallback = { result ->
                                 homeViewModel.updateActivity(activity = activity.copy(
                                     isCompleted = result,
-                                    doneDate = if (result) { Clock.System.now() } else { null }
+                                    doneInstant = if (result) { Clock.System.now() } else { null }
                                 ))
                             },
                         )

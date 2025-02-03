@@ -162,8 +162,3 @@ fun BikeAdd(
         }
     )
 }
-
-fun convertMillisToDate(millis: Long): String {
-    return Instant.fromEpochMilliseconds(millis)
-        .toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
-}

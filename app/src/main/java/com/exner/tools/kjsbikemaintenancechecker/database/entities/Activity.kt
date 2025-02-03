@@ -16,9 +16,9 @@ data class Activity(
     @ColumnInfo(name = "is_ebike_specific") val isEBikeSpecific: Boolean = false,
 
     @ColumnInfo(name = "ride_uid") val rideUid: Long?,
-    @ColumnInfo(name = "created_date") val createdDate: LocalDate,
+    @ColumnInfo(name = "created_instant") val createdInstant: Instant,
     @ColumnInfo(name = "due_date") val dueDate: LocalDate?,
-    @ColumnInfo(name = "done_date") val doneDate: Instant?,
+    @ColumnInfo(name = "done_instant") val doneInstant: Instant?,
 
     @PrimaryKey(autoGenerate = true) val uid: Long = 0
 )

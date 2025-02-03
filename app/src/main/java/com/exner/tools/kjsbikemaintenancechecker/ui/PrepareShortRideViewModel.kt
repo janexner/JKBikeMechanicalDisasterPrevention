@@ -147,9 +147,9 @@ class PrepareShortRideViewModel @Inject constructor(
                         bikeUid = null,
                         isEBikeSpecific = templateActivity.isEBikeSpecific,
                         rideUid = newRideUid,
-                        createdDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                        createdInstant = Clock.System.now(),
                         dueDate = null,
-                        doneDate = null,
+                        doneInstant = null,
                         uid = 0,
                     )
                     Log.d(TAG, "Adding activity ${activity.title}...")

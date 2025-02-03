@@ -35,7 +35,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.ui.ActivityEditViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorNullableWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultInstantSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
@@ -62,12 +62,7 @@ fun ActivityEdit(
         }
 
     val activity by activityEditViewModel.activity.observeAsState()
-    val createdDateInstant = activity?.let {
-        LocalDateTime(it.createdDate, LocalTime(12, 0, 0)).toInstant(
-            TimeZone.currentSystemDefault()
-        )
-    }
-    var selectedCreatedDate = createdDateInstant?.toEpochMilliseconds()
+    var selectedCreatedDate = activity?.createdInstant?.toEpochMilliseconds()
     val dueDateInstant = activity?.dueDate?.let {
         LocalDateTime(
             it,
@@ -129,10 +124,10 @@ fun ActivityEdit(
                     },
                     bikes = bikes
                 )
-                DefaultDateSelectorWithSpacer(
+                DefaultInstantSelectorWithSpacer(
                     selectedDate = selectedCreatedDate,
-                    label = stringResource(R.string.lbl_created_date),
-                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
+                    label = stringResource(R.string.lbl_created_at),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd_hh_mm_ss),
                     onDateSelected = {
                         selectedCreatedDate = it
                         if (it != null) {

@@ -66,10 +66,8 @@ class ActivityEditViewModel @AssistedInject constructor(
     fun updateCreatedDate(millis: Long) {
         if (activity.value != null) {
             val buildDateInstant = Instant.fromEpochMilliseconds(millis)
-            val buildDate =
-                buildDateInstant.toLocalDateTime(TimeZone.currentSystemDefault()).date
             _activity.value = activity.value!!.copy(
-                createdDate = buildDate
+                createdInstant = buildDateInstant
             )
         }
     }
