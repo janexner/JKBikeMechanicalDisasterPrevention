@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.TemplateActivityDeleteViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowTemplateActivityDetails
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -59,6 +60,7 @@ fun TemplateActivityDelete(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.delete_template_activity))
                 if (activity != null) {
                     Text(text = "You are about to delete template activity ${activity?.title}!")
                     DefaultSpacer()

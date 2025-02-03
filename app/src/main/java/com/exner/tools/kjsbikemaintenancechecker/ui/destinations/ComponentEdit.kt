@@ -41,6 +41,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFiel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultParentComponentSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ComponentDeleteDestination
@@ -105,6 +106,7 @@ fun ComponentEdit(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.edit_a_component))
                 DefaultTextFieldWithSpacer(
                     value = component?.name ?: stringResource(R.string.placehldr_name),
                     onValueChange = {

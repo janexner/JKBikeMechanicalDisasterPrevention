@@ -15,7 +15,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -35,7 +34,8 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActiv
 import com.exner.tools.kjsbikemaintenancechecker.ui.ManageTemplateActivitiesViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.RideLevelSelector
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.RideLevelSelectorForLists
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TemplateActivityListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -44,7 +44,6 @@ import com.ramcosta.composedestinations.generated.destinations.TemplateActivityA
 import com.ramcosta.composedestinations.generated.destinations.TemplateActivityEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
 @Composable
 fun ManageTemplateActivities(
@@ -69,10 +68,10 @@ fun ManageTemplateActivities(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                RideLevelSelector(
+                PageHeaderTextWithSpacer(stringResource(R.string.lbl_manage_template_activities))
+                RideLevelSelectorForLists(
                     currentRideLevel,
                     rideLevels,
-                    leftAlign = false
                 ) {
                     currentRideLevel = it
                 }

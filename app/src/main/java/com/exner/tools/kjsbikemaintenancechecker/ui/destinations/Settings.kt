@@ -27,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.SettingsViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndTriStateToggle
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -53,6 +54,7 @@ fun Settings(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.menu_item_settings))
                 TextAndTriStateToggle(
                     text = stringResource(R.string.lbl_theme),
                     currentTheme = userSelectedTheme,

@@ -94,12 +94,11 @@ fun TemplateActivityListItem(
     templateActivity: TemplateActivity,
     onItemClick: (Long) -> Unit
 ) {
+    val overlineContentText = templateActivity.rideLevel?.name + if (templateActivity.isEBikeSpecific) { " - eBike-specific" } else { "" }
     ListItem(
         modifier = Modifier.clickable { onItemClick(templateActivity.uid) },
         overlineContent = {
-            if (templateActivity.isEBikeSpecific) {
-                Text(text = "eBike-specific")
-            }
+            Text(text = overlineContentText)
         },
         headlineContent = {
             Text(text = templateActivity.title)

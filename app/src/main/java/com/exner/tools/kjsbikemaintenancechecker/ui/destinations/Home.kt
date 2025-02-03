@@ -33,6 +33,7 @@ import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
 import com.exner.tools.kjsbikemaintenancechecker.ui.HomeViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
@@ -65,6 +66,8 @@ fun Home(
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
+                Text(text = stringResource(R.string.welcome_to_kj_s_bike_maintenance_checker))
+                DefaultSpacer()
                 val filteredActivitiesByBikes: List<ActivityWithBikeData> = activitiesByBikes.filter { activityWithBikeData ->
                     activityWithBikeData.rideUid == null || activityWithBikeData.rideUid < 0
                 }
@@ -73,7 +76,7 @@ fun Home(
                         .fillMaxWidth()
                 ) {
                     stickyHeader {
-                        Text(text = "TODOs")
+                        Text(text = stringResource(R.string.todos))
                     }
 
                     items(items = filteredActivitiesByBikes, key = { it.activityUid }) { activityByBike ->

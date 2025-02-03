@@ -10,7 +10,6 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,12 +23,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -61,7 +58,6 @@ import androidx.compose.ui.unit.dp
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.convertMillisToDate
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.convertMillisToDateAndTime
 import com.exner.tools.kjsbikemaintenancechecker.ui.theme.Theme
@@ -209,48 +205,6 @@ fun DefaultSpacer() {
 fun IconSpacer() {
     Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
 }
-
-//@Composable fun DefaultDateField(
-//
-//) {
-//    OutlinedTextField(
-//        value = selectedBuildDate?.let { convertMillisToDate(it) } ?: "",
-//        onValueChange = { },
-//        label = { Text("Acquisition date") },
-//        placeholder = { Text("YYYY-MM-DD") },
-//        trailingIcon = {
-//            Icon(Icons.Default.DateRange, contentDescription = "Select date")
-//        },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .pointerInput(selectedBuildDate) {
-//                awaitEachGesture {
-//                    // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
-//                    // in the Initial pass to observe events before the text field consumes them
-//                    // in the Main pass.
-//                    awaitFirstDown(pass = PointerEventPass.Initial)
-//                    val upEvent =
-//                        waitForUpOrCancellation(pass = PointerEventPass.Initial)
-//                    if (upEvent != null) {
-//                        showBuildDateModal = true
-//                    }
-//                }
-//            }
-//    )
-//
-//    if (showBuildDateModal) {
-//        DatePickerModal(
-//            onDateSelected = {
-//                selectedBuildDate = it
-//                if (it != null) {
-//                    componentEditViewModel.updateAcquisitionDate(it)
-//                }
-//            },
-//            onDismiss = { showBuildDateModal = false }
-//        )
-//    }
-//    DefaultSpacer()
-//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -563,60 +517,10 @@ fun ShowAnimatedText(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun RideLevelSelector(
-    currentRideLevel: RideLevel?,
-    rideLevels: List<RideLevel>,
-    leftAlign: Boolean = false,
-    onItemSelected: (RideLevel?) -> Unit,
-) {
-    var levelsExpanded by remember {
-        mutableStateOf(false)
-    }
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp, 0.dp)
-            .wrapContentSize(Alignment.TopEnd)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = if (leftAlign) { Arrangement.Start } else { Arrangement.End }
-        ) {
-            Text(text = stringResource(R.string.ride_level_name))
-            DefaultSpacer()
-            Button(
-                onClick = { levelsExpanded = true }
-            ) {
-                if (currentRideLevel != null) {
-                    Text(text = currentRideLevel.name)
-                } else {
-                    Text(text = stringResource(R.string.select_a_level))
-                }
-            }
-        }
-        DropdownMenu(
-            expanded = levelsExpanded,
-            onDismissRequest = { levelsExpanded = false }) {
-            DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.all_levels)) },
-                onClick = {
-                    onItemSelected(null)
-                    levelsExpanded = false
-                },
-                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-            )
-            rideLevels.forEach { level ->
-                DropdownMenuItem(
-                    text = { Text(text = level.name) },
-                    onClick = {
-                        onItemSelected(level)
-                        levelsExpanded = false
-                    },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                )
-            }
-        }
-    }
+fun PageHeaderTextWithSpacer(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.headlineSmall
+    )
     DefaultSpacer()
 }

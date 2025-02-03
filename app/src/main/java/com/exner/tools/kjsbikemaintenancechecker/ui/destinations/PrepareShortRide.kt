@@ -28,7 +28,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -59,6 +58,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBike
 import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.ShowAnimatedText
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TransientTodoListItem
@@ -112,10 +112,7 @@ fun PrepareShortRide(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.hdr_quick_ride),
-                        style = MaterialTheme.typography.headlineMedium
-                    )
+                    PageHeaderTextWithSpacer(stringResource(R.string.hdr_quick_ride))
                     if (prepareShortRideViewModel.showIntroText.value) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropUp,

@@ -37,7 +37,8 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActiv
 import com.exner.tools.kjsbikemaintenancechecker.ui.TemplateActivityAddViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.RideLevelSelector
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultRideLevelSelector
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -69,11 +70,13 @@ fun TemplateActivityAdd(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                RideLevelSelector(
+                PageHeaderTextWithSpacer(stringResource(R.string.lbl_add_template_activity))
+                DefaultRideLevelSelector(
                     rideLevel,
                     RideLevel.getListOfRideLevels()
                 ) {
                     rideLevel = it
+                    modified = true
                 }
                 DefaultSpacer()
                 DefaultTextFieldWithSpacer(

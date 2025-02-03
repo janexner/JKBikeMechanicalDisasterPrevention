@@ -39,6 +39,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelect
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -85,6 +86,7 @@ fun ActivityAdd(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.add_activity))
                 DefaultTextFieldWithSpacer(
                     value = title,
                     onValueChange = {
@@ -109,8 +111,11 @@ fun ActivityAdd(
                     modified = true
                 }
                 DefaultBikeSelectorWithSpacer(
-                    value = if (currentBike != null) { currentBike!!.name } else {
-                        stringResource(R.string.none) },
+                    value = if (currentBike != null) {
+                        currentBike!!.name
+                    } else {
+                        stringResource(R.string.none)
+                    },
                     label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
                         activityAddViewModel.updateAttachedBike(it)
@@ -175,12 +180,18 @@ fun ActivityAdd(
                                     title = title,
                                     description = description,
                                     rideUid = null,
-                                    createdInstant = Instant.fromEpochMilliseconds(selectedCreatedDate),
+                                    createdInstant = Instant.fromEpochMilliseconds(
+                                        selectedCreatedDate
+                                    ),
                                     isCompleted = isCompleted,
-                                    dueDate = if (selectedDueDate != null) { Instant.fromEpochMilliseconds(selectedDueDate!!)
-                                        .toLocalDateTime(
-                                            TimeZone.currentSystemDefault()
-                                        ).date } else { null },
+                                    dueDate = if (selectedDueDate != null) {
+                                        Instant.fromEpochMilliseconds(selectedDueDate!!)
+                                            .toLocalDateTime(
+                                                TimeZone.currentSystemDefault()
+                                            ).date
+                                    } else {
+                                        null
+                                    },
                                     doneInstant = null,
                                     bikeUid = currentBike?.uid
                                 )

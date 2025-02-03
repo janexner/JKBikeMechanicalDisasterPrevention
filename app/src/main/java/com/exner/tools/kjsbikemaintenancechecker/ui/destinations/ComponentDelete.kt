@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentDeleteViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -63,6 +64,7 @@ fun ComponentDelete(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.delete_a_component))
                 if (component != null) {
                     Text(text = "You are about to delete the component ${component!!.name}.")
                     if (componentCount != null && componentCount!! > 0) {

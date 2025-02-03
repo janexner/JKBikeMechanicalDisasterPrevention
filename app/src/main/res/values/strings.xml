@@ -91,4 +91,19 @@
     <string name="title_quick_ride">Quick ride</string>
     <string name="title_day_out">Day out</string>
     <string name="title_holidays">Holidays</string>
+    <string name="done">Done</string>
+    <string name="about">About</string>
+    <string name="delete_a_bike">Delete bike</string>
+    <string name="edit_a_bike">Edit bike</string>
+    <string name="delete_a_component">Delete component</string>
+    <string name="edit_a_component">Edit component</string>
+    <string name="welcome_to_kj_s_bike_maintenance_checker">Welcome to KJ\'s Bike Maintenance Checker!</string>
+    <string name="todos">TODOs</string>
+    <string name="manage_bikes_components"><![CDATA[Manage bikes & components]]></string>
+    <string name="shelf">Shelf</string>
+    <string name="delete_template_activity">Delete template activity</string>
+    <string name="edit_template_activity">Edit template activity</string>
+    <string name="delete_an_activity">Delete activity</string>
+    <string name="activity_details">Activity details</string>
+    <string name="edit_an_activity">Edit activity</string>
 </resources>

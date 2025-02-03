@@ -39,6 +39,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultInstantSel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -91,6 +92,7 @@ fun ActivityEdit(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.edit_an_activity))
                 DefaultTextFieldWithSpacer(
                     value = activity?.title ?: "",
                     label = stringResource(R.string.lbl_activity_title),

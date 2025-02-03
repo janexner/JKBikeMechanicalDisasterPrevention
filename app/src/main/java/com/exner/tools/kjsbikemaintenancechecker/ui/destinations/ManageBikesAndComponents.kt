@@ -39,6 +39,7 @@ import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.ManageBikesAndComponentsViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeEditDestination
@@ -72,6 +73,7 @@ fun ManageBikesAndComponents(
                     .padding(8.dp)
                     .fillMaxSize()
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.manage_bikes_components))
                 Text(text = stringResource(R.string.tap_bike_or_component_to_edit_or_delete_long_press_bike_to_select_it))
                 DefaultSpacer()
                 LazyColumn(

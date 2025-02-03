@@ -33,6 +33,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelect
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -69,6 +70,7 @@ fun BikeAdd(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
+                PageHeaderTextWithSpacer(stringResource(R.string.menu_item_add_bike))
                 Text(text = stringResource(R.string.a_new_bike_brilliant))
                 DefaultSpacer()
                 DefaultTextFieldWithSpacer(
