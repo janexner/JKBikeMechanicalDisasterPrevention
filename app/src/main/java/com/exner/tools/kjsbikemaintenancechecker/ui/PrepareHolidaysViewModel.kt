@@ -29,10 +29,10 @@ import kotlinx.datetime.todayIn
 import javax.inject.Inject
 import kotlin.time.Duration
 
-private const val TAG = "PrepareShortRideVM"
+private const val TAG = "PrepareHolidaysVM"
 
 @HiltViewModel
-class PrepareShortRideViewModel @Inject constructor(
+class PrepareHolidaysViewModel @Inject constructor(
     private val userPreferencesManager: UserPreferencesManager,
     private val repository: KJsRepository
 ) : ViewModel() {
@@ -41,7 +41,7 @@ class PrepareShortRideViewModel @Inject constructor(
 
     val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
-    private val rideLevelShortRide = MutableStateFlow(1)
+    private val rideLevelHolidays = MutableStateFlow(RideLevel.getRideLevelHolidays().level)
 
     val rideUid = MutableStateFlow(0L)
 
@@ -51,7 +51,7 @@ class PrepareShortRideViewModel @Inject constructor(
         }
     }
 
-    val observeActivitiesShortRide: StateFlow<List<ActivityWithBikeData>> =
+    val observeActivitiesHolidays: StateFlow<List<ActivityWithBikeData>> =
         repository.observeActivityWithBikeDataOrderedByDueDate
             .combine(rideUid) { result, rideUid ->
                 result.filter { activityWithBikeData ->
@@ -107,11 +107,11 @@ class PrepareShortRideViewModel @Inject constructor(
     private suspend fun copyTemplateActivities(): Long {
         Log.d(TAG, "Will copy template activities...")
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
-        val currentShortRide = Ride(
-            name = "Quick Ride $today",
+        val currentHolidays = Ride(
+            name = "Holidays $today",
             createdInstant = Clock.System.now()
         )
-        var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelShortRide.value)
+        var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelHolidays.value)
         Log.d(TAG, "Found potential old ride ${potentialOldRide?.rideUid}")
         val oldTodoListsExpire = userPreferencesManager.todoListsExpire().firstOrNull()
         Log.d(TAG, "User wishes old rides to expire after 2 days")
@@ -127,18 +127,18 @@ class PrepareShortRideViewModel @Inject constructor(
             }
         }
         if (potentialOldRide == null) {
-            val newRideUid: Long = repository.insertRide(currentShortRide)
+            val newRideUid: Long = repository.insertRide(currentHolidays)
             val rideUidByRideLevel = RideUidByRideLevel(
                 rideUid = newRideUid,
-                rideLevel = rideLevelShortRide.value,
+                rideLevel = rideLevelHolidays.value,
                 createdInstant = Clock.System.now(),
                 uid = 0
             )
             Log.d(TAG, "Adding ride to repository ${rideUidByRideLevel.uid}")
             repository.insertRideUidByRideLevel(rideUidByRideLevel = rideUidByRideLevel)
             Log.d(TAG, "Going to create activities from template activities...")
-            val rideLevelQuickRide = RideLevel.getRideLevelQuickRide()
-            repository.getTemplateActivityForRideLevel(rideLevel = rideLevelQuickRide)
+            val rideLevelHolidays = RideLevel.getRideLevelHolidays()
+            repository.getTemplateActivityForRideLevel(rideLevel = rideLevelHolidays)
                 .forEach { templateActivity ->
                     val activity = Activity(
                         title = templateActivity.title,

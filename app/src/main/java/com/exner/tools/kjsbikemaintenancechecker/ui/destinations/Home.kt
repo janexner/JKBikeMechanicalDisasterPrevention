@@ -39,10 +39,9 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.TodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ActivityAddDestination
-import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
-import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
+import com.ramcosta.composedestinations.generated.destinations.PrepareQuickRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
 
@@ -68,9 +67,10 @@ fun Home(
             ) {
                 Text(text = stringResource(R.string.welcome_to_kj_s_bike_maintenance_checker))
                 DefaultSpacer()
-                val filteredActivitiesByBikes: List<ActivityWithBikeData> = activitiesByBikes.filter { activityWithBikeData ->
-                    activityWithBikeData.rideUid == null || activityWithBikeData.rideUid < 0
-                }
+                val filteredActivitiesByBikes: List<ActivityWithBikeData> =
+                    activitiesByBikes.filter { activityWithBikeData ->
+                        activityWithBikeData.rideUid == null || activityWithBikeData.rideUid < 0
+                    }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -79,7 +79,9 @@ fun Home(
                         Text(text = stringResource(R.string.todos))
                     }
 
-                    items(items = filteredActivitiesByBikes, key = { it.activityUid }) { activityByBike ->
+                    items(
+                        items = filteredActivitiesByBikes,
+                        key = { it.activityUid }) { activityByBike ->
                         val activity = Activity(
                             title = activityByBike.activityTitle,
                             description = activityByBike.activityDescription,
@@ -95,10 +97,16 @@ fun Home(
                             activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
-                                homeViewModel.updateActivity(activity = activity.copy(
-                                    isCompleted = result,
-                                    doneInstant = if (result) { Clock.System.now() } else { null }
-                                ))
+                                homeViewModel.updateActivity(
+                                    activity = activity.copy(
+                                        isCompleted = result,
+                                        doneInstant = if (result) {
+                                            Clock.System.now()
+                                        } else {
+                                            null
+                                        }
+                                    )
+                                )
                             },
                         )
                     }
@@ -131,21 +139,25 @@ fun Home(
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    onClick = {
-                        destinationsNavigator.navigate(HomeDestination)
-                    },
+                    onClick = {},
                     icon = {
-                        Icon(Icons.Default.Home, contentDescription = stringResource(R.string.tab_home))
+                        Icon(
+                            Icons.Default.Home,
+                            contentDescription = stringResource(R.string.tab_home)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_home)) },
-                    selected = true
+                    selected = true,
                 )
                 NavigationBarItem(
                     onClick = {
-                        destinationsNavigator.navigate(PrepareShortRideDestination)
+                        destinationsNavigator.navigate(PrepareQuickRideDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.ThumbUp, contentDescription = stringResource(R.string.tab_quick_ride))
+                        Icon(
+                            Icons.Outlined.ThumbUp,
+                            contentDescription = stringResource(R.string.tab_quick_ride)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_quick_ride)) },
                     selected = false
@@ -155,7 +167,10 @@ fun Home(
                         destinationsNavigator.navigate(PrepareDayOutDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Hail, contentDescription = stringResource(R.string.tab_day_out))
+                        Icon(
+                            Icons.Outlined.Hail,
+                            contentDescription = stringResource(R.string.tab_day_out)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_day_out)) },
                     selected = false
@@ -165,7 +180,10 @@ fun Home(
                         destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
                     },
                     icon = {
-                        Icon(Icons.Outlined.Luggage, contentDescription = stringResource(R.string.tab_holidays))
+                        Icon(
+                            Icons.Outlined.Luggage,
+                            contentDescription = stringResource(R.string.tab_holidays)
+                        )
                     },
                     label = { Text(text = stringResource(R.string.tab_holidays)) },
                     selected = false

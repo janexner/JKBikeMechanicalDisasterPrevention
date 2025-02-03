@@ -55,7 +55,7 @@ import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
-import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareShortRideViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareQuickRideViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
@@ -67,7 +67,6 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
-import com.ramcosta.composedestinations.generated.destinations.PrepareShortRideDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
 
@@ -77,22 +76,22 @@ import kotlinx.datetime.Clock
 )
 @Destination<RootGraph>
 @Composable
-fun PrepareShortRide(
-    prepareShortRideViewModel: PrepareShortRideViewModel = hiltViewModel(),
+fun PrepareQuickRide(
+    prepareQuickRideViewModel: PrepareQuickRideViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val bikes: List<Bike> by prepareShortRideViewModel.observeBikesRaw.collectAsStateWithLifecycle(
+    val bikes: List<Bike> by prepareQuickRideViewModel.observeBikesRaw.collectAsStateWithLifecycle(
         initialValue = emptyList()
     )
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
 
-    val activitiesByBikes: List<ActivityWithBikeData> by prepareShortRideViewModel.observeActivitiesByBikes.collectAsState(
+    val activitiesByBikes: List<ActivityWithBikeData> by prepareQuickRideViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
     )
 
-    val shortRideActivities by prepareShortRideViewModel.observeActivitiesShortRide.collectAsStateWithLifecycle(
+    val shortRideActivities by prepareQuickRideViewModel.observeActivitiesShortRide.collectAsStateWithLifecycle(
         initialValue = emptyList()
     )
 
@@ -113,12 +112,12 @@ fun PrepareShortRide(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     PageHeaderTextWithSpacer(stringResource(R.string.hdr_quick_ride))
-                    if (prepareShortRideViewModel.showIntroText.value) {
+                    if (prepareQuickRideViewModel.showIntroText.value) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropUp,
                             contentDescription = stringResource(R.string.collapse),
                             modifier = Modifier.clickable {
-                                prepareShortRideViewModel.updateShowIntroText(false)
+                                prepareQuickRideViewModel.updateShowIntroText(false)
                             }
                         )
                     } else {
@@ -126,18 +125,18 @@ fun PrepareShortRide(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = stringResource(R.string.expand),
                             modifier = Modifier.clickable {
-                                prepareShortRideViewModel.updateShowIntroText(true)
+                                prepareQuickRideViewModel.updateShowIntroText(true)
                             }
                         )
                     }
                 }
-                ShowAnimatedText(show = prepareShortRideViewModel.showIntroText.value) {
+                ShowAnimatedText(show = prepareQuickRideViewModel.showIntroText.value) {
                     DefaultSpacer()
-                    Text(text = stringResource(R.string.quick_ride_you_are_not_so_far_away_from_a_walk_out_that_it_is_a_disaster_if_something_breaks))
+                    Text(text = stringResource(R.string.quick_ride_definition))
                     DefaultSpacer()
-                    Text(text = stringResource(R.string.these_activities_help_avoid_things_that_will_either_stop_you_from_riding_or_make_your_ride_miserable_if_not_right))
+                    Text(text = stringResource(R.string.quick_ride_avoid))
                     DefaultSpacer()
-                    Text(text = stringResource(R.string.best_do_these_the_night_before))
+                    Text(text = stringResource(R.string.quick_ride_when_todo))
                     DefaultSpacer()
                 }
                 var offset = Offset.Zero
@@ -221,7 +220,7 @@ fun PrepareShortRide(
                         TransientTodoListItem(
                             activity = activity,
                             onCheckboxCallback = { checked ->
-                                prepareShortRideViewModel.updateRideActivity(
+                                prepareQuickRideViewModel.updateRideActivity(
                                     activityUid = activity.activityUid,
                                     isCompleted = checked
                                 )
@@ -250,7 +249,7 @@ fun PrepareShortRide(
                             activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
-                                prepareShortRideViewModel.updateActivity(
+                                prepareQuickRideViewModel.updateActivity(
                                     activity = activity.copy(
                                         isCompleted = result,
                                         doneInstant = if (result) {
@@ -272,14 +271,14 @@ fun PrepareShortRide(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(onClick = {
-                        prepareShortRideViewModel.endCurrentRideAndStartFromScratch()
+                        prepareQuickRideViewModel.endCurrentRideAndStartFromScratch()
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
                             contentDescription = stringResource(R.string.clear_and_start_anew)
                         )
                         IconSpacer()
-                        Text(text = stringResource(R.string.lbl_start_new_short_ride))
+                        Text(text = stringResource(R.string.lbl_start_new_quick_ride))
                     }
                 }
             }
@@ -300,9 +299,7 @@ fun PrepareShortRide(
                     selected = false
                 )
                 NavigationBarItem(
-                    onClick = {
-                        destinationsNavigator.navigate(PrepareShortRideDestination)
-                    },
+                    onClick = {},
                     icon = {
                         Icon(
                             Icons.Filled.ThumbUp,
@@ -310,7 +307,7 @@ fun PrepareShortRide(
                         )
                     },
                     label = { Text(text = stringResource(R.string.tab_quick_ride)) },
-                    selected = true
+                    selected = true,
                 )
                 NavigationBarItem(
                     onClick = {

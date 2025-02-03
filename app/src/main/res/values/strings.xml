@@ -11,7 +11,6 @@
     <string name="all_bikes">All bikes</string>
     <string name="app_name" translatable="false">KJ\'s Bike Maintenance Checker</string>
     <string name="back">Back</string>
-    <string name="best_do_these_the_night_before">Best do these the night before!</string>
     <string name="bike">Bike</string>
     <string name="cancel">Cancel</string>
     <string name="collapse">Collapse</string>
@@ -61,7 +60,6 @@
     <string name="placehldr_no_description">No description</string>
     <string name="placehldr_yyyy_mm_dd">YYYY-MM-DD</string>
     <string name="placehldr_yyyy_mm_dd_hh_mm_ss">YYYY-MM-DD hh:mm:ss</string>
-    <string name="quick_ride_you_are_not_so_far_away_from_a_walk_out_that_it_is_a_disaster_if_something_breaks">Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.</string>
     <string name="save">Save</string>
     <string name="save_the_activity">Save the activity</string>
     <string name="save_the_bike">Save the bike</string>
@@ -73,7 +71,6 @@
     <string name="tab_home">home</string>
     <string name="tab_quick_ride">quick ride</string>
     <string name="tap_bike_or_component_to_edit_or_delete_long_press_bike_to_select_it">Tap bike or component to edit or delete. Long press bike to select it.</string>
-    <string name="these_activities_help_avoid_things_that_will_either_stop_you_from_riding_or_make_your_ride_miserable_if_not_right">These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.</string>
     <string name="this_is_your_shelf_it_contains_components_that_are_not_currently_attached_to_any_bike">This is your shelf. It contains components that are not currently attached to any bike.</string>
     <string name="title">Title</string>
     <string name="toast_archive_job_successful">Archive job successful</string>
@@ -82,7 +79,7 @@
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="we_can_not_find_this_component">We did not find this component.</string>
     <string name="which_bike">Which bike</string>
-    <string name="lbl_start_new_short_ride">Start new short ride</string>
+    <string name="lbl_start_new_quick_ride">Start new quick ride</string>
     <string name="clear_and_start_anew">Clear and start anew</string>
     <string name="ride_level_name">Ride Level</string>
     <string name="select_a_level">Select a ride level</string>
@@ -106,4 +103,19 @@
     <string name="delete_an_activity">Delete activity</string>
     <string name="activity_details">Activity details</string>
     <string name="edit_an_activity">Edit activity</string>
+    <string name="activities_for_a_day_out">Activities for a day out:</string>
+    <string name="lbl_start_new_day_out">Start new day out</string>
+    <string name="hdr_day_out">Day out</string>
+    <string name="hdr_holidays">Holidays</string>
+    <string name="activities_for_holidays">Activities for holidays:</string>
+    <string name="lbl_start_new_holidays">Start new holidays</string>
+    <string name="quick_ride_definition">Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.</string>
+    <string name="quick_ride_avoid">These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.</string>
+    <string name="quick_ride_when_todo">Best do these the night before!</string>
+    <string name="day_out_definition">Day out - you are out for longer time and maybe some distance from easy or fast recovery.</string>
+    <string name="day_out_avoid">These activities help avoid things are likely not fixable on the trail.</string>
+    <string name="day_out_when_todo">Best do these the night before or a couple of days earlier!</string>
+    <string name="holidays_definition">Holidays - you are taking your bike(s) to another place, where you will not have access to all your tools.</string>
+    <string name="holidays_avoid">Replace components before you go to avoid mishaps due to material fatigue.</string>
+    <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
 </resources>
