@@ -38,7 +38,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWit
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AccessoryAddDestination
-import com.ramcosta.composedestinations.generated.destinations.ComponentEditDestination
+import com.ramcosta.composedestinations.generated.destinations.AccessoryEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
@@ -69,7 +69,7 @@ fun ManageAccessories(
                     items(accessories, key = { "component.${it.uid}" }) { component ->
                         Surface(
                             onClick = {
-                                destinationsNavigator.navigate(ComponentEditDestination(component.uid))
+                                destinationsNavigator.navigate(AccessoryEditDestination(component.uid))
                             },
                         ) {
                             Row(

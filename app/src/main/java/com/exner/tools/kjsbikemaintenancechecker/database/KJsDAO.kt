@@ -81,6 +81,10 @@ interface KJsDAO {
     @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel")
     suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity>
 
+    @Query("SELECT COUNT(uid) FROM accessory WHERE parent_accessory_uid=:parentUid")
+    suspend fun getAccessoryCountByParent(parentUid: Long): Int
+
+
     //
     // UPDATE/INSERT/DELETE
     //
@@ -114,6 +118,15 @@ interface KJsDAO {
 
     @Insert
     suspend fun insertAccessory(accessory: Accessory): Long
+
+    @Update
+    suspend fun updateAccessory(accessory: Accessory)
+
+    @Delete
+    suspend fun deleteAccessory(accessory: Accessory)
+
+    @Query("DELETE FROM accessory WHERE parent_accessory_uid=:parentUid")
+    suspend fun deleteAccessoriesForParent(parentUid: Long)
 
     //
 

@@ -179,7 +179,28 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun updateAccessory(accessory: Accessory) {
+        kjsDAO.updateAccessory(accessory)
+    }
+
+    @WorkerThread
     suspend fun getAccessoryByUid(accessoryUid: Long): Accessory? {
         return kjsDAO.getAccessoryByUid(accessoryUid)
     }
+
+    @WorkerThread
+    suspend fun getAccessoryCountByParent(parentUid: Long): Int {
+        return kjsDAO.getAccessoryCountByParent(parentUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteAccessoriesForParent(parentUid: Long) {
+        kjsDAO.deleteAccessoriesForParent(parentUid)
+    }
+
+    @WorkerThread
+    suspend fun deleteAccessory(accessory: Accessory) {
+        kjsDAO.deleteAccessory(accessory)
+    }
+
 }

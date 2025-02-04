@@ -126,4 +126,8 @@
     <string name="lbl_part_of_accessory">Part of accessory</string>
     <string name="manage_accessories">Manage accessories</string>
     <string name="accessory">Accessory</string>
+    <string name="delete_an_accessory">Delete accessory</string>
+    <string name="we_can_not_find_this_accessory">We can not find this accessory</string>
+    <string name="delete_the_accessory">Delete the accessory</string>
+    <string name="edit_an_accessory">Edit accessory</string>
 </resources>
