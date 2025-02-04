@@ -83,6 +83,7 @@ fun PrepareDayOut(
     )
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
+    var currentBikeIsAnEBike: Boolean by remember { mutableStateOf(true) }
 
     val activitiesByBikes: List<ActivityWithBikeData> by prepareDayOutViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
@@ -174,6 +175,7 @@ fun PrepareDayOut(
                             text = { Text(text = stringResource(R.string.all_bikes)) },
                             onClick = {
                                 currentBike = null
+                                currentBikeIsAnEBike = true
                                 modified = true
                                 bikesExpanded = false
                             },
@@ -184,6 +186,7 @@ fun PrepareDayOut(
                                 text = { Text(text = bike.name) },
                                 onClick = {
                                     currentBike = bike
+                                    currentBikeIsAnEBike = bike.isElectric
                                     modified = true
                                     bikesExpanded = false
                                 },
@@ -202,6 +205,13 @@ fun PrepareDayOut(
                         activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
                     }
                 }
+                val filteredDayOutActivities = if (currentBikeIsAnEBike) {
+                    dayOutActivities
+                } else {
+                    dayOutActivities.filter { activityWithBikeData ->
+                        !activityWithBikeData.isEBikeSpecific
+                    }
+                }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -212,7 +222,7 @@ fun PrepareDayOut(
                     }
 
                     items(
-                        items = dayOutActivities,
+                        items = filteredDayOutActivities,
                         key = { "temp-${it.activityUid}" }) { activity ->
                         TransientTodoListItem(
                             activity = activity,

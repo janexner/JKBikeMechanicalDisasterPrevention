@@ -36,7 +36,7 @@ interface KJsDAO {
     @Query("SELECT * FROM shelvedcomponents ORDER BY name")
     fun observeShelvedComponents(): Flow<List<Component>>
 
-    @Query("SELECT * FROM templateactivity")
+    @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     fun observeTemplateActivities(): Flow<List<TemplateActivity>>
 
     //

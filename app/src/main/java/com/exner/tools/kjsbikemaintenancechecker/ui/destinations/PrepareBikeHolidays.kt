@@ -84,6 +84,7 @@ fun PrepareBikeHolidays(
     )
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
+    var currentBikeIsAnEBike: Boolean by remember { mutableStateOf(true) }
 
     val activitiesByBikes: List<ActivityWithBikeData> by prepareHolidaysViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
@@ -175,6 +176,7 @@ fun PrepareBikeHolidays(
                             text = { Text(text = stringResource(R.string.all_bikes)) },
                             onClick = {
                                 currentBike = null
+                                currentBikeIsAnEBike = true
                                 modified = true
                                 bikesExpanded = false
                             },
@@ -185,6 +187,7 @@ fun PrepareBikeHolidays(
                                 text = { Text(text = bike.name) },
                                 onClick = {
                                     currentBike = bike
+                                    currentBikeIsAnEBike = bike.isElectric
                                     modified = true
                                     bikesExpanded = false
                                 },
@@ -203,6 +206,13 @@ fun PrepareBikeHolidays(
                         activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
                     }
                 }
+                val filteredHolidaysActivities = if (currentBikeIsAnEBike) {
+                    shortRideActivities
+                } else {
+                    shortRideActivities.filter { activityWithBikeData ->
+                        !activityWithBikeData.isEBikeSpecific
+                    }
+                }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -213,7 +223,7 @@ fun PrepareBikeHolidays(
                     }
 
                     items(
-                        items = shortRideActivities,
+                        items = filteredHolidaysActivities,
                         key = { "temp-${it.activityUid}" }) { activity ->
                         TransientTodoListItem(
                             activity = activity,

@@ -86,6 +86,7 @@ fun PrepareQuickRide(
     )
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
+    var currentBikeIsAnEBike: Boolean by remember { mutableStateOf(true) }
 
     val activitiesByBikes: List<ActivityWithBikeData> by prepareQuickRideViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
@@ -177,6 +178,7 @@ fun PrepareQuickRide(
                             text = { Text(text = stringResource(R.string.all_bikes)) },
                             onClick = {
                                 currentBike = null
+                                currentBikeIsAnEBike = true
                                 modified = true
                                 bikesExpanded = false
                             },
@@ -187,6 +189,7 @@ fun PrepareQuickRide(
                                 text = { Text(text = bike.name) },
                                 onClick = {
                                     currentBike = bike
+                                    currentBikeIsAnEBike = bike.isElectric
                                     modified = true
                                     bikesExpanded = false
                                 },
@@ -202,7 +205,14 @@ fun PrepareQuickRide(
                     activitiesByBikes
                 } else {
                     activitiesByBikes.filter { activityByBike ->
-                        activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
+                        activityByBike.bikeName == currentBike!!.name || (activityByBike.bikeName == null && activityByBike.isEBikeSpecific == currentBikeIsAnEBike)
+                    }
+                }
+                val filteredShortRideActivities = if (currentBikeIsAnEBike) {
+                    shortRideActivities
+                } else {
+                    shortRideActivities.filter { activityWithBikeData ->
+                        !activityWithBikeData.isEBikeSpecific
                     }
                 }
                 LazyColumn(
@@ -215,7 +225,7 @@ fun PrepareQuickRide(
                     }
 
                     items(
-                        items = shortRideActivities,
+                        items = filteredShortRideActivities,
                         key = { "temp-${it.activityUid}" }) { activity ->
                         TransientTodoListItem(
                             activity = activity,
