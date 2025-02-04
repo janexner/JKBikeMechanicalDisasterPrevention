@@ -63,6 +63,14 @@ class ActivityEditViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateIsEBikeSpecific(isEBikeSpecific: Boolean) {
+        if (activity.value != null) {
+            _activity.value = activity.value!!.copy(
+                isEBikeSpecific = isEBikeSpecific
+            )
+        }
+    }
+
     fun updateCreatedDate(millis: Long) {
         if (activity.value != null) {
             val buildDateInstant = Instant.fromEpochMilliseconds(millis)

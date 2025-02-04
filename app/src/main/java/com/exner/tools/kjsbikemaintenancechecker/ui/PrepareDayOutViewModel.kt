@@ -109,6 +109,7 @@ class PrepareDayOutViewModel @Inject constructor(
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
         val currentDayOut = Ride(
             name = "Day Out $today",
+            level = RideLevel.getRideLevelDayOut(),
             createdInstant = Clock.System.now()
         )
         var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelDayOut.value)
@@ -137,8 +138,8 @@ class PrepareDayOutViewModel @Inject constructor(
             Log.d(TAG, "Adding ride to repository ${rideUidByRideLevel.uid}")
             repository.insertRideUidByRideLevel(rideUidByRideLevel = rideUidByRideLevel)
             Log.d(TAG, "Going to create activities from template activities...")
-            val rideLevelQuickRide = RideLevel.getRideLevelDayOut()
-            repository.getTemplateActivityForRideLevel(rideLevel = rideLevelQuickRide)
+            val rideLevelDayOut = RideLevel.getRideLevelDayOut()
+            repository.getTemplateActivityForRideLevel(rideLevel = rideLevelDayOut)
                 .forEach { templateActivity ->
                     val activity = Activity(
                         title = templateActivity.title,
@@ -146,6 +147,7 @@ class PrepareDayOutViewModel @Inject constructor(
                         isCompleted = false,
                         bikeUid = null,
                         isEBikeSpecific = templateActivity.isEBikeSpecific,
+                        rideLevel = templateActivity.rideLevel ?: rideLevelDayOut,
                         rideUid = newRideUid,
                         createdInstant = Clock.System.now(),
                         dueDate = null,

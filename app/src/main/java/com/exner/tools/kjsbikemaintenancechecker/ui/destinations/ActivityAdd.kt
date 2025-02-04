@@ -65,6 +65,7 @@ fun ActivityAdd(
         )
     }
     var selectedDueDate by remember { mutableStateOf<Long?>(null) }
+    var isEBikeSpecific by remember { mutableStateOf(false) }
 
     val bikes: List<Bike> by activityAddViewModel.observeBikes.collectAsStateWithLifecycle(
         emptyList()
@@ -103,6 +104,13 @@ fun ActivityAdd(
                     },
                     label = stringResource(R.string.lbl_description),
                 )
+                TextAndSwitch(
+                    text = stringResource(R.string.is_ebike_specific),
+                    checked = isEBikeSpecific
+                ) {
+                    isEBikeSpecific = it
+                    modified = true
+                }
                 TextAndSwitch(
                     text = stringResource(R.string.lbl_completed),
                     checked = isCompleted
@@ -180,6 +188,8 @@ fun ActivityAdd(
                                     title = title,
                                     description = description,
                                     rideUid = null,
+                                    isEBikeSpecific = isEBikeSpecific,
+                                    rideLevel = null, // TODO
                                     createdInstant = Instant.fromEpochMilliseconds(
                                         selectedCreatedDate
                                     ),

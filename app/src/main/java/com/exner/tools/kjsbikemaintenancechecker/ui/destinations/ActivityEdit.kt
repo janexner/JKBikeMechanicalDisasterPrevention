@@ -111,6 +111,13 @@ fun ActivityEdit(
                     label = stringResource(R.string.lbl_description),
                 )
                 TextAndSwitch(
+                    text = stringResource(R.string.is_ebike_specific),
+                    checked = activity?.isEBikeSpecific ?: false
+                ) {
+                    activityEditViewModel.updateIsEBikeSpecific(it)
+                    modified = true
+                }
+                TextAndSwitch(
                     text = stringResource(R.string.lbl_completed),
                     checked = activity?.isCompleted ?: false
                 ) {

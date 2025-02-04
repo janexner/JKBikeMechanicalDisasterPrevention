@@ -243,6 +243,8 @@ fun PrepareQuickRide(
                             dueDate = activityByBike.activityDueDate,
                             doneInstant = activityByBike.activityDoneDateInstant,
                             bikeUid = activityByBike.bikeUid!!,
+                            isEBikeSpecific = activityByBike.isEBikeSpecific,
+                            rideLevel = activityByBike.activityRideLevel,
                             uid = activityByBike.activityUid
                         )
                         TodoListItem(

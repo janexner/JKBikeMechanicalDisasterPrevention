@@ -37,6 +37,10 @@ fun ShowActivityDetails(activity: Activity?) {
     } else {
         Text(text = stringResource(R.string.no_due_date))
     }
+    if (activity?.isEBikeSpecific == true) {
+        DefaultSpacer()
+        Text(text = "It is eBike-specific.")
+    }
     DefaultSpacer()
     if (activity != null) {
         if (activity.isCompleted && activity.doneInstant != null) {

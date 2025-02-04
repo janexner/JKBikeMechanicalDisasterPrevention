@@ -66,7 +66,11 @@ fun TransientTodoListItem(
     onCheckboxCallback: (Boolean) -> Unit,
     suppressDueDate: Boolean = false
 ) {
+    val overlineText = activity.activityRideLevel.name + if (activity.isEBikeSpecific) { " - eBike-specific" } else { "" }
     ListItem(
+        overlineContent = {
+            Text(text = overlineText, color = MaterialTheme.colorScheme.tertiary)
+        },
         headlineContent = {
             val headline = if (activity.activityDueDate != null && !suppressDueDate) {
                 "${activity.activityDueDate} - ${activity.activityTitle}"
@@ -98,7 +102,7 @@ fun TemplateActivityListItem(
     ListItem(
         modifier = Modifier.clickable { onItemClick(templateActivity.uid) },
         overlineContent = {
-            Text(text = overlineContentText)
+            Text(text = overlineContentText, color = MaterialTheme.colorScheme.tertiary)
         },
         headlineContent = {
             Text(text = templateActivity.title)

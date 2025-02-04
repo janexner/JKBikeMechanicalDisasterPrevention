@@ -87,6 +87,8 @@ fun Home(
                             description = activityByBike.activityDescription,
                             isCompleted = activityByBike.activityIsCompleted,
                             rideUid = null,
+                            isEBikeSpecific = activityByBike.isEBikeSpecific,
+                            rideLevel = activityByBike.activityRideLevel,
                             createdInstant = activityByBike.activityCreatedInstant,
                             dueDate = activityByBike.activityDueDate,
                             bikeUid = activityByBike.bikeUid ?: 0,

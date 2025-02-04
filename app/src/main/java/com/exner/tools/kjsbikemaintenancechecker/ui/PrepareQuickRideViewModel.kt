@@ -109,6 +109,7 @@ class PrepareQuickRideViewModel @Inject constructor(
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
         val currentShortRide = Ride(
             name = "Quick Ride $today",
+            level = RideLevel.getRideLevelQuickRide(),
             createdInstant = Clock.System.now()
         )
         var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelShortRide.value)
@@ -146,6 +147,7 @@ class PrepareQuickRideViewModel @Inject constructor(
                         isCompleted = false,
                         bikeUid = null,
                         isEBikeSpecific = templateActivity.isEBikeSpecific,
+                        rideLevel = templateActivity.rideLevel ?: rideLevelQuickRide,
                         rideUid = newRideUid,
                         createdInstant = Clock.System.now(),
                         dueDate = null,

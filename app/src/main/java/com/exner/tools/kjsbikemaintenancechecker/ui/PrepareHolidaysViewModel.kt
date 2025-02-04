@@ -109,6 +109,7 @@ class PrepareHolidaysViewModel @Inject constructor(
         val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
         val currentHolidays = Ride(
             name = "Holidays $today",
+            level = RideLevel.getRideLevelHolidays(),
             createdInstant = Clock.System.now()
         )
         var potentialOldRide = repository.getLatestRideUidByRideLevel(rideLevelHolidays.value)
@@ -146,6 +147,7 @@ class PrepareHolidaysViewModel @Inject constructor(
                         isCompleted = false,
                         bikeUid = null,
                         isEBikeSpecific = templateActivity.isEBikeSpecific,
+                        rideLevel = templateActivity.rideLevel ?: RideLevel.getRideLevelHolidays(),
                         rideUid = newRideUid,
                         createdInstant = Clock.System.now(),
                         dueDate = null,
