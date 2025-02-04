@@ -53,7 +53,7 @@ import com.exner.tools.kjsbikemaintenancechecker.R
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.views.ActivityWithBikeData
-import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareHolidaysViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.PrepareBikeHolidaysViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
@@ -75,22 +75,22 @@ import kotlinx.datetime.Clock
 @Destination<RootGraph>
 @Composable
 fun PrepareBikeHolidays(
-    prepareHolidaysViewModel: PrepareHolidaysViewModel = hiltViewModel(),
+    prepareBikeHolidaysViewModel: PrepareBikeHolidaysViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val bikes: List<Bike> by prepareHolidaysViewModel.observeBikesRaw.collectAsStateWithLifecycle(
+    val bikes: List<Bike> by prepareBikeHolidaysViewModel.observeBikesRaw.collectAsStateWithLifecycle(
         initialValue = emptyList()
     )
 
     var currentBike: Bike? by remember { mutableStateOf(null) }
     var currentBikeIsAnEBike: Boolean by remember { mutableStateOf(true) }
 
-    val activitiesByBikes: List<ActivityWithBikeData> by prepareHolidaysViewModel.observeActivitiesByBikes.collectAsState(
+    val activitiesByBikes: List<ActivityWithBikeData> by prepareBikeHolidaysViewModel.observeActivitiesByBikes.collectAsState(
         initial = emptyList()
     )
 
-    val shortRideActivities by prepareHolidaysViewModel.observeActivitiesHolidays.collectAsStateWithLifecycle(
+    val shortRideActivities by prepareBikeHolidaysViewModel.observeActivitiesHolidays.collectAsStateWithLifecycle(
         initialValue = emptyList()
     )
 
@@ -111,12 +111,12 @@ fun PrepareBikeHolidays(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     PageHeaderTextWithSpacer(stringResource(R.string.hdr_holidays))
-                    if (prepareHolidaysViewModel.showIntroText.value) {
+                    if (prepareBikeHolidaysViewModel.showIntroText.value) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropUp,
                             contentDescription = stringResource(R.string.collapse),
                             modifier = Modifier.clickable {
-                                prepareHolidaysViewModel.updateShowIntroText(false)
+                                prepareBikeHolidaysViewModel.updateShowIntroText(false)
                             }
                         )
                     } else {
@@ -124,12 +124,12 @@ fun PrepareBikeHolidays(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = stringResource(R.string.expand),
                             modifier = Modifier.clickable {
-                                prepareHolidaysViewModel.updateShowIntroText(true)
+                                prepareBikeHolidaysViewModel.updateShowIntroText(true)
                             }
                         )
                     }
                 }
-                ShowAnimatedText(show = prepareHolidaysViewModel.showIntroText.value) {
+                ShowAnimatedText(show = prepareBikeHolidaysViewModel.showIntroText.value) {
                     DefaultSpacer()
                     Text(text = stringResource(R.string.holidays_definition))
                     DefaultSpacer()
@@ -228,7 +228,7 @@ fun PrepareBikeHolidays(
                         TransientTodoListItem(
                             activity = activity,
                             onCheckboxCallback = { checked ->
-                                prepareHolidaysViewModel.updateRideActivity(
+                                prepareBikeHolidaysViewModel.updateRideActivity(
                                     activityUid = activity.activityUid,
                                     isCompleted = checked
                                 )
@@ -259,7 +259,7 @@ fun PrepareBikeHolidays(
                             activity = activityByBike,
                             destinationsNavigator = destinationsNavigator,
                             onCheckboxCallback = { result ->
-                                prepareHolidaysViewModel.updateActivity(
+                                prepareBikeHolidaysViewModel.updateActivity(
                                     activity = activity.copy(
                                         isCompleted = result,
                                         doneInstant = if (result) {
@@ -281,7 +281,7 @@ fun PrepareBikeHolidays(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(onClick = {
-                        prepareHolidaysViewModel.endCurrentRideAndStartFromScratch()
+                        prepareBikeHolidaysViewModel.endCurrentRideAndStartFromScratch()
                     }) {
                         Icon(
                             imageVector = Icons.Default.Clear,

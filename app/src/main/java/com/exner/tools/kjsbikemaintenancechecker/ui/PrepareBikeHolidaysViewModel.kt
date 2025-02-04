@@ -32,7 +32,7 @@ import kotlin.time.Duration
 private const val TAG = "PrepareHolidaysVM"
 
 @HiltViewModel
-class PrepareHolidaysViewModel @Inject constructor(
+class PrepareBikeHolidaysViewModel @Inject constructor(
     private val userPreferencesManager: UserPreferencesManager,
     private val repository: KJsRepository
 ) : ViewModel() {
