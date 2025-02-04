@@ -65,7 +65,7 @@ fun Home(
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = stringResource(R.string.welcome_to_kj_s_bike_maintenance_checker))
+                Text(text = stringResource(R.string.welcome_to_kj_do_it_now))
                 DefaultSpacer()
                 val filteredActivitiesByBikes: List<ActivityWithBikeData> =
                     activitiesByBikes.filter { activityWithBikeData ->

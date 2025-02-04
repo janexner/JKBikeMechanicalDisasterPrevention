@@ -1,22 +1,18 @@
 package com.exner.tools.kjsbikemaintenancechecker.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -29,7 +25,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -39,7 +34,6 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.BikeEditViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFieldWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.IconSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
@@ -47,8 +41,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeDeleteDestination
-import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -140,25 +133,6 @@ fun BikeEdit(
                     }
                 )
 
-                DefaultSpacer()
-                // TODO list components
-                DefaultSpacer()
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        destinationsNavigator.navigate(ComponentAddDestination(bikeUid = bikeUid))
-                    }) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(R.string.add_a_component)
-                        )
-                        IconSpacer()
-                        Text(text = stringResource(R.string.add_a_component))
-                    }
-                }
             }
         },
         bottomBar = {
@@ -197,7 +171,7 @@ fun BikeEdit(
                                 bikeEditViewModel.commitBike()
                                 modified = false
                                 destinationsNavigator.popBackStack(
-                                    ManageBikesAndComponentsDestination, inclusive = false
+                                    ManageBikesDestination, inclusive = false
                                 )
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,

@@ -41,7 +41,7 @@ fun DefaultRideLevelSelector(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Template applies to ride level")
+            Text(text = stringResource(R.string.template_for_ride_level))
             DefaultSpacer()
             Box {
                 Button(

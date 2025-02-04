@@ -37,7 +37,7 @@ import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWit
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -55,7 +55,6 @@ fun BikeAdd(
     var selectedDate by remember { mutableStateOf<Long?>(null) }
     var mileage by remember { mutableIntStateOf(0) }
     var isElectric by remember { mutableStateOf(false) }
-    var addComponentsWhenSavingBike by remember { mutableStateOf(false) }
 
     var modified by remember { mutableStateOf(false) }
     var created by remember { mutableStateOf(false) }
@@ -103,12 +102,6 @@ fun BikeAdd(
                     label = stringResource(R.string.lbl_mileage),
                 )
                 DefaultSpacer()
-                TextAndSwitch(
-                    text = stringResource(R.string.lbl_add_set_of_components),
-                    checked = addComponentsWhenSavingBike
-                ) {
-                    addComponentsWhenSavingBike = it
-                }
             }
         },
         bottomBar = {
@@ -147,12 +140,11 @@ fun BikeAdd(
                                 )
                                 bikeAddViewModel.saveNewBike(
                                     bike = bike,
-                                    addComponents = addComponentsWhenSavingBike
                                 )
                                 modified = false
                                 created = true
                                 destinationsNavigator.popBackStack(
-                                    ManageBikesAndComponentsDestination, inclusive = false
+                                    ManageBikesDestination, inclusive = false
                                 )
                             },
                             containerColor = BottomAppBarDefaults.bottomAppBarFabColor,

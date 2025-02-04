@@ -43,7 +43,7 @@ fun About(
                     .padding(8.dp)
             ) {
                 PageHeaderTextWithSpacer(stringResource(R.string.about))
-                Text(text = "KJ's Bike Maintenance Tracker is a tool that makes maintenance of your bike(s) easier.")
+                Text(text = "KJ's Do it now! is a tool that makes maintenance of your bike(s) easier.")
             }
         },
         bottomBar = {

@@ -12,9 +12,6 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 @HiltViewModel(assistedFactory = TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory::class)
 class TemplateActivityEditViewModel @AssistedInject constructor(

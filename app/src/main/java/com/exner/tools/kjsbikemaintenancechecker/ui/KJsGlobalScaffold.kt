@@ -31,14 +31,10 @@ import com.exner.tools.kjsbikemaintenancechecker.R
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
-import com.ramcosta.composedestinations.generated.destinations.AccessoryAddDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
-import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageAccessoriesDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
-import com.ramcosta.composedestinations.generated.destinations.ShelfDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
@@ -140,66 +136,13 @@ private fun KJsTopBar(
                     enabled = true,
                     text = {
                         Text(
-                            text = stringResource(R.string.menu_item_add_component),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ComponentAddDestination(bikeUid = null))
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_add_accessory),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(AccessoryAddDestination)
-                    }
-                )
-                HorizontalDivider()
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
                             text = stringResource(R.string.menu_item_manage_bikes_components),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },
                     onClick = {
                         displayMainMenu = false
-                        destinationsNavigator.navigate(ManageBikesAndComponentsDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_component_shelf),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ShelfDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_manage_accessories),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ManageAccessoriesDestination)
+                        destinationsNavigator.navigate(ManageBikesDestination)
                     }
                 )
                 HorizontalDivider()
