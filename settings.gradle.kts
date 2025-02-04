@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "KJ's Bike Maintenance Checker"
+rootProject.name = "K&J Do it now!"
 include(":app")
