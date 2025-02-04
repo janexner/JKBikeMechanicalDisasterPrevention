@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.exner.tools.kjsbikemaintenancechecker"
+    namespace = "com.exner.tools.kjdoitnow"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.exner.tools.kjsbikemaintenancechecker"
+        applicationId = "com.exner.tools.kjdoitnow"
         minSdk = 30
         targetSdk = 35
         versionCode = 1
