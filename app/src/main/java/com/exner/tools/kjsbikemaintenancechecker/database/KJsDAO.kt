@@ -5,10 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Accessory
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.TemplateActivity
@@ -26,6 +26,9 @@ interface KJsDAO {
 
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
+
+    @Query("SELECT * FROM accessory ORDER BY name")
+    fun observeAccessoriesOrderedAlphabetically(): Flow<List<Accessory>>
 
     @Query("SELECT * FROM activitywithbikedata ORDER BY activity_due_date DESC")
     fun observeActivitiesWithBikeDataOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
@@ -50,6 +53,9 @@ interface KJsDAO {
 
     @Query("SELECT * FROM component WHERE uid=:uid")
     suspend fun getComponentByUid(uid: Long): Component?
+
+    @Query("SELECT * FROM accessory WHERE uid=:uid")
+    suspend fun getAccessoryByUid(uid: Long): Accessory?
 
     @Query("SELECT * FROM templateactivity WHERE uid=:uid")
     suspend fun getTemplateActivityByUid(uid: Long): TemplateActivity?
@@ -107,10 +113,12 @@ interface KJsDAO {
     //
 
     @Insert
-    suspend fun insertActivity(activity: Activity): Long
+    suspend fun insertAccessory(accessory: Accessory): Long
+
+    //
 
     @Insert
-    suspend fun insertComponentActivity(componentActivities: ComponentActivities): Long
+    suspend fun insertActivity(activity: Activity): Long
 
     @Update
     suspend fun updateActivity(activity: Activity)

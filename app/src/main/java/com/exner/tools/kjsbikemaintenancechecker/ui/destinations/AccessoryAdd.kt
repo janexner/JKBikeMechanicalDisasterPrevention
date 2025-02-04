@@ -20,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,14 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.kjsbikemaintenancechecker.R
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Accessory
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.ui.ComponentAddViewModel
+import com.exner.tools.kjsbikemaintenancechecker.ui.AccessoryAddViewModel
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultDateSelectorWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultNumberFieldWithSpacer
-import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultParentComponentSelectorWithSpacer
+import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultParentAccessorySelectorWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.kjsbikemaintenancechecker.ui.components.PageHeaderTextWithSpacer
@@ -51,36 +49,30 @@ import kotlinx.datetime.todayIn
 
 @Destination<RootGraph>
 @Composable
-fun ComponentAdd(
-    bikeUid: Long?,
+fun AccessoryAdd(
+    accessoryAddViewModel: AccessoryAddViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator
 ) {
-
-    val componentAddViewModel =
-        hiltViewModel<ComponentAddViewModel, ComponentAddViewModel.ComponentAddViewModelFactory> { factory ->
-            factory.create(bikeUid = bikeUid ?: 0)
-        }
 
     // input fields
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var attachedBikeUid by remember { mutableStateOf(bikeUid) }
-    var parentComponentUid by remember { mutableStateOf<Long?>(null) }
+    var attachedBikeUid: Long? by remember { mutableStateOf(null) }
+    var parentAccessoryUid by remember { mutableStateOf<Long?>(null) }
     var selectedAcquisitionDate by remember { mutableStateOf<Long?>(null) }
-    var mileage by remember { mutableIntStateOf(0) }
     var selectedLastUsedDate by remember { mutableStateOf<Long?>(null) }
 
-    val bikes: List<Bike> by componentAddViewModel.observeBikes.collectAsStateWithLifecycle(
+    val bikes: List<Bike> by accessoryAddViewModel.observeBikes.collectAsStateWithLifecycle(
         emptyList()
     )
-    val currentBike: Bike? by componentAddViewModel.currentBike.collectAsStateWithLifecycle(
+    val currentBike: Bike? by accessoryAddViewModel.currentBike.collectAsStateWithLifecycle(
         initialValue = null
     )
 
-    val components: List<Component> by componentAddViewModel.observeComponents.collectAsStateWithLifecycle(
+    val accessories: List<Accessory> by accessoryAddViewModel.observeAccessories.collectAsStateWithLifecycle(
         emptyList()
     )
-    val currentParentComponent: Component? by componentAddViewModel.currentParentComponent.collectAsStateWithLifecycle(
+    val currentParentAccessory: Accessory? by accessoryAddViewModel.currentParentAccessory.collectAsStateWithLifecycle(
         initialValue = null
     )
 
@@ -97,8 +89,8 @@ fun ComponentAdd(
                     .padding(innerPadding)
                     .padding(8.dp)
             ) {
-                PageHeaderTextWithSpacer(stringResource(R.string.add_a_component))
-                Text(text = stringResource(R.string.a_new_component))
+                PageHeaderTextWithSpacer(stringResource(R.string.add_an_accessory))
+                Text(text = stringResource(R.string.a_new_accessory))
                 DefaultSpacer()
                 DefaultTextFieldWithSpacer(
                     value = name,
@@ -106,7 +98,7 @@ fun ComponentAdd(
                         name = it
                         modified = true
                     },
-                    label = stringResource(R.string.lbl_component_name),
+                    label = stringResource(R.string.lbl_accessory_name),
                 )
                 DefaultTextFieldWithSpacer(
                     value = description,
@@ -120,21 +112,21 @@ fun ComponentAdd(
                     value = if (currentBike == null) stringResource(R.string.none) else currentBike!!.name,
                     label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
-                        componentAddViewModel.updateAttachedBike(null)
+                        accessoryAddViewModel.updateAttachedBike(null)
                         attachedBikeUid = null
                         modified = true
                     },
                     bikes = bikes
                 )
-                DefaultParentComponentSelectorWithSpacer(
-                    value = if (currentParentComponent == null) stringResource(R.string.none) else currentParentComponent!!.name,
-                    label = stringResource(R.string.lbl_part_of_component),
+                DefaultParentAccessorySelectorWithSpacer(
+                    value = if (currentParentAccessory == null) stringResource(R.string.none) else currentParentAccessory!!.name,
+                    label = stringResource(R.string.lbl_part_of_accessory),
                     onMenuItemClick = {
-                        componentAddViewModel.updateParentComponent(null)
-                        parentComponentUid = null
+                        accessoryAddViewModel.updateParentAccessory(null)
+                        parentAccessoryUid = null
                         modified = true
                     },
-                    components = components
+                    accessories = accessories
                 )
                 DefaultDateSelectorWithSpacer(
                     selectedDate = selectedAcquisitionDate,
@@ -143,14 +135,6 @@ fun ComponentAdd(
                     onDateSelected = {
                         selectedAcquisitionDate = it
                     }
-                )
-                DefaultNumberFieldWithSpacer(
-                    value = mileage.toString(),
-                    onValueChange = { value ->
-                        mileage = value.toIntOrNull() ?: 0
-                        modified = true
-                    },
-                    label = stringResource(R.string.lbl_mileage),
                 )
                 DefaultDateSelectorNullableWithSpacer(
                     selectedDate = selectedLastUsedDate,
@@ -185,18 +169,17 @@ fun ComponentAdd(
                             )
                         },
                         onClick = {
-                            val component = Component(
+                            val accessory = Accessory(
                                 name = name,
                                 description = description,
                                 bikeUid = currentBike?.uid ?: 0,
-                                parentComponentUid = currentParentComponent?.uid ?: 0,
+                                parentAccessoryUid = currentParentAccessory?.uid ?: 0,
                                 acquisitionDate = selectedAcquisitionDate.toLocalDate()
                                     ?: Clock.System.todayIn(TimeZone.currentSystemDefault()),
-                                mileage = mileage,
                                 lastUsedDate = selectedLastUsedDate.toLocalDate(),
                                 uid = 0
                             )
-                            componentAddViewModel.saveNewComponent(component)
+                            accessoryAddViewModel.saveNewAccessory(accessory)
                             destinationsNavigator.navigateUp()
                         },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,

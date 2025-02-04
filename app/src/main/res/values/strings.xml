@@ -118,4 +118,12 @@
     <string name="holidays_definition">Holidays - you are taking your bike(s) to another place, where you will not have access to all your tools.</string>
     <string name="holidays_avoid">Replace components before you go to avoid mishaps due to material fatigue.</string>
     <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
+    <string name="menu_item_add_accessory">Add Accessory</string>
+    <string name="menu_item_manage_accessories">Manage Accessories</string>
+    <string name="add_an_accessory">Add an accessory</string>
+    <string name="a_new_accessory">A new accessory!</string>
+    <string name="lbl_accessory_name">Accessory name</string>
+    <string name="lbl_part_of_accessory">Part of accessory</string>
+    <string name="manage_accessories">Manage accessories</string>
+    <string name="accessory">Accessory</string>
 </resources>

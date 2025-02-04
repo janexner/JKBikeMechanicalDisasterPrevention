@@ -1,6 +1,7 @@
 package com.exner.tools.kjsbikemaintenancechecker.database
 
 import androidx.annotation.WorkerThread
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Accessory
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
@@ -25,6 +26,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
         kjsDAO.observeActivitiesWithBikeDataAndDueDateOrderedByDueDate()
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedAlphabetically()
+
+    val observeAccessories: Flow<List<Accessory>> = kjsDAO.observeAccessoriesOrderedAlphabetically()
 
     val observeShelvedComponents: Flow<List<Component>> = kjsDAO.observeShelvedComponents()
 
@@ -168,5 +171,15 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun getLatestRideUidByRideLevel(rideLevel: Int): RideUidByRideLevel? {
         return kjsDAO.getLatestRideUidByRideLevel(rideLevel)
+    }
+
+    @WorkerThread
+    suspend fun insertAccessory(accessory: Accessory): Long {
+        return kjsDAO.insertAccessory(accessory)
+    }
+
+    @WorkerThread
+    suspend fun getAccessoryByUid(accessoryUid: Long): Accessory? {
+        return kjsDAO.getAccessoryByUid(accessoryUid)
     }
 }

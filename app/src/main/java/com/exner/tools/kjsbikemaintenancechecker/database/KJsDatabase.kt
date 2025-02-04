@@ -3,11 +3,11 @@ package com.exner.tools.kjsbikemaintenancechecker.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Accessory
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Activity
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.ActivityTags
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
-import com.exner.tools.kjsbikemaintenancechecker.database.entities.ComponentActivities
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Ride
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.RideUidByRideLevel
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Tag
@@ -17,12 +17,12 @@ import com.exner.tools.kjsbikemaintenancechecker.database.views.ShelvedComponent
 
 @Database(
     entities = [
+        Accessory::class,
         Activity::class,
         Tag::class,
         ActivityTags::class,
         Bike::class,
         Component::class,
-        ComponentActivities::class,
         Ride::class,
         RideUidByRideLevel::class,
         TemplateActivity::class,

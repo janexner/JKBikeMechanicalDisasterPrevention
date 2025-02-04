@@ -2,8 +2,64 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e05cb654744879964212db90801f5365",
+    "identityHash": "23525a5bbc6cba275eb025f94e1dba93",
     "entities": [
+      {
+        "tableName": "Accessory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER, `parent_accessory_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `last_used_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bikeUid",
+            "columnName": "bike_uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentAccessoryUid",
+            "columnName": "parent_accessory_uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "acquisitionDate",
+            "columnName": "acquisition_date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUsedDate",
+            "columnName": "last_used_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
       {
         "tableName": "Activity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER, `is_ebike_specific` INTEGER NOT NULL, `ride_level` TEXT, `ride_uid` INTEGER, `created_instant` INTEGER NOT NULL, `due_date` TEXT, `done_instant` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
@@ -255,38 +311,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "ComponentActivities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`component_uid` INTEGER NOT NULL, `activity_uid` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "componentUid",
-            "columnName": "component_uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "activityUid",
-            "columnName": "activity_uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "uid",
-            "columnName": "uid",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "uid"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "Ride",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `level` TEXT NOT NULL, `created_instant` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
@@ -419,7 +443,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e05cb654744879964212db90801f5365')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23525a5bbc6cba275eb025f94e1dba93')"
     ]
   }
 }

@@ -56,6 +56,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.exner.tools.kjsbikemaintenancechecker.R
+import com.exner.tools.kjsbikemaintenancechecker.database.entities.Accessory
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Bike
 import com.exner.tools.kjsbikemaintenancechecker.database.entities.Component
 import com.exner.tools.kjsbikemaintenancechecker.ui.helpers.convertMillisToDate
@@ -345,6 +346,64 @@ fun DefaultParentComponentSelectorWithSpacer(
                     onClick = {
                         onMenuItemClick(component.uid)
                         parentComponentExpanded = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                )
+            }
+        }
+    }
+    DefaultSpacer()
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DefaultParentAccessorySelectorWithSpacer(
+    value: String,
+    label: String,
+    onMenuItemClick: (Long?) -> Unit,
+    accessories: List<Accessory>,
+) {
+    var parentAccessoryExpanded by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(
+        expanded = parentAccessoryExpanded,
+        onExpandedChange = { parentAccessoryExpanded = !parentAccessoryExpanded }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            OutlinedTextField(
+                // The `menuAnchor` modifier must be passed to the text field for correctness.
+                modifier = Modifier
+                    .menuAnchor(type = MenuAnchorType.PrimaryEditable, enabled = true)
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                readOnly = true,
+                value = value,
+                onValueChange = {},
+                label = { Text(text = label) },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = parentAccessoryExpanded) },
+            )
+        }
+        ExposedDropdownMenu(
+            expanded = parentAccessoryExpanded,
+            onDismissRequest = { parentAccessoryExpanded = false }) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.none)) },
+                onClick = {
+                    onMenuItemClick(null)
+                    parentAccessoryExpanded = false
+                },
+                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+            )
+            accessories.forEach { component ->
+                DropdownMenuItem(
+                    text = { Text(text = component.name) },
+                    onClick = {
+                        onMenuItemClick(component.uid)
+                        parentAccessoryExpanded = false
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
