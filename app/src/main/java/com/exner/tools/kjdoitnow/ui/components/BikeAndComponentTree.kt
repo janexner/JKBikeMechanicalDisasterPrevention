@@ -116,7 +116,8 @@ fun componentAndSubComponentsToListOfString(
 data class BikeOrComponent(
     val bike: Bike?,
     val component: Component?,
-    val level: Int
+    val level: Int,
+    val hasChildren: Boolean
 ) {
     fun isBike(): Boolean {
         return (bike != null)
@@ -135,7 +136,8 @@ fun RootNode.flattenWithIndent(): List<BikeOrComponent> {
                 BikeOrComponent(
                     bike = bikeNode.bike,
                     component = null,
-                    level = 0
+                    level = 0,
+                    hasChildren = bikeNode.attachedComponents.isNotEmpty()
                 )
             )
             result.addAll(flattenComponentAndSubComponents(bikeNode.attachedComponents, 1))
@@ -151,7 +153,12 @@ fun flattenComponentAndSubComponents(
     val result: MutableList<BikeOrComponent> = mutableListOf()
     if (componentNodes.isNotEmpty()) {
         componentNodes.forEach { componentNode ->
-            result.add(BikeOrComponent(bike = null, component = componentNode.component, level))
+            result.add(BikeOrComponent(
+                bike = null,
+                component = componentNode.component,
+                level,
+                hasChildren = componentNode.attachedComponents.isNotEmpty()
+            ))
             result.addAll(
                 flattenComponentAndSubComponents(
                     componentNodes = componentNode.attachedComponents,

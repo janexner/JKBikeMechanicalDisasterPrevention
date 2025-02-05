@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.BottomAppBar
@@ -70,15 +71,17 @@ fun ManageBikesAndComponents(
                     items(flattenedComponents) { bikeOrComponent ->
                         Surface(onClick = {
                             if (bikeOrComponent.isBike()) {
-                                destinationsNavigator.navigate(BikeEditDestination(bikeOrComponent.bike!!.uid))
-                            } else {
-                                if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
-                                    destinationsNavigator.navigate(
-                                        ComponentEditDestination(
-                                            bikeOrComponent.component.uid
-                                        )
+                                destinationsNavigator.navigate(
+                                    BikeEditDestination(
+                                        bikeOrComponent.bike!!.uid
                                     )
-                                }
+                                )
+                            } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
+                                destinationsNavigator.navigate(
+                                    ComponentEditDestination(
+                                        bikeOrComponent.component.uid
+                                    )
+                                )
                             }
                         }) {
                             Row(
@@ -109,18 +112,42 @@ fun ManageBikesAndComponents(
                                         text = "${bikeOrComponent.bike.lastUsedDate}",
                                         style = MaterialTheme.typography.bodySmall
                                     )
+                                    IconSpacer()
+                                    IconButton(onClick = {
+                                        // TODO
+                                    }) {
+                                        if (bikeOrComponent.hasChildren) {
+                                            Icon(
+                                                imageVector = Icons.Default.ArrowDropUp,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    }
                                 } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
                                     Icon(
                                         imageVector = Icons.Default.Dataset, // TODO
                                         contentDescription = stringResource(R.string.component),
                                     )
                                     IconSpacer()
-                                    Column {
+                                    Column(
+                                        modifier = Modifier.weight(.8f)
+                                    ) {
                                         Text(text = bikeOrComponent.component.name)
                                         Text(
                                             text = bikeOrComponent.component.description,
                                             style = MaterialTheme.typography.bodySmall
                                         )
+                                    }
+                                    IconSpacer()
+                                    IconButton(onClick = {
+                                        // TODO
+                                    }) {
+                                        if (bikeOrComponent.hasChildren) {
+                                            Icon(
+                                                imageVector = Icons.Default.ArrowDropUp,
+                                                contentDescription = null
+                                            )
+                                        }
                                     }
                                 } else {
                                     Icon(
