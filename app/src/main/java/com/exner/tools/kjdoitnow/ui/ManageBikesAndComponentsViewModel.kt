@@ -25,6 +25,33 @@ class ManageBikesAndComponentsViewModel @Inject constructor(
         )
     val flattenedBikesAndComponents: StateFlow<List<BikeOrComponent>> = _flattenedBikesAndComponents
 
+    private val collapsedIds: MutableSet<String> = mutableSetOf()
+    private val _cidList: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
+    val cidList: StateFlow<Set<String>> = _cidList
+
+    fun addIdToCollapsedIds(collapseId: String) {
+        collapsedIds.add(collapseId)
+        _cidList.value = collapsedIds.toMutableSet()
+    }
+    fun removeIdFromCollapsedIds(collapseId: String) {
+        collapsedIds.remove(collapseId)
+        _cidList.value = collapsedIds.toMutableSet()
+    }
+
+    fun isThisIdCollapsed(collapseId: String, someSet: Set<String>): Boolean {
+        Log.d("MBCVM", "${someSet.size}")
+        return collapsedIds.contains(collapseId)
+    }
+    fun isThisIdHidden(collapseIdTags: List<String>, someSet: Set<String>): Boolean {
+        Log.d("MBCVM", "${someSet.size}")
+        collapsedIds.forEach { id ->
+            if (collapseIdTags.contains(id)) {
+                return true
+            }
+        }
+        return false
+    }
+
     init {
         viewModelScope.launch {
             val bikeAndComponentTree = createBikeAndComponentTree(repository)

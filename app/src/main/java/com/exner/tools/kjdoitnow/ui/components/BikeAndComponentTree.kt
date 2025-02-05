@@ -117,7 +117,9 @@ data class BikeOrComponent(
     val bike: Bike?,
     val component: Component?,
     val level: Int,
-    val hasChildren: Boolean
+    val hasChildren: Boolean,
+    val collapseId: String,
+    val collapseIdTags: List<String>,
 ) {
     fun isBike(): Boolean {
         return (bike != null)
@@ -132,15 +134,21 @@ fun RootNode.flattenWithIndent(): List<BikeOrComponent> {
     val result: MutableList<BikeOrComponent> = mutableListOf()
     if (this.bikes.isNotEmpty()) {
         this.bikes.forEach { bikeNode ->
+            val collapseId = "bike-${bikeNode.bike.uid}"
+            val collapseIdTags: List<String> = emptyList()
             result.add(
                 BikeOrComponent(
                     bike = bikeNode.bike,
                     component = null,
                     level = 0,
-                    hasChildren = bikeNode.attachedComponents.isNotEmpty()
+                    hasChildren = bikeNode.attachedComponents.isNotEmpty(),
+                    collapseId = collapseId,
+                    collapseIdTags = collapseIdTags
                 )
             )
-            result.addAll(flattenComponentAndSubComponents(bikeNode.attachedComponents, 1))
+            val newCollapseIdTags: MutableList<String> = collapseIdTags.toMutableList()
+            newCollapseIdTags.add(collapseId)
+            result.addAll(flattenComponentAndSubComponents(bikeNode.attachedComponents, 1, newCollapseIdTags))
         }
     }
     return result
@@ -148,21 +156,28 @@ fun RootNode.flattenWithIndent(): List<BikeOrComponent> {
 
 fun flattenComponentAndSubComponents(
     componentNodes: List<ComponentNode>,
-    level: Int
+    level: Int,
+    collapseIdTags: List<String>,
 ): List<BikeOrComponent> {
     val result: MutableList<BikeOrComponent> = mutableListOf()
     if (componentNodes.isNotEmpty()) {
         componentNodes.forEach { componentNode ->
+            val collapseId = "component-${componentNode.component.uid}"
             result.add(BikeOrComponent(
                 bike = null,
                 component = componentNode.component,
                 level,
-                hasChildren = componentNode.attachedComponents.isNotEmpty()
+                hasChildren = componentNode.attachedComponents.isNotEmpty(),
+                collapseId = collapseId,
+                collapseIdTags = collapseIdTags
             ))
+            val newCollapseIdTags: MutableList<String> = collapseIdTags.toMutableList()
+            newCollapseIdTags.add(collapseId)
             result.addAll(
                 flattenComponentAndSubComponents(
                     componentNodes = componentNode.attachedComponents,
-                    level = level + 1
+                    level = level + 1,
+                    collapseIdTags = newCollapseIdTags,
                 )
             )
         }

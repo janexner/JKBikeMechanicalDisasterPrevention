@@ -1,5 +1,6 @@
 package com.exner.tools.kjdoitnow.ui.destinations
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.Error
@@ -54,6 +56,9 @@ fun ManageBikesAndComponents(
 
     val flattenedComponents by manageBikesAndComponentsViewModel.flattenedBikesAndComponents.collectAsState()
 
+    val cidList by manageBikesAndComponentsViewModel.cidList.collectAsState()
+
+    Log.d("MBC", "List of collapsed ids: $cidList")
     Scaffold(
         content = { innerPadding ->
             Column(
@@ -69,93 +74,111 @@ fun ManageBikesAndComponents(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(flattenedComponents) { bikeOrComponent ->
-                        Surface(onClick = {
-                            if (bikeOrComponent.isBike()) {
-                                destinationsNavigator.navigate(
-                                    BikeEditDestination(
-                                        bikeOrComponent.bike!!.uid
-                                    )
-                                )
-                            } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
-                                destinationsNavigator.navigate(
-                                    ComponentEditDestination(
-                                        bikeOrComponent.component.uid
-                                    )
-                                )
-                            }
-                        }) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = (24 * bikeOrComponent.level).dp,
-                                        top = 0.dp,
-                                        end = 0.dp,
-                                        bottom = 0.dp
-                                    ),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
+                        // is this hidden?
+                        if (!manageBikesAndComponentsViewModel.isThisIdHidden(bikeOrComponent.collapseIdTags, cidList)) {
+                            Surface(onClick = {
                                 if (bikeOrComponent.isBike()) {
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
-                                        contentDescription = "Bike"
+                                    destinationsNavigator.navigate(
+                                        BikeEditDestination(bikeOrComponent.bike!!.uid)
                                     )
-                                    IconSpacer()
-                                    Text(text = bikeOrComponent.bike!!.name)
-                                    DefaultSpacer()
-                                    Text(
-                                        text = "${bikeOrComponent.bike.mileage} km",
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                    Spacer(modifier = Modifier.weight(0.5f))
-                                    Text(
-                                        text = "${bikeOrComponent.bike.lastUsedDate}",
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                    IconSpacer()
-                                    IconButton(onClick = {
-                                        // TODO
-                                    }) {
-                                        if (bikeOrComponent.hasChildren) {
-                                            Icon(
-                                                imageVector = Icons.Default.ArrowDropUp,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
                                 } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
-                                    Icon(
-                                        imageVector = Icons.Default.Dataset, // TODO
-                                        contentDescription = stringResource(R.string.component),
+                                    destinationsNavigator.navigate(
+                                        ComponentEditDestination(bikeOrComponent.component.uid)
                                     )
-                                    IconSpacer()
-                                    Column(
-                                        modifier = Modifier.weight(.8f)
-                                    ) {
-                                        Text(text = bikeOrComponent.component.name)
+                                }
+                            }) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            start = (24 * bikeOrComponent.level).dp,
+                                            top = 0.dp,
+                                            end = 0.dp,
+                                            bottom = 0.dp
+                                        ),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Log.d("MBC", "Showing $bikeOrComponent")
+                                    if (bikeOrComponent.isBike()) {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
+                                            contentDescription = "Bike"
+                                        )
+                                        IconSpacer()
+                                        Text(text = bikeOrComponent.bike!!.name)
+                                        DefaultSpacer()
                                         Text(
-                                            text = bikeOrComponent.component.description,
+                                            text = "${bikeOrComponent.bike.mileage} km",
                                             style = MaterialTheme.typography.bodySmall
                                         )
-                                    }
-                                    IconSpacer()
-                                    IconButton(onClick = {
-                                        // TODO
-                                    }) {
-                                        if (bikeOrComponent.hasChildren) {
-                                            Icon(
-                                                imageVector = Icons.Default.ArrowDropUp,
-                                                contentDescription = null
+                                        Spacer(modifier = Modifier.weight(0.5f))
+                                        Text(
+                                            text = "${bikeOrComponent.bike.lastUsedDate}",
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                        IconSpacer()
+                                        IconButton(onClick = {
+                                            Log.d("MBC", "Tap! ${bikeOrComponent.collapseId} - ${manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)}")
+                                            if (manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)) {
+                                                manageBikesAndComponentsViewModel.removeIdFromCollapsedIds(
+                                                    bikeOrComponent.collapseId
+                                                )
+                                            } else {
+                                                manageBikesAndComponentsViewModel.addIdToCollapsedIds(
+                                                    bikeOrComponent.collapseId
+                                                )
+                                            }
+                                        }) {
+                                            if (bikeOrComponent.hasChildren) {
+                                                Icon(
+                                                    imageVector = if (manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)) { Icons.Default.ArrowDropDown } else { Icons.Default.ArrowDropUp },
+                                                    contentDescription = null
+                                                )
+                                            }
+                                        }
+                                    } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
+                                        Icon(
+                                            imageVector = Icons.Default.Dataset, // TODO
+                                            contentDescription = stringResource(R.string.component),
+                                        )
+                                        IconSpacer()
+                                        Column(
+                                            modifier = Modifier.weight(.8f)
+                                        ) {
+                                            Text(text = bikeOrComponent.component.name)
+                                            Text(
+                                                text = bikeOrComponent.component.description,
+                                                style = MaterialTheme.typography.bodySmall
                                             )
                                         }
+                                        IconSpacer()
+                                        IconButton(onClick = {
+                                            Log.d("MBC", "Tap! ${bikeOrComponent.collapseId} - ${manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)}")
+                                            if (manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)) {
+                                                manageBikesAndComponentsViewModel.removeIdFromCollapsedIds(
+                                                    bikeOrComponent.collapseId
+                                                )
+                                            } else {
+                                                manageBikesAndComponentsViewModel.addIdToCollapsedIds(
+                                                    bikeOrComponent.collapseId
+                                                )
+                                            }
+                                        }) {
+                                            if (bikeOrComponent.hasChildren) {
+                                                Icon(
+                                                    imageVector = if (manageBikesAndComponentsViewModel.isThisIdCollapsed(bikeOrComponent.collapseId, cidList)) { Icons.Default.ArrowDropDown } else { Icons.Default.ArrowDropUp },
+                                                    contentDescription = null
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        Icon(
+                                            imageVector = Icons.Default.Error,
+                                            contentDescription = "Error"
+                                        )
+                                        IconSpacer()
+                                        Text(text = "This line is wrong $bikeOrComponent")
                                     }
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.Error,
-                                        contentDescription = "Error"
-                                    )
-                                    IconSpacer()
-                                    Text(text = "This line is wrong $bikeOrComponent")
                                 }
                             }
                         }
