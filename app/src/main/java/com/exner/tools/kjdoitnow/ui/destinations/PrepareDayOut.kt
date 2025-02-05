@@ -296,7 +296,7 @@ fun PrepareDayOut(
             NavigationBar {
                 NavigationBarItem(
                     onClick = {
-                        destinationsNavigator.navigate(HomeDestination)
+                        destinationsNavigator.popBackStack(HomeDestination, inclusive = false)
                     },
                     icon = {
                         Icon(

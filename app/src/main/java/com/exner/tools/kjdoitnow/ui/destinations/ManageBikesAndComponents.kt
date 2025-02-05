@@ -1,9 +1,8 @@
 package com.exner.tools.kjdoitnow.ui.destinations
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Dataset
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -30,12 +30,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.kjdoitnow.R
-import com.exner.tools.kjdoitnow.database.entities.Bike
-import com.exner.tools.kjdoitnow.database.entities.Component
 import com.exner.tools.kjdoitnow.ui.ManageBikesAndComponentsViewModel
 import com.exner.tools.kjdoitnow.ui.components.DefaultSpacer
 import com.exner.tools.kjdoitnow.ui.components.IconSpacer
@@ -47,7 +44,6 @@ import com.ramcosta.composedestinations.generated.destinations.ComponentAddDesti
 import com.ramcosta.composedestinations.generated.destinations.ComponentEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@OptIn(ExperimentalFoundationApi::class)
 @Destination<RootGraph>
 @Composable
 fun ManageBikesAndComponents(
@@ -55,15 +51,7 @@ fun ManageBikesAndComponents(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val bikes: List<Bike> by manageBikesAndComponentsViewModel.bikes.collectAsState(
-        initial = emptyList()
-    )
-
-    val components: List<Component> by manageBikesAndComponentsViewModel.components.collectAsState(
-        initial = emptyList()
-    )
-
-    val currentBike by manageBikesAndComponentsViewModel.currentBike.collectAsState()
+    val flattenedComponents by manageBikesAndComponentsViewModel.flattenedBikesAndComponents.collectAsState()
 
     Scaffold(
         content = { innerPadding ->
@@ -79,107 +67,68 @@ fun ManageBikesAndComponents(
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    stickyHeader {
-                        Text(
-                            text = stringResource(R.string.hdr_bikes),
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
-                    }
-
-                    items(bikes, key = { "bike.${it.uid}" }) { bike ->
-                        Surface(
-                            modifier = Modifier
-                                .combinedClickable(
-                                    onClick = {
-                                        destinationsNavigator.navigate(BikeEditDestination(bike.uid))
-                                    },
-                                    onLongClick = {
-                                        if (currentBike == bike.uid) {
-                                            manageBikesAndComponentsViewModel.updateCurrentBike(-1L) // no bike
-                                        } else {
-                                            manageBikesAndComponentsViewModel.updateCurrentBike(bike.uid)
-                                        }
-                                    }
-                                )
-                                .padding(4.dp),
-                            color = if (currentBike == bike.uid) {
-                                MaterialTheme.colorScheme.surfaceVariant
+                    items(flattenedComponents) { bikeOrComponent ->
+                        Surface(onClick = {
+                            if (bikeOrComponent.isBike()) {
+                                destinationsNavigator.navigate(BikeEditDestination(bikeOrComponent.bike!!.uid))
                             } else {
-                                MaterialTheme.colorScheme.surface
+                                if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
+                                    destinationsNavigator.navigate(
+                                        ComponentEditDestination(
+                                            bikeOrComponent.component.uid
+                                        )
+                                    )
+                                }
                             }
-                        ) {
+                        }) {
                             Row(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
-                                    contentDescription = stringResource(R.string.bike),
-                                )
-                                IconSpacer()
-                                Text(
-                                    text = bike.name,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                DefaultSpacer()
-                                Text(
-                                    text = "${bike.mileage} km",
-                                )
-                                DefaultSpacer()
-                                Text(
-                                    text = if (bike.lastUsedDate != null) {
-                                        bike.lastUsedDate.toString()
-                                    } else {
-                                        stringResource(R.string.not_yet_used)
-                                    },
-                                )
-                            }
-                        }
-                    }
-
-                    stickyHeader {
-                        Text(
-                            text = stringResource(R.string.hdr_components),
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
-                    }
-
-                    val filteredComponents = if (currentBike > 0) {
-                        components.filter { component ->
-                            component.bikeUid == currentBike
-                        }
-                    } else {
-                        components
-                    }
-
-                    items(filteredComponents, key = { "component.${it.uid}" }) { component ->
-                        Surface(
-                            onClick = {
-                                destinationsNavigator.navigate(ComponentEditDestination(component.uid))
-                            },
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = (24 * bikeOrComponent.level).dp,
+                                        top = 0.dp,
+                                        end = 0.dp,
+                                        bottom = 0.dp
+                                    ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Icon(
-                                    imageVector = Icons.Default.Dataset, // TODO
-                                    contentDescription = stringResource(R.string.component),
-                                )
-                                IconSpacer()
-                                Column {
-                                    Text(
-                                        text = component.name,
+                                if (bikeOrComponent.isBike()) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
+                                        contentDescription = "Bike"
                                     )
+                                    IconSpacer()
+                                    Text(text = bikeOrComponent.bike!!.name)
+                                    DefaultSpacer()
                                     Text(
-                                        text = component.description,
+                                        text = "${bikeOrComponent.bike.mileage} km",
                                         style = MaterialTheme.typography.bodySmall
                                     )
+                                    Spacer(modifier = Modifier.weight(0.5f))
+                                    Text(
+                                        text = "${bikeOrComponent.bike.lastUsedDate}",
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                } else if (bikeOrComponent.isComponent() && bikeOrComponent.component != null) {
+                                    Icon(
+                                        imageVector = Icons.Default.Dataset, // TODO
+                                        contentDescription = stringResource(R.string.component),
+                                    )
+                                    IconSpacer()
+                                    Column {
+                                        Text(text = bikeOrComponent.component.name)
+                                        Text(
+                                            text = bikeOrComponent.component.description,
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                    }
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Default.Error,
+                                        contentDescription = "Error"
+                                    )
+                                    IconSpacer()
+                                    Text(text = "This line is wrong $bikeOrComponent")
                                 }
                             }
                         }
@@ -209,15 +158,7 @@ fun ManageBikesAndComponents(
                             )
                         },
                         onClick = {
-                            destinationsNavigator.navigate(
-                                ComponentAddDestination(
-                                    bikeUid = if (currentBike == -1L) {
-                                        null
-                                    } else {
-                                        currentBike
-                                    }
-                                )
-                            )
+                            destinationsNavigator.navigate(ComponentAddDestination(null))
                         },
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()

@@ -76,12 +76,14 @@ fun getSubComponentTreeForComponent(
     return listOfComponentNode
 }
 
-fun bikeAndComponentTreeToListOfString(rootNode: RootNode): List<String> {
+//
+
+fun RootNode.bikeAndComponentTreeToListOfString(): List<String> {
     val result: MutableList<String> = mutableListOf()
-    if (rootNode.bikes.isEmpty()) {
+    if (this.bikes.isEmpty()) {
         result.add("Empty, no bikes")
     } else {
-        rootNode.bikes.forEach { bikeNode ->
+        this.bikes.forEach { bikeNode ->
             result.add("Bike ${bikeNode.bike.name}")
             result.addAll(componentAndSubComponentsToListOfString(bikeNode.attachedComponents, 1))
         }
@@ -95,15 +97,65 @@ fun componentAndSubComponentsToListOfString(
 ): List<String> {
     val result: MutableList<String> = mutableListOf()
     val spacer = " ".repeat(level * 2)
-    if (componentNodes.isEmpty()) {
-        result.add("$spacer- Empty, no components")
-    } else {
+    if (componentNodes.isNotEmpty()) {
         componentNodes.forEach { componentNode ->
             result.add("$spacer- ${componentNode.component.name}")
             result.addAll(
                 componentAndSubComponentsToListOfString(
                     componentNode.attachedComponents,
                     level + 1
+                )
+            )
+        }
+    }
+    return result
+}
+
+//
+
+data class BikeOrComponent(
+    val bike: Bike?,
+    val component: Component?,
+    val level: Int
+) {
+    fun isBike(): Boolean {
+        return (bike != null)
+    }
+
+    fun isComponent(): Boolean {
+        return (bike == null)
+    }
+}
+
+fun RootNode.flattenWithIndent(): List<BikeOrComponent> {
+    val result: MutableList<BikeOrComponent> = mutableListOf()
+    if (this.bikes.isNotEmpty()) {
+        this.bikes.forEach { bikeNode ->
+            result.add(
+                BikeOrComponent(
+                    bike = bikeNode.bike,
+                    component = null,
+                    level = 0
+                )
+            )
+            result.addAll(flattenComponentAndSubComponents(bikeNode.attachedComponents, 1))
+        }
+    }
+    return result
+}
+
+fun flattenComponentAndSubComponents(
+    componentNodes: List<ComponentNode>,
+    level: Int
+): List<BikeOrComponent> {
+    val result: MutableList<BikeOrComponent> = mutableListOf()
+    if (componentNodes.isNotEmpty()) {
+        componentNodes.forEach { componentNode ->
+            result.add(BikeOrComponent(bike = null, component = componentNode.component, level))
+            result.addAll(
+                flattenComponentAndSubComponents(
+                    componentNodes = componentNode.attachedComponents,
+                    level = level + 1
                 )
             )
         }
