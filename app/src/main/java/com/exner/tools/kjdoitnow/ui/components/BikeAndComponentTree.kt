@@ -4,29 +4,109 @@ import com.exner.tools.kjdoitnow.database.KJsRepository
 import com.exner.tools.kjdoitnow.database.entities.Bike
 import com.exner.tools.kjdoitnow.database.entities.Component
 
-data class BikeAndComponentTree(
-    var bikes: List<BikeAndComponents>,
-    var repository: KJsRepository,
-) {
+data class RootNode(
+    var bikes: List<BikeNode>,
+)
 
-    init {
-        val allBikes = emptyList<BikeAndComponents>()
-        bikes.forEach { bike ->
-            val allBike = BikeAndComponents(
-                bike.bike,
-                emptyList()
-            )
-        }
-        
+data class BikeNode(
+    val bike: Bike,
+    val attachedComponents: List<ComponentNode>,
+)
+
+data class ComponentNode(
+    val component: Component,
+    val attachedComponents: List<ComponentNode>,
+)
+
+suspend fun createBikeAndComponentTree(
+    repository: KJsRepository
+): RootNode {
+    val listOfBikeNodes: MutableList<BikeNode> = mutableListOf()
+    val bikes: List<Bike> = repository.getAllBikes()
+    bikes.forEach { bike ->
+        val componentsForBike = getComponentTreeForBike(bike, repository)
+        val bikeNode = BikeNode(
+            bike = bike,
+            attachedComponents = componentsForBike
+        )
+        listOfBikeNodes.add(bikeNode)
     }
+    return RootNode(listOfBikeNodes)
 }
 
-data class BikeAndComponents(
-    var bike: Bike,
-    var components: List<Components>,
-)
+suspend fun getComponentTreeForBike(
+    bike: Bike,
+    repository: KJsRepository
+): List<ComponentNode> {
+    val componentsForBike: MutableList<ComponentNode> = mutableListOf()
+    val flatComponentsForBike = repository.getComponentsForBike(bike.uid)
 
-class Components(
+    flatComponentsForBike.forEach { component ->
+        if (component.parentComponentUid == null) {
+            // a top-level component, so let's add it to the list!
+            val componentNode = ComponentNode(
+                component = component,
+                attachedComponents = getSubComponentTreeForComponent(
+                    component,
+                    flatComponentsForBike
+                )
+            )
+            componentsForBike.add(componentNode)
+        }
+    }
+    return componentsForBike
+}
+
+fun getSubComponentTreeForComponent(
     component: Component,
-    attachedComponents: List<Components>,
-)
+    flatListOfComponents: List<Component>
+): List<ComponentNode> {
+    val listOfComponentNode: MutableList<ComponentNode> = mutableListOf()
+
+    flatListOfComponents.forEach { comp ->
+        if (comp.parentComponentUid == component.uid) {
+            // add this one to the list of "children"
+            val componentNode = ComponentNode(
+                component = comp,
+                attachedComponents = getSubComponentTreeForComponent(comp, flatListOfComponents)
+            )
+            listOfComponentNode.add(componentNode)
+        }
+    }
+    return listOfComponentNode
+}
+
+fun bikeAndComponentTreeToListOfString(rootNode: RootNode): List<String> {
+    val result: MutableList<String> = mutableListOf()
+    if (rootNode.bikes.isEmpty()) {
+        result.add("Empty, no bikes")
+    } else {
+        rootNode.bikes.forEach { bikeNode ->
+            result.add("Bike ${bikeNode.bike.name}")
+            result.addAll(componentAndSubComponentsToListOfString(bikeNode.attachedComponents, 1))
+        }
+    }
+    return result
+}
+
+fun componentAndSubComponentsToListOfString(
+    componentNodes: List<ComponentNode>,
+    level: Int
+): List<String> {
+    val result: MutableList<String> = mutableListOf()
+    val spacer = " ".repeat(level * 2)
+    if (componentNodes.isEmpty()) {
+        result.add("$spacer- Empty, no components")
+    } else {
+        componentNodes.forEach { componentNode ->
+            result.add("$spacer- ${componentNode.component.name}")
+            result.addAll(
+                componentAndSubComponentsToListOfString(
+                    componentNode.attachedComponents,
+                    level + 1
+                )
+            )
+        }
+    }
+    return result
+}

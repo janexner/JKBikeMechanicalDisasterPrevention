@@ -119,6 +119,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllBikes(): List<Bike> {
+        return kjsDAO.getAllBikes()
+    }
+
+    @WorkerThread
     suspend fun insertComponent(component: Component): Long {
         return kjsDAO.insertComponent(component)
     }
@@ -131,6 +136,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun getComponentByUid(uid: Long): Component? {
         return kjsDAO.getComponentByUid(uid)
+    }
+
+    @WorkerThread
+    suspend fun getComponentsForBike(bikeUid: Long): List<Component> {
+        return kjsDAO.getComponentsForBike(bikeUid)
     }
 
     @WorkerThread
