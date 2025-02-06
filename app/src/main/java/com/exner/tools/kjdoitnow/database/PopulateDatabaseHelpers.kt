@@ -117,7 +117,13 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check pedals",
-        description = "Pedals secure with no play",
+        description = "Pedals secure with no play + pedal pins in place",
+    )
+
+    createDayOutTemplateActivity(
+        provider = provider,
+        title = "Check cleats + shoes",
+        description = "SPD cleats secure in shoes and pedal connection working",
     )
 
     createDayOutTemplateActivity(
@@ -128,14 +134,20 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
 
     createDayOutTemplateActivity(
         provider = provider,
-        title = "Check cranks",
+        title = "Check crank bolts",
         description = "Crank bolts torqued",
     )
 
     createDayOutTemplateActivity(
         provider = provider,
+        title = "Check crank pre-tensioned (if needed)",
+        description = "Cranks pre-tensioned (if required by crankset)",
+    )
+
+    createDayOutTemplateActivity(
+        provider = provider,
         title = "Check bottom bracket",
-        description = "Turn pedals with bike on bike stand, listen and feel for grinding",
+        description = "Turn pedals with bike on bike stand ideally with chain removed, listen and feel for grinding",
     )
 
     createDayOutTemplateActivity(
@@ -165,7 +177,7 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check freehub",
-        description = "Check that freehub is working and does not make unusual noises",
+        description = "Check that freehub/cassette is working and does not make unusual noises or play",
     )
 
     createDayOutTemplateActivity(
@@ -177,13 +189,13 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check stem and faceplate bolts",
-        description = "Make sure stem and faceplate bolts are properly torqued",
+        description = "Make sure stem and faceplate bolts are properly torqued. Do this after headset pre-tension check.",
     )
 
     createDayOutTemplateActivity(
         provider = provider,
-        title = "Check headset bolts",
-        description = "Make sure headset bolts are properly torqued",
+        title = "Check headset pre-tension",
+        description = "Make sure headset is pre-tension and bolt properly torqued. Do this before you check the stem and faceplate.",
     )
 
     createDayOutTemplateActivity(
@@ -352,8 +364,6 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
         description = "Electric cables all with smooth run and no kinks",
         isEBikeSpecific = true
     )
-
-
 }
 
 suspend fun createQuickRideTemplateActivity(
