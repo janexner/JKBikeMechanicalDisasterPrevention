@@ -1,8 +1,10 @@
 package com.exner.tools.kjdoitnow.ui.destinations
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -12,6 +14,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -120,8 +123,8 @@ fun ComponentAdd(
                     value = if (currentBike == null) stringResource(R.string.none) else currentBike!!.name,
                     label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
-                        componentAddViewModel.updateAttachedBike(null)
-                        attachedBikeUid = null
+                        componentAddViewModel.updateAttachedBike(it)
+                        attachedBikeUid = it
                         modified = true
                     },
                     bikes = bikes
@@ -130,8 +133,8 @@ fun ComponentAdd(
                     value = if (currentParentComponent == null) stringResource(R.string.none) else currentParentComponent!!.name,
                     label = stringResource(R.string.lbl_part_of_component),
                     onMenuItemClick = {
-                        componentAddViewModel.updateParentComponent(null)
-                        parentComponentUid = null
+                        componentAddViewModel.updateParentComponent(it)
+                        parentComponentUid = it
                         modified = true
                     },
                     components = components
@@ -144,14 +147,32 @@ fun ComponentAdd(
                         selectedAcquisitionDate = it
                     }
                 )
-                DefaultNumberFieldWithSpacer(
-                    value = mileage.toString(),
-                    onValueChange = { value ->
-                        mileage = value.toIntOrNull() ?: 0
-                        modified = true
-                    },
-                    label = stringResource(R.string.lbl_mileage),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    DefaultNumberFieldWithSpacer(
+                        modifier = Modifier.weight(0.6f),
+                        value = mileage.toString(),
+                        onValueChange = { value ->
+                            mileage = value.toIntOrNull() ?: 0
+                            modified = true
+                        },
+                        label = stringResource(R.string.lbl_mileage),
+                    )
+                    if (mileage == 0 && currentBike != null) {
+                        DefaultSpacer()
+                        Button(
+                            modifier = Modifier.weight(.4f),
+                            onClick = {
+                                val bikeMileage = currentBike!!.mileage
+                                mileage = bikeMileage
+                            }
+                        ) {
+                            Text(text = "from bike")
+                        }
+                    }
+                }
+                DefaultSpacer()
                 DefaultDateSelectorNullableWithSpacer(
                     selectedDate = selectedLastUsedDate,
                     label = stringResource(R.string.lbl_last_used_date),

@@ -91,6 +91,9 @@ class ComponentEditViewModel @AssistedInject constructor(
         if (bikeUid != null) {
             viewModelScope.launch {
                 _currentBike.value = repository.getBikeByUid(bikeUid)
+                if (component.value?.mileage == 0) {
+                    _currentBike.value?.mileage?.let { updateMileage(it) }
+                }
             }
         } else {
             _currentBike.value = null

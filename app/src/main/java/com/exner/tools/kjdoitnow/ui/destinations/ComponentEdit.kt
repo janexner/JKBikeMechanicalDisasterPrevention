@@ -1,8 +1,10 @@
 package com.exner.tools.kjdoitnow.ui.destinations
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -152,14 +155,31 @@ fun ComponentEdit(
                         }
                     }
                 )
-                DefaultNumberFieldWithSpacer(
-                    value = component?.mileage.toString(),
-                    onValueChange = { value ->
-                        componentEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
-                        modified = true
-                    },
-                    label = stringResource(R.string.lbl_mileage),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    DefaultNumberFieldWithSpacer(
+                        modifier = Modifier.weight(0.6f),
+                        value = component?.mileage.toString(),
+                        onValueChange = { value ->
+                            componentEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
+                            modified = true
+                        },
+                        label = stringResource(R.string.lbl_mileage),
+                    )
+                    if (component?.mileage == 0 && currentBike != null) {
+                        DefaultSpacer()
+                        Button(
+                            modifier = Modifier.weight(.4f),
+                            onClick = {
+                                componentEditViewModel.updateMileage(currentBike!!.mileage)
+                            }
+                        ) {
+                            Text(text = "from bike")
+                        }
+                    }
+                }
+                DefaultSpacer()
                 DefaultDateSelectorNullableWithSpacer(
                     selectedDate = selectedLastUsedDate,
                     label = stringResource(R.string.lbl_last_used_date),
