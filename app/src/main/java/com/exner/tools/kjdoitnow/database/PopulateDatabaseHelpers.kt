@@ -35,6 +35,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = taigaBuildDate,
         mileage = 6395,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     provider.get().insertComponent(bike1Fork)
@@ -46,6 +48,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = taigaBuildDate,
         mileage = 6395,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val taigaBrakesUid = provider.get().insertComponent(bike1Brakes)
@@ -57,6 +61,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = taigaBuildDate,
         mileage = 6395,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val taigaFrontBrakesUid = provider.get().insertComponent(bike1FrontBrakes)
@@ -68,6 +74,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = LocalDate.parse("2024-11-01"),
         mileage = 181,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     provider.get().insertComponent(bike1FrontBrakePads)
@@ -79,6 +87,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = taigaBuildDate,
         mileage = 6395,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val taigaRearBrakesUid = provider.get().insertComponent(bike1RearBrakes)
@@ -90,6 +100,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = LocalDate.parse("2024-09-01"),
         mileage = 200,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     provider.get().insertComponent(bike1RearBrakePads)
@@ -112,6 +124,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = LocalDate.parse("2023-05-20"),
         mileage = 6500,
         lastUsedDate = nowDate,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0,
     )
     provider.get().insertComponent(bike2Battery)
@@ -136,6 +150,8 @@ suspend fun populateDatabaseWithSampleData(
         acquisitionDate = LocalDate(2024, 6, 1),
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0,
     )
     provider.get().insertComponent(extraCassette1)
@@ -154,6 +170,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val drivetrainUid = repository.insertComponent(drivetrain)
@@ -165,6 +183,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(bottomBracket)
@@ -176,6 +196,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(chainring)
@@ -188,6 +210,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(fork)
@@ -200,6 +224,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(suspension)
@@ -212,6 +238,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frame)
@@ -224,6 +252,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(cockpit)
@@ -236,6 +266,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val wheelsUid = repository.insertComponent(wheels)
@@ -247,6 +279,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val rearWheelUid = repository.insertComponent(rearWheel)
@@ -258,6 +292,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(rearTyre)
@@ -269,6 +305,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(rearRim)
@@ -280,6 +318,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(rearHub)
@@ -291,6 +331,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val frontWheelUid = repository.insertComponent(frontWheel)
@@ -302,6 +344,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frontTyre)
@@ -313,6 +357,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frontRim)
@@ -324,6 +370,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frontHub)
@@ -336,6 +384,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val brakesUid = repository.insertComponent(brakes)
@@ -347,6 +397,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val frontBrakesUid = repository.insertComponent(frontBrakes)
@@ -358,6 +410,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frontBrakePads)
@@ -369,6 +423,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(frontRotor)
@@ -380,6 +436,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     val rearBrakesUid = repository.insertComponent(rearBrakes)
@@ -391,6 +449,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(rearBrakePads)
@@ -402,6 +462,8 @@ suspend fun generateTopLevelComponentsForNewBike(bikeUid: Long, repository: KJsR
         acquisitionDate = buildDate,
         mileage = 0,
         lastUsedDate = null,
+        expectedLifespanInKm = null,
+        notes = null,
         uid = 0
     )
     repository.insertComponent(rearRotor)
@@ -473,7 +535,13 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check pedals",
-        description = "Pedals secure with no play",
+        description = "Pedals secure with no play + pedal pins in place",
+    )
+
+    createDayOutTemplateActivity(
+        provider = provider,
+        title = "Check cleats + shoes",
+        description = "SPD cleats secure in shoes and pedal connection working",
     )
 
     createDayOutTemplateActivity(
@@ -484,14 +552,20 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
 
     createDayOutTemplateActivity(
         provider = provider,
-        title = "Check cranks",
+        title = "Check crank bolts",
         description = "Crank bolts torqued",
     )
 
     createDayOutTemplateActivity(
         provider = provider,
+        title = "Check crank pre-tensioned (if needed)",
+        description = "Cranks pre-tensioned (if required by crankset)",
+    )
+
+    createDayOutTemplateActivity(
+        provider = provider,
         title = "Check bottom bracket",
-        description = "Turn pedals with bike on bike stand, listen and feel for grinding",
+        description = "Turn pedals with bike on bike stand ideally with chain removed, listen and feel for grinding",
     )
 
     createDayOutTemplateActivity(
@@ -521,7 +595,7 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check freehub",
-        description = "Check that freehub is working and does not make unusual noises",
+        description = "Check that freehub/cassette is working and does not make unusual noises or play",
     )
 
     createDayOutTemplateActivity(
@@ -533,13 +607,13 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     createDayOutTemplateActivity(
         provider = provider,
         title = "Check stem and faceplate bolts",
-        description = "Make sure stem and faceplate bolts are properly torqued",
+        description = "Make sure stem and faceplate bolts are properly torqued. Do this after headset pre-tension check.",
     )
 
     createDayOutTemplateActivity(
         provider = provider,
-        title = "Check headset bolts",
-        description = "Make sure headset bolts are properly torqued",
+        title = "Check headset pre-tension",
+        description = "Make sure headset is pre-tension and bolt properly torqued. Do this before you check the stem and faceplate.",
     )
 
     createDayOutTemplateActivity(
@@ -708,8 +782,6 @@ suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
         description = "Electric cables all with smooth run and no kinks",
         isEBikeSpecific = true
     )
-
-
 }
 
 suspend fun createQuickRideTemplateActivity(

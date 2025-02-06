@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "23525a5bbc6cba275eb025f94e1dba93",
+    "identityHash": "7bf2d25faee7d54f493ac16da2f0067f",
     "entities": [
       {
         "tableName": "Accessory",
@@ -250,7 +250,7 @@
       },
       {
         "tableName": "Component",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER NOT NULL, `parent_component_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `bike_uid` INTEGER NOT NULL, `parent_component_uid` INTEGER, `acquisition_date` TEXT NOT NULL, `mileage` INTEGER NOT NULL, `last_used_date` TEXT, `expected_lifespan_in_km` INTEGER, `notes` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
@@ -291,6 +291,18 @@
           {
             "fieldPath": "lastUsedDate",
             "columnName": "last_used_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "expectedLifespanInKm",
+            "columnName": "expected_lifespan_in_km",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -443,7 +455,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23525a5bbc6cba275eb025f94e1dba93')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bf2d25faee7d54f493ac16da2f0067f')"
     ]
   }
 }

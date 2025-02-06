@@ -17,5 +17,9 @@ data class Component(
     @ColumnInfo(name = "mileage") val mileage: Int,
     @ColumnInfo(name = "last_used_date") val lastUsedDate: LocalDate?,
 
+    @ColumnInfo(name = "expected_lifespan_in_km") val expectedLifespanInKm: Int?,
+
+    @ColumnInfo(name = "notes") val notes: String?,
+
     @PrimaryKey(autoGenerate = true) val uid: Long = 0
 )

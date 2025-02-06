@@ -189,6 +189,22 @@ fun ComponentEdit(
                         componentEditViewModel.updateLastUsedDate(it)
                     }
                 )
+                DefaultNumberFieldWithSpacer(
+                    value = component?.expectedLifespanInKm.toString(),
+                    onValueChange = { value ->
+                        componentEditViewModel.updateExpectedLifetimeInKm(value.toIntOrNull() ?: 0)
+                        modified = true
+                    },
+                    label = stringResource(R.string.lblExpectedLifetimeInKm)
+                )
+                DefaultTextFieldWithSpacer(
+                    value = component?.notes ?: "",
+                    onValueChange = {
+                        componentEditViewModel.updateNotes(it)
+                        modified = true
+                    },
+                    label = stringResource(R.string.notes)
+                )
                 DefaultSpacer()
 
             }

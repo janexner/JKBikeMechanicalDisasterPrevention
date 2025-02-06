@@ -72,6 +72,8 @@ fun ComponentAdd(
     var selectedAcquisitionDate by remember { mutableStateOf<Long?>(null) }
     var mileage by remember { mutableIntStateOf(0) }
     var selectedLastUsedDate by remember { mutableStateOf<Long?>(null) }
+    var expectedLifetimeInKm by remember { mutableStateOf<Int?>(0) }
+    var notes by remember { mutableStateOf<String?>(null) }
 
     val bikes: List<Bike> by componentAddViewModel.observeBikes.collectAsStateWithLifecycle(
         emptyList()
@@ -181,6 +183,22 @@ fun ComponentAdd(
                         selectedLastUsedDate = it
                     }
                 )
+                DefaultNumberFieldWithSpacer(
+                    value = expectedLifetimeInKm.toString(),
+                    onValueChange = { value ->
+                        expectedLifetimeInKm = value.toIntOrNull() ?: 0
+                        modified = true
+                    },
+                    label = stringResource(R.string.lblExpectedLifetimeInKm)
+                )
+                DefaultTextFieldWithSpacer(
+                    value = notes ?: "",
+                    onValueChange = {
+                        notes = it
+                        modified = true
+                    },
+                    label = stringResource(R.string.notes)
+                )
                 DefaultSpacer()
             }
         },
@@ -215,6 +233,8 @@ fun ComponentAdd(
                                     ?: Clock.System.todayIn(TimeZone.currentSystemDefault()),
                                 mileage = mileage,
                                 lastUsedDate = selectedLastUsedDate.toLocalDate(),
+                                expectedLifespanInKm = expectedLifetimeInKm,
+                                notes = notes,
                                 uid = 0
                             )
                             componentAddViewModel.saveNewComponent(component)

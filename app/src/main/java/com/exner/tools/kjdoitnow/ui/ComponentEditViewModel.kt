@@ -110,6 +110,22 @@ class ComponentEditViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateExpectedLifetimeInKm(expectedLifetime: Int?) {
+        if (component.value != null) {
+            _component.value = component.value!!.copy(
+                expectedLifespanInKm = expectedLifetime
+            )
+        }
+    }
+
+    fun updateNotes(notes: String?) {
+        if (component.value != null) {
+            _component.value = component.value!!.copy(
+                notes = notes
+            )
+        }
+    }
+
     fun commitComponent() {
         if (component.value != null) {
             viewModelScope.launch {

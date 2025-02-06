@@ -131,4 +131,6 @@
     <string name="delete_the_accessory">Delete the accessory</string>
     <string name="edit_an_accessory">Edit accessory</string>
     <string name="about_text_block_1"><![CDATA[K&J Do it now! is a tool that makes maintenance of your bike(s) easier.]]></string>
+    <string name="lblExpectedLifetimeInKm">Expected lifetime (km)</string>
+    <string name="notes">Notes</string>
 </resources>
