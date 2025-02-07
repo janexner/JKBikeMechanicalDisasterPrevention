@@ -1,1 +1,1 @@
-App that helps you do routine checks before rides, big or small.
+App that helps build positive bike maintenance, for rides quick, big or epic.

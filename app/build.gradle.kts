@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.exner.tools.kjdoitnow"
+    namespace = "com.exner.tools.jkbikemechanicaldisasterprevention"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.exner.tools.kjdoitnow"
+        applicationId = "com.exner.tools.jkbikemechanicaldisasterprevention"
         minSdk = 30
         targetSdk = 35
         versionCode = 1
@@ -25,6 +25,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
+            vcsInfo.include = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
