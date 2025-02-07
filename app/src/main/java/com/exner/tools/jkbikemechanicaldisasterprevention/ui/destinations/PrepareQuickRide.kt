@@ -1,6 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -221,7 +223,13 @@ fun PrepareQuickRide(
                         .weight(0.5f)
                 ) {
                     stickyHeader {
-                        Text(text = stringResource(R.string.activities_for_a_quick_ride))
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(8.dp),
+                            text = stringResource(R.string.activities_for_a_quick_ride)
+                        )
                     }
 
                     items(
@@ -240,7 +248,13 @@ fun PrepareQuickRide(
                     }
 
                     stickyHeader {
-                        Text(text = stringResource(R.string.activities_that_are_due_anyway))
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(8.dp),
+                            text = stringResource(R.string.activities_that_are_due_anyway)
+                        )
                     }
 
                     items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
