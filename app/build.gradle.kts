@@ -37,6 +37,18 @@ android {
         buildConfig = true
     }
     buildToolsVersion = "35.0.0"
+
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val outputFileName = "JK Bike Mechanical Disaster Prevention_${variant.baseName}_${variant.versionName}_${variant.versionCode}.apk"
+                println("OutputFileName: $outputFileName")
+                output.outputFileName = outputFileName
+            }
+    }
+
 }
 
 kotlin {
