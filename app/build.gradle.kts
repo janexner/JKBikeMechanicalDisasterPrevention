@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "com.exner.tools.kjdoitnow"
+    namespace = "com.exner.tools.jkbikemechanicaldisasterprevention"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.exner.tools.kjdoitnow"
+        applicationId = "com.exner.tools.jkbikemechanicaldisasterprevention"
         minSdk = 30
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +37,22 @@ android {
         buildConfig = true
     }
     buildToolsVersion = "35.0.0"
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val outputFileName = "JK-Bike_Mechanical_Disaster_Prevention_${variant.baseName}_${variant.versionName}_${variant.versionCode}.apk"
+                println("OutputFileName: $outputFileName")
+                output.outputFileName = outputFileName
+            }
+    }
 }
 
 kotlin {
