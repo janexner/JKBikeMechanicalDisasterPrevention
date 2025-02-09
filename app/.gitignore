@@ -1,3 +1,4 @@
 /build
 *.dm
 *.apk
+/src/main/assets/schemas/com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsDatabase/1.json
