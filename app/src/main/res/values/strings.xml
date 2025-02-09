@@ -9,7 +9,7 @@
     <string name="add_a_component">Add a component</string>
     <string name="add_activity">Add activity</string>
     <string name="all_bikes">All bikes</string>
-    <string name="app_name" translatable="false">K&amp;J Do it now!</string>
+    <string name="app_name" translatable="false">J-K Bike Mechanical Disaster Prevention</string>
     <string name="back">Back</string>
     <string name="bike">Bike</string>
     <string name="cancel">Cancel</string>
@@ -45,7 +45,7 @@
     <string name="lbl_part_of_component">Part of component</string>
     <string name="lbl_theme">Theme</string>
     <string name="menu">Menu</string>
-    <string name="menu_item_about">About K&amp;J Do it now!</string>
+    <string name="menu_item_about">About J-K Bike Mechanical Disaster Prevention</string>
     <string name="menu_item_add_bike">Add Bike</string>
     <string name="menu_item_add_component">Add Component</string>
     <string name="menu_item_component_shelf">Component shelf</string>
@@ -74,7 +74,7 @@
     <string name="this_is_your_shelf_it_contains_components_that_are_not_currently_attached_to_any_bike">This is your shelf. It contains components that are not currently attached to any bike.</string>
     <string name="title">Title</string>
     <string name="toast_archive_job_successful">Archive job successful</string>
-    <string name="top_bar_title">K&amp;J Do it now!</string>
+    <string name="top_bar_title">J-K Bike MDP</string>
     <string name="we_can_not_find_this_activity">We can not find this activity.</string>
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="we_can_not_find_this_component">We did not find this component.</string>
@@ -94,7 +94,7 @@
     <string name="edit_a_bike">Edit bike</string>
     <string name="delete_a_component">Delete component</string>
     <string name="edit_a_component">Edit component</string>
-    <string name="welcome_to_kj_s_bike_maintenance_checker">Welcome to K&amp;J Do it now!</string>
+    <string name="welcome_to_kj_s_bike_maintenance_checker">Welcome to J-K Bike Mechanical Disaster Prevention!</string>
     <string name="todos">TODOs</string>
     <string name="manage_bikes_components"><![CDATA[Manage bikes & components]]></string>
     <string name="shelf">Shelf</string>
@@ -130,7 +130,7 @@
     <string name="we_can_not_find_this_accessory">We can not find this accessory</string>
     <string name="delete_the_accessory">Delete the accessory</string>
     <string name="edit_an_accessory">Edit accessory</string>
-    <string name="about_text_block_1"><![CDATA[K&J Do it now! is a tool that makes maintenance of your bike(s) easier.]]></string>
+    <string name="about_text_block_1"><![CDATA[J-K Bike - Mechanical Disaster Prevention is an app that helps build positive bike maintenance behaviours, for rides quick, big or epic.]]></string>
     <string name="lblExpectedLifetimeInKm">Expected lifetime (km)</string>
     <string name="notes">Notes</string>
 </resources>
