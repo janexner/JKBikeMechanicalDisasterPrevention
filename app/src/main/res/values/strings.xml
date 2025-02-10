@@ -104,4 +104,9 @@
     <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
     <string name="tap_bike_to_edit">Tap bike to edit</string>
     <string name="template_for_ride_level">Template for ride level</string>
+    <string name="data_that_will_be_exported">Here is all the data that will be exported</string>
+    <string name="hdr_activities">Activities</string>
+    <string name="hdr_template_activities">Template activities</string>
+    <string name="export">Export</string>
+    <string name="export_data">Export data</string>
 </resources>

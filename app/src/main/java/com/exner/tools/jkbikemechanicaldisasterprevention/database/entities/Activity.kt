@@ -4,10 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
+import com.squareup.moshi.JsonClass
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
 @Entity
+@JsonClass(generateAdapter = true)
 data class Activity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String,

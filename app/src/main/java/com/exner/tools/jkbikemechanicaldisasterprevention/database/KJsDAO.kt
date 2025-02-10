@@ -22,6 +22,9 @@ interface KJsDAO {
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
 
+    @Query("SELECT * FROM activity ORDER BY title")
+    fun observeActivitiesOrderedByTitle(): Flow<List<Activity>>
+
     @Query("SELECT * FROM activitywithbikedata ORDER BY activity_due_date DESC")
     fun observeActivitiesWithBikeDataOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
 
@@ -30,6 +33,19 @@ interface KJsDAO {
 
     @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     fun observeTemplateActivities(): Flow<List<TemplateActivity>>
+
+    //
+    // GETTERS = return all lines
+    //
+    @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
+    suspend fun getAllBikesOrderedByLastUsedDate(): List<Bike>
+
+    @Query("SELECT * FROM activity ORDER BY title")
+    suspend fun getAllActivitiesOrderedByTitle(): List<Activity>
+
+    @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
+    suspend fun getAllTemplateActivities(): List<TemplateActivity>
+
 
     //
     // GETTERS - return individual lines

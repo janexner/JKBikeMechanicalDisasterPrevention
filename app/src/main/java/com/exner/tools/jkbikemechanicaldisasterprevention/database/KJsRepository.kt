@@ -17,6 +17,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     // Observed Flow will notify the observer when the data has changed.
     val observeBikes: Flow<List<Bike>> = kjsDAO.observeBikesOrderedByLastUsedDate()
 
+    val observeActivities: Flow<List<Activity>> = kjsDAO.observeActivitiesOrderedByTitle()
+
     val observeActivityWithBikeDataOrderedByDueDate: Flow<List<ActivityWithBikeData>> =
         kjsDAO.observeActivitiesWithBikeDataOrderedByDueDate()
 
@@ -51,6 +53,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllActivities() : List<Activity> {
+        return kjsDAO.getAllActivitiesOrderedByTitle()
+    }
+
+    @WorkerThread
     suspend fun getTemplateActivity(templateActivityUid: Long): TemplateActivity? {
         return kjsDAO.getTemplateActivityByUid(templateActivityUid)
     }
@@ -76,6 +83,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllTemplateActivities(): List<TemplateActivity> {
+        return kjsDAO.getAllTemplateActivities()
+    }
+
+    @WorkerThread
     suspend fun getBikeByUid(uid: Long): Bike? {
         return kjsDAO.getBikeByUid(uid)
     }
@@ -93,6 +105,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun deleteBike(bike: Bike) {
         kjsDAO.deleteBike(bike)
+    }
+
+    @WorkerThread
+    suspend fun getAllBikes(): List<Bike> {
+        return kjsDAO.getAllBikesOrderedByLastUsedDate()
     }
 
     @WorkerThread

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,6 +33,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ExportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
@@ -111,7 +113,7 @@ private fun KJsTopBar(
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Menu,
+                    imageVector = Icons.Default.MoreVert,
                     contentDescription = stringResource(R.string.menu)
                 )
             }
@@ -157,6 +159,19 @@ private fun KJsTopBar(
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(SettingsDestination)
+                    }
+                )
+                DropdownMenuItem(
+                    enabled = destination != SettingsDestination,
+                    text = {
+                        Text(
+                            text = stringResource(R.string.export_data),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(ExportDataDestination)
                     }
                 )
                 HorizontalDivider()

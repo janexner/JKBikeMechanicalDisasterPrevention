@@ -3,9 +3,11 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDate
 
 @Entity
+@JsonClass(generateAdapter = true)
 data class Bike(
     @ColumnInfo(name = "name") var name: String,
 
