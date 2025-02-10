@@ -36,11 +36,33 @@ interface KJsDAO {
     @Query("SELECT * FROM activitywithbikedata WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
     fun observeActivitiesWithBikeDataAndDueDateOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
 
+    @Query("SELECT * FROM activity ORDER BY title")
+    fun observeActivitiesOrderedByTitle(): Flow<List<Activity>>
+
     @Query("SELECT * FROM shelvedcomponents ORDER BY name")
     fun observeShelvedComponents(): Flow<List<Component>>
 
     @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     fun observeTemplateActivities(): Flow<List<TemplateActivity>>
+
+    //
+    // GETTERS = return all lines
+    //
+    @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
+    suspend fun getAllBikesOrderedByLastUsedDate(): List<Bike>
+
+    @Query("SELECT * FROM component ORDER BY bike_uid,name")
+    suspend fun getAllComponentsOrderedByBike(): List<Component>
+
+    @Query("SELECT * FROM accessory ORDER BY name")
+    suspend fun getAllAccessoriesOrderedByName(): List<Accessory>
+
+    @Query("SELECT * FROM activity ORDER BY title")
+    suspend fun getAllActivitiesOrderedByTitle(): List<Activity>
+
+    @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
+    suspend fun getAllTemplateActivities(): List<TemplateActivity>
+
 
     //
     // GETTERS - return individual lines
@@ -86,9 +108,6 @@ interface KJsDAO {
 
     @Query("SELECT COUNT(uid) FROM accessory WHERE parent_accessory_uid=:parentUid")
     suspend fun getAccessoryCountByParent(parentUid: Long): Int
-
-    @Query("SELECT * from bike ORDER BY name")
-    suspend fun getAllBikes(): List<Bike>
 
     //
     // UPDATE/INSERT/DELETE

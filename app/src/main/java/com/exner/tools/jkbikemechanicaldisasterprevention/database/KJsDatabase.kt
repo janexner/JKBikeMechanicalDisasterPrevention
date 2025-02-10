@@ -28,7 +28,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Shelved
         TemplateActivity::class,
     ],
     views = [ActivityWithBikeData::class, ShelvedComponents::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(

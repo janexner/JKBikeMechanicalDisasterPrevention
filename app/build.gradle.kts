@@ -14,7 +14,7 @@ android {
         applicationId = "com.exner.tools.jkbikemechanicaldisasterprevention"
         minSdk = 30
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -103,6 +103,11 @@ dependencies {
     // compose destinations
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
+
+    // moshi
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.codegen)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

@@ -133,4 +133,10 @@
     <string name="about_text_block_1"><![CDATA[J-K Bike - Mechanical Disaster Prevention is an app that helps build positive bike maintenance behaviours, for rides quick, big or epic.]]></string>
     <string name="lblExpectedLifetimeInKm">Expected lifetime (km)</string>
     <string name="notes">Notes</string>
+    <string name="menu_item_export">Export data</string>
+    <string name="export">Export</string>
+    <string name="hdr_activities">Activities</string>
+    <string name="hdr_template_activities">Template activities</string>
+    <string name="data_that_will_be_exported">This is the data that will be exported</string>
+    <string name="hdr_accessories">Accessories</string>
 </resources>

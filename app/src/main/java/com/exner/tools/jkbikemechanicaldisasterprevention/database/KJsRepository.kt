@@ -29,6 +29,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
 
     val observeAccessories: Flow<List<Accessory>> = kjsDAO.observeAccessoriesOrderedAlphabetically()
 
+    val observeActivities: Flow<List<Activity>> = kjsDAO.observeActivitiesOrderedByTitle()
+
     val observeShelvedComponents: Flow<List<Component>> = kjsDAO.observeShelvedComponents()
 
     val observeTemplateActivity: Flow<List<TemplateActivity>> = kjsDAO.observeTemplateActivities()
@@ -74,6 +76,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllActivities(): List<Activity> {
+        return kjsDAO.getAllActivitiesOrderedByTitle()
+    }
+
+    @WorkerThread
     suspend fun getTemplateActivity(templateActivityUid: Long): TemplateActivity? {
         return kjsDAO.getTemplateActivityByUid(templateActivityUid)
     }
@@ -99,6 +106,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllTemplateActivities(): List<TemplateActivity> {
+        return kjsDAO.getAllTemplateActivities()
+    }
+
+    @WorkerThread
     suspend fun getBikeByUid(uid: Long): Bike? {
         return kjsDAO.getBikeByUid(uid)
     }
@@ -120,7 +132,7 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
 
     @WorkerThread
     suspend fun getAllBikes(): List<Bike> {
-        return kjsDAO.getAllBikes()
+        return kjsDAO.getAllBikesOrderedByLastUsedDate()
     }
 
     @WorkerThread
@@ -169,6 +181,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getAllComponents(): List<Component> {
+        return kjsDAO.getAllComponentsOrderedByBike()
+    }
+
+    @WorkerThread
     suspend fun insertRide(ride: Ride): Long {
         return kjsDAO.insertRide(ride)
     }
@@ -211,6 +228,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun deleteAccessory(accessory: Accessory) {
         kjsDAO.deleteAccessory(accessory)
+    }
+
+    @WorkerThread
+    suspend fun getAllAccessories(): List<Accessory> {
+        return kjsDAO.getAllAccessoriesOrderedByName()
     }
 
 }
