@@ -8,11 +8,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.InstantJsonAdapter
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.LocalDateJsonAdapter
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RootData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
@@ -43,27 +41,10 @@ class ExportDataViewModel @Inject constructor(
                     .add(InstantJsonAdapter())
                     .addLast(KotlinJsonAdapterFactory())
                     .build()
-                var overallJsonString = "["
-                // bikes first
-                val jsonAdapterBikes: JsonAdapter<List<Bike>> = moshi.adapter<List<Bike>>()
-                val listOfAllBikes = repository.getAllBikes()
-                val bikeJsonString: String = jsonAdapterBikes.toJson(listOfAllBikes)
-                overallJsonString += "{\"bikes\": $bikeJsonString},"
-                // activities next
-                val jsonAdapterActivities: JsonAdapter<List<Activity>> =
-                    moshi.adapter<List<Activity>>()
-                val listOfAllActivities = repository.getAllActivities()
-                val activitiesJsonString: String = jsonAdapterActivities.toJson(listOfAllActivities)
-                overallJsonString += "{\"activities\": $activitiesJsonString},"
-                // template activities last
-                val jsonAdapterTemplates: JsonAdapter<List<TemplateActivity>> =
-                    moshi.adapter<List<TemplateActivity>>()
-                val listOfTemplateActivities = repository.getAllTemplateActivities()
-                val templatesJsonString: String =
-                    jsonAdapterTemplates.toJson(listOfTemplateActivities)
-                overallJsonString += "{\"templates\": $templatesJsonString},"
-                // that is all
-                overallJsonString += "]"
+                // load data
+                val data = bundleData()
+                val jsonAdapter: JsonAdapter<RootData> = moshi.adapter<RootData>()
+                val overallJsonString = jsonAdapter.toJson(data)
                 Log.d("ExportDateVM", "Collected data: $overallJsonString")
                 // now write it to the Downloads folder
                 val contentValues = ContentValues().apply {
@@ -90,5 +71,13 @@ class ExportDataViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun bundleData(): RootData {
+        val listOfAllBikes = repository.getAllBikes()
+        val listOfAllActivities = repository.getAllActivities()
+        val listOfTemplateActivities = repository.getAllTemplateActivities()
+        val data = RootData(listOfAllBikes, listOfAllActivities, listOfTemplateActivities)
+        return data
     }
 }
