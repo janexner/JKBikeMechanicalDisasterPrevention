@@ -7,7 +7,7 @@
     <string name="completed">completed.</string>
     <string name="add_activity">Add activity</string>
     <string name="all_bikes">All bikes</string>
-    <string name="app_name">J-K Bike - Mechanical Disaster Prevention</string>
+    <string name="app_name" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
     <string name="tag_line">\"…before it happens!\"</string>
     <string name="back">Back</string>
     <string name="bike">Bike</string>
@@ -61,8 +61,8 @@
     <string name="tab_home">home</string>
     <string name="tab_quick_ride">quick ride</string>
     <string name="title">Title</string>
-    <string name="toast_archive_job_successful">Archive job successful</string>
-    <string name="top_bar_title">J-K Bike - MDP</string>
+    <string name="toast_archive_job_successful" translatable="false">Archive job successful</string>
+    <string name="top_bar_title" translatable="false">J-K Bike - MDP</string>
     <string name="we_can_not_find_this_activity">We can not find this activity.</string>
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="which_bike">Which bike</string>
