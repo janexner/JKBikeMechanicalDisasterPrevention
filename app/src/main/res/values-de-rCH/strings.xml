@@ -56,8 +56,8 @@
     <string name="placehldr_description">Beschreibung</string>
     <string name="placehldr_name">Name</string>
     <string name="placehldr_no_description">Keine Beschreibung</string>
-    <string name="placehldr_yyyy_mm_dd">JJJJ-MM-DD</string>
-    <string name="placehldr_yyyy_mm_dd_hh_mm_ss">JJJJ-MM-DD hh:mm:ss</string>
+    <string name="placehldr_yyyy_mm_dd">JJJJ-MM-TT</string>
+    <string name="placehldr_yyyy_mm_dd_hh_mm_ss">JJJJ-MM-TT hh:mm:ss</string>
     <string name="save">Speichern</string>
     <string name="save_the_activity">Aktivität speichern</string>
     <string name="save_the_bike">Velo speichern</string>
@@ -89,7 +89,7 @@
     <string name="edit_a_bike">Velo bearbeiten</string>
     <string name="welcome_to_kj_s_bike_maintenance_checker">Willkommen bei J-K Bike - Mechanic Disaster Prevention</string>
     <string name="todos">Aktivitäten</string>
-    <string name="manage_bikes_components">Velos verwalten</string>
+    <string name="manage_bikes_components"><![CDATA[Velos & Komponenten verwalten]]></string>
     <string name="shelf">Ersatzteillager</string>
     <string name="delete_template_activity">Vorlage löschen</string>
     <string name="edit_template_activity">Vorlage bearbeiten</string>
@@ -136,4 +136,5 @@
     <string name="lblExpectedLifetimeInKm">Erwartete Lebensdauer (km)</string>
     <string name="notes">Notizen</string>
     <string name="hdr_accessories">Zubehör</string>
+    <string name="menu_item_import">Daten importieren</string>
 </resources>

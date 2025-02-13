@@ -45,7 +45,7 @@
     <string name="lbl_part_of_component">Part of component</string>
     <string name="lbl_theme">Theme</string>
     <string name="menu">Menu</string>
-    <string name="menu_item_about">About J-K Bike Mechanical Disaster Prevention</string>
+    <string name="menu_item_about">About J-K Bike - Mechanical Disaster Prevention</string>
     <string name="menu_item_add_bike">Add Bike</string>
     <string name="menu_item_add_component">Add Component</string>
     <string name="menu_item_component_shelf">Component shelf</string>
@@ -139,4 +139,5 @@
     <string name="hdr_template_activities">Template activities</string>
     <string name="data_that_will_be_exported">This is the data that will be exported</string>
     <string name="hdr_accessories">Accessories</string>
+    <string name="menu_item_import">Import data</string>
 </resources>

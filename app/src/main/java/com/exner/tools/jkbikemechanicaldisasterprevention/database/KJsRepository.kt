@@ -235,4 +235,14 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
         return kjsDAO.getAllAccessoriesOrderedByName()
     }
 
+    @WorkerThread
+    suspend fun deleteAllComponents() {
+        kjsDAO.deleteAllComponents()
+    }
+
+    @WorkerThread
+    suspend fun deleteAllBikes() {
+        kjsDAO.deleteAllBikes()
+    }
+
 }

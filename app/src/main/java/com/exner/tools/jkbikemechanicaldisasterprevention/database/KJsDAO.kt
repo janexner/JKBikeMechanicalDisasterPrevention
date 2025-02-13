@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
+import androidx.annotation.WorkerThread
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -108,6 +109,15 @@ interface KJsDAO {
 
     @Query("SELECT COUNT(uid) FROM accessory WHERE parent_accessory_uid=:parentUid")
     suspend fun getAccessoryCountByParent(parentUid: Long): Int
+
+    //
+    // big deletes
+    //
+    @Query("DELETE FROM bike")
+    suspend fun deleteAllBikes()
+
+    @Query("DELETE FROM component")
+    suspend fun deleteAllComponents()
 
     //
     // UPDATE/INSERT/DELETE

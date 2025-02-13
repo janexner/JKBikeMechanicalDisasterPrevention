@@ -36,6 +36,7 @@ import com.ramcosta.composedestinations.generated.destinations.BikeAddDestinatio
 import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ExportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
+import com.ramcosta.composedestinations.generated.destinations.ImportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageAccessoriesDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
@@ -215,6 +216,19 @@ private fun KJsTopBar(
                     onClick = {
                         displayMainMenu = false
                         destinationsNavigator.navigate(SettingsDestination)
+                    }
+                )
+                DropdownMenuItem(
+                    enabled = destination != ImportDataDestination,
+                    text = {
+                        Text(
+                            text = stringResource(R.string.menu_item_import),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    onClick = {
+                        displayMainMenu = false
+                        destinationsNavigator.navigate(ImportDataDestination)
                     }
                 )
                 DropdownMenuItem(
