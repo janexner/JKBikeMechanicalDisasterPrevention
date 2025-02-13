@@ -73,8 +73,8 @@
     <string name="tap_bike_or_component_to_edit_or_delete_long_press_bike_to_select_it">Tap bike or component to edit or delete. Long press bike to select it.</string>
     <string name="this_is_your_shelf_it_contains_components_that_are_not_currently_attached_to_any_bike">This is your shelf. It contains components that are not currently attached to any bike.</string>
     <string name="title">Title</string>
-    <string name="toast_archive_job_successful">Archive job successful</string>
-    <string name="top_bar_title">J-K Bike MDP</string>
+    <string name="toast_archive_job_successful" translatable="false">Archive job successful</string>
+    <string name="top_bar_title" translatable="false">J-K Bike MDP</string>
     <string name="we_can_not_find_this_activity">We can not find this activity.</string>
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
     <string name="we_can_not_find_this_component">We did not find this component.</string>
@@ -94,7 +94,7 @@
     <string name="edit_a_bike">Edit bike</string>
     <string name="delete_a_component">Delete component</string>
     <string name="edit_a_component">Edit component</string>
-    <string name="welcome_to_kj_s_bike_maintenance_checker">Welcome to J-K Bike Mechanical Disaster Prevention!</string>
+    <string name="welcome_to_kj_s_bike_maintenance_checker">Welcome to J-K Bike - Mechanical Disaster Prevention!</string>
     <string name="todos">TODOs</string>
     <string name="manage_bikes_components"><![CDATA[Manage bikes & components]]></string>
     <string name="shelf">Shelf</string>

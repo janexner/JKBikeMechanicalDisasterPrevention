@@ -43,6 +43,10 @@ android {
         includeInBundle = false
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     applicationVariants.all {
         val variant = this
         variant.outputs
