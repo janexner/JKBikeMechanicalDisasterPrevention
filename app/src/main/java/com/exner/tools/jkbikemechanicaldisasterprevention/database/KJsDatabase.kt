@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -29,7 +30,10 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Shelved
     ],
     views = [ActivityWithBikeData::class, ShelvedComponents::class],
     version = 2,
-    exportSchema = true
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration (from = 1, to = 2)
+    ]
 )
 @TypeConverters(
     DataConverter::class

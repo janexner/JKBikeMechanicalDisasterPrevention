@@ -140,10 +140,10 @@ fun ImportData(
                             Text(text = "Select different file")
                         }
                         DefaultSpacer()
-                        Text(text = "File contains ${listOfBikesInFile.size} processes and ${listOfComponentsInFile.size} categories.")
+                        Text(text = "File contains ${listOfBikesInFile.size} bikes and ${listOfComponentsInFile.size} components.")
                         DefaultSpacer()
                         if (override) {
-                            Text(text = "Existing processes & categories will be deleted, and ${listOfBikesInFile.size}/${listOfComponentsInFile.size} will be imported.")
+                            Text(text = "Existing bikes & components will be deleted, and ${listOfBikesInFile.size}/${listOfComponentsInFile.size} will be imported.")
                             DefaultSpacer()
                             LazyColumn(
                                 modifier = Modifier
@@ -152,7 +152,7 @@ fun ImportData(
                             ) {
                                 stickyHeader {
                                     Text(
-                                        text = "Processes",
+                                        text = "Bikes",
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 }
@@ -161,7 +161,7 @@ fun ImportData(
                                 }
                                 stickyHeader {
                                     Text(
-                                        text = "Categories",
+                                        text = "Components",
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 }
