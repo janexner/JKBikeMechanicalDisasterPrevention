@@ -61,7 +61,7 @@ class ExportDataViewModel @Inject constructor(
                     accessories = listOfAllAccessories,
                     templateActivities = listOfTemplateActivities
                 )
-                var overallJsonString: String = jsonAdapter.toJson(data)
+                val overallJsonString: String = jsonAdapter.toJson(data)
                 Log.d("ExportDateVM", "Collected data: $overallJsonString")
                 // now write it to the Downloads folder
                 val contentValues = ContentValues().apply {
