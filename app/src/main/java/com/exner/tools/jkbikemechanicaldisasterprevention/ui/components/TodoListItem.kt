@@ -9,11 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.generated.destinations.ActivityDetailsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
@@ -84,7 +88,11 @@ fun TransientTodoListItem(
     onCheckboxCallback: (Boolean) -> Unit,
     suppressDueDate: Boolean = false
 ) {
-    val overlineText = activity.activityRideLevel.name + if (activity.isEBikeSpecific) { " - eBike-specific" } else { "" }
+    val context = LocalContext.current
+    val overlineText = RideLevel.getLabel(context, activity.activityRideLevel) + if (activity.isEBikeSpecific) {
+        stringResource(
+            R.string.dash_ebike_specific
+        ) } else { "" }
     ListItem(
         overlineContent = {
             Text(text = overlineText, color = MaterialTheme.colorScheme.tertiary)
@@ -116,7 +124,10 @@ fun TemplateActivityListItem(
     templateActivity: TemplateActivity,
     onItemClick: (Long) -> Unit
 ) {
-    val overlineContentText = templateActivity.rideLevel?.name + if (templateActivity.isEBikeSpecific) { " - eBike-specific" } else { "" }
+    val context = LocalContext.current
+    val overlineContentText = RideLevel.getLabel(context, templateActivity.rideLevel) + if (templateActivity.isEBikeSpecific) { stringResource(
+        R.string.dash_ebike_specific
+    ) } else { "" }
     ListItem(
         modifier = Modifier.clickable { onItemClick(templateActivity.uid) },
         overlineContent = {

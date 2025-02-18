@@ -41,7 +41,7 @@ class PrepareQuickRideViewModel @Inject constructor(
 
     val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
-    private val rideLevelShortRide = MutableStateFlow(RideLevel.getRideLevelQuickRide().level)
+    private val rideLevelShortRide = MutableStateFlow(RideLevel.getRideLevelQuickRide())
 
     val rideUid = MutableStateFlow(0L)
 

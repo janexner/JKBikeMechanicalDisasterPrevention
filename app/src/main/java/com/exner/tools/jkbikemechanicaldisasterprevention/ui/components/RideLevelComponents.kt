@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
@@ -26,10 +27,12 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun DefaultRideLevelSelector(
-    currentRideLevel: RideLevel?,
-    rideLevels: List<RideLevel>,
-    onItemSelected: (RideLevel?) -> Unit,
+    currentRideLevel: Int?,
+    rideLevels: List<Int>,
+    onItemSelected: (Int?) -> Unit,
 ) {
+    val context = LocalContext.current
+
     var levelsExpanded by remember {
         mutableStateOf(false)
     }
@@ -48,7 +51,7 @@ fun DefaultRideLevelSelector(
                     onClick = { levelsExpanded = true }
                 ) {
                     if (currentRideLevel != null) {
-                        Text(text = currentRideLevel.name)
+                        Text(text = RideLevel.getLabel(context, currentRideLevel))
                     } else {
                         Text(text = stringResource(R.string.select_a_level))
                     }
@@ -66,7 +69,7 @@ fun DefaultRideLevelSelector(
                     )
                     rideLevels.forEach { level ->
                         DropdownMenuItem(
-                            text = { Text(text = level.name) },
+                            text = { Text(text = RideLevel.getLabel(context, level)) },
                             onClick = {
                                 onItemSelected(level)
                                 levelsExpanded = false
@@ -84,10 +87,12 @@ fun DefaultRideLevelSelector(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun RideLevelSelectorForLists(
-    currentRideLevel: RideLevel?,
-    rideLevels: List<RideLevel>,
-    onItemSelected: (RideLevel?) -> Unit,
+    currentRideLevel: Int?,
+    rideLevels: List<Int>,
+    onItemSelected: (Int?) -> Unit,
 ) {
+    val context = LocalContext.current
+
     var levelsExpanded by remember {
         mutableStateOf(false)
     }
@@ -107,7 +112,7 @@ fun RideLevelSelectorForLists(
                     onClick = { levelsExpanded = true }
                 ) {
                     if (currentRideLevel != null) {
-                        Text(text = currentRideLevel.name)
+                        Text(text = RideLevel.getLabel(context, currentRideLevel))
                     } else {
                         Text(text = stringResource(R.string.all_levels))
                     }
@@ -125,7 +130,7 @@ fun RideLevelSelectorForLists(
                     )
                     rideLevels.forEach { level ->
                         DropdownMenuItem(
-                            text = { Text(text = level.name) },
+                            text = { Text(text = RideLevel.getLabel(context, level)) },
                             onClick = {
                                 onItemSelected(level)
                                 levelsExpanded = false

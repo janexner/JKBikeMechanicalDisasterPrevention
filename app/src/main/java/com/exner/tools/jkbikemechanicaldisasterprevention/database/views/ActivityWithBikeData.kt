@@ -2,7 +2,6 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
@@ -26,6 +25,6 @@ data class ActivityWithBikeData(
     @ColumnInfo(name = "activity_due_date") val activityDueDate: LocalDate?,
     @ColumnInfo(name = "activity_done_instant") val activityDoneDateInstant: Instant?,
     @ColumnInfo(name = "activity_is_ebike_specific") val isEBikeSpecific: Boolean,
-    @ColumnInfo(name = "activity_ride_level") val activityRideLevel: RideLevel,
+    @ColumnInfo(name = "activity_ride_level") val activityRideLevel: Int?,
     @ColumnInfo(name = "activity_uid") val activityUid: Long
 )

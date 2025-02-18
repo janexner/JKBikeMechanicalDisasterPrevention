@@ -41,7 +41,7 @@ class PrepareBikeHolidaysViewModel @Inject constructor(
 
     val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
-    private val rideLevelHolidays = MutableStateFlow(RideLevel.getRideLevelHolidays().level)
+    private val rideLevelHolidays = MutableStateFlow(RideLevel.getRideLevelHolidays())
 
     val rideUid = MutableStateFlow(0L)
 

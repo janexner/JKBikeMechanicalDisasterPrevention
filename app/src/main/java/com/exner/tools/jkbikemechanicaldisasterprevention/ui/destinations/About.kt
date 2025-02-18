@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.exner.tools.jkbikemechanicaldisasterprevention.BuildConfig
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
@@ -44,6 +45,8 @@ fun About(
                     .padding(8.dp)
             ) {
                 PageHeaderTextWithSpacer(stringResource(R.string.about))
+                Text(text = "Version " + BuildConfig.VERSION_NAME)
+                DefaultSpacer()
                 Text(text = "J-K Bike - Mechanical Disaster Prevention is a free, open source app that helps build positive bike maintenance behaviours, for rides quick, big or epic.")
                 DefaultSpacer()
                 Text(text = "We have all experienced those rides where something mechanical happens that really was preventable.")

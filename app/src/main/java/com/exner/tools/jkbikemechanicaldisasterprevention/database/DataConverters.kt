@@ -1,7 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
 import androidx.room.TypeConverter
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
@@ -30,23 +29,5 @@ object DataConverter {
     @TypeConverter
     fun instantToEpochMillis(instant: Instant?): Long? {
         return instant?.toEpochMilliseconds()
-    }
-
-    @TypeConverter
-    fun rideLevelToString(rideLevel: RideLevel?): String? {
-        return if (rideLevel != null) {
-            "${rideLevel.level}|${rideLevel.name}"
-        } else {
-            null
-        }
-    }
-
-    @TypeConverter
-    fun fromString(rideLevelString: String?): RideLevel? {
-        if (rideLevelString == null) {
-            return null
-        }
-        val values = rideLevelString.split('|')
-        return RideLevel(values[0].toInt(), values[1])
     }
 }

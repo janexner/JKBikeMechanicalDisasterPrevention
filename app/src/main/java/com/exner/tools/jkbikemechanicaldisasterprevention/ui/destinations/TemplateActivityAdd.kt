@@ -54,7 +54,7 @@ fun TemplateActivityAdd(
 
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var rideLevel: RideLevel? by remember { mutableStateOf(null) }
+    var rideLevel: Int? by remember { mutableStateOf(null) }
     var isEbikeSpecific by remember { mutableStateOf(false) }
 
     var modified by remember { mutableStateOf(false) }

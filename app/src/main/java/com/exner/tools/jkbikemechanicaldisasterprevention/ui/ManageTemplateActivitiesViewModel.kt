@@ -13,7 +13,7 @@ class ManageTemplateActivitiesViewModel @Inject constructor(
     repository: KJsRepository
 ) : ViewModel() {
 
-    val rideLevel: StateFlow<List<RideLevel>> = MutableStateFlow(RideLevel.getListOfRideLevels())
+    val rideLevel: StateFlow<List<Int>> = MutableStateFlow(RideLevel.getListOfRideLevels())
 
     val templateActivities = repository.observeTemplateActivity
 

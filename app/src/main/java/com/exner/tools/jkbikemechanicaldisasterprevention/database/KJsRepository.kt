@@ -7,7 +7,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -53,7 +52,7 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun getAllActivities() : List<Activity> {
+    suspend fun getAllActivities(): List<Activity> {
         return kjsDAO.getAllActivitiesOrderedByTitle()
     }
 
@@ -63,7 +62,7 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
-    suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity> {
+    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity> {
         return kjsDAO.getTemplateActivityForRideLevel(rideLevel)
     }
 

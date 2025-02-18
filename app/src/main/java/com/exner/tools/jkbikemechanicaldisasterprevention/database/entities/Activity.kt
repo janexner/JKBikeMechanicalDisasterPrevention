@@ -3,7 +3,6 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.squareup.moshi.JsonClass
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -17,7 +16,7 @@ data class Activity(
 
     @ColumnInfo(name = "bike_uid") val bikeUid: Long?,
     @ColumnInfo(name = "is_ebike_specific") val isEBikeSpecific: Boolean = false,
-    @ColumnInfo(name = "ride_level") val rideLevel: RideLevel?,
+    @ColumnInfo(name = "ride_level") val rideLevel: Int?,
 
     @ColumnInfo(name = "ride_uid") val rideUid: Long?,
     @ColumnInfo(name = "created_instant") val createdInstant: Instant,

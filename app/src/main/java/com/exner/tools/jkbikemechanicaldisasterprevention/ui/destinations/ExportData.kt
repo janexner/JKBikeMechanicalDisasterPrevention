@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ExportDataViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -108,7 +109,7 @@ fun ExportData(
                         )
                     }
                     items(items = templates, key = { "template-${it.uid}" }) {
-                        Text(text = "${it.rideLevel?.name} - ${it.title}")
+                        Text(text = "${RideLevel.getLabel(context, it.rideLevel)} - ${it.title}")
                     }
                 }
             }

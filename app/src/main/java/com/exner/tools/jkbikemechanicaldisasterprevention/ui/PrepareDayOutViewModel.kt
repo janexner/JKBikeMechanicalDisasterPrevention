@@ -41,7 +41,7 @@ class PrepareDayOutViewModel @Inject constructor(
 
     val observeActivitiesByBikes = repository.observeActivityWithBikeDataAndDueDateOrderedByDueDate
 
-    private val rideLevelDayOut = MutableStateFlow(RideLevel.getRideLevelDayOut().level)
+    private val rideLevelDayOut = MutableStateFlow(RideLevel.getRideLevelDayOut())
 
     val rideUid = MutableStateFlow(0L)
 

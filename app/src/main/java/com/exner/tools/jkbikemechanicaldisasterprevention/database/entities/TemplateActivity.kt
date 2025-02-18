@@ -3,13 +3,12 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.squareup.moshi.JsonClass
 
 @Entity
 @JsonClass(generateAdapter = true)
 data class TemplateActivity(
-    @ColumnInfo(name = "ride_level") val rideLevel: RideLevel?,
+    @ColumnInfo(name = "ride_level") val rideLevel: Int?,
 
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String,

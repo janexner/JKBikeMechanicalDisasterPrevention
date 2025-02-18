@@ -11,7 +11,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -66,7 +65,7 @@ interface KJsDAO {
     suspend fun getActivityCountByBike(bikeUid: Long): Int
 
     @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel")
-    suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity>
+    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity>
 
     //
     // UPDATE/INSERT/DELETE

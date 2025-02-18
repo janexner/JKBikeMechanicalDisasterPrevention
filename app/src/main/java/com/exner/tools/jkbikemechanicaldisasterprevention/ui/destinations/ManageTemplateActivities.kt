@@ -37,7 +37,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpac
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.RideLevelSelectorForLists
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TemplateActivityListItem
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.TemplateActivityAddDestination
@@ -51,8 +50,8 @@ fun ManageTemplateActivities(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val rideLevels: List<RideLevel> by manageTemplateActivitiesViewModel.rideLevel.collectAsStateWithLifecycle()
-    var currentRideLevel: RideLevel? by remember { mutableStateOf(null) }
+    val rideLevels: List<Int> by manageTemplateActivitiesViewModel.rideLevel.collectAsStateWithLifecycle()
+    var currentRideLevel: Int? by remember { mutableStateOf(null) }
 
     val templateActivities by manageTemplateActivitiesViewModel.templateActivities.collectAsStateWithLifecycle(
         initialValue = emptyList()

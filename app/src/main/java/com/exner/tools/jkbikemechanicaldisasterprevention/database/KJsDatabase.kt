@@ -23,7 +23,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Activit
         TemplateActivity::class,
     ],
     views = [ActivityWithBikeData::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(

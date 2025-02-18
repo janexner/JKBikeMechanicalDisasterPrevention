@@ -107,4 +107,5 @@
     <string name="holidays_definition">Holidays - you are taking your bike(s) to another place, where you will not have access to all your tools.</string>
     <string name="holidays_avoid">Replace components before you go to avoid mishaps due to material fatigue.</string>
     <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
+    <string name="dash_ebike_specific">" - eBike-spezifisch"</string>
 </resources>
