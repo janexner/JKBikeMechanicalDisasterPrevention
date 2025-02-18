@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,11 +26,35 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 
 @Composable
+fun DefaultRideLevelSelectorActivity(
+    rideLevel: Int?,
+    onItemSelected: (Int?) -> Unit
+) {
+    DefaultRideLevelSelectorWithSpacer(
+        rideLevel,
+        onItemSelected,
+        stringResource(R.string.select_a_level)
+    )
+}
+
+@Composable
+fun DefaultRideLevelSelectorTemplate(
+    rideLevel: Int?,
+    onItemSelected: (Int?) -> Unit
+) {
+    DefaultRideLevelSelectorWithSpacer(
+        rideLevel,
+        onItemSelected,
+        stringResource(R.string.template_for_ride_level)
+    )
+}
+
+@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DefaultRideLevelSelector(
+fun DefaultRideLevelSelectorWithSpacer(
     currentRideLevel: Int?,
-    rideLevels: List<Int>,
     onItemSelected: (Int?) -> Unit,
+    labelText: String
 ) {
     val context = LocalContext.current
 
@@ -42,9 +67,11 @@ fun DefaultRideLevelSelector(
             .padding(8.dp, 0.dp)
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
         ) {
-            Text(text = stringResource(R.string.template_for_ride_level))
+            Text(text = labelText)
             DefaultSpacer()
             Box {
                 Button(
@@ -67,7 +94,7 @@ fun DefaultRideLevelSelector(
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
-                    rideLevels.forEach { level ->
+                    RideLevel.getListOfRideLevels().forEach { level ->
                         DropdownMenuItem(
                             text = { Text(text = RideLevel.getLabel(context, level)) },
                             onClick = {
@@ -88,7 +115,6 @@ fun DefaultRideLevelSelector(
 @OptIn(ExperimentalMaterial3Api::class)
 fun RideLevelSelectorForLists(
     currentRideLevel: Int?,
-    rideLevels: List<Int>,
     onItemSelected: (Int?) -> Unit,
 ) {
     val context = LocalContext.current
@@ -128,7 +154,7 @@ fun RideLevelSelectorForLists(
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
-                    rideLevels.forEach { level ->
+                    RideLevel.getListOfRideLevels().forEach { level ->
                         DropdownMenuItem(
                             text = { Text(text = RideLevel.getLabel(context, level)) },
                             onClick = {

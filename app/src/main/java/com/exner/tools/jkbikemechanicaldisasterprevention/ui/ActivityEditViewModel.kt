@@ -107,6 +107,14 @@ class ActivityEditViewModel @AssistedInject constructor(
         }
     }
 
+    fun updateRideLevel(level: Int?) {
+        viewModelScope.launch {
+            _activity.value = activity.value!!.copy(
+                rideLevel = level
+            )
+        }
+    }
+
     fun commitActivity() {
         if (activity.value != null) {
             viewModelScope.launch {

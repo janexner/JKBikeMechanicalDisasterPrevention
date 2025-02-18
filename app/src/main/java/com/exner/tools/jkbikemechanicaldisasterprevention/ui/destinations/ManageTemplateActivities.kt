@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -50,7 +50,6 @@ fun ManageTemplateActivities(
     destinationsNavigator: DestinationsNavigator
 ) {
 
-    val rideLevels: List<Int> by manageTemplateActivitiesViewModel.rideLevel.collectAsStateWithLifecycle()
     var currentRideLevel: Int? by remember { mutableStateOf(null) }
 
     val templateActivities by manageTemplateActivitiesViewModel.templateActivities.collectAsStateWithLifecycle(
@@ -70,7 +69,6 @@ fun ManageTemplateActivities(
                 PageHeaderTextWithSpacer(stringResource(R.string.lbl_manage_template_activities))
                 RideLevelSelectorForLists(
                     currentRideLevel,
-                    rideLevels,
                 ) {
                     currentRideLevel = it
                 }
@@ -124,7 +122,7 @@ fun ManageTemplateActivities(
                         destinationsNavigator.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Clear,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.cancel)
                         )
                     }

@@ -37,6 +37,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityAddViewMode
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
@@ -66,6 +67,7 @@ fun ActivityAdd(
     }
     var selectedDueDate by remember { mutableStateOf<Long?>(null) }
     var isEBikeSpecific by remember { mutableStateOf(false) }
+    var rideLevel: Int? by remember { mutableStateOf(null) }
 
     val bikes: List<Bike> by activityAddViewModel.observeBikes.collectAsStateWithLifecycle(
         emptyList()
@@ -104,6 +106,12 @@ fun ActivityAdd(
                     },
                     label = stringResource(R.string.lbl_description),
                 )
+                DefaultRideLevelSelectorActivity(
+                    rideLevel = rideLevel
+                ) {
+                    rideLevel = it
+                    modified = true
+                }
                 TextAndSwitch(
                     text = stringResource(R.string.is_ebike_specific),
                     checked = isEBikeSpecific

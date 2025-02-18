@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -97,7 +97,7 @@ fun Settings(
                         destinationsNavigator.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Clear,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.cancel)
                         )
                     }

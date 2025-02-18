@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomAppBar
@@ -36,6 +36,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityEditViewMod
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultInstantSelectorWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
@@ -110,6 +111,13 @@ fun ActivityEdit(
                     },
                     label = stringResource(R.string.lbl_description),
                 )
+                DefaultRideLevelSelectorActivity(
+                    rideLevel = activity?.rideLevel,
+                    onItemSelected = {
+                        activityEditViewModel.updateRideLevel(it)
+                        modified = true
+                    }
+                )
                 TextAndSwitch(
                     text = stringResource(R.string.is_ebike_specific),
                     checked = activity?.isEBikeSpecific ?: false
@@ -125,8 +133,11 @@ fun ActivityEdit(
                     modified = true
                 }
                 DefaultBikeSelectorWithSpacer(
-                    value = if (currentBike != null) { currentBike!!.name } else {
-                        stringResource(R.string.none) },
+                    value = if (currentBike != null) {
+                        currentBike!!.name
+                    } else {
+                        stringResource(R.string.none)
+                    },
                     label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
                         activityEditViewModel.updateAttachedBike(it)
@@ -164,14 +175,14 @@ fun ActivityEdit(
                         destinationsNavigator.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Clear,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.cancel)
                         )
                     }
 
                     IconSpacer()
                     IconButton(onClick = {
-                         destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                        destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,

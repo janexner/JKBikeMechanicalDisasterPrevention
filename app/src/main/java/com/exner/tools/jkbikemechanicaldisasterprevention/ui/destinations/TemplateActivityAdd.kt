@@ -35,12 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityAddViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorTemplate
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -71,9 +70,8 @@ fun TemplateActivityAdd(
                     .padding(8.dp)
             ) {
                 PageHeaderTextWithSpacer(stringResource(R.string.lbl_add_template_activity))
-                DefaultRideLevelSelector(
+                DefaultRideLevelSelectorTemplate(
                     rideLevel,
-                    RideLevel.getListOfRideLevels()
                 ) {
                     rideLevel = it
                     modified = true
@@ -141,7 +139,10 @@ fun TemplateActivityAdd(
                                     description = description,
                                     isEBikeSpecific = isEbikeSpecific
                                 )
-                                Log.d("TemplateActivityAdd", "Saving template activity $templateActivity")
+                                Log.d(
+                                    "TemplateActivityAdd",
+                                    "Saving template activity $templateActivity"
+                                )
                                 templateActivityAddViewModel.saveTemplateActivity(templateActivity)
                                 modified = false
                                 destinationsNavigator.navigateUp()
