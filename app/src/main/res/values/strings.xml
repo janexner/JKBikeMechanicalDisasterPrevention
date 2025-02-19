@@ -79,7 +79,7 @@
     <string name="about">About</string>
     <string name="delete_a_bike">Delete bike</string>
     <string name="edit_a_bike">Edit bike</string>
-    <string name="welcome_to_kj_do_it_now">Welcome to J-K Bike - Mechanical Disaster Prevention</string>
+    <string name="welcome_to_kj_do_it_now">Welcome to J-K Bike - Mechanical Disaster Prevention!</string>
     <string name="todos">TODOs</string>
     <string name="manage_bikes_components">Manage bikes</string>
     <string name="delete_template_activity">Delete template activity</string>
@@ -110,5 +110,5 @@
     <string name="export">Export</string>
     <string name="export_data">Export data</string>
     <string name="dash_ebike_specific">" - eBike-specific"</string>
-    <string name="top_bar_title_long">J-K Bike - Mechanical Disaster Prevention</string>
+    <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
 </resources>

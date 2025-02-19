@@ -98,15 +98,14 @@
     <string name="tap_bike_to_edit">Tap bike to edit</string>
     <string name="template_for_ride_level">Vorlagen für Level</string>
     <string name="lbl_name">Name</string>
-    <string name="quick_ride_definition">Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.</string>
-    <string name="quick_ride_avoid">These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.</string>
-    <string name="quick_ride_when_todo">Best do these the night before!</string>
-    <string name="day_out_definition">Day out - you are out for longer time and maybe some distance from easy or fast recovery.</string>
-    <string name="day_out_avoid">These activities help avoid things are likely not fixable on the trail.</string>
-    <string name="day_out_when_todo">Best do these the night before or a couple of days earlier!</string>
-    <string name="holidays_definition">Holidays - you are taking your bike(s) to another place, where you will not have access to all your tools.</string>
-    <string name="holidays_avoid">Replace components before you go to avoid mishaps due to material fatigue.</string>
-    <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
+    <string name="quick_ride_definition">Kurze Tour - wenn man irgendwie immer noch wieder nach Hause kommen würde.</string>
+    <string name="quick_ride_avoid">Diese Aktivitäten sollen sicherstellen, dass die Tour angenehm wird.</string>
+    <string name="quick_ride_when_todo">Am besten am Vorabend erledigen!</string>
+    <string name="day_out_definition">Tagestour - wenn man weit genug weg ist, dass ein technisches Problem ein echtes Problem wäre.</string>
+    <string name="day_out_avoid">Diese Aktivitäten sollen sicherstellen, dass nichts kaputtgeht, was man nicht am Trail fixen könnte.</string>
+    <string name="day_out_when_todo">Am besten am Vorabend oder ein paar Tage vorher erledigen!</string>
+    <string name="holidays_definition">Ferien - wenn man an einem Ort ist, an dem man nicht alles Werkzeug und Ersatzteile hat.</string>
+    <string name="holidays_avoid">Diese Aktivitäten sollen ausschliessen, dass Dinge wegen Materialermüdung schieflaufen.</string>
+    <string name="holidays_when_todo">Gerne ein paar Wochen im Voraus erledigen!</string>
     <string name="dash_ebike_specific">" - eBike-spezifisch"</string>
-    <string name="top_bar_title_long">J-K Bike - Mechanical Disaster Prevention</string>
 </resources>
