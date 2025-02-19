@@ -6,12 +6,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,10 +23,12 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Hail
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Luggage
-import androidx.compose.material.icons.outlined.ThumbUp
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Luggage
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,7 +36,13 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,6 +66,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.NavigationStyle
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.PrepareDayOutViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
@@ -62,21 +74,203 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHead
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowAnimatedText
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TodoListItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TransientTodoListItem
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsMenuItem
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
+import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
 import com.ramcosta.composedestinations.generated.destinations.PrepareQuickRideDestination
+import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
+
+@Destination<RootGraph>
+@Composable
+fun PrepareDayOut(
+    prepareDayOutViewModel: PrepareDayOutViewModel = hiltViewModel(),
+    destinationsNavigator: DestinationsNavigator
+) {
+
+    val listOfMenuItems: List<KJsMenuItem> = listOf(
+        KJsMenuItem(
+            label = stringResource(R.string.tab_home),
+            icon = Icons.Default.Home,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(HomeDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_quick_ride),
+            icon = Icons.Default.ThumbUp,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(PrepareQuickRideDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_day_out),
+            icon = Icons.Default.Hail,
+            selected = true,
+            onClick = {
+                destinationsNavigator.navigate(PrepareDayOutDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_holidays),
+            icon = Icons.Default.Luggage,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
+            }
+        ),
+    )
+
+    val navigationStyle = NavigationStyle.LEFT_DRAWER
+
+    when (navigationStyle) {
+        NavigationStyle.BOTTOM_BAR -> {
+            Scaffold(
+                modifier = Modifier.imePadding(),
+                content = { innerPadding ->
+                    PrepareDayOutContent(
+                        innerPadding,
+                        prepareDayOutViewModel,
+                        destinationsNavigator
+                    )
+                },
+                bottomBar = {
+                    NavigationBar {
+                        listOfMenuItems.forEach { item ->
+                            NavigationBarItem(
+                                selected = item.selected,
+                                onClick = item.onClick,
+                                label = {
+                                    Text(text = item.label)
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = item.label
+                                    )
+                                },
+                            )
+                        }
+                    }
+                }
+            )
+        }
+
+        NavigationStyle.LEFT_RAIL -> {
+            Row(
+                modifier = Modifier.imePadding()
+            ) {
+                NavigationRail(
+                    containerColor = NavigationBarDefaults.containerColor
+                ) {
+                    listOfMenuItems.forEach { item ->
+                        NavigationRailItem(
+                            selected = item.selected,
+                            onClick = item.onClick,
+                            label = {
+                                Text(text = item.label)
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.label
+                                )
+                            },
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(0.5f))
+                    NavigationRailItem(
+                        selected = false,
+                        onClick = {
+                            destinationsNavigator.navigate(SettingsDestination)
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = stringResource(R.string.menu_item_settings)
+                            )
+                        },
+                        label = {
+                            Text(stringResource(R.string.menu_item_settings))
+                        }
+                    )
+                }
+                DefaultSpacer()
+                PrepareDayOutContent(
+                    PaddingValues(8.dp),
+                    prepareDayOutViewModel,
+                    destinationsNavigator
+                )
+            }
+        }
+
+        NavigationStyle.LEFT_DRAWER -> {
+            PermanentNavigationDrawer(
+                modifier = Modifier,
+                drawerContent = {
+                    PermanentDrawerSheet(
+                        modifier = Modifier.width(200.dp),
+                        drawerContainerColor = DrawerDefaults.standardContainerColor
+                    ) {
+                        Column {
+                            listOfMenuItems.forEach { item ->
+                                NavigationDrawerItem(
+                                    selected = item.selected,
+                                    onClick = item.onClick,
+                                    label = {
+                                        Text(text = item.label)
+                                    },
+                                    icon = {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.label
+                                        )
+                                    },
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(0.5f))
+                            NavigationDrawerItem(
+                                selected = false,
+                                onClick = {
+                                    destinationsNavigator.navigate(SettingsDestination)
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Settings,
+                                        contentDescription = stringResource(R.string.menu_item_settings)
+                                    )
+                                },
+                                label = {
+                                    Text(stringResource(R.string.menu_item_settings))
+                                }
+                            )
+                        }
+                    }
+                },
+            ) {
+                PrepareDayOutContent(
+                    PaddingValues(8.dp),
+                    prepareDayOutViewModel,
+                    destinationsNavigator
+                )
+            }
+        }
+    }
+}
 
 @OptIn(
     ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
     ExperimentalComposeUiApi::class
 )
-@Destination<RootGraph>
 @Composable
-fun PrepareDayOut(
+fun PrepareDayOutContent(
+    innerPadding: PaddingValues,
     prepareDayOutViewModel: PrepareDayOutViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator
 ) {
@@ -98,268 +292,209 @@ fun PrepareDayOut(
 
     var modified by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier.imePadding(),
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
-                    .padding(8.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    PageHeaderTextWithSpacer(stringResource(R.string.hdr_day_out))
-                    if (prepareDayOutViewModel.showIntroText.value) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropUp,
-                            contentDescription = stringResource(R.string.collapse),
-                            modifier = Modifier.clickable {
-                                prepareDayOutViewModel.updateShowIntroText(false)
-                            }
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = stringResource(R.string.expand),
-                            modifier = Modifier.clickable {
-                                prepareDayOutViewModel.updateShowIntroText(true)
-                            }
-                        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .consumeWindowInsets(innerPadding)
+            .padding(innerPadding)
+            .padding(8.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_day_out))
+            if (prepareDayOutViewModel.showIntroText.value) {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropUp,
+                    contentDescription = stringResource(R.string.collapse),
+                    modifier = Modifier.clickable {
+                        prepareDayOutViewModel.updateShowIntroText(false)
                     }
-                }
-                ShowAnimatedText(show = prepareDayOutViewModel.showIntroText.value) {
-                    DefaultSpacer()
-                    Text(text = stringResource(R.string.day_out_definition))
-                    DefaultSpacer()
-                    Text(text = stringResource(R.string.day_out_avoid))
-                    DefaultSpacer()
-                }
-                Text(text = stringResource(R.string.day_out_when_todo))
-                DefaultSpacer()
-                var offset = Offset.Zero
-                var bikesExpanded by remember {
-                    mutableStateOf(false)
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp, 0.dp)
-                        .wrapContentSize(Alignment.TopEnd)
-                        .pointerInteropFilter {
-                            offset = Offset(it.x, it.y)
-                            false
-                        }
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.which_bike))
-                        DefaultSpacer()
-                        Button(
-                            onClick = { bikesExpanded = true }
-                        ) {
-                            if (currentBike != null) {
-                                Text(text = currentBike!!.name)
-                            } else {
-                                Text(text = stringResource(R.string.select_a_bike))
-                            }
-                        }
-                    }
-                    val density = LocalDensity.current
-                    DropdownMenu(
-                        expanded = bikesExpanded,
-                        offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
-                        onDismissRequest = { bikesExpanded = false }) {
-                        DropdownMenuItem(
-                            text = { Text(text = stringResource(R.string.all_bikes)) },
-                            onClick = {
-                                currentBike = null
-                                currentBikeIsAnEBike = true
-                                modified = true
-                                bikesExpanded = false
-                            },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                        )
-                        bikes.forEach { bike ->
-                            DropdownMenuItem(
-                                text = { Text(text = bike.name) },
-                                onClick = {
-                                    currentBike = bike
-                                    currentBikeIsAnEBike = bike.isElectric
-                                    modified = true
-                                    bikesExpanded = false
-                                },
-                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                            )
-                        }
-                    }
-                }
-                DefaultSpacer()
-                // filter activities by bike
-                val suppressBikeBadge = (currentBike != null && currentBike!!.uid > 0)
-                val filteredActivities = if (currentBike == null || currentBike!!.uid < 1) {
-                    activitiesByBikes
-                } else {
-                    activitiesByBikes.filter { activityByBike ->
-                        activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
-                    }
-                }
-                val filteredDayOutActivities = if (currentBikeIsAnEBike) {
-                    dayOutActivities
-                } else {
-                    dayOutActivities.filter { activityWithBikeData ->
-                        !activityWithBikeData.isEBikeSpecific
-                    }
-                }
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.5f)
-                ) {
-                    stickyHeader {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primaryContainer)
-                                .padding(8.dp),
-                            text = stringResource(R.string.activities_for_a_day_out)
-                        )
-                    }
-
-                    items(
-                        items = filteredDayOutActivities,
-                        key = { "temp-${it.activityUid}" }) { activity ->
-                        TransientTodoListItem(
-                            activity = activity,
-                            onCheckboxCallback = { checked ->
-                                prepareDayOutViewModel.updateRideActivity(
-                                    activityUid = activity.activityUid,
-                                    isCompleted = checked
-                                )
-                            },
-                            suppressDueDate = true
-                        )
-                    }
-
-                    stickyHeader {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primaryContainer)
-                                .padding(8.dp),
-                            text = stringResource(R.string.activities_that_are_due_anyway)
-                        )
-                    }
-
-                    items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
-                        val activity = Activity(
-                            title = activityByBike.activityTitle,
-                            description = activityByBike.activityDescription,
-                            isCompleted = activityByBike.activityIsCompleted,
-                            rideUid = null,
-                            createdInstant = activityByBike.activityCreatedInstant,
-                            dueDate = activityByBike.activityDueDate,
-                            doneInstant = activityByBike.activityDoneDateInstant,
-                            bikeUid = activityByBike.bikeUid!!,
-                            isEBikeSpecific = activityByBike.isEBikeSpecific,
-                            rideLevel = activityByBike.activityRideLevel,
-                            uid = activityByBike.activityUid
-                        )
-                        TodoListItem(
-                            activity = activityByBike,
-                            destinationsNavigator = destinationsNavigator,
-                            onCheckboxCallback = { result ->
-                                prepareDayOutViewModel.updateActivity(
-                                    activity = activity.copy(
-                                        isCompleted = result,
-                                        doneInstant = if (result) {
-                                            Clock.System.now()
-                                        } else {
-                                            null
-                                        }
-                                    )
-                                )
-                            },
-                            suppressBikeBadge = suppressBikeBadge,
-                            suppressDueDate = true
-                        )
-                    }
-                }
-                DefaultSpacer()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(onClick = {
-                        prepareDayOutViewModel.endCurrentRideAndStartFromScratch()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = stringResource(R.string.clear_and_start_anew)
-                        )
-                        IconSpacer()
-                        Text(text = stringResource(R.string.lbl_start_new_day_out))
-                    }
-                }
-            }
-        },
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    onClick = {
-                        destinationsNavigator.navigate(HomeDestination)
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Outlined.Home,
-                            contentDescription = stringResource(R.string.tab_home)
-                        )
-                    },
-                    label = { Text(text = stringResource(R.string.tab_home)) },
-                    selected = false
                 )
-                NavigationBarItem(
-                    onClick = {
-                        destinationsNavigator.navigate(PrepareQuickRideDestination)
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Outlined.ThumbUp,
-                            contentDescription = stringResource(R.string.tab_quick_ride)
-                        )
-                    },
-                    label = { Text(text = stringResource(R.string.tab_quick_ride)) },
-                    selected = false
-                )
-                NavigationBarItem(
-                    onClick = {},
-                    icon = {
-                        Icon(
-                            Icons.Filled.Hail,
-                            contentDescription = stringResource(R.string.tab_day_out)
-                        )
-                    },
-                    label = { Text(text = stringResource(R.string.tab_day_out)) },
-                    selected = true,
-                )
-                NavigationBarItem(
-                    onClick = {
-                        destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Outlined.Luggage,
-                            contentDescription = stringResource(R.string.tab_holidays)
-                        )
-                    },
-                    label = { Text(text = stringResource(R.string.tab_holidays)) },
-                    selected = false
+            } else {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = stringResource(R.string.expand),
+                    modifier = Modifier.clickable {
+                        prepareDayOutViewModel.updateShowIntroText(true)
+                    }
                 )
             }
         }
-    )
+        ShowAnimatedText(show = prepareDayOutViewModel.showIntroText.value) {
+            DefaultSpacer()
+            Text(text = stringResource(R.string.day_out_definition))
+            DefaultSpacer()
+            Text(text = stringResource(R.string.day_out_avoid))
+            DefaultSpacer()
+        }
+        Text(text = stringResource(R.string.day_out_when_todo))
+        DefaultSpacer()
+        var offset = Offset.Zero
+        var bikesExpanded by remember {
+            mutableStateOf(false)
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp, 0.dp)
+                .wrapContentSize(Alignment.TopEnd)
+                .pointerInteropFilter {
+                    offset = Offset(it.x, it.y)
+                    false
+                }
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = stringResource(R.string.which_bike))
+                DefaultSpacer()
+                Button(
+                    onClick = { bikesExpanded = true }
+                ) {
+                    if (currentBike != null) {
+                        Text(text = currentBike!!.name)
+                    } else {
+                        Text(text = stringResource(R.string.select_a_bike))
+                    }
+                }
+            }
+            val density = LocalDensity.current
+            DropdownMenu(
+                expanded = bikesExpanded,
+                offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
+                onDismissRequest = { bikesExpanded = false }) {
+                DropdownMenuItem(
+                    text = { Text(text = stringResource(R.string.all_bikes)) },
+                    onClick = {
+                        currentBike = null
+                        currentBikeIsAnEBike = true
+                        modified = true
+                        bikesExpanded = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                )
+                bikes.forEach { bike ->
+                    DropdownMenuItem(
+                        text = { Text(text = bike.name) },
+                        onClick = {
+                            currentBike = bike
+                            currentBikeIsAnEBike = bike.isElectric
+                            modified = true
+                            bikesExpanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    )
+                }
+            }
+        }
+        DefaultSpacer()
+        // filter activities by bike
+        val suppressBikeBadge = (currentBike != null && currentBike!!.uid > 0)
+        val filteredActivities = if (currentBike == null || currentBike!!.uid < 1) {
+            activitiesByBikes
+        } else {
+            activitiesByBikes.filter { activityByBike ->
+                activityByBike.bikeName == currentBike!!.name || activityByBike.bikeName == null
+            }
+        }
+        val filteredDayOutActivities = if (currentBikeIsAnEBike) {
+            dayOutActivities
+        } else {
+            dayOutActivities.filter { activityWithBikeData ->
+                !activityWithBikeData.isEBikeSpecific
+            }
+        }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.5f)
+        ) {
+            stickyHeader {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .padding(8.dp),
+                    text = stringResource(R.string.activities_for_a_day_out)
+                )
+            }
+
+            items(
+                items = filteredDayOutActivities,
+                key = { "temp-${it.activityUid}" }) { activity ->
+                TransientTodoListItem(
+                    activity = activity,
+                    onCheckboxCallback = { checked ->
+                        prepareDayOutViewModel.updateRideActivity(
+                            activityUid = activity.activityUid,
+                            isCompleted = checked
+                        )
+                    },
+                    suppressDueDate = true
+                )
+            }
+
+            stickyHeader {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .padding(8.dp),
+                    text = stringResource(R.string.activities_that_are_due_anyway)
+                )
+            }
+
+            items(items = filteredActivities, key = { it.activityUid }) { activityByBike ->
+                val activity = Activity(
+                    title = activityByBike.activityTitle,
+                    description = activityByBike.activityDescription,
+                    isCompleted = activityByBike.activityIsCompleted,
+                    rideUid = null,
+                    createdInstant = activityByBike.activityCreatedInstant,
+                    dueDate = activityByBike.activityDueDate,
+                    doneInstant = activityByBike.activityDoneDateInstant,
+                    bikeUid = activityByBike.bikeUid!!,
+                    isEBikeSpecific = activityByBike.isEBikeSpecific,
+                    rideLevel = activityByBike.activityRideLevel,
+                    uid = activityByBike.activityUid
+                )
+                TodoListItem(
+                    activity = activityByBike,
+                    destinationsNavigator = destinationsNavigator,
+                    onCheckboxCallback = { result ->
+                        prepareDayOutViewModel.updateActivity(
+                            activity = activity.copy(
+                                isCompleted = result,
+                                doneInstant = if (result) {
+                                    Clock.System.now()
+                                } else {
+                                    null
+                                }
+                            )
+                        )
+                    },
+                    suppressBikeBadge = suppressBikeBadge,
+                    suppressDueDate = true
+                )
+            }
+        }
+        DefaultSpacer()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Button(onClick = {
+                prepareDayOutViewModel.endCurrentRideAndStartFromScratch()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Clear,
+                    contentDescription = stringResource(R.string.clear_and_start_anew)
+                )
+                IconSpacer()
+                Text(text = stringResource(R.string.lbl_start_new_day_out))
+            }
+        }
+    }
 }

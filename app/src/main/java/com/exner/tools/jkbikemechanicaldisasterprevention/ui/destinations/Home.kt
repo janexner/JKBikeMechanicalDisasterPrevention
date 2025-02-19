@@ -2,6 +2,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -193,7 +194,7 @@ fun Home(
                 modifier = Modifier,
                 drawerContent = {
                     PermanentDrawerSheet(
-                        modifier = Modifier.width(180.dp),
+                        modifier = Modifier.width(200.dp),
                         drawerContainerColor = DrawerDefaults.standardContainerColor
                     ) {
                         Column {
@@ -317,24 +318,27 @@ private fun HomeContent(
         Spacer(modifier = Modifier.weight(0.1f))
 
         // more static UI
-        Button(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                destinationsNavigator.navigate(ActivityAddDestination)
-            }
+            horizontalArrangement = Arrangement.End
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Button(
+                onClick = {
+                    destinationsNavigator.navigate(ActivityAddDestination)
+                }
             ) {
-                Icon(
-                    imageVector = Icons.Default.AddTask,
-                    contentDescription = stringResource(R.string.add_activity)
-                )
-                IconSpacer()
-                Text(text = stringResource(R.string.add_activity))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AddTask,
+                        contentDescription = stringResource(R.string.add_activity)
+                    )
+                    IconSpacer()
+                    Text(text = stringResource(R.string.add_activity))
+                }
             }
         }
-
         Spacer(modifier = Modifier.height(8.dp))
     }
 }

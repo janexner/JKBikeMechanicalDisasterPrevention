@@ -220,7 +220,7 @@ fun PrepareQuickRide(
                 modifier = Modifier,
                 drawerContent = {
                     PermanentDrawerSheet(
-                        modifier = Modifier.width(180.dp),
+                        modifier = Modifier.width(200.dp),
                         drawerContainerColor = DrawerDefaults.standardContainerColor
                     ) {
                         Column {
@@ -488,7 +488,7 @@ fun PrepareQuickRideContent(
         DefaultSpacer()
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.End
         ) {
             Button(onClick = {
                 prepareQuickRideViewModel.endCurrentRideAndStartFromScratch()

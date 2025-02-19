@@ -21,12 +21,16 @@ import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarDefaults
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,10 +48,16 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpac
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndTriStateToggle
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsMenuItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.Theme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageTemplateActivitiesDestination
+import com.ramcosta.composedestinations.generated.destinations.PrepareBikeHolidaysDestination
+import com.ramcosta.composedestinations.generated.destinations.PrepareDayOutDestination
+import com.ramcosta.composedestinations.generated.destinations.PrepareQuickRideDestination
+import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
@@ -60,7 +70,42 @@ fun Settings(
     val userSelectedTheme by settingsViewModel.userSelectedTheme.collectAsStateWithLifecycle()
     val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
 
-    val navigationStyle = NavigationStyle.LEFT_RAIL
+    val listOfMenuItems: List<KJsMenuItem> = listOf(
+        KJsMenuItem(
+            label = stringResource(R.string.tab_home),
+            icon = Icons.Default.Home,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(HomeDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_quick_ride),
+            icon = Icons.Default.ThumbUp,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(PrepareQuickRideDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_day_out),
+            icon = Icons.Default.Hail,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(PrepareDayOutDestination)
+            }
+        ),
+        KJsMenuItem(
+            label = stringResource(R.string.tab_holidays),
+            icon = Icons.Default.Luggage,
+            selected = false,
+            onClick = {
+                destinationsNavigator.navigate(PrepareBikeHolidaysDestination)
+            }
+        ),
+    )
+
+    val navigationStyle = NavigationStyle.LEFT_DRAWER
 
     when (navigationStyle) {
         NavigationStyle.BOTTOM_BAR -> {
@@ -100,72 +145,36 @@ fun Settings(
                 NavigationRail(
                     containerColor = NavigationBarDefaults.containerColor
                 ) {
+                    listOfMenuItems.forEach { item ->
+                        NavigationRailItem(
+                            selected = item.selected,
+                            onClick = item.onClick,
+                            label = {
+                                Text(text = item.label)
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.label
+                                )
+                            },
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(0.5f))
                     NavigationRailItem(
                         selected = false,
-                        onClick = {},
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Home,
-                                contentDescription = stringResource(R.string.tab_home)
-                            )
+                        onClick = {
+                            destinationsNavigator.navigate(SettingsDestination)
                         },
-                        label = {
-                            Text(stringResource(R.string.tab_home))
-                        }
-                    )
-                    NavigationRailItem(
-                        selected = false,
-                        onClick = {},
                         icon = {
                             Icon(
-                                imageVector = Icons.Default.ThumbUp,
-                                contentDescription = stringResource(R.string.tab_quick_ride)
-                            )
-                        },
-                        label = {
-                            Text(stringResource(R.string.tab_quick_ride))
-                        }
-                    )
-                    NavigationRailItem(
-                        selected = false,
-                        onClick = {},
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Hail,
-                                contentDescription = stringResource(R.string.tab_day_out)
-                            )
-                        },
-                        label = {
-                            Text(stringResource(R.string.tab_day_out))
-                        }
-                    )
-                    NavigationRailItem(
-                        selected = false,
-                        onClick = {},
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Luggage,
-                                contentDescription = stringResource(R.string.tab_holidays)
-                            )
-                        },
-                        label = {
-                            Text(stringResource(R.string.tab_holidays))
-                        }
-                    )
-                    HorizontalDivider(modifier = Modifier.width(16.dp))
-                    NavigationRailItem(
-                        selected = true,
-                        onClick = {},
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Outlined.Settings,
+                                imageVector = Icons.Default.Settings,
                                 contentDescription = stringResource(R.string.menu_item_settings)
                             )
                         },
-                        enabled = true,
                         label = {
-                            Text(text = stringResource(R.string.menu_item_settings))
-                        },
+                            Text(stringResource(R.string.menu_item_settings))
+                        }
                     )
                 }
                 DefaultSpacer()
@@ -180,26 +189,49 @@ fun Settings(
         }
 
         NavigationStyle.LEFT_DRAWER -> {
-            Row(
-                modifier = Modifier.imePadding()
-            ) {
-                NavigationRail {
-                    NavigationRailItem(
-                        selected = true,
-                        onClick = {},
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = stringResource(R.string.menu_item_settings)
+            PermanentNavigationDrawer(
+                modifier = Modifier,
+                drawerContent = {
+                    PermanentDrawerSheet(
+                        modifier = Modifier.width(200.dp),
+                        drawerContainerColor = DrawerDefaults.standardContainerColor
+                    ) {
+                        Column {
+                            listOfMenuItems.forEach { item ->
+                                NavigationDrawerItem(
+                                    selected = item.selected,
+                                    onClick = item.onClick,
+                                    label = {
+                                        Text(text = item.label)
+                                    },
+                                    icon = {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.label
+                                        )
+                                    },
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(0.5f))
+                            NavigationDrawerItem(
+                                selected = true,
+                                onClick = {
+                                    destinationsNavigator.navigate(SettingsDestination)
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Settings,
+                                        contentDescription = stringResource(R.string.menu_item_settings)
+                                    )
+                                },
+                                label = {
+                                    Text(stringResource(R.string.menu_item_settings))
+                                }
                             )
-                        },
-                        enabled = true,
-                        label = {
-                            Text(text = stringResource(R.string.menu_item_settings))
-                        },
-                    )
-                }
-                DefaultSpacer()
+                        }
+                    }
+                },
+            ) {
                 SettingsContent(
                     PaddingValues(8.dp),
                     userSelectedTheme,
@@ -244,7 +276,7 @@ private fun SettingsContent(
         Spacer(modifier = Modifier.weight(1f))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.End
         ) {
             Button(onClick = {
                 destinationsNavigator.navigate(ManageTemplateActivitiesDestination)
