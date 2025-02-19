@@ -18,11 +18,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarDefaults
@@ -66,9 +64,6 @@ fun Settings(
     settingsViewModel: SettingsViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator,
 ) {
-
-    val userSelectedTheme by settingsViewModel.userSelectedTheme.collectAsStateWithLifecycle()
-    val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
 
     val listOfMenuItems: List<KJsMenuItem> = listOf(
         KJsMenuItem(
@@ -115,9 +110,7 @@ fun Settings(
                 content = { innerPadding ->
                     SettingsContent(
                         innerPadding,
-                        userSelectedTheme,
                         settingsViewModel,
-                        todoListsExpire,
                         destinationsNavigator
                     )
                 },
@@ -180,9 +173,7 @@ fun Settings(
                 DefaultSpacer()
                 SettingsContent(
                     PaddingValues(8.dp),
-                    userSelectedTheme,
                     settingsViewModel,
-                    todoListsExpire,
                     destinationsNavigator
                 )
             }
@@ -234,9 +225,7 @@ fun Settings(
             ) {
                 SettingsContent(
                     PaddingValues(8.dp),
-                    userSelectedTheme,
                     settingsViewModel,
-                    todoListsExpire,
                     destinationsNavigator
                 )
             }
@@ -247,11 +236,13 @@ fun Settings(
 @Composable
 private fun SettingsContent(
     innerPadding: PaddingValues,
-    userSelectedTheme: Theme,
     settingsViewModel: SettingsViewModel,
-    todoListsExpire: Boolean,
     destinationsNavigator: DestinationsNavigator
 ) {
+
+    val userSelectedTheme by settingsViewModel.userSelectedTheme.collectAsStateWithLifecycle()
+    val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .consumeWindowInsets(innerPadding)
