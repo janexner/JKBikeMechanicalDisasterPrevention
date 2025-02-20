@@ -100,21 +100,23 @@ fun KJsResponsiveNavigation(
                     }
                 },
                 bottomBar = {
-                    NavigationBar {
-                        listOfMenuItems.forEach { item ->
-                            NavigationBarItem(
-                                selected = item.selected,
-                                onClick = item.onClick,
-                                label = {
-                                    Text(text = item.label)
-                                },
-                                icon = {
-                                    Icon(
-                                        imageVector = item.icon,
-                                        contentDescription = item.label
-                                    )
-                                },
-                            )
+                    if (currentDestination == HomeDestination || currentDestination == PrepareDayOutDestination || currentDestination == PrepareQuickRideDestination || currentDestination == PrepareBikeHolidaysDestination) {
+                        NavigationBar {
+                            listOfMenuItems.forEach { item ->
+                                NavigationBarItem(
+                                    selected = item.selected,
+                                    onClick = item.onClick,
+                                    label = {
+                                        Text(text = item.label)
+                                    },
+                                    icon = {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.label
+                                        )
+                                    },
+                                )
+                            }
                         }
                     }
                 }

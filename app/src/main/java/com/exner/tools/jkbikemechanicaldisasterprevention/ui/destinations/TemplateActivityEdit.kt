@@ -69,7 +69,6 @@ fun TemplateActivityEdit(
 
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(8.dp)
         ) {

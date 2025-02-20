@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -131,6 +132,20 @@ fun ExportData(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
                     )
+                }
+                Button(onClick = {
+                    exportDataViewModel.commitExport(
+                        context = context,
+                        successCallback = {
+                            Toast.makeText(
+                                context,
+                                "Data exported to Downloads folder!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
+                }) {
+                    Text(text = stringResource(R.string.export_data))
                 }
             }
         }
