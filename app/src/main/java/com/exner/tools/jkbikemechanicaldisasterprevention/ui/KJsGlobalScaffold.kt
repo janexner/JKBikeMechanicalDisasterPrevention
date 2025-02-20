@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.NavigationStyle
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
@@ -45,10 +46,6 @@ import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 
-enum class NavigationStyle {
-    BOTTOM_BAR, LEFT_RAIL, LEFT_DRAWER
-}
-
 @Composable
 fun KJsGlobalScaffold(
     windowSizeClass: WindowSizeClass
@@ -58,23 +55,7 @@ fun KJsGlobalScaffold(
     val destinationsNavigator = navController.rememberDestinationsNavigator()
     val destination = navController.currentDestinationAsState().value
 
-    val navigationStyle = when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> {
-            NavigationStyle.BOTTOM_BAR
-        }
-
-        WindowWidthSizeClass.Medium -> {
-            NavigationStyle.LEFT_RAIL
-        }
-
-        WindowWidthSizeClass.Expanded -> {
-            NavigationStyle.LEFT_DRAWER
-        }
-
-        else -> {
-            NavigationStyle.BOTTOM_BAR
-        }
-    }
+    val navigationStyle = NavigationStyle.getNavigationStyleForWidthSizeClass(windowSizeClass.widthSizeClass)
 
     Scaffold(
         topBar = {
@@ -90,8 +71,8 @@ fun KJsGlobalScaffold(
             DestinationsNavHost(
                 navController = navController,
                 navGraph = NavGraphs.root,
-                dependenciesContainerBuilder = {
-                    dependency(navigationStyle)
+                dependenciesContainerBuilder = { //this: DependenciesContainerBuilder<*>
+                    dependency(windowSizeClass)
                 },
                 modifier = Modifier
                     .fillMaxSize()

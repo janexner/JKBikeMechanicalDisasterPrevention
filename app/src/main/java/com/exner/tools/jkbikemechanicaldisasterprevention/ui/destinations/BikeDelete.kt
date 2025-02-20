@@ -1,23 +1,20 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -27,9 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.BikeDeleteViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.BikeDeleteDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -37,67 +36,62 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun BikeDelete(
     bikeUid: Long,
-    destinationsNavigator: DestinationsNavigator
+    destinationsNavigator: DestinationsNavigator,
+    windowSizeClass: WindowSizeClass
 ) {
-    val bikeDeleteViewModel =
-        hiltViewModel<BikeDeleteViewModel, BikeDeleteViewModel.BikeDeleteViewModelFactory> { factory ->
-            factory.create(bikeUid = bikeUid)
-        }
 
-    val bike by bikeDeleteViewModel.bike.observeAsState()
-
-    Scaffold(
-        modifier = Modifier.imePadding(),
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .fillMaxSize()
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
-                    .padding(8.dp)
-            ) {
-                PageHeaderTextWithSpacer(stringResource(R.string.delete_a_bike))
-                if (bike != null) {
-                    Text(text = "You are about to delete the bike ${bike!!.name}.")
-                } else {
-                    Text(text = stringResource(R.string.we_can_not_find_this_bike))
-                }
+    KJsResponsiveNavigation(
+        BikeDeleteDestination,
+        destinationsNavigator,
+        windowSizeClass
+    ) {
+        val bikeDeleteViewModel =
+            hiltViewModel<BikeDeleteViewModel, BikeDeleteViewModel.BikeDeleteViewModelFactory> { factory ->
+                factory.create(bikeUid = bikeUid)
             }
-        },
-        bottomBar = {
-            BottomAppBar(
-                actions = {
-                    IconButton(onClick = {
-                        destinationsNavigator.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = stringResource(R.string.cancel)
-                        )
-                    }
-                },
-                floatingActionButton = {
-                    ExtendedFloatingActionButton(
-                        text = { Text(text = stringResource(R.string.delete)) },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = stringResource(R.string.delete_the_bike)
-                            )
-                        },
-                        onClick = {
-                            bikeDeleteViewModel.commitDelete()
-                            destinationsNavigator.popBackStack(
-                                ManageBikesDestination,
-                                inclusive = false
-                            )
-                        },
-                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+
+        val bike by bikeDeleteViewModel.bike.observeAsState()
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
+            PageHeaderTextWithSpacer(stringResource(R.string.delete_a_bike))
+            if (bike != null) {
+                Text(text = "You are about to delete the bike ${bike!!.name}.")
+            } else {
+                Text(text = stringResource(R.string.we_can_not_find_this_bike))
+            }
+            Spacer(modifier = Modifier.weight(0.7f))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = {
+                    destinationsNavigator.navigateUp()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = stringResource(R.string.cancel)
                     )
                 }
-            )
+                Button(
+                    onClick = {
+                        bikeDeleteViewModel.commitDelete()
+                        destinationsNavigator.popBackStack(
+                            ManageBikesDestination,
+                            inclusive = false
+                        )
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Done,
+                        contentDescription = stringResource(R.string.delete_the_bike)
+                    )
+                    Text(text = stringResource(R.string.delete))
+                }
+            }
         }
-    )
+    }
 }
