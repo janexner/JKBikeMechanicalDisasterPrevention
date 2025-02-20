@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
@@ -88,49 +90,54 @@ fun BikeEdit(
                 .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.edit_a_bike))
-            DefaultTextFieldWithSpacer(
-                value = bike?.name ?: stringResource(R.string.placehldr_name),
-                onValueChange = {
-                    bikeEditViewModel.updateName(it)
-                    modified = true
-                },
-                label = stringResource(R.string.lbl_bike_name),
-            )
-            TextAndSwitch(
-                text = stringResource(R.string.lbl_is_an_ebike),
-                checked = bike?.isElectric ?: false
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
             ) {
-                bikeEditViewModel.updateIsElectric(it)
-                modified = true
-            }
-            DefaultDateSelectorWithSpacer(
-                selectedDate = selectedBuildDate,
-                label = stringResource(R.string.lbl_build_date),
-                placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
-                onDateSelected = {
-                    selectedBuildDate = it
-                    if (it != null) {
-                        bikeEditViewModel.updateBuildDate(it)
-                    }
-                }
-            )
-            DefaultNumberFieldWithSpacer(
-                value = bike?.mileage.toString(),
-                onValueChange = { value ->
-                    bikeEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
+                DefaultTextFieldWithSpacer(
+                    value = bike?.name ?: stringResource(R.string.placehldr_name),
+                    onValueChange = {
+                        bikeEditViewModel.updateName(it)
+                        modified = true
+                    },
+                    label = stringResource(R.string.lbl_bike_name),
+                )
+                TextAndSwitch(
+                    text = stringResource(R.string.lbl_is_an_ebike),
+                    checked = bike?.isElectric ?: false
+                ) {
+                    bikeEditViewModel.updateIsElectric(it)
                     modified = true
-                },
-                label = stringResource(R.string.lbl_mileage),
-            )
-            DefaultDateSelectorNullableWithSpacer(
-                selectedDate = selectedLastUsedDate,
-                label = stringResource(R.string.lbl_last_used_date),
-                placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
-                onDateSelected = {
-                    selectedLastUsedDate = it
-                    bikeEditViewModel.updateLastUsedDate(it)
                 }
-            )
+                DefaultDateSelectorWithSpacer(
+                    selectedDate = selectedBuildDate,
+                    label = stringResource(R.string.lbl_build_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
+                    onDateSelected = {
+                        selectedBuildDate = it
+                        if (it != null) {
+                            bikeEditViewModel.updateBuildDate(it)
+                        }
+                    }
+                )
+                DefaultNumberFieldWithSpacer(
+                    value = bike?.mileage.toString(),
+                    onValueChange = { value ->
+                        bikeEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
+                        modified = true
+                    },
+                    label = stringResource(R.string.lbl_mileage),
+                )
+                DefaultDateSelectorNullableWithSpacer(
+                    selectedDate = selectedLastUsedDate,
+                    label = stringResource(R.string.lbl_last_used_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
+                    onDateSelected = {
+                        selectedLastUsedDate = it
+                        bikeEditViewModel.updateLastUsedDate(it)
+                    }
+                )
+            }
             Spacer(modifier = Modifier.weight(0.7f))
             Row(
                 modifier = Modifier.fillMaxWidth(),

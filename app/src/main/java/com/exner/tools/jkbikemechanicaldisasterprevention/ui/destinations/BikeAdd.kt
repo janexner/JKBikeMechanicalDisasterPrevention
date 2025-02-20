@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
@@ -74,35 +76,40 @@ fun BikeAdd(
             PageHeaderTextWithSpacer(stringResource(R.string.menu_item_add_bike))
             Text(text = stringResource(R.string.a_new_bike_brilliant))
             DefaultSpacer()
-            DefaultTextFieldWithSpacer(
-                value = name,
-                onValueChange = {
-                    name = it
-                    modified = true
-                },
-                label = stringResource(R.string.lbl_name),
-            )
-            TextAndSwitch(
-                text = stringResource(R.string.lbl_is_an_ebike),
-                checked = isElectric
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
             ) {
-                isElectric = it
-            }
-            DefaultDateSelectorWithSpacer(
-                selectedDate = selectedDate,
-                label = stringResource(R.string.lbl_build_date),
-                placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
-                onDateSelected = {
-                    selectedDate = it
+                DefaultTextFieldWithSpacer(
+                    value = name,
+                    onValueChange = {
+                        name = it
+                        modified = true
+                    },
+                    label = stringResource(R.string.lbl_name),
+                )
+                TextAndSwitch(
+                    text = stringResource(R.string.lbl_is_an_ebike),
+                    checked = isElectric
+                ) {
+                    isElectric = it
                 }
-            )
-            DefaultNumberFieldWithSpacer(
-                value = mileage.toString(),
-                onValueChange = {
-                    mileage = it.toIntOrNull() ?: 0
-                },
-                label = stringResource(R.string.lbl_mileage),
-            )
+                DefaultDateSelectorWithSpacer(
+                    selectedDate = selectedDate,
+                    label = stringResource(R.string.lbl_build_date),
+                    placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
+                    onDateSelected = {
+                        selectedDate = it
+                    }
+                )
+                DefaultNumberFieldWithSpacer(
+                    value = mileage.toString(),
+                    onValueChange = {
+                        mileage = it.toIntOrNull() ?: 0
+                    },
+                    label = stringResource(R.string.lbl_mileage),
+                )
+            }
             Spacer(modifier = Modifier.weight(0.7f))
             Row(
                 modifier = Modifier.fillMaxWidth(),

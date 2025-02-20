@@ -1,10 +1,10 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,15 +13,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -39,11 +36,13 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultR
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.TemplateActivityDeleteDestination
+import com.ramcosta.composedestinations.generated.destinations.TemplateActivityEditDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination<RootGraph>
@@ -51,29 +50,33 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun TemplateActivityEdit(
     templateActivityUid: Long,
     destinationsNavigator: DestinationsNavigator,
+    windowSizeClass: WindowSizeClass
 ) {
 
-    val templateActivityEditViewModel =
-        hiltViewModel<TemplateActivityEditViewModel, TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory> { factory ->
-            factory.create(templateActivityUid = templateActivityUid)
-        }
+    KJsResponsiveNavigation(
+        TemplateActivityEditDestination,
+        destinationsNavigator,
+        windowSizeClass
+    ) {
+        val templateActivityEditViewModel =
+            hiltViewModel<TemplateActivityEditViewModel, TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory> { factory ->
+                factory.create(templateActivityUid = templateActivityUid)
+            }
 
-    val templateActivity by templateActivityEditViewModel.templateActivity.observeAsState()
+        val templateActivity by templateActivityEditViewModel.templateActivity.observeAsState()
 
-    var modified by remember { mutableStateOf(false) }
+        var modified by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier.imePadding(),
-        content = { innerPadding ->
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
+            PageHeaderTextWithSpacer(stringResource(R.string.edit_template_activity))
             Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .fillMaxSize()
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
-                    .padding(8.dp)
+                modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                PageHeaderTextWithSpacer(stringResource(R.string.edit_template_activity))
                 DefaultRideLevelSelectorTemplate(
                     templateActivity?.rideLevel,
                 ) {
@@ -113,54 +116,48 @@ fun TemplateActivityEdit(
                     modified = true
                 }
             }
-        },
-        bottomBar = {
-            BottomAppBar(
-                actions = {
-                    IconButton(onClick = {
-                        destinationsNavigator.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.cancel)
-                        )
-                    }
-
-                    IconSpacer()
-                    IconButton(onClick = {
-                        destinationsNavigator.navigate(
-                            TemplateActivityDeleteDestination(
-                                templateActivityUid
-                            )
-                        )
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.delete)
-                        )
-                    }
-                },
-                floatingActionButton = {
-                    if (modified) {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = stringResource(R.string.save)) },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Done,
-                                    contentDescription = stringResource(R.string.save_the_activity)
-                                )
-                            },
-                            onClick = {
-                                templateActivityEditViewModel.commitActivity()
-                                modified = false
-                                destinationsNavigator.navigateUp()
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
-                    }
+            Spacer(modifier = Modifier.weight(0.7f))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                IconButton(onClick = {
+                    destinationsNavigator.navigateUp()
+                }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.cancel)
+                    )
                 }
-            )
+                IconSpacer()
+                IconButton(onClick = {
+                    destinationsNavigator.navigate(
+                        TemplateActivityDeleteDestination(
+                            templateActivityUid
+                        )
+                    )
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.delete)
+                    )
+                }
+                Spacer(modifier = Modifier.weight(0.7f))
+                Button(
+                    onClick = {
+                        templateActivityEditViewModel.commitActivity()
+                        modified = false
+                        destinationsNavigator.navigateUp()
+                    },
+                    enabled = modified
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Done,
+                        contentDescription = stringResource(R.string.save_the_activity)
+                    )
+                    Text(text = stringResource(R.string.save))
+
+                }
+            }
         }
-    )
+    }
 }
