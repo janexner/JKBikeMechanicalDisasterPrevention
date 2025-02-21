@@ -1,24 +1,22 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -39,11 +37,12 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ActivityAddDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -55,41 +54,45 @@ import kotlinx.datetime.toLocalDateTime
 fun ActivityAdd(
     activityAddViewModel: ActivityAddViewModel = hiltViewModel(),
     destinationsNavigator: DestinationsNavigator,
+    windowSizeClass: WindowSizeClass
 ) {
 
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var isCompleted by remember { mutableStateOf(false) }
-    var selectedCreatedDate by remember {
-        mutableLongStateOf(
-            Clock.System.now().toEpochMilliseconds()
+    KJsResponsiveNavigation(
+        ActivityAddDestination,
+        destinationsNavigator,
+        windowSizeClass
+    ) {
+        var title by remember { mutableStateOf("") }
+        var description by remember { mutableStateOf("") }
+        var isCompleted by remember { mutableStateOf(false) }
+        var selectedCreatedDate by remember {
+            mutableLongStateOf(
+                Clock.System.now().toEpochMilliseconds()
+            )
+        }
+        var selectedDueDate by remember { mutableStateOf<Long?>(null) }
+        var isEBikeSpecific by remember { mutableStateOf(false) }
+        var rideLevel: Int? by remember { mutableStateOf(null) }
+
+        val bikes: List<Bike> by activityAddViewModel.observeBikes.collectAsStateWithLifecycle(
+            emptyList()
         )
-    }
-    var selectedDueDate by remember { mutableStateOf<Long?>(null) }
-    var isEBikeSpecific by remember { mutableStateOf(false) }
-    var rideLevel: Int? by remember { mutableStateOf(null) }
+        val currentBike: Bike? by activityAddViewModel.currentBike.collectAsStateWithLifecycle(
+            initialValue = null
+        )
 
-    val bikes: List<Bike> by activityAddViewModel.observeBikes.collectAsStateWithLifecycle(
-        emptyList()
-    )
-    val currentBike: Bike? by activityAddViewModel.currentBike.collectAsStateWithLifecycle(
-        initialValue = null
-    )
+        var modified by remember { mutableStateOf(false) }
 
-    var modified by remember { mutableStateOf(false) }
-
-    Scaffold(
-        modifier = Modifier.imePadding(),
-        content = { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
+            PageHeaderTextWithSpacer(stringResource(R.string.add_activity))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
-                    .fillMaxSize()
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
-                    .padding(8.dp)
             ) {
-                PageHeaderTextWithSpacer(stringResource(R.string.add_activity))
                 DefaultTextFieldWithSpacer(
                     value = title,
                     onValueChange = {
@@ -156,73 +159,56 @@ fun ActivityAdd(
                         selectedDueDate = it
                     }
                 )
-
             }
-        },
-        bottomBar = {
-            BottomAppBar(
-                actions = {
-                    IconButton(onClick = {
-                        destinationsNavigator.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = stringResource(R.string.cancel)
-                        )
-                    }
-
-                    IconSpacer()
-                    IconButton(onClick = {
-                        // destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.delete)
-                        )
-                    }
-                },
-                floatingActionButton = {
-                    if (modified) {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = stringResource(R.string.save)) },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Done,
-                                    contentDescription = stringResource(R.string.save_the_activity)
-                                )
-                            },
-                            onClick = {
-                                val activity = Activity(
-                                    title = title,
-                                    description = description,
-                                    rideUid = null,
-                                    isEBikeSpecific = isEBikeSpecific,
-                                    rideLevel = null, // TODO
-                                    createdInstant = Instant.fromEpochMilliseconds(
-                                        selectedCreatedDate
-                                    ),
-                                    isCompleted = isCompleted,
-                                    dueDate = if (selectedDueDate != null) {
-                                        Instant.fromEpochMilliseconds(selectedDueDate!!)
-                                            .toLocalDateTime(
-                                                TimeZone.currentSystemDefault()
-                                            ).date
-                                    } else {
-                                        null
-                                    },
-                                    doneInstant = null,
-                                    bikeUid = currentBike?.uid
-                                )
-                                activityAddViewModel.saveActivity(activity)
-                                modified = false
-                                destinationsNavigator.navigateUp()
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
-                    }
+            Spacer(modifier = Modifier.weight(0.7f))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = {
+                    destinationsNavigator.navigateUp()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = stringResource(R.string.cancel)
+                    )
                 }
-            )
+                Button(
+                    onClick = {
+                        val activity = Activity(
+                            title = title,
+                            description = description,
+                            rideUid = null,
+                            isEBikeSpecific = isEBikeSpecific,
+                            rideLevel = null, // TODO
+                            createdInstant = Instant.fromEpochMilliseconds(
+                                selectedCreatedDate
+                            ),
+                            isCompleted = isCompleted,
+                            dueDate = if (selectedDueDate != null) {
+                                Instant.fromEpochMilliseconds(selectedDueDate!!)
+                                    .toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).date
+                            } else {
+                                null
+                            },
+                            doneInstant = null,
+                            bikeUid = currentBike?.uid
+                        )
+                        activityAddViewModel.saveActivity(activity)
+                        modified = false
+                        destinationsNavigator.navigateUp()
+                    },
+                    enabled = modified
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Done,
+                        contentDescription = stringResource(R.string.save_the_activity)
+                    )
+                    Text(text = stringResource(R.string.save))
+                }
+            }
         }
-    )
+    }
 }
