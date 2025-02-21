@@ -1,10 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
@@ -74,13 +70,6 @@ class PrepareBikeHolidaysViewModel @Inject constructor(
         }
     }
 
-    private val _showIntroText = mutableStateOf(true)
-    val showIntroText: State<Boolean> = _showIntroText
-
-    fun updateShowIntroText(show: Boolean) {
-        _showIntroText.value = show
-    }
-
     fun endCurrentRideAndStartFromScratch() {
         // delete the old ride
         viewModelScope.launch {
@@ -97,11 +86,6 @@ class PrepareBikeHolidaysViewModel @Inject constructor(
         viewModelScope.launch {
             rideUid.value = copyTemplateActivities()
         }
-        // remove intro text in 2s
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            _showIntroText.value = false
-        }, 2000)
     }
 
     private suspend fun copyTemplateActivities(force: Boolean = false): Long {

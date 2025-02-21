@@ -2,30 +2,22 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,13 +25,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,11 +35,11 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Acti
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.PrepareDayOutViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.BikeSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowAnimatedText
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TodoListItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TransientTodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
@@ -62,8 +49,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Clock
 
 @OptIn(
-    ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalFoundationApi::class
 )
 @Destination<RootGraph>
 @Composable
@@ -97,91 +83,32 @@ fun PrepareDayOut(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                PageHeaderTextWithSpacer(stringResource(R.string.hdr_day_out))
-                if (prepareDayOutViewModel.showIntroText.value) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropUp,
-                        contentDescription = stringResource(R.string.collapse),
-                        modifier = Modifier.clickable {
-                            prepareDayOutViewModel.updateShowIntroText(false)
-                        }
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = stringResource(R.string.expand),
-                        modifier = Modifier.clickable {
-                            prepareDayOutViewModel.updateShowIntroText(true)
-                        }
-                    )
-                }
-            }
-            ShowAnimatedText(show = prepareDayOutViewModel.showIntroText.value) {
-                DefaultSpacer()
-                Text(text = stringResource(R.string.day_out_definition))
-                DefaultSpacer()
-                Text(text = stringResource(R.string.day_out_avoid))
-                DefaultSpacer()
-            }
-            Text(text = stringResource(R.string.day_out_when_todo))
-            DefaultSpacer()
-            var offset = Offset.Zero
-            var bikesExpanded by remember {
-                mutableStateOf(false)
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp, 0.dp)
-                    .wrapContentSize(Alignment.TopEnd)
-                    .pointerInteropFilter {
-                        offset = Offset(it.x, it.y)
-                        false
-                    }
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.weight(0.6f)
                 ) {
-                    Text(text = stringResource(R.string.which_bike))
+                    PageHeaderTextWithSpacer(stringResource(R.string.hdr_day_out))
                     DefaultSpacer()
-                    Button(
-                        onClick = { bikesExpanded = true }
-                    ) {
-                        if (currentBike != null) {
-                            Text(text = currentBike!!.name)
-                        } else {
-                            Text(text = stringResource(R.string.select_a_bike))
-                        }
-                    }
+                    Text(text = stringResource(R.string.day_out_when_todo))
                 }
-                val density = LocalDensity.current
-                DropdownMenu(
-                    expanded = bikesExpanded,
-                    offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
-                    onDismissRequest = { bikesExpanded = false }) {
-                    DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.all_bikes)) },
-                        onClick = {
+                // the bike selector
+                BikeSelector(
+                    currentBike = currentBike,
+                    bikes = bikes,
+                    displayLabel = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+                ) { bike ->
+                    if (bike != currentBike) {
+                        if (bike == null) {
                             currentBike = null
-                            currentBikeIsAnEBike = true
+                            currentBikeIsAnEBike = false
                             modified = true
-                            bikesExpanded = false
-                        },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                    )
-                    bikes.forEach { bike ->
-                        DropdownMenuItem(
-                            text = { Text(text = bike.name) },
-                            onClick = {
-                                currentBike = bike
-                                currentBikeIsAnEBike = bike.isElectric
-                                modified = true
-                                bikesExpanded = false
-                            },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                        )
+                        } else {
+                            currentBike = bike
+                            currentBikeIsAnEBike = bike.isElectric
+                            modified = true
+                        }
                     }
                 }
             }
