@@ -111,4 +111,12 @@
     <string name="export_data">Export data</string>
     <string name="dash_ebike_specific">" - eBike-specific"</string>
     <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
+    <string name="import_data">Import data</string>
+    <string name="start_by_selecting_a_file_to_import_from">Start by selecting a file to import from</string>
+    <string name="select_file">Select file</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="select_different_file">Select different file</string>
+    <string name="you_could_try_importing_a_different_file">You could try importing a different file?</string>
+    <string name="file_selected">"File selected: "</string>
+    <string name="pick_a_json_file">Pick a JSON file</string>
 </resources>

@@ -114,6 +114,10 @@ dependencies {
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.codegen)
 
+    // filekit
+    implementation(libs.filekit.core)
+    implementation(libs.filekit.compose)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

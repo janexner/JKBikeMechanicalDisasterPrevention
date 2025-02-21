@@ -108,4 +108,12 @@
     <string name="tap_bike_to_edit">Tap to edit bike</string>
     <string name="export_data">Exporter les données</string>
     <string name="dash_ebike_specific">- spécifique aux vélos électriques</string>
+    <string name="import_data">Importer les données</string>
+    <string name="start_by_selecting_a_file_to_import_from">Commencez en choisissant un fichier</string>
+    <string name="select_file">Choisissez un fichier</string>
+    <string name="something_went_wrong">Erreur!</string>
+    <string name="select_different_file">Choisisser un autre fichier</string>
+    <string name="you_could_try_importing_a_different_file">Essayez un autre fichier?</string>
+    <string name="file_selected">Fichier sélectionné</string>
+    <string name="pick_a_json_file">Choisissez un fichier JSON</string>
 </resources>

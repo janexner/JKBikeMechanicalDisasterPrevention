@@ -67,6 +67,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun getTemplateActivityByUid(uid: Long): TemplateActivity? {
+        return kjsDAO.getTemplateActivityByUid(uid)
+    }
+
+    @WorkerThread
     suspend fun insertTemplateActivity(templateActivity: TemplateActivity) {
         kjsDAO.insertTemplateActivity(templateActivity)
     }
