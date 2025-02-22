@@ -53,7 +53,7 @@
     <string name="save">Speichern</string>
     <string name="save_the_activity">Aktivität speichern</string>
     <string name="save_the_bike">Fahrrad speichern</string>
-    <string name="select_a_bike">Fahrrad auswählen</string>
+    <string name="select_a_bike">Rad wählen</string>
     <string name="select_date">Datum auswählen</string>
     <string name="tab_day_out">Tagestour</string>
     <string name="tab_holidays">Ferien</string>
@@ -100,13 +100,13 @@
     <string name="lbl_name">Name</string>
     <string name="quick_ride_definition">Kurze Tour - wenn man irgendwie immer noch wieder nach Hause kommen würde.</string>
     <string name="quick_ride_avoid">Diese Aktivitäten sollen sicherstellen, dass die Tour angenehm wird.</string>
-    <string name="quick_ride_when_todo">Am besten am Vorabend erledigen!</string>
+    <string name="quick_ride_when_todo">Am Vorabend erledigen!</string>
     <string name="day_out_definition">Tagestour - wenn man weit genug weg ist, dass ein technisches Problem ein echtes Problem wäre.</string>
     <string name="day_out_avoid">Diese Aktivitäten sollen sicherstellen, dass nichts kaputtgeht, was man nicht am Trail fixen könnte.</string>
-    <string name="day_out_when_todo">Am besten am Vorabend oder ein paar Tage vorher erledigen!</string>
+    <string name="day_out_when_todo">Am Vorabend oder ein paar Tage vorher erledigen!</string>
     <string name="holidays_definition">Ferien - wenn man an einem Ort ist, an dem man nicht alles Werkzeug und Ersatzteile hat.</string>
     <string name="holidays_avoid">Diese Aktivitäten sollen ausschliessen, dass Dinge wegen Materialermüdung schieflaufen.</string>
-    <string name="holidays_when_todo">Gerne ein paar Wochen im Voraus erledigen!</string>
+    <string name="holidays_when_todo">Wochen im Voraus erledigen!</string>
     <string name="dash_ebike_specific">" - eBike-spezifisch"</string>
     <string name="import_data">Daten importieren</string>
     <string name="start_by_selecting_a_file_to_import_from">Schritt 1: Datei für Import auswählen</string>
@@ -132,4 +132,9 @@
     <string name="overwrite_activities">Aktivitäten überschreiben?</string>
     <string name="overwrite_template_activities">Vorlagen überschreiben?</string>
     <string name="overwrite_data">Daten überschreiben</string>
+    <string name="about1">J-K Bike – Mechanical Disaster Prevention ist eine kostenlose Open-Source-App, die dabei hilft, positive Verhaltensweisen bei der Fahrradwartung zu entwickeln, für schnelle, lange oder epische Fahrten.</string>
+    <string name="about2">Wir alle haben schon Fahrten erlebt, bei denen ein mechanischer Defekt passiert ist, der eigentlich vermeidbar gewesen wäre.</string>
+    <string name="about3">Obwohl wir als Autoren einen gewissen Stolz auf unsere eigenen Bemühungen haben, die Laufruhe unserer MTBs aufrechtzuerhalten, und eine gewisse Verachtung für unsere Radsportfreunde empfinden, die sich keine Gedanken darüber machen, bis etwas „KNAUK!“ macht und die Fahrt vorbei ist, gibt es immer noch unzählige Situationen, in denen etwas nicht überprüft wurde, was hätte überprüft werden sollen oder nach der Installation normalerweise nie überprüft werden muss.</string>
+    <string name="about4">„Woher kommt diese Vibration?“, „Warum knarrt das Hinterrad?“, „Was ist das für ein schreckliches Klopfen?“ sind so oft das Ergebnis von relativ einfachen Dingen, die übersehen oder vergessen werden. Zu den häufigsten Problemen in letzter Zeit zählen lockere Bremsscheibenschrauben, nicht richtig befestigte Hinterrad-Steckachsen und falsch gespannte Steuersätze.</string>
+    <string name="about5">Um mechanische Katastrophen auf Ihren Fahrten zu verhindern, verwenden Sie diese App, um bessere, neue Gewohnheiten zu entwickeln und sicherzustellen, dass Ihre Fahrten (mechanisch) hervorragend sind.</string>
 </resources>

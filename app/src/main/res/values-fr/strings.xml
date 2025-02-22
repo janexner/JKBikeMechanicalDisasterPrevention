@@ -53,7 +53,7 @@
     <string name="save">Enregistrer</string>
     <string name="save_the_activity">Enregistrer l\'activité</string>
     <string name="save_the_bike">Enregistrer le vélo</string>
-    <string name="select_a_bike">Sélectionner un vélo</string>
+    <string name="select_a_bike">Sélectionner vélo</string>
     <string name="select_date">Sélectionner une date</string>
     <string name="tab_day_out">sortie journée</string>
     <string name="tab_holidays">vacances</string>
@@ -104,7 +104,7 @@
     <string name="day_out_when_todo">Mieux vaut les faire la veille ou quelques jours avant !</string>
     <string name="holidays_definition">Vacances - vous emmenez votre/vos vélo(s) à un autre endroit, où vous n\'aurez pas accès à tous vos outils.</string>
     <string name="holidays_avoid">Remplacez les composants avant de partir pour éviter les problèmes dus à la fatigue des matériaux.</string>
-    <string name="holidays_when_todo">Mieux vaut les faire quelques semaines à l\'avance !</string>
+    <string name="holidays_when_todo">Mieux vaut les faire bien à l\'avance !</string>
     <string name="tap_bike_to_edit">Tap to edit bike</string>
     <string name="export_data">Exporter les données</string>
     <string name="dash_ebike_specific">- spécifique aux vélos électriques</string>
@@ -132,4 +132,9 @@
     <string name="overwrite_activities">Remplacer les activités?</string>
     <string name="overwrite_template_activities">Remplacer les activités modèles?</string>
     <string name="overwrite_data">Remplacer</string>
+    <string name="about1">J-K Bike - Mechanical Disaster Prevention est une application gratuite et open source qui aide à développer des comportements positifs en matière d\'entretien du vélo, pour des sorties rapides, grandes ou épiques.</string>
+    <string name="about2">Nous avons tous vécu ces expériences où quelque chose de mécanique se produit alors que cela aurait pu être évité.</string>
+    <string name="about3">En tant qu\'auteurs, même si nous sommes assez fiers de nos efforts pour maintenir le bon fonctionnement des VTT et que nous méprisons nos compagnons de route qui ne réfléchissent jamais avant que quelque chose ne fasse « CRUNCH ! » et ne mette fin à la course, il existe encore d\'innombrables situations où quelque chose qui aurait dû être vérifié, ou qui n\'a généralement jamais besoin d\'être vérifié après une installation correcte, ne l\'a pas été.</string>
+    <string name="about4">« D\'où viennent ces vibrations ? », « Pourquoi l\'arrière grince-t-il ? », « Qu\'est-ce que c\'est que ce terrible cognement ? » sont souvent le résultat d\'un problème relativement simple qui a été négligé ou oublié. Les questions les plus fréquemment posées ces derniers temps sont les boulons de rotor de disque qui se desserrent, les axes traversants arrière mal serrés et les jeux de direction mal tendus.</string>
+    <string name="about5">Alors, pour éviter que des catastrophes mécaniques ne se produisent lors de vos balades, utilisez cette application pour créer de meilleures et nouvelles habitudes et garantir que vos balades soient (mécaniquement) glorieuses.</string>
 </resources>
