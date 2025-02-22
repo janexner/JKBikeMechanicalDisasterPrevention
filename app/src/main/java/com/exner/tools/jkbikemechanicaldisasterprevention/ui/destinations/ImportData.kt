@@ -144,7 +144,22 @@ fun ImportData(
                 if (importState.state != ImportStateConstants.IDLE) {
                     Text(
                         modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
-                        text = "The file contains " + listOfBikesInFile.size + " bikes, " + listOfActivitiesInFile.size + " activities, and " + listOfTemplateActivitiesInFile.size + " template activities."
+                        text = stringResource(R.string.the_file_contains)
+                                + " "
+                                + listOfBikesInFile.size
+                                + " "
+                                + stringResource(R.string.bikes)
+                                + ", "
+                                + listOfActivitiesInFile.size
+                                + " "
+                                + stringResource(R.string.activities)
+                                + ", "
+                                + stringResource(R.string.and)
+                                + " "
+                                + listOfTemplateActivitiesInFile.size
+                                + " "
+                                + stringResource(R.string.template_activities)
+                                + "."
                     )
                 }
             }
@@ -152,12 +167,12 @@ fun ImportData(
             // step 3 - stuff
             item {
                 if (listOfBikesOld.isNotEmpty() || listOfBikesClashing.isNotEmpty()) {
-                    var text = "Bikes: ${listOfBikesOld.size} already in database"
+                    var text = stringResource(R.string.hdr_bikes) + ": ${listOfBikesOld.size} " + stringResource(R.string.already_in_database)
                     if (listOfBikesClashing.isNotEmpty()) {
-                        text += ", ${listOfBikesClashing.size} clashing"
+                        text += ", ${listOfBikesClashing.size} " + stringResource(R.string.clashing)
                     }
                     text += if (listOfBikesNew.isEmpty()) {
-                        ". Nothing to import!"
+                        ". " + stringResource(R.string.nothing_to_import)
                     } else {
                         "."
                     }
@@ -167,12 +182,12 @@ fun ImportData(
                     )
                 }
                 if (listOfActivitiesOld.isNotEmpty() || listOfActivitiesClashing.isNotEmpty()) {
-                    var text = "Activities: ${listOfActivitiesOld.size} already in database"
+                    var text = stringResource(R.string.hdr_activities) + ": ${listOfActivitiesOld.size} " + stringResource(R.string.already_in_database)
                     if (listOfActivitiesClashing.isNotEmpty()) {
-                        text += ", ${listOfActivitiesClashing.size} clashing"
+                        text += ", ${listOfActivitiesClashing.size} " + stringResource(R.string.clashing)
                     }
                     text += if (listOfActivitiesNew.isEmpty()) {
-                        ". Nothing to import!"
+                        ". " + stringResource(R.string.nothing_to_import)
                     } else {
                         "."
                     }
@@ -183,12 +198,12 @@ fun ImportData(
                 }
                 if (listOfTemplateActivitiesOld.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
                     var text =
-                        "Template activities: ${listOfTemplateActivitiesOld.size} already in database"
+                        stringResource(R.string.hdr_template_activities) + ": ${listOfTemplateActivitiesOld.size} " + stringResource(R.string.already_in_database)
                     if (listOfTemplateActivitiesClashing.isNotEmpty()) {
-                        text += ", ${listOfTemplateActivitiesClashing.size} clashing"
+                        text += ", ${listOfTemplateActivitiesClashing.size} " + stringResource(R.string.clashing)
                     }
                     text += if (listOfTemplateActivitiesNew.isEmpty()) {
-                        ". Nothing to import!"
+                        ". " + stringResource(R.string.nothing_to_import)
                     } else {
                         "."
                     }
@@ -227,7 +242,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewBikes()
                         }) {
-                            Text("Import these bikes")
+                            Text(stringResource(R.string.import_these_bikes))
                         }
                     }
                 }
@@ -261,7 +276,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewActivities()
                         }) {
-                            Text("Import these activities")
+                            Text(stringResource(R.string.import_these_activities))
                         }
                     }
                 }
@@ -295,7 +310,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewTemplateActivities()
                         }) {
-                            Text("Import these template activities")
+                            Text(stringResource(R.string.import_these_template_activities))
                         }
                     }
                 }
@@ -306,7 +321,7 @@ fun ImportData(
             item {
                 if (listOfBikesClashing.isNotEmpty() || listOfActivitiesClashing.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
                     TextAndSwitch(
-                        text = "Overwrite any?",
+                        text = stringResource(R.string.overwrite_any),
                         checked = showOverrides
                     ) {
                         importDataViewModel.setShowOverrideControls(it)
@@ -318,7 +333,7 @@ fun ImportData(
             item {
                 if (showOverrides && listOfBikesClashing.isNotEmpty()) {
                     TextAndSwitch(
-                        text = "Overwrite bikes?",
+                        text = stringResource(R.string.overwrite_bikes),
                         checked = overrideClashingBikes
                     ) {
                         importDataViewModel.setOverrideClashingBikes(it)
@@ -330,7 +345,7 @@ fun ImportData(
             item {
                 if (showOverrides && listOfActivitiesClashing.isNotEmpty()) {
                     TextAndSwitch(
-                        text = "Overwrite activities?",
+                        text = stringResource(R.string.overwrite_activities),
                         checked = overrideClashingActivities
                     ) {
                         importDataViewModel.setOverrideClashingActivities(it)
@@ -342,7 +357,7 @@ fun ImportData(
             item {
                 if (showOverrides && listOfTemplateActivitiesClashing.isNotEmpty()) {
                     TextAndSwitch(
-                        text = "Overwrite template activities?",
+                        text = stringResource(R.string.overwrite_template_activities),
                         checked = overrideClashingTemplateActivities
                     ) {
                         importDataViewModel.setOverrideClashingTemplateActivities(it)
@@ -357,7 +372,7 @@ fun ImportData(
                         // overwrite!
                         importDataViewModel.overwriteData()
                     }) {
-                        Text("Overwrite data")
+                        Text(stringResource(R.string.overwrite_data))
                     }
                 }
             }

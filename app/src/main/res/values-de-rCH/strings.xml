@@ -116,4 +116,20 @@
     <string name="you_could_try_importing_a_different_file">Vielleicht eine andere Datei?</string>
     <string name="file_selected">Gewählte Datei</string>
     <string name="pick_a_json_file">JSON Datei auswählen</string>
+    <string name="clashing">abgewandelt</string>
+    <string name="nothing_to_import">Nichts zu importieren!</string>
+    <string name="the_file_contains">Die Datei enthält</string>
+    <string name="bikes">Vélos</string>
+    <string name="activities">Aktivitäten</string>
+    <string name="template_activities">Vorlagen</string>
+    <string name="and">und</string>
+    <string name="already_in_database">identisch</string>
+    <string name="import_these_bikes">Vélos importieren</string>
+    <string name="import_these_activities">Aktivitäten importieren</string>
+    <string name="import_these_template_activities">Vorlagen importieren</string>
+    <string name="overwrite_any">Daten überschreiben?</string>
+    <string name="overwrite_bikes">Vélos überschreiben?</string>
+    <string name="overwrite_activities">Aktivitäten überschreiben?</string>
+    <string name="overwrite_template_activities">Vorlagen überschreiben?</string>
+    <string name="overwrite_data">Daten überschreiben</string>
 </resources>

@@ -119,4 +119,20 @@
     <string name="you_could_try_importing_a_different_file">You could try importing a different file?</string>
     <string name="file_selected">"File selected: "</string>
     <string name="pick_a_json_file">Pick a JSON file</string>
+    <string name="the_file_contains">"The file contains "</string>
+    <string name="bikes">bikes</string>
+    <string name="activities">activities</string>
+    <string name="template_activities">template activities</string>
+    <string name="and">and</string>
+    <string name="already_in_database">already in database</string>
+    <string name="clashing">clashing</string>
+    <string name="nothing_to_import">Nothing to import!</string>
+    <string name="import_these_bikes">Import these bikes</string>
+    <string name="import_these_activities">Import these activities</string>
+    <string name="import_these_template_activities">Import these template activities</string>
+    <string name="overwrite_any">Overwrite any?</string>
+    <string name="overwrite_bikes">Overwrite bikes?</string>
+    <string name="overwrite_activities">Overwrite activities?</string>
+    <string name="overwrite_template_activities">Overwrite template activities?</string>
+    <string name="overwrite_data">Overwrite data</string>
 </resources>
