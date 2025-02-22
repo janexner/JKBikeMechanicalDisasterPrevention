@@ -77,7 +77,6 @@
     <string name="title_holidays">Holidays</string>
     <string name="done">Done</string>
     <string name="about">About</string>
-    <string name="delete_a_bike">Delete bike</string>
     <string name="edit_a_bike">Edit bike</string>
     <string name="welcome_to_kj_do_it_now">Welcome to J-K Bike - Mechanical Disaster Prevention!</string>
     <string name="todos">TODOs</string>
@@ -140,4 +139,5 @@
     <string name="about3">As the authors, even though we take a certain pride in our own efforts in maintaining smooth running MTBs, and a disdain for our riding buddies who never give a passing thought until something goes \'CRUNCH!\' in a ride-ending manner, there are still innumerate situations where something that should have been checked, or usually never needs checked after proper installation, has not been.</string>
     <string name="about4">\'Where is that vibration coming from?\', \'why is the rear end creaking?\', \'What is that terrible knocking?\' are so often result of something relatively simple being overlooked or forgotten. Recent favourites have been disc rotor bolts backing out, rear thru axles not done up properly, and headsets improperly tensioned.</string>
     <string name="about5">So, to prevent mechanical disasters happening on your rides, use this app to build better, new, habits and ensure your rides are (mechanically) glorious.</string>
+    <string name="delete_a_bike">Delete bike</string>
 </resources>

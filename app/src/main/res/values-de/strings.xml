@@ -8,7 +8,7 @@
     <string name="completed">erledigt</string>
     <string name="add_activity">Neue Aktivität</string>
     <string name="all_bikes">Alle Fahrräder</string>
-    <string name="tag_line">\"...bevor es passiert!\"</string>
+    <string name="tag_line">\"…bevor es passiert!\"</string>
     <string name="back">Zurück</string>
     <string name="bike">Fahrrad</string>
     <string name="cancel">Abbrechen</string>
@@ -54,7 +54,7 @@
     <string name="save_the_activity">Aktivität speichern</string>
     <string name="save_the_bike">Fahrrad speichern</string>
     <string name="select_a_bike">Rad wählen</string>
-    <string name="select_date">Datum auswählen</string>
+    <string name="select_date">Datum wählen</string>
     <string name="tab_day_out">Tagestour</string>
     <string name="tab_holidays">Ferien</string>
     <string name="tab_home">Home</string>
@@ -66,7 +66,7 @@
     <string name="lbl_start_new_quick_ride">Neue Tour starten</string>
     <string name="clear_and_start_anew">Zurücksetzen</string>
     <string name="ride_level_name">Tourlevel</string>
-    <string name="select_a_level">Tourlevel auswählen</string>
+    <string name="select_a_level">Tourlevel wählen</string>
     <string name="all_levels">Alle Level</string>
     <string name="is_ebike_specific">eBike-spezifisch</string>
     <string name="title_quick_ride">Kurze Tour</string>
@@ -109,13 +109,13 @@
     <string name="holidays_when_todo">Wochen im Voraus erledigen!</string>
     <string name="dash_ebike_specific">" - eBike-spezifisch"</string>
     <string name="import_data">Daten importieren</string>
-    <string name="start_by_selecting_a_file_to_import_from">Schritt 1: Datei für Import auswählen</string>
-    <string name="select_file">Datei auswählen</string>
+    <string name="start_by_selecting_a_file_to_import_from">Schritt 1: Datei für Import wählen</string>
+    <string name="select_file">Datei wählen</string>
     <string name="something_went_wrong">Fehler!</string>
-    <string name="select_different_file">Andere Datei auswählen</string>
+    <string name="select_different_file">Andere Datei wählen</string>
     <string name="you_could_try_importing_a_different_file">Vielleicht eine andere Datei?</string>
     <string name="file_selected">Gewählte Datei</string>
-    <string name="pick_a_json_file">JSON Datei auswählen</string>
+    <string name="pick_a_json_file">JSON Datei wählen</string>
     <string name="clashing">abgewandelt</string>
     <string name="nothing_to_import">Nichts zu importieren!</string>
     <string name="the_file_contains">Die Datei enthält</string>
