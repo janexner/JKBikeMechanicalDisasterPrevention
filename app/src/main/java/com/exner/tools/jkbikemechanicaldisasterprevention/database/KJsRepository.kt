@@ -57,6 +57,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun deleteAllActivities() {
+        kjsDAO.deleteAllActivities()
+    }
+
+    @WorkerThread
     suspend fun getTemplateActivity(templateActivityUid: Long): TemplateActivity? {
         return kjsDAO.getTemplateActivityByUid(templateActivityUid)
     }
@@ -92,6 +97,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     }
 
     @WorkerThread
+    suspend fun deleteAllTemplateActivities() {
+        kjsDAO.deleteAllTemplateActivities()
+    }
+
+    @WorkerThread
     suspend fun getBikeByUid(uid: Long): Bike? {
         return kjsDAO.getBikeByUid(uid)
     }
@@ -114,6 +124,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun getAllBikes(): List<Bike> {
         return kjsDAO.getAllBikesOrderedByLastUsedDate()
+    }
+
+    @WorkerThread
+    suspend fun deleteAllBikes() {
+        kjsDAO.deleteAllBikes()
     }
 
     @WorkerThread

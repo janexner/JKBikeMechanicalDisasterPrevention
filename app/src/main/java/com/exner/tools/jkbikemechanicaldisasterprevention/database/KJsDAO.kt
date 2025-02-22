@@ -79,6 +79,9 @@ interface KJsDAO {
     @Delete
     suspend fun deleteBike(bike: Bike)
 
+    @Query("DELETE FROM bike")
+    suspend fun deleteAllBikes()
+
     //
 
     @Insert
@@ -92,6 +95,9 @@ interface KJsDAO {
 
     @Query("DELETE FROM Activity WHERE ride_uid=:rideUid")
     suspend fun deleteActivitiesForRide(rideUid: Long)
+
+    @Query("DELETE FROM activity")
+    suspend fun deleteAllActivities()
 
     //
 
@@ -111,6 +117,9 @@ interface KJsDAO {
 
     @Query("DELETE FROM templateactivity WHERE uid=:uid")
     suspend fun deleteTemplateActivityByUid(uid: Long)
+
+    @Query("DELETE FROM templateactivity")
+    suspend fun deleteAllTemplateActivities()
 
     //
 

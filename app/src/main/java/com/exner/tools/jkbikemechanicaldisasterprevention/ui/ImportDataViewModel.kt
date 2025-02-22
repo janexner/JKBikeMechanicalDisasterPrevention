@@ -57,6 +57,9 @@ class ImportDataViewModel @Inject constructor(
     private val _errorMessage: MutableStateFlow<String> = MutableStateFlow("")
     val errorMessage: StateFlow<String> = _errorMessage
 
+    private val _showOverrideControls: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showOverrideControls: StateFlow<Boolean> = _showOverrideControls
+
     private val _listOfBikesInFile: MutableStateFlow<List<Bike>> = MutableStateFlow(emptyList())
     val listOfBikesInFile: StateFlow<List<Bike>> = _listOfBikesInFile
     private val _listOfBikesOld: MutableStateFlow<List<Bike>> = MutableStateFlow(emptyList())
@@ -65,8 +68,8 @@ class ImportDataViewModel @Inject constructor(
     val listOfBikesNew: StateFlow<List<Bike>> = _listOfBikesNew
     private val _listOfBikesClashing: MutableStateFlow<List<Bike>> = MutableStateFlow(emptyList())
     val listOfBikesClashing: StateFlow<List<Bike>> = _listOfBikesClashing
-    private val _highestUidInBikeDB: MutableStateFlow<Long> = MutableStateFlow(-1)
-    private val highestUidInBikeDB: StateFlow<Long> = _highestUidInBikeDB
+    private val _overrideClashingBikes: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val overrideClashingBikes: StateFlow<Boolean> = _overrideClashingBikes
 
     private val _listOfActivitiesInFile: MutableStateFlow<List<Activity>> =
         MutableStateFlow(emptyList())
@@ -80,8 +83,8 @@ class ImportDataViewModel @Inject constructor(
     private val _listOfActivitiesClashing: MutableStateFlow<List<Activity>> =
         MutableStateFlow(emptyList())
     val listOfActivitiesClashing: StateFlow<List<Activity>> = _listOfActivitiesClashing
-    private val _highestUidInActivityDB: MutableStateFlow<Long> = MutableStateFlow(-1)
-    private val highestUidInActivityDB: StateFlow<Long> = _highestUidInActivityDB
+    private val _overrideClashingActivities: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val overrideClashingActivities: StateFlow<Boolean> = _overrideClashingActivities
 
     private val _listOfTemplateActivitiesInFile: MutableStateFlow<List<TemplateActivity>> =
         MutableStateFlow(emptyList())
@@ -99,8 +102,24 @@ class ImportDataViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val listOfTemplateActivitiesClashing: StateFlow<List<TemplateActivity>> =
         _listOfTemplateActivitiesClashing
-    private val _highestUidInTemplateActivityDB: MutableStateFlow<Long> = MutableStateFlow(-1)
-    private val highestUidInTemplateActivityDB: StateFlow<Long> = _highestUidInTemplateActivityDB
+    private val _overrideClashingTemplateActivities: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val overrideClashingTemplateActivities: StateFlow<Boolean> = _overrideClashingTemplateActivities
+
+    fun setShowOverrideControls(show: Boolean) {
+        _showOverrideControls.value = show
+    }
+
+    fun setOverrideClashingBikes(override: Boolean) {
+        _overrideClashingBikes.value = override
+    }
+
+    fun setOverrideClashingActivities(override: Boolean) {
+        _overrideClashingActivities.value = override
+    }
+
+    fun setOverrideClashingTemplateActivities(override: Boolean) {
+        _overrideClashingTemplateActivities.value = override
+    }
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun analyseFile(file: PlatformFile) {
@@ -124,9 +143,6 @@ class ImportDataViewModel @Inject constructor(
                     val oldBikeUids: MutableList<Long> = mutableListOf()
                     oldBikes.forEach { oldProcess ->
                         oldBikeUids.add(oldProcess.uid)
-                        if (oldProcess.uid > highestUidInBikeDB.value) {
-                            _highestUidInBikeDB.value = oldProcess.uid
-                        }
                     }
                     _listOfBikesOld.value = emptyList()
                     _listOfBikesClashing.value = emptyList()
@@ -157,9 +173,6 @@ class ImportDataViewModel @Inject constructor(
                     val oldActivityUids: MutableList<Long> = mutableListOf()
                     oldActivities.forEach { oldProcess ->
                         oldActivityUids.add(oldProcess.uid)
-                        if (oldProcess.uid > highestUidInActivityDB.value) {
-                            _highestUidInActivityDB.value = oldProcess.uid
-                        }
                     }
                     _listOfActivitiesOld.value = emptyList()
                     _listOfActivitiesClashing.value = emptyList()
@@ -190,9 +203,6 @@ class ImportDataViewModel @Inject constructor(
                     val oldTemplateActivityUids: MutableList<Long> = mutableListOf()
                     oldTemplateActivities.forEach { oldProcess ->
                         oldTemplateActivityUids.add(oldProcess.uid)
-                        if (oldProcess.uid > highestUidInActivityDB.value) {
-                            _highestUidInActivityDB.value = oldProcess.uid
-                        }
                     }
                     _listOfTemplateActivitiesOld.value = emptyList()
                     _listOfTemplateActivitiesClashing.value = emptyList()
@@ -255,7 +265,10 @@ class ImportDataViewModel @Inject constructor(
 
     fun importNewTemplateActivities() {
         if (listOfTemplateActivitiesNew.value.isNotEmpty()) {
-            Log.d(TAG, "Importing ${listOfTemplateActivitiesNew.value.size} new template activities...")
+            Log.d(
+                TAG,
+                "Importing ${listOfTemplateActivitiesNew.value.size} new template activities..."
+            )
             viewModelScope.launch {
                 listOfTemplateActivitiesNew.value.forEach { newTemplateActivity ->
                     repository.insertTemplateActivity(newTemplateActivity)
@@ -263,6 +276,63 @@ class ImportDataViewModel @Inject constructor(
                 _listOfTemplateActivitiesNew.value = emptyList()
             }
             Log.d(TAG, "New template activities imported.")
+        }
+    }
+
+    fun overwriteData() {
+        if (overrideClashingBikes.value && listOfBikesClashing.value.isNotEmpty()) {
+            Log.d(TAG, "Overwriting ${listOfBikesClashing.value.size} bikes...")
+            viewModelScope.launch {
+                repository.deleteAllBikes()
+                listOfBikesOld.value.forEach { oldBike ->
+                    repository.insertBike(oldBike)
+                }
+                listOfBikesClashing.value.forEach { clashingBike ->
+                    repository.insertBike(clashingBike)
+                }
+                val tempList = listOfBikesOld.value.toMutableList()
+                tempList.addAll(listOfBikesClashing.value)
+                _listOfBikesOld.value = tempList
+                _listOfBikesClashing.value = emptyList()
+                _overrideClashingBikes.value = false
+            }
+            Log.d(TAG, "Done overwriting bikes.")
+        }
+        if (overrideClashingActivities.value && listOfActivitiesClashing.value.isNotEmpty()) {
+            Log.d(TAG, "Overwriting ${listOfActivitiesClashing.value.size} activities...")
+            viewModelScope.launch {
+                repository.deleteAllActivities()
+                listOfActivitiesOld.value.forEach { oldActivity ->
+                    repository.insertActivity(oldActivity)
+                }
+                listOfActivitiesClashing.value.forEach { clashingActivity ->
+                    repository.insertActivity(clashingActivity)
+                }
+                val tempList = listOfActivitiesOld.value.toMutableList()
+                tempList.addAll(listOfActivitiesClashing.value)
+                _listOfActivitiesOld.value = tempList
+                _listOfActivitiesClashing.value = emptyList()
+                _overrideClashingActivities.value = false
+            }
+            Log.d(TAG, "Done overwriting activities.")
+        }
+        if (overrideClashingTemplateActivities.value && listOfTemplateActivitiesClashing.value.isNotEmpty()) {
+            Log.d(TAG, "Overwriting ${listOfTemplateActivitiesClashing.value.size} template activities...")
+            viewModelScope.launch {
+                repository.deleteAllTemplateActivities()
+                listOfTemplateActivitiesOld.value.forEach { oldTemplateActivity ->
+                    repository.insertTemplateActivity(oldTemplateActivity)
+                }
+                listOfTemplateActivitiesClashing.value.forEach { clashingTemplateActivity ->
+                    repository.insertTemplateActivity(clashingTemplateActivity)
+                }
+                val tempList = listOfTemplateActivitiesOld.value.toMutableList()
+                tempList.addAll(listOfTemplateActivitiesClashing.value)
+                _listOfTemplateActivitiesOld.value = tempList
+                _listOfTemplateActivitiesClashing.value = emptyList()
+                _overrideClashingTemplateActivities.value = false
+            }
+            Log.d(TAG, "Done overwriting template activities.")
         }
     }
 }

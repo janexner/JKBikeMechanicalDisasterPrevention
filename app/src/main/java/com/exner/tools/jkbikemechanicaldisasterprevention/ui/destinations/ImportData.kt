@@ -12,9 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -60,19 +57,19 @@ fun ImportData(
         val listOfBikesOld by importDataViewModel.listOfBikesOld.collectAsStateWithLifecycle()
         val listOfBikesNew by importDataViewModel.listOfBikesNew.collectAsStateWithLifecycle()
         val listOfBikesClashing by importDataViewModel.listOfBikesClashing.collectAsStateWithLifecycle()
-        var overrideClashingBikes by remember { mutableStateOf(false) }
+        val overrideClashingBikes by importDataViewModel.overrideClashingBikes.collectAsStateWithLifecycle()
 
         val listOfActivitiesInFile by importDataViewModel.listOfActivitiesInFile.collectAsStateWithLifecycle()
         val listOfActivitiesOld by importDataViewModel.listOfActivitiesOld.collectAsStateWithLifecycle()
         val listOfActivitiesNew by importDataViewModel.listOfActivitiesNew.collectAsStateWithLifecycle()
         val listOfActivitiesClashing by importDataViewModel.listOfActivitiesClashing.collectAsStateWithLifecycle()
-        var overrideClashingActivities by remember { mutableStateOf(false) }
+        val overrideClashingActivities by importDataViewModel.overrideClashingActivities.collectAsStateWithLifecycle()
 
-        val listOfTemplateActivitiesInFile by importDataViewModel.listOfActivitiesInFile.collectAsStateWithLifecycle()
-        val listOfTemplateActivitiesOld by importDataViewModel.listOfActivitiesOld.collectAsStateWithLifecycle()
-        val listOfTemplateActivitiesNew by importDataViewModel.listOfActivitiesNew.collectAsStateWithLifecycle()
-        val listOfTemplateActivitiesClashing by importDataViewModel.listOfActivitiesClashing.collectAsStateWithLifecycle()
-        var overrideClashingTemplateActivities by remember { mutableStateOf(false) }
+        val listOfTemplateActivitiesInFile by importDataViewModel.listOfTemplateActivitiesInFile.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesOld by importDataViewModel.listOfTemplateActivitiesOld.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesNew by importDataViewModel.listOfTemplateActivitiesNew.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesClashing by importDataViewModel.listOfTemplateActivitiesClashing.collectAsStateWithLifecycle()
+        val overrideClashingTemplateActivities by importDataViewModel.overrideClashingTemplateActivities.collectAsStateWithLifecycle()
 
         val launcher = rememberFilePickerLauncher(
             type = PickerType.File(
@@ -84,7 +81,7 @@ fun ImportData(
             importDataViewModel.setFile(file)
         }
 
-        var showOverrides by remember { mutableStateOf(false) }
+        val showOverrides by importDataViewModel.showOverrideControls.collectAsStateWithLifecycle()
 
         LazyColumn(
             modifier = Modifier
@@ -93,7 +90,7 @@ fun ImportData(
         ) {
             // step 1 - select a file
             stickyHeader {
-                Column() {
+                Column {
                     when (importState.state) {
                         ImportStateConstants.IDLE -> {
                             Text(text = stringResource(R.string.start_by_selecting_a_file_to_import_from))
@@ -185,7 +182,8 @@ fun ImportData(
                     )
                 }
                 if (listOfTemplateActivitiesOld.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
-                    var text = "Template activities: ${listOfTemplateActivitiesOld.size} already in database"
+                    var text =
+                        "Template activities: ${listOfTemplateActivitiesOld.size} already in database"
                     if (listOfTemplateActivitiesClashing.isNotEmpty()) {
                         text += ", ${listOfTemplateActivitiesClashing.size} clashing"
                     }
@@ -311,7 +309,7 @@ fun ImportData(
                         text = "Overwrite any?",
                         checked = showOverrides
                     ) {
-                        showOverrides = it
+                        importDataViewModel.setShowOverrideControls(it)
                     }
                 }
             }
@@ -323,7 +321,7 @@ fun ImportData(
                         text = "Overwrite bikes?",
                         checked = overrideClashingBikes
                     ) {
-                        overrideClashingBikes = it
+                        importDataViewModel.setOverrideClashingBikes(it)
                     }
                 }
             }
@@ -335,7 +333,7 @@ fun ImportData(
                         text = "Overwrite activities?",
                         checked = overrideClashingActivities
                     ) {
-                        overrideClashingActivities = it
+                        importDataViewModel.setOverrideClashingActivities(it)
                     }
                 }
             }
@@ -347,7 +345,7 @@ fun ImportData(
                         text = "Overwrite template activities?",
                         checked = overrideClashingTemplateActivities
                     ) {
-                        overrideClashingTemplateActivities = it
+                        importDataViewModel.setOverrideClashingTemplateActivities(it)
                     }
                 }
             }
@@ -357,6 +355,7 @@ fun ImportData(
                 if (overrideClashingActivities || overrideClashingTemplateActivities || overrideClashingBikes) {
                     Button(onClick = {
                         // overwrite!
+                        importDataViewModel.overwriteData()
                     }) {
                         Text("Overwrite data")
                     }
