@@ -33,6 +33,8 @@ data class ImportState(
     val state: ImportStateConstants = ImportStateConstants.IDLE
 )
 
+private const val TAG = "ImportDataVM"
+
 @HiltViewModel
 class ImportDataViewModel @Inject constructor(
     val repository: KJsRepository
@@ -112,7 +114,7 @@ class ImportDataViewModel @Inject constructor(
                 moshi.adapter<RootData>()
             try {
                 val fileContent = file.readBytes().toString(Charsets.UTF_8)
-                Log.d("ImportDataVM", "File content: '$fileContent'")
+                Log.d(TAG, "File content: '$fileContent'")
                 val newData: RootData? = jsonAdapter.fromJson(fileContent)
                 if (newData != null) {
                     val newBikes = newData.bikes
@@ -218,10 +220,49 @@ class ImportDataViewModel @Inject constructor(
                 // done
                 _importStateFlow.value = ImportState(ImportStateConstants.FILE_ANALYSED)
             } catch (exception: Exception) {
-                Log.d("ImportDataVM", "Exception: ${exception.message}")
+                Log.d(TAG, "Exception: ${exception.message}")
                 _errorMessage.value = exception.message.toString()
                 _importStateFlow.value = ImportState(ImportStateConstants.ERROR)
             }
+        }
+    }
+
+    fun importNewBikes() {
+        if (listOfBikesNew.value.isNotEmpty()) {
+            Log.d(TAG, "Importing ${listOfBikesNew.value.size} new bikes...")
+            viewModelScope.launch {
+                listOfBikesNew.value.forEach { newBike ->
+                    repository.insertBike(newBike)
+                }
+                _listOfBikesNew.value = emptyList()
+            }
+            Log.d(TAG, "New bikes imported.")
+        }
+    }
+
+    fun importNewActivities() {
+        if (listOfActivitiesNew.value.isNotEmpty()) {
+            Log.d(TAG, "Importing ${listOfActivitiesNew.value.size} new activities...")
+            viewModelScope.launch {
+                listOfActivitiesNew.value.forEach { newActivity ->
+                    repository.insertActivity(newActivity)
+                }
+                _listOfActivitiesNew.value = emptyList()
+            }
+            Log.d(TAG, "New activities imported.")
+        }
+    }
+
+    fun importNewTemplateActivities() {
+        if (listOfTemplateActivitiesNew.value.isNotEmpty()) {
+            Log.d(TAG, "Importing ${listOfTemplateActivitiesNew.value.size} new template activities...")
+            viewModelScope.launch {
+                listOfTemplateActivitiesNew.value.forEach { newTemplateActivity ->
+                    repository.insertTemplateActivity(newTemplateActivity)
+                }
+                _listOfTemplateActivitiesNew.value = emptyList()
+            }
+            Log.d(TAG, "New template activities imported.")
         }
     }
 }

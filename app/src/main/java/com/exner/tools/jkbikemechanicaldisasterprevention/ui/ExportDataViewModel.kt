@@ -17,6 +17,9 @@ import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,9 +49,14 @@ class ExportDataViewModel @Inject constructor(
                 val jsonAdapter: JsonAdapter<RootData> = moshi.adapter<RootData>()
                 val overallJsonString = jsonAdapter.toJson(data)
                 Log.d("ExportDateVM", "Collected data: $overallJsonString")
+                val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+                val timeComponentForExportFileName = now.toString()
                 // now write it to the Downloads folder
                 val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, "jkbike-export")
+                    put(
+                        MediaStore.MediaColumns.DISPLAY_NAME,
+                        "jkbike-export-$timeComponentForExportFileName"
+                    )
                     put(MediaStore.MediaColumns.MIME_TYPE, "application/json")
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
                 }

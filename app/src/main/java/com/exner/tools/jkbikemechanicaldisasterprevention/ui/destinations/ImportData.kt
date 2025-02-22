@@ -3,7 +3,6 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -85,6 +84,8 @@ fun ImportData(
             importDataViewModel.setFile(file)
         }
 
+        var showOverrides by remember { mutableStateOf(false) }
+
         LazyColumn(
             modifier = Modifier
                 .padding(8.dp)
@@ -152,10 +153,57 @@ fun ImportData(
             }
 
             // step 3 - stuff
+            item {
+                if (listOfBikesOld.isNotEmpty() || listOfBikesClashing.isNotEmpty()) {
+                    var text = "Bikes: ${listOfBikesOld.size} already in database"
+                    if (listOfBikesClashing.isNotEmpty()) {
+                        text += ", ${listOfBikesClashing.size} clashing"
+                    }
+                    text += if (listOfBikesNew.isEmpty()) {
+                        ". Nothing to import!"
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+                if (listOfActivitiesOld.isNotEmpty() || listOfActivitiesClashing.isNotEmpty()) {
+                    var text = "Activities: ${listOfActivitiesOld.size} already in database"
+                    if (listOfActivitiesClashing.isNotEmpty()) {
+                        text += ", ${listOfActivitiesClashing.size} clashing"
+                    }
+                    text += if (listOfActivitiesNew.isEmpty()) {
+                        ". Nothing to import!"
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+                if (listOfTemplateActivitiesOld.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    var text = "Template activities: ${listOfTemplateActivitiesOld.size} already in database"
+                    if (listOfTemplateActivitiesClashing.isNotEmpty()) {
+                        text += ", ${listOfTemplateActivitiesClashing.size} clashing"
+                    }
+                    text += if (listOfTemplateActivitiesNew.isEmpty()) {
+                        ". Nothing to import!"
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+            }
 
             // step 3a - bikes
             stickyHeader {
-                if (listOfBikesInFile.isNotEmpty()) {
+                if (listOfBikesNew.isNotEmpty()) {
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -167,32 +215,9 @@ fun ImportData(
                 }
             }
             item {
-                if (listOfBikesInFile.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Column {
-                            Text(text = "New")
-                            listOfBikesNew.forEach {
-                                Text(text = it.name)
-                            }
-                        }
-                        DefaultSpacer()
-                        Column {
-                            Text(text = "Existing")
-                            listOfBikesOld.forEach {
-                                Text(text = it.name)
-                            }
-                        }
-                        DefaultSpacer()
-                        Column {
-                            Text(text = "Clashing")
-                            listOfBikesClashing.forEach {
-                                Text(text = it.name)
-                            }
-                        }
+                if (listOfBikesNew.isNotEmpty()) {
+                    listOfBikesNew.forEach {
+                        Text(text = it.name)
                     }
                 }
             }
@@ -201,15 +226,8 @@ fun ImportData(
                     Column(
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        TextAndSwitch(
-                            text = "Overwrite clashing bikes?",
-                            checked = overrideClashingBikes
-                        ) {
-                            overrideClashingBikes = it
-                        }
-                        DefaultSpacer()
                         Button(onClick = {
-
+                            importDataViewModel.importNewBikes()
                         }) {
                             Text("Import these bikes")
                         }
@@ -218,10 +236,132 @@ fun ImportData(
             }
 
             // step 3b - activities
+            stickyHeader {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_activities),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    listOfActivitiesNew.forEach {
+                        Text(text = it.title)
+                    }
+                }
+            }
+            item {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewActivities()
+                        }) {
+                            Text("Import these activities")
+                        }
+                    }
+                }
+            }
 
             // step 3c - templates
+            stickyHeader {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_template_activities),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    listOfTemplateActivitiesNew.forEach {
+                        Text(text = it.title)
+                    }
+                }
+            }
+            item {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewTemplateActivities()
+                        }) {
+                            Text("Import these template activities")
+                        }
+                    }
+                }
+            }
 
             // done
+            // or are we?
+            item {
+                if (listOfBikesClashing.isNotEmpty() || listOfActivitiesClashing.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = "Overwrite any?",
+                        checked = showOverrides
+                    ) {
+                        showOverrides = it
+                    }
+                }
+            }
+
+            // overwrite bikes?
+            item {
+                if (showOverrides && listOfBikesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = "Overwrite bikes?",
+                        checked = overrideClashingBikes
+                    ) {
+                        overrideClashingBikes = it
+                    }
+                }
+            }
+
+            // overwrite activities?
+            item {
+                if (showOverrides && listOfActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = "Overwrite activities?",
+                        checked = overrideClashingActivities
+                    ) {
+                        overrideClashingActivities = it
+                    }
+                }
+            }
+
+            // overwrite template activities?
+            item {
+                if (showOverrides && listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = "Overwrite template activities?",
+                        checked = overrideClashingTemplateActivities
+                    ) {
+                        overrideClashingTemplateActivities = it
+                    }
+                }
+            }
+
+            // button
+            item {
+                if (overrideClashingActivities || overrideClashingTemplateActivities || overrideClashingBikes) {
+                    Button(onClick = {
+                        // overwrite!
+                    }) {
+                        Text("Overwrite data")
+                    }
+                }
+            }
         }
     }
 }
