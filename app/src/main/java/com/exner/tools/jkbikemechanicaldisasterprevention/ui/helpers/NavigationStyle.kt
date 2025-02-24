@@ -9,19 +9,19 @@ enum class NavigationStyle {
         fun getNavigationStyleForWidthSizeClass(widthSizeClass: WindowWidthSizeClass): NavigationStyle {
             return when (widthSizeClass) {
                 WindowWidthSizeClass.Compact -> {
-                    NavigationStyle.BOTTOM_BAR
+                    BOTTOM_BAR
                 }
 
                 WindowWidthSizeClass.Medium -> {
-                    NavigationStyle.LEFT_RAIL
+                    LEFT_RAIL
                 }
 
                 WindowWidthSizeClass.Expanded -> {
-                    NavigationStyle.LEFT_DRAWER
+                    LEFT_DRAWER
                 }
 
                 else -> {
-                    NavigationStyle.BOTTOM_BAR
+                    BOTTOM_BAR
                 }
             }
         }

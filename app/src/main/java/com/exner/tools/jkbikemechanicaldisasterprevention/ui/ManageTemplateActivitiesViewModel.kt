@@ -8,8 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "ManageTemplateActivitiesVM"
-
 @HiltViewModel
 class ManageTemplateActivitiesViewModel @Inject constructor(
     val repository: KJsRepository

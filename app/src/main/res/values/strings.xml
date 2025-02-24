@@ -8,20 +8,16 @@
     <string name="add_activity">Add activity</string>
     <string name="all_bikes">All bikes</string>
     <string name="app_name" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
-    <string name="tag_line">\"…before it happens!\"</string>
     <string name="back">Back</string>
     <string name="bike">Bike</string>
     <string name="cancel">Cancel</string>
-    <string name="collapse">Collapse</string>
     <string name="delete">Delete</string>
     <string name="delete_the_activity">Delete the activity</string>
     <string name="delete_the_bike">Delete the bike</string>
     <string name="edit">Edit</string>
     <string name="edit_the_activity">Edit the activity</string>
-    <string name="expand">Expand</string>
     <string name="hdr_bikes">Bikes</string>
     <string name="hdr_quick_ride">Quick ride</string>
-    <string name="lbl_acquisition_date">Acquisition date</string>
     <string name="lbl_activity_title">Activity title</string>
     <string name="lbl_add_template_activity">Add template activity</string>
     <string name="lbl_attached_to_bike">Attached to bike</string>
@@ -61,7 +57,6 @@
     <string name="tab_home">home</string>
     <string name="tab_quick_ride">quick ride</string>
     <string name="title">Title</string>
-    <string name="toast_archive_job_successful" translatable="false">Archive job successful</string>
     <string name="top_bar_title" translatable="false">J-K Bike - MDP</string>
     <string name="we_can_not_find_this_activity">We can not find this activity.</string>
     <string name="we_can_not_find_this_bike">We did not find this bike.</string>
@@ -75,7 +70,6 @@
     <string name="title_quick_ride">Quick ride</string>
     <string name="title_day_out">Day out</string>
     <string name="title_holidays">Holidays</string>
-    <string name="done">Done</string>
     <string name="about">About</string>
     <string name="edit_a_bike">Edit bike</string>
     <string name="welcome_to_kj_do_it_now">Welcome to J-K Bike - Mechanical Disaster Prevention!</string>
@@ -92,21 +86,14 @@
     <string name="hdr_holidays">Holidays</string>
     <string name="activities_for_holidays">Activities for holidays:</string>
     <string name="lbl_start_new_holidays">Start new holidays</string>
-    <string name="quick_ride_definition">Quick ride - you are not so far away from a walk out that it is a disaster if something breaks.</string>
-    <string name="quick_ride_avoid">These activities help avoid things that will either stop you from riding, or make your ride miserable if not right.</string>
     <string name="quick_ride_when_todo">Best do these the night before!</string>
-    <string name="day_out_definition">Day out - you are out for longer time and maybe some distance from easy or fast recovery.</string>
-    <string name="day_out_avoid">These activities help avoid things are likely not fixable on the trail.</string>
     <string name="day_out_when_todo">Best do these the night before or a couple of days earlier!</string>
-    <string name="holidays_definition">Holidays - you are taking your bike(s) to another place, where you will not have access to all your tools.</string>
-    <string name="holidays_avoid">Replace components before you go to avoid mishaps due to material fatigue.</string>
     <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
     <string name="tap_bike_to_edit">Tap bike to edit</string>
     <string name="template_for_ride_level">Template for ride level</string>
     <string name="data_that_will_be_exported">Here is all the data that will be exported</string>
     <string name="hdr_activities">Activities</string>
     <string name="hdr_template_activities">Template activities</string>
-    <string name="export">Export</string>
     <string name="export_data">Export data</string>
     <string name="dash_ebike_specific">" - eBike-specific"</string>
     <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
