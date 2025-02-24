@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -74,11 +75,11 @@ fun ManageTemplateActivities(
                 currentRideLevel = it
             }
             DefaultSpacer()
+            Text(text = stringResource(R.string.get_template_activities_in))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = stringResource(R.string.get_template_activities_in))
                 TextButton(onClick = {
                     manageTemplateActivitiesViewModel.replaceTemplateActivitiesWithNewLanguage("en")
                 }) {
