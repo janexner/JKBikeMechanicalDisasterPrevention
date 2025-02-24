@@ -14,12 +14,14 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -71,6 +73,34 @@ fun ManageTemplateActivities(
             ) {
                 currentRideLevel = it
             }
+            DefaultSpacer()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = stringResource(R.string.get_template_activities_in))
+                TextButton(onClick = {
+                    manageTemplateActivitiesViewModel.replaceTemplateActivitiesWithNewLanguage("en")
+                }) {
+                    Text(text = "English")
+                }
+                TextButton(onClick = {
+                    manageTemplateActivitiesViewModel.replaceTemplateActivitiesWithNewLanguage("fr")
+                }) {
+                    Text(text = "Français")
+                }
+                TextButton(onClick = {
+                    manageTemplateActivitiesViewModel.replaceTemplateActivitiesWithNewLanguage("de")
+                }) {
+                    Text(text = "Deutsch")
+                }
+                TextButton(onClick = {
+                    manageTemplateActivitiesViewModel.replaceTemplateActivitiesWithNewLanguage("de-rCH")
+                }) {
+                    Text(text = "Deutsch (Schweiz)")
+                }
+            }
+            DefaultSpacer()
             // filter template activities by level
             val filteredTemplateActivities: List<TemplateActivity> =
                 if (currentRideLevel != null) {

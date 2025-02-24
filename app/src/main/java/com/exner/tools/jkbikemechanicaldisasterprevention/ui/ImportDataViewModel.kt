@@ -137,93 +137,100 @@ class ImportDataViewModel @Inject constructor(
                 val newData: RootData? = jsonAdapter.fromJson(fileContent)
                 if (newData != null) {
                     val newBikes = newData.bikes
-                    // compare with existing
-                    _listOfBikesInFile.value = newBikes
-                    val oldBikes = repository.getAllBikes()
-                    val oldBikeUids: MutableList<Long> = mutableListOf()
-                    oldBikes.forEach { oldProcess ->
-                        oldBikeUids.add(oldProcess.uid)
-                    }
-                    _listOfBikesOld.value = emptyList()
-                    _listOfBikesClashing.value = emptyList()
-                    _listOfBikesNew.value = emptyList()
-                    newBikes.forEach { newProcess ->
-                        if (oldBikeUids.contains(newProcess.uid)) {
-                            // is it the same?
-                            if (newProcess == repository.getBikeByUid(newProcess.uid)) {
-                                // it is the same. No need to import
-                                val temp = listOfBikesOld.value.toMutableList()
-                                temp.add(newProcess)
-                                _listOfBikesOld.value = temp
+                    if (newBikes != null) {
+                        // compare with existing
+                        _listOfBikesInFile.value = newBikes
+                        val oldBikes = repository.getAllBikes()
+                        val oldBikeUids: MutableList<Long> = mutableListOf()
+                        oldBikes.forEach { oldProcess ->
+                            oldBikeUids.add(oldProcess.uid)
+                        }
+                        _listOfBikesOld.value = emptyList()
+                        _listOfBikesClashing.value = emptyList()
+                        _listOfBikesNew.value = emptyList()
+                        newBikes.forEach { newProcess ->
+                            if (oldBikeUids.contains(newProcess.uid)) {
+                                // is it the same?
+                                if (newProcess == repository.getBikeByUid(newProcess.uid)) {
+                                    // it is the same. No need to import
+                                    val temp = listOfBikesOld.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfBikesOld.value = temp
+                                } else {
+                                    val temp = listOfBikesClashing.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfBikesClashing.value = temp
+                                }
                             } else {
-                                val temp = listOfBikesClashing.value.toMutableList()
+                                val temp = listOfBikesNew.value.toMutableList()
                                 temp.add(newProcess)
-                                _listOfBikesClashing.value = temp
+                                _listOfBikesNew.value = temp
                             }
-                        } else {
-                            val temp = listOfBikesNew.value.toMutableList()
-                            temp.add(newProcess)
-                            _listOfBikesNew.value = temp
                         }
                     }
                     val newActivities = newData.activities
-                    // compare with existing
-                    _listOfActivitiesInFile.value = newActivities
-                    val oldActivities = repository.getAllActivities()
-                    val oldActivityUids: MutableList<Long> = mutableListOf()
-                    oldActivities.forEach { oldProcess ->
-                        oldActivityUids.add(oldProcess.uid)
-                    }
-                    _listOfActivitiesOld.value = emptyList()
-                    _listOfActivitiesClashing.value = emptyList()
-                    _listOfActivitiesNew.value = emptyList()
-                    newActivities.forEach { newProcess ->
-                        if (oldActivityUids.contains(newProcess.uid)) {
-                            // is it the same?
-                            if (newProcess == repository.getActivityByUid(newProcess.uid)) {
-                                // it is the same. No need to import
-                                val temp = listOfActivitiesOld.value.toMutableList()
-                                temp.add(newProcess)
-                                _listOfActivitiesOld.value = temp
+                    if (newActivities != null) {
+                        // compare with existing
+                        _listOfActivitiesInFile.value = newActivities
+                        val oldActivities = repository.getAllActivities()
+                        val oldActivityUids: MutableList<Long> = mutableListOf()
+                        oldActivities.forEach { oldProcess ->
+                            oldActivityUids.add(oldProcess.uid)
+                        }
+                        _listOfActivitiesOld.value = emptyList()
+                        _listOfActivitiesClashing.value = emptyList()
+                        _listOfActivitiesNew.value = emptyList()
+                        newActivities.forEach { newProcess ->
+                            if (oldActivityUids.contains(newProcess.uid)) {
+                                // is it the same?
+                                if (newProcess == repository.getActivityByUid(newProcess.uid)) {
+                                    // it is the same. No need to import
+                                    val temp = listOfActivitiesOld.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfActivitiesOld.value = temp
+                                } else {
+                                    val temp = listOfActivitiesClashing.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfActivitiesClashing.value = temp
+                                }
                             } else {
-                                val temp = listOfActivitiesClashing.value.toMutableList()
+                                val temp = listOfActivitiesNew.value.toMutableList()
                                 temp.add(newProcess)
-                                _listOfActivitiesClashing.value = temp
+                                _listOfActivitiesNew.value = temp
                             }
-                        } else {
-                            val temp = listOfActivitiesNew.value.toMutableList()
-                            temp.add(newProcess)
-                            _listOfActivitiesNew.value = temp
                         }
                     }
                     val newTemplates = newData.templateActivities
-                    // compare with existing
-                    _listOfTemplateActivitiesInFile.value = newTemplates
-                    val oldTemplateActivities = repository.getAllTemplateActivities()
-                    val oldTemplateActivityUids: MutableList<Long> = mutableListOf()
-                    oldTemplateActivities.forEach { oldProcess ->
-                        oldTemplateActivityUids.add(oldProcess.uid)
-                    }
-                    _listOfTemplateActivitiesOld.value = emptyList()
-                    _listOfTemplateActivitiesClashing.value = emptyList()
-                    _listOfTemplateActivitiesNew.value = emptyList()
-                    newTemplates.forEach { newProcess ->
-                        if (oldTemplateActivityUids.contains(newProcess.uid)) {
-                            // is it the same?
-                            if (newProcess == repository.getTemplateActivityByUid(newProcess.uid)) {
-                                // it is the same. No need to import
-                                val temp = listOfTemplateActivitiesOld.value.toMutableList()
-                                temp.add(newProcess)
-                                _listOfTemplateActivitiesOld.value = temp
+                    if (newTemplates != null) {
+                        // compare with existing
+                        _listOfTemplateActivitiesInFile.value = newTemplates
+                        val oldTemplateActivities = repository.getAllTemplateActivities()
+                        val oldTemplateActivityUids: MutableList<Long> = mutableListOf()
+                        oldTemplateActivities.forEach { oldProcess ->
+                            oldTemplateActivityUids.add(oldProcess.uid)
+                        }
+                        _listOfTemplateActivitiesOld.value = emptyList()
+                        _listOfTemplateActivitiesClashing.value = emptyList()
+                        _listOfTemplateActivitiesNew.value = emptyList()
+                        newTemplates.forEach { newProcess ->
+                            if (oldTemplateActivityUids.contains(newProcess.uid)) {
+                                // is it the same?
+                                if (newProcess == repository.getTemplateActivityByUid(newProcess.uid)) {
+                                    // it is the same. No need to import
+                                    val temp = listOfTemplateActivitiesOld.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfTemplateActivitiesOld.value = temp
+                                } else {
+                                    val temp =
+                                        listOfTemplateActivitiesClashing.value.toMutableList()
+                                    temp.add(newProcess)
+                                    _listOfTemplateActivitiesClashing.value = temp
+                                }
                             } else {
-                                val temp = listOfTemplateActivitiesClashing.value.toMutableList()
+                                val temp = listOfTemplateActivitiesNew.value.toMutableList()
                                 temp.add(newProcess)
-                                _listOfTemplateActivitiesClashing.value = temp
+                                _listOfTemplateActivitiesNew.value = temp
                             }
-                        } else {
-                            val temp = listOfTemplateActivitiesNew.value.toMutableList()
-                            temp.add(newProcess)
-                            _listOfTemplateActivitiesNew.value = temp
                         }
                     }
                 }

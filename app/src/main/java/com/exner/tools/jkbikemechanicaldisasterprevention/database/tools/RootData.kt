@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RootData(
-    val bikes: List<Bike>,
-    val activities: List<Activity>,
-    val templateActivities: List<TemplateActivity>
+    val bikes: List<Bike>?,
+    val activities: List<Activity>?,
+    val templateActivities: List<TemplateActivity>?
 )
