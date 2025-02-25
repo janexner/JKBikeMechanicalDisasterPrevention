@@ -3,3 +3,5 @@
 <p>'Where is that vibration coming from?', 'why is the rear end creaking?', 'What is that terrible knocking?' are so often result of something relatively simple being overlooked or forgotten. Recent favourites have been disc rotor bolts backing out, rear thru axles not done up properly, and headsets improperly tensioned.</p>
 
 <p>So, to prevent mechanical disasters happening on your rides, use this app to build better, new, habits and ensure your rides are (mechanically) glorious.</p>
+
+<p>This app uses INTERNET permissions to download template activities from a github repository at <a href="https://github.com/janexner/JKBikeTemplateActivities">https://github.com/janexner/JKBikeTemplateActivities</a>. No internet access beyond that.</p>
