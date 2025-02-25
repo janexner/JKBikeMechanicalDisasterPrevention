@@ -1,0 +1,1 @@
+- App will try to load template activities in local language (en/de/fr)

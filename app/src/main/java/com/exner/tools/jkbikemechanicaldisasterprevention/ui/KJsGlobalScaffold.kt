@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,19 +29,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.NavigationStyle
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
-import com.ramcosta.composedestinations.generated.destinations.AccessoryAddDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
-import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ExportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ImportDataDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageAccessoriesDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesAndComponentsDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
-import com.ramcosta.composedestinations.generated.destinations.ShelfDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
@@ -57,9 +55,11 @@ fun KJsGlobalScaffold(
     val destinationsNavigator = navController.rememberDestinationsNavigator()
     val destination = navController.currentDestinationAsState().value
 
+    val navigationStyle = NavigationStyle.getNavigationStyleForWidthSizeClass(windowSizeClass.widthSizeClass)
+
     Scaffold(
         topBar = {
-            KJsTopBar(destination, destinationsNavigator)
+            KJsTopBar(destination, destinationsNavigator, navigationStyle)
         },
         content = { innerPadding ->
             val newPadding = PaddingValues.Absolute(
@@ -71,7 +71,7 @@ fun KJsGlobalScaffold(
             DestinationsNavHost(
                 navController = navController,
                 navGraph = NavGraphs.root,
-                dependenciesContainerBuilder = {
+                dependenciesContainerBuilder = { //this: DependenciesContainerBuilder<*>
                     dependency(windowSizeClass)
                 },
                 modifier = Modifier
@@ -89,176 +89,149 @@ fun KJsGlobalScaffold(
 private fun KJsTopBar(
     destination: DestinationSpec?,
     destinationsNavigator: DestinationsNavigator,
+    navigationStyle: NavigationStyle
 ) {
+
+    when (navigationStyle) {
+        NavigationStyle.BOTTOM_BAR -> {
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.top_bar_title)) },
+                navigationIcon = {
+                    when (destination) {
+                        HomeDestination -> {
+                            // no back button here
+                        }
+
+                        else -> {
+                            IconButton(onClick = { destinationsNavigator.navigateUp() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = stringResource(R.string.back)
+                                )
+                            }
+                        }
+                    }
+                },
+                actions = {
+                    MainMenuAction(destination, destinationsNavigator)
+                }
+            )
+        }
+
+        NavigationStyle.LEFT_RAIL, NavigationStyle.LEFT_DRAWER -> {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(text = stringResource(R.string.top_bar_title_long))
+                },
+                actions = {
+                    MainMenuAction(destination, destinationsNavigator)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun MainMenuAction(
+    destination: DestinationSpec?,
+    destinationsNavigator: DestinationsNavigator,
+) {
+
     var displayMainMenu by remember { mutableStateOf(false) }
 
-    TopAppBar(
-        title = { Text(text = stringResource(R.string.top_bar_title)) },
-        navigationIcon = {
-            when (destination) {
-                HomeDestination -> {
-                    // no back button here
-                }
-
-                else -> {
-                    IconButton(onClick = { destinationsNavigator.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
-                        )
-                    }
-                }
-            }
-        },
-        actions = {
-            IconButton(
-                onClick = {
-                    displayMainMenu = !displayMainMenu
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(R.string.menu)
-                )
-            }
-            DropdownMenu(
-                expanded = displayMainMenu,
-                onDismissRequest = { displayMainMenu = false }
-            ) {
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_add_bike),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(BikeAddDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_add_component),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ComponentAddDestination(bikeUid = null))
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_add_accessory),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(AccessoryAddDestination)
-                    }
-                )
-                HorizontalDivider()
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_manage_bikes_components),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ManageBikesAndComponentsDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_component_shelf),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ShelfDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = true,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_manage_accessories),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ManageAccessoriesDestination)
-                    }
-                )
-                HorizontalDivider()
-                DropdownMenuItem(
-                    enabled = destination != SettingsDestination,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_settings),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(SettingsDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = destination != ImportDataDestination,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_import),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ImportDataDestination)
-                    }
-                )
-                DropdownMenuItem(
-                    enabled = destination != ExportDataDestination,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_export),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(ExportDataDestination)
-                    }
-                )
-                HorizontalDivider()
-                DropdownMenuItem(
-                    enabled = destination != AboutDestination,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.menu_item_about),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    onClick = {
-                        displayMainMenu = false
-                        destinationsNavigator.navigate(AboutDestination)
-                    }
-                )
-            }
+    IconButton(
+        onClick = {
+            displayMainMenu = !displayMainMenu
         }
-    )
+    ) {
+        Icon(
+            imageVector = Icons.Default.MoreVert,
+            contentDescription = stringResource(R.string.menu)
+        )
+    }
+    DropdownMenu(
+        expanded = displayMainMenu,
+        onDismissRequest = { displayMainMenu = false }
+    ) {
+        DropdownMenuItem(
+            enabled = true,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_add_bike),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(BikeAddDestination)
+            }
+        )
+        DropdownMenuItem(
+            enabled = true,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_manage_bikes_components),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ManageBikesDestination)
+            }
+        )
+        HorizontalDivider()
+        DropdownMenuItem(
+            enabled = destination != SettingsDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_settings),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(SettingsDestination)
+            }
+        )
+        DropdownMenuItem(
+            enabled = destination != ImportDataDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.import_data),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ImportDataDestination)
+            }
+        )
+        DropdownMenuItem(
+            enabled = destination != ExportDataDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.export_data),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ExportDataDestination)
+            }
+        )
+        HorizontalDivider()
+        DropdownMenuItem(
+            enabled = destination != AboutDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_about),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(AboutDestination)
+            }
+        )
+    }
 }

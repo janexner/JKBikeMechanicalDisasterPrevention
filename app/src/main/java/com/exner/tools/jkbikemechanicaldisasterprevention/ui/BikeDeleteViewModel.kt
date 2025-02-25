@@ -24,57 +24,20 @@ class BikeDeleteViewModel @AssistedInject constructor(
     private val _bike: MutableLiveData<Bike?> = MutableLiveData()
     val bike: LiveData<Bike?> = _bike
 
-    private val _componentCount: MutableLiveData<Int> = MutableLiveData(0)
-    val componentCount: LiveData<Int> = _componentCount
-
-    private val _activityCount: MutableLiveData<Int> = MutableLiveData(0)
-    val activityCount: LiveData<Int> = _activityCount
-
     init {
         // go look for the bike
         if (bikeUid > 0) {
             viewModelScope.launch {
                 _bike.value = repository.getBikeByUid(bikeUid)
-                if (bike.value != null) {
-                    // find anything attached to the bike
-                    _componentCount.value =
-                        repository.getComponentCountByBike(bikeUid = bike.value!!.uid)
-                    _activityCount.value =
-                        repository.getActivityCountByBike(bikeUid = bike.value!!.uid)
-                }
             }
         }
     }
 
-    fun commitDelete(
-        deleteAttachedComponents: Boolean = false,
-        deleteAttachedActivities: Boolean = false,
-    ) {
+    fun commitDelete() {
         Log.d(TAG, "About to delete bike $bikeUid...")
         if (bike.value != null) {
             Log.d(TAG, "Bike $bikeUid exists: ${bike.value!!.name}")
-            if (deleteAttachedComponents) {
-                Log.d(TAG, "Deleting components...")
-                // delete components first
-                viewModelScope.launch {
-                    repository.deleteComponentsForBike(bike.value!!.uid)
-                }
-            }
-            if (deleteAttachedActivities) {
-                Log.d(TAG, "Deleting activities...")
-                // delete activities first
-                viewModelScope.launch {
-                    val activities = repository.getActivitiesForBike(bike.value!!.uid)
-                    activities.forEach { activity ->
-                        Log.d(
-                            TAG,
-                            "  deleting activity ${activity.uid} / ${activity.title}"
-                        )
-                        repository.deleteActivityByUid(activity.uid)
-                    }
-                }
-            }
-            Log.d(TAG, "Now deleting bike itself...")
+            Log.d(TAG, "Deleting bike...")
             // delete bike
             viewModelScope.launch {
                 repository.deleteBike(bike.value!!)

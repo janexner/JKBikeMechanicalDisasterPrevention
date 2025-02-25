@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -54,7 +53,7 @@ class TemplateActivityEditViewModel @AssistedInject constructor(
         }
     }
 
-    fun updateRideLevel(rideLevel: RideLevel?) {
+    fun updateRideLevel(rideLevel: Int?) {
         if (templateActivity.value != null) {
             _templateActivity.value = templateActivity.value!!.copy(
                 rideLevel = rideLevel

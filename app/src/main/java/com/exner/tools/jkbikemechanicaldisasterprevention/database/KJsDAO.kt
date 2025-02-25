@@ -1,20 +1,16 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
-import androidx.annotation.WorkerThread
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Accessory
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,23 +21,14 @@ interface KJsDAO {
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     fun observeBikesOrderedByLastUsedDate(): Flow<List<Bike>>
 
-    @Query("SELECT * FROM component ORDER BY name")
-    fun observeComponentsOrderedAlphabetically(): Flow<List<Component>>
-
-    @Query("SELECT * FROM accessory ORDER BY name")
-    fun observeAccessoriesOrderedAlphabetically(): Flow<List<Accessory>>
+    @Query("SELECT * FROM activity ORDER BY title")
+    fun observeActivitiesOrderedByTitle(): Flow<List<Activity>>
 
     @Query("SELECT * FROM activitywithbikedata ORDER BY activity_due_date DESC")
     fun observeActivitiesWithBikeDataOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
 
     @Query("SELECT * FROM activitywithbikedata WHERE activity_due_date NOT NULL ORDER BY activity_due_date DESC")
     fun observeActivitiesWithBikeDataAndDueDateOrderedByDueDate(): Flow<List<ActivityWithBikeData>>
-
-    @Query("SELECT * FROM activity ORDER BY title")
-    fun observeActivitiesOrderedByTitle(): Flow<List<Activity>>
-
-    @Query("SELECT * FROM shelvedcomponents ORDER BY name")
-    fun observeShelvedComponents(): Flow<List<Component>>
 
     @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     fun observeTemplateActivities(): Flow<List<TemplateActivity>>
@@ -51,12 +38,6 @@ interface KJsDAO {
     //
     @Query("SELECT * FROM bike ORDER BY last_used_date DESC")
     suspend fun getAllBikesOrderedByLastUsedDate(): List<Bike>
-
-    @Query("SELECT * FROM component ORDER BY bike_uid,name")
-    suspend fun getAllComponentsOrderedByBike(): List<Component>
-
-    @Query("SELECT * FROM accessory ORDER BY name")
-    suspend fun getAllAccessoriesOrderedByName(): List<Accessory>
 
     @Query("SELECT * FROM activity ORDER BY title")
     suspend fun getAllActivitiesOrderedByTitle(): List<Activity>
@@ -74,50 +55,17 @@ interface KJsDAO {
     @Query("SELECT * FROM bike WHERE uid=:uid")
     suspend fun getBikeByUid(uid: Long): Bike?
 
-    @Query("SELECT * FROM component WHERE uid=:uid")
-    suspend fun getComponentByUid(uid: Long): Component?
-
-    @Query("SELECT * FROM accessory WHERE uid=:uid")
-    suspend fun getAccessoryByUid(uid: Long): Accessory?
-
     @Query("SELECT * FROM templateactivity WHERE uid=:uid")
     suspend fun getTemplateActivityByUid(uid: Long): TemplateActivity?
 
     //
     // other helpers
     //
-    @Query("SELECT COUNT(uid) FROM component WHERE bike_uid=:bikeUid")
-    suspend fun getComponentCountByBike(bikeUid: Long): Int
-
-    @Query("SELECT COUNT(uid) FROM component WHERE parent_component_uid=:parentUid")
-    suspend fun getComponentCountByParent(parentUid: Long): Int
-
     @Query("SELECT COUNT(uid) FROM activity WHERE bike_uid=:bikeUid")
     suspend fun getActivityCountByBike(bikeUid: Long): Int
 
-    @Query("SELECT * FROM component WHERE bike_uid=:bikeUid")
-    suspend fun getComponentsForBike(bikeUid: Long): List<Component>
-
-    @Query("SELECT * FROM activity WHERE bike_uid=:bikeUid")
-    suspend fun getActivitiesForBike(bikeUid: Long): List<Activity>
-
-    @Query("SELECT * FROM activitywithbikedata WHERE activity_ride_uid=:rideUid ORDER BY activity_due_date DESC")
-    suspend fun getActivitiesWithBikeDataForRide(rideUid: Long): List<ActivityWithBikeData>
-
     @Query("SELECT * FROM templateactivity WHERE ride_level=:rideLevel")
-    suspend fun getTemplateActivityForRideLevel(rideLevel: RideLevel): List<TemplateActivity>
-
-    @Query("SELECT COUNT(uid) FROM accessory WHERE parent_accessory_uid=:parentUid")
-    suspend fun getAccessoryCountByParent(parentUid: Long): Int
-
-    //
-    // big deletes
-    //
-    @Query("DELETE FROM bike")
-    suspend fun deleteAllBikes()
-
-    @Query("DELETE FROM component")
-    suspend fun deleteAllComponents()
+    suspend fun getTemplateActivityForRideLevel(rideLevel: Int): List<TemplateActivity>
 
     //
     // UPDATE/INSERT/DELETE
@@ -131,36 +79,8 @@ interface KJsDAO {
     @Delete
     suspend fun deleteBike(bike: Bike)
 
-    //
-
-    @Insert
-    suspend fun insertComponent(component: Component): Long
-
-    @Update
-    suspend fun updateComponent(component: Component)
-
-    @Delete
-    suspend fun deleteComponent(component: Component)
-
-    @Query("DELETE FROM component WHERE bike_uid=:bikeUid")
-    suspend fun deleteComponentsForBike(bikeUid: Long)
-
-    @Query("DELETE FROM component WHERE parent_component_uid=:parentUid")
-    suspend fun deleteComponentsForParent(parentUid: Long)
-
-    //
-
-    @Insert
-    suspend fun insertAccessory(accessory: Accessory): Long
-
-    @Update
-    suspend fun updateAccessory(accessory: Accessory)
-
-    @Delete
-    suspend fun deleteAccessory(accessory: Accessory)
-
-    @Query("DELETE FROM accessory WHERE parent_accessory_uid=:parentUid")
-    suspend fun deleteAccessoriesForParent(parentUid: Long)
+    @Query("DELETE FROM bike")
+    suspend fun deleteAllBikes()
 
     //
 
@@ -175,6 +95,9 @@ interface KJsDAO {
 
     @Query("DELETE FROM Activity WHERE ride_uid=:rideUid")
     suspend fun deleteActivitiesForRide(rideUid: Long)
+
+    @Query("DELETE FROM activity")
+    suspend fun deleteAllActivities()
 
     //
 
@@ -194,6 +117,9 @@ interface KJsDAO {
 
     @Query("DELETE FROM templateactivity WHERE uid=:uid")
     suspend fun deleteTemplateActivityByUid(uid: Long)
+
+    @Query("DELETE FROM templateactivity")
+    suspend fun deleteAllTemplateActivities()
 
     //
 

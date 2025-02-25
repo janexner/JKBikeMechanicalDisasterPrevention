@@ -14,8 +14,8 @@ android {
         applicationId = "com.exner.tools.jkbikemechanicaldisasterprevention"
         minSdk = 30
         targetSdk = 35
-        versionCode = 4
-        versionName = "2.0.0"
+        versionCode = 6
+        versionName = "1.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,6 +57,7 @@ android {
                 output.outputFileName = outputFileName
             }
     }
+
 }
 
 kotlin {
@@ -99,6 +100,7 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
+    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)

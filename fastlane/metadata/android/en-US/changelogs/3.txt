@@ -1,0 +1,2 @@
+- Fixed a bug were editing Activities would lead to app crash
+- Started working on German translation

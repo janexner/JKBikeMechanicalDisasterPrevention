@@ -1,20 +1,31 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.loadTemplateActivitiesJsonAndImport
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ManageTemplateActivitiesViewModel @Inject constructor(
-    repository: KJsRepository
+    val repository: KJsRepository
 ) : ViewModel() {
-
-    val rideLevel: StateFlow<List<RideLevel>> = MutableStateFlow(RideLevel.getListOfRideLevels())
 
     val templateActivities = repository.observeTemplateActivity
 
+    fun replaceTemplateActivitiesWithNewLanguage(language: String) {
+        // check whether that language is OK
+        loadTemplateActivitiesJsonAndImport(language) { newTemplateActivities ->
+            viewModelScope.launch {
+                // clear out templates
+                repository.deleteAllTemplateActivities()
+                // import List
+                newTemplateActivities.forEach { templateActivity ->
+                    repository.insertTemplateActivity(templateActivity)
+                }
+            }
+        }
+    }
 }

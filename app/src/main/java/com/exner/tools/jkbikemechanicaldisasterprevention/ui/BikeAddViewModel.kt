@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.generateTopLevelComponentsForNewBike
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,16 +16,11 @@ class BikeAddViewModel @Inject constructor(
     val repository: KJsRepository
 ) : ViewModel() {
 
-    fun saveNewBike(bike: Bike, addComponents: Boolean) {
+    fun saveNewBike(bike: Bike) {
         viewModelScope.launch {
             Log.d(TAG, "Save ${bike.name} ${bike.buildDate} ${bike.mileage} ${bike.lastUsedDate}")
             val bikeUid = repository.insertBike(bike)
             Log.d(TAG, "Saved as uid $bikeUid.")
-
-            if (addComponents) {
-                Log.d(TAG, "Generating components for new bike...")
-                generateTopLevelComponentsForNewBike(bikeUid, repository)
-            }
         }
     }
 }

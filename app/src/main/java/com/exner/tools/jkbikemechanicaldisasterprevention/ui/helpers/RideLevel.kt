@@ -1,39 +1,40 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers
 
-data class RideLevel(
-    val level: Int,
-    val name: String,
-) {
+import android.content.Context
+import com.exner.tools.jkbikemechanicaldisasterprevention.R
+
+class RideLevel {
 
     companion object {
-        fun getRideLevelQuickRide(): RideLevel {
-            return RideLevel(
-                level = 1,
-                name = "Quick ride"
-            )
+        fun getRideLevelQuickRide(): Int {
+            return 1
         }
 
-        fun getRideLevelDayOut(): RideLevel {
-            return RideLevel(
-                level = 2,
-                name = "Day out"
-            )
+        fun getRideLevelDayOut(): Int {
+            return 2
         }
 
-        fun getRideLevelHolidays(): RideLevel {
-            return RideLevel(
-                level = 3,
-                name = "Holidays"
-            )
+        fun getRideLevelHolidays(): Int {
+            return 3
         }
 
-        fun getListOfRideLevels(): List<RideLevel> {
-            return listOf(
-                getRideLevelQuickRide(),
-                getRideLevelDayOut(),
-                getRideLevelHolidays()
-            )
+        fun getListOfRideLevels(): List<Int> {
+            return listOf(1, 2, 3)
         }
+
+        fun getLabel(context: Context, level: Int?): String {
+            when (level) {
+                null -> return context.getString(R.string.all_levels)
+
+                1 -> return context.getString(R.string.title_quick_ride)
+
+                2 -> return context.getString(R.string.title_day_out)
+
+                3 -> return context.getString(R.string.title_holidays)
+            }
+
+            return "Unknown"
+        }
+
     }
 }
-

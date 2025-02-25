@@ -13,4 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
-output-metadata.json
+# IntelliJ
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+# Android Studio 3 in .gitignore file.
+.idea/caches

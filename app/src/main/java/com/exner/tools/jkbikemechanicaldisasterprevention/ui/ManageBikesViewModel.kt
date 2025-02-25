@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ManageAccessoriesViewModel @Inject constructor(
+class ManageBikesViewModel @Inject constructor(
     repository: KJsRepository
 ) : ViewModel() {
 
-    val accessories = repository.observeAccessories
+    val bikes = repository.observeBikes
 
 }

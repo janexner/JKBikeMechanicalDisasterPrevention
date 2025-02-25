@@ -1,42 +1,32 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportDataViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportState
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportStateConstants
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.ImportDataDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
@@ -47,302 +37,345 @@ import io.github.vinceglb.filekit.core.PickerType
 @Composable
 fun ImportData(
     importDataViewModel: ImportDataViewModel = hiltViewModel(),
-    destinationsNavigator: DestinationsNavigator
+    destinationsNavigator: DestinationsNavigator,
+    windowSizeClass: WindowSizeClass
 ) {
-//    val context = LocalContext.current
 
-    val importState by importDataViewModel.importStateFlow.collectAsStateWithLifecycle(
-        ImportState()
-    )
+    KJsResponsiveNavigation(
+        ImportDataDestination,
+        destinationsNavigator,
+        windowSizeClass
+    ) {
+        val importState by importDataViewModel.importStateFlow.collectAsStateWithLifecycle(
+            ImportState()
+        )
+        val errorMessage by importDataViewModel.errorMessage.collectAsStateWithLifecycle()
 
-    val fileForImport by importDataViewModel.file.collectAsStateWithLifecycle()
+        val fileForImport by importDataViewModel.file.collectAsStateWithLifecycle()
 
-    val listOfBikesInFile by importDataViewModel.listOfBikesInFile.collectAsStateWithLifecycle()
-    val listOfComponentsInFile by importDataViewModel.listOfComponentsInFile.collectAsStateWithLifecycle()
+        val listOfBikesInFile by importDataViewModel.listOfBikesInFile.collectAsStateWithLifecycle()
+        val listOfBikesOld by importDataViewModel.listOfBikesOld.collectAsStateWithLifecycle()
+        val listOfBikesNew by importDataViewModel.listOfBikesNew.collectAsStateWithLifecycle()
+        val listOfBikesClashing by importDataViewModel.listOfBikesClashing.collectAsStateWithLifecycle()
+        val overrideClashingBikes by importDataViewModel.overrideClashingBikes.collectAsStateWithLifecycle()
 
-    val listOfOldBikes by importDataViewModel.listOfOldBikes.collectAsStateWithLifecycle()
-    val listOfNewBikes by importDataViewModel.listOfNewBikes.collectAsStateWithLifecycle()
-    val listOfClashingBikes by importDataViewModel.listOfClashingBikes.collectAsStateWithLifecycle()
+        val listOfActivitiesInFile by importDataViewModel.listOfActivitiesInFile.collectAsStateWithLifecycle()
+        val listOfActivitiesOld by importDataViewModel.listOfActivitiesOld.collectAsStateWithLifecycle()
+        val listOfActivitiesNew by importDataViewModel.listOfActivitiesNew.collectAsStateWithLifecycle()
+        val listOfActivitiesClashing by importDataViewModel.listOfActivitiesClashing.collectAsStateWithLifecycle()
+        val overrideClashingActivities by importDataViewModel.overrideClashingActivities.collectAsStateWithLifecycle()
 
-    val listOfOldComponents by importDataViewModel.listOfOldComponents.collectAsStateWithLifecycle()
-    val listOfNewComponents by importDataViewModel.listOfNewComponents.collectAsStateWithLifecycle()
-    val listOfClashingComponents by importDataViewModel.listOfClashingComponents.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesInFile by importDataViewModel.listOfTemplateActivitiesInFile.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesOld by importDataViewModel.listOfTemplateActivitiesOld.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesNew by importDataViewModel.listOfTemplateActivitiesNew.collectAsStateWithLifecycle()
+        val listOfTemplateActivitiesClashing by importDataViewModel.listOfTemplateActivitiesClashing.collectAsStateWithLifecycle()
+        val overrideClashingTemplateActivities by importDataViewModel.overrideClashingTemplateActivities.collectAsStateWithLifecycle()
 
-    val override by importDataViewModel.override.collectAsStateWithLifecycle()
-    val highestUidInBikeDB by importDataViewModel.highestUidInBikeDB.collectAsStateWithLifecycle()
-    val highestUidInComponentDB by importDataViewModel.highestUidInComponentDB.collectAsStateWithLifecycle()
+        val launcher = rememberFilePickerLauncher(
+            type = PickerType.File(
+                extensions = listOf("json")
+            ),
+            mode = PickerMode.Single,
+            title = stringResource(R.string.pick_a_json_file)
+        ) { file ->
+            importDataViewModel.setFile(file)
+        }
 
-    val errorMessage by importDataViewModel.errorMessage.collectAsStateWithLifecycle()
+        val showOverrides by importDataViewModel.showOverrideControls.collectAsStateWithLifecycle()
 
-    val launcher = rememberFilePickerLauncher(
-        type = PickerType.File(
-            extensions = listOf("json")
-        ),
-        mode = PickerMode.Single,
-        title = "Pick a JSON file"
-    ) { file ->
-        importDataViewModel.setFile(file)
-    }
-
-    Scaffold(
-        modifier = Modifier.imePadding(),
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = "Import data",
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                DefaultSpacer()
-                when (importState.state) {
-                    ImportStateConstants.IDLE -> {
-                        Text(text = "Start by selecting a file to import from")
-                        DefaultSpacer()
-                        Button(onClick = {
-                            launcher.launch()
-                        }) {
-                            Text(text = "Select file")
-                        }
-                    }
-
-                    ImportStateConstants.ERROR -> {
-                        Text(text = "Something went wrong!")
-                        DefaultSpacer()
-                        Text(text = "There was an error ('$errorMessage'). You could try importing a different file?")
-                        Button(onClick = {
-                            launcher.launch()
-                        }) {
-                            Text(text = "Select different file")
-                        }
-                    }
-
-                    ImportStateConstants.FILE_SELECTED -> {
-                        Text(text = "File selected: ${fileForImport?.name}")
-                        DefaultSpacer()
-                        Button(onClick = {
-                            launcher.launch()
-                        }) {
-                            Text(text = "Select different file")
-                        }
-                    }
-
-                    ImportStateConstants.FILE_ANALYSED -> {
-                        Text(text = "File selected: ${fileForImport?.name}")
-                        DefaultSpacer()
-                        Button(onClick = {
-                            launcher.launch()
-                        }) {
-                            Text(text = "Select different file")
-                        }
-                        DefaultSpacer()
-                        Text(text = "File contains ${listOfBikesInFile.size} bikes and ${listOfComponentsInFile.size} components.")
-                        DefaultSpacer()
-                        if (override) {
-                            Text(text = "Existing bikes & components will be deleted, and ${listOfBikesInFile.size}/${listOfComponentsInFile.size} will be imported.")
+        LazyColumn(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+        ) {
+            // step 1 - select a file
+            stickyHeader {
+                Column {
+                    when (importState.state) {
+                        ImportStateConstants.IDLE -> {
+                            Text(text = stringResource(R.string.start_by_selecting_a_file_to_import_from))
                             DefaultSpacer()
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(0.5f)
-                            ) {
-                                stickyHeader {
-                                    Text(
-                                        text = "Bikes",
-                                        style = MaterialTheme.typography.labelMedium
-                                    )
-                                }
-                                items(items = listOfBikesInFile) { process ->
-                                    Text(text = "${process.uid} - ${process.name}")
-                                }
-                                stickyHeader {
-                                    Text(
-                                        text = "Components",
-                                        style = MaterialTheme.typography.labelMedium
-                                    )
-                                }
-                                items(items = listOfComponentsInFile) { category ->
-                                    Text(text = "${category.uid} - ${category.name}")
-                                }
-                            }
-                        } else {
-                            if (listOfOldBikes.isNotEmpty() || listOfOldComponents.isNotEmpty()) {
-                                Text(text = "Processes/categories that already exist in the database: ${listOfOldBikes.size}/${listOfOldComponents.size}")
-                                DefaultSpacer()
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(0.5f)
-                                ) {
-                                    stickyHeader {
-                                        Text(
-                                            text = "Processes",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfOldBikes) { process ->
-                                        Text(text = "${process.uid} - ${process.name}")
-                                    }
-                                    stickyHeader {
-                                        Text(
-                                            text = "Categories",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfOldComponents) { category ->
-                                        Text(text = "${category.uid} - ${category.name}")
-                                    }
-                                }
-                            }
-                            if (listOfClashingBikes.isNotEmpty()) {
-                                Text(text = "Processes that exist but are different: ${listOfClashingBikes.size}")
-                                DefaultSpacer()
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(0.5f)
-                                ) {
-                                    stickyHeader {
-                                        Text(
-                                            text = "Processes",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfClashingBikes) { process ->
-                                        Text(text = "${process.uid} - ${process.name}")
-                                    }
-                                    stickyHeader {
-                                        Text(
-                                            text = "Categories",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfClashingComponents) { category ->
-                                        Text(text = "${category.uid} - ${category.name}")
-                                    }
-                                }
-                            }
-                            if (listOfNewBikes.isNotEmpty()) {
-                                Text(text = "Processes that will be imported: ${listOfNewBikes.size}")
-                                DefaultSpacer()
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(0.5f)
-                                ) {
-                                    stickyHeader {
-                                        Text(
-                                            text = "Processes",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfNewBikes) { process ->
-                                        Text(text = "${process.uid} - ${process.name}")
-                                    }
-                                    stickyHeader {
-                                        Text(
-                                            text = "Categories",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                    }
-                                    items(items = listOfNewComponents) { category ->
-                                        Text(text = "${category.uid} - ${category.name}")
-                                    }
-                                }
-                            } else {
-                                Text(
-                                    modifier = Modifier.weight(0.5f),
-                                    text = "Nothing to import.",
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-                                )
-                            }
-                            DefaultSpacer()
-                            if (listOfClashingBikes.isNotEmpty() || listOfClashingComponents.isNotEmpty()) {
-                                Text(
-                                    text = "Uids overlap! This will cause an error on import!",
-                                    color = MaterialTheme.colorScheme.error
-                                )
-                                DefaultSpacer()
-                                Text(text = "The safe option is to delete all existing processes before import.")
-                                DefaultSpacer()
-                                Text(text = "You can also edit the JSON file and start over. When doing so, change the 'uid' fields for each process, and check whether any 'gotoId' fields have to be adjusted, too.")
-                                DefaultSpacer()
-                                Text(text = "The highest Uids in the database are:")
-                                DefaultSpacer()
-                                Text(text = "Process $highestUidInBikeDB & category $highestUidInComponentDB.")
+                            Button(onClick = {
+                                launcher.launch()
+                            }) {
+                                Text(text = stringResource(R.string.select_file))
                             }
                         }
-                        TextAndSwitch(
-                            text = "Delete existing processes & categories before import?",
-                            checked = override
-                        ) {
-                            importDataViewModel.setOverride(it)
-                        }
-                    }
 
-                    ImportStateConstants.IMPORT_FINISHED -> {
-                        Text(text = "Import successfully done.")
+                        ImportStateConstants.ERROR -> {
+                            Text(text = stringResource(R.string.something_went_wrong))
+                            DefaultSpacer()
+                            Text(text = errorMessage)
+                            DefaultSpacer()
+                            Text(text = stringResource(R.string.you_could_try_importing_a_different_file))
+                            DefaultSpacer()
+                            Button(onClick = {
+                                launcher.launch()
+                            }) {
+                                Text(text = stringResource(R.string.select_different_file))
+                            }
+                        }
+
+                        ImportStateConstants.FILE_SELECTED, ImportStateConstants.FILE_ANALYSED -> {
+                            Text(text = stringResource(R.string.file_selected) + fileForImport?.name)
+                            DefaultSpacer()
+                            Button(onClick = {
+                                launcher.launch()
+                            }) {
+                                Text(text = stringResource(R.string.select_different_file))
+                            }
+                        }
+
+                        ImportStateConstants.IMPORT_FINISHED -> {
+                            Text(text = stringResource(R.string.import_data))
+                            DefaultSpacer()
+                            Button(onClick = {
+                                launcher.launch()
+                            }) {
+                                Text(text = stringResource(R.string.select_different_file))
+                            }
+                        }
                     }
                 }
             }
-        },
-        bottomBar = {
-            BottomAppBar(
-                actions = {
-                    IconButton(onClick = {
-                        destinationsNavigator.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Cancel"
-                        )
+
+            // step 2 - information about the file
+            item {
+                if (importState.state != ImportStateConstants.IDLE) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = stringResource(R.string.the_file_contains)
+                                + " "
+                                + listOfBikesInFile.size
+                                + " "
+                                + stringResource(R.string.bikes)
+                                + ", "
+                                + listOfActivitiesInFile.size
+                                + " "
+                                + stringResource(R.string.activities)
+                                + ", "
+                                + stringResource(R.string.and)
+                                + " "
+                                + listOfTemplateActivitiesInFile.size
+                                + " "
+                                + stringResource(R.string.template_activities)
+                                + "."
+                    )
+                }
+            }
+
+            // step 3 - stuff
+            item {
+                if (listOfBikesOld.isNotEmpty() || listOfBikesClashing.isNotEmpty()) {
+                    var text = stringResource(R.string.hdr_bikes) + ": ${listOfBikesOld.size} " + stringResource(R.string.already_in_database)
+                    if (listOfBikesClashing.isNotEmpty()) {
+                        text += ", ${listOfBikesClashing.size} " + stringResource(R.string.clashing)
                     }
-                },
-                floatingActionButton = {
-                    if (importState.state == ImportStateConstants.FILE_ANALYSED
-                        && ((listOfClashingBikes.isEmpty() && listOfClashingComponents.isEmpty()) || override)
-                        && (listOfNewBikes.isNotEmpty() || (override && listOfBikesInFile.isNotEmpty()))
-                    ) {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = "Import") },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Filled.PlayArrow,
-                                    contentDescription = "Import"
-                                )
-                            },
-                            onClick = {
-                                importDataViewModel.commitImport {
-//                                    Toast.makeText(context, "Date imported", Toast.LENGTH_LONG)
-//                                        .show()
-                                }
-                                destinationsNavigator.navigateUp()
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
+                    text += if (listOfBikesNew.isEmpty()) {
+                        ". " + stringResource(R.string.nothing_to_import)
                     } else {
-                        ExtendedFloatingActionButton(
-                            text = { Text(text = "Select file") },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Default.Search,
-                                    contentDescription = "Select file"
-                                )
-                            },
-                            onClick = {
-                                launcher.launch()
-                            },
-                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                        )
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+                if (listOfActivitiesOld.isNotEmpty() || listOfActivitiesClashing.isNotEmpty()) {
+                    var text = stringResource(R.string.hdr_activities) + ": ${listOfActivitiesOld.size} " + stringResource(R.string.already_in_database)
+                    if (listOfActivitiesClashing.isNotEmpty()) {
+                        text += ", ${listOfActivitiesClashing.size} " + stringResource(R.string.clashing)
+                    }
+                    text += if (listOfActivitiesNew.isEmpty()) {
+                        ". " + stringResource(R.string.nothing_to_import)
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+                if (listOfTemplateActivitiesOld.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    var text =
+                        stringResource(R.string.hdr_template_activities) + ": ${listOfTemplateActivitiesOld.size} " + stringResource(R.string.already_in_database)
+                    if (listOfTemplateActivitiesClashing.isNotEmpty()) {
+                        text += ", ${listOfTemplateActivitiesClashing.size} " + stringResource(R.string.clashing)
+                    }
+                    text += if (listOfTemplateActivitiesNew.isEmpty()) {
+                        ". " + stringResource(R.string.nothing_to_import)
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+            }
+
+            // step 3a - bikes
+            stickyHeader {
+                if (listOfBikesNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_bikes),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfBikesNew.isNotEmpty()) {
+                    listOfBikesNew.forEach {
+                        Text(text = it.name)
                     }
                 }
-            )
+            }
+            item {
+                if (listOfBikesNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewBikes()
+                        }) {
+                            Text(stringResource(R.string.import_these_bikes))
+                        }
+                    }
+                }
+            }
+
+            // step 3b - activities
+            stickyHeader {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_activities),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    listOfActivitiesNew.forEach {
+                        Text(text = it.title)
+                    }
+                }
+            }
+            item {
+                if (listOfActivitiesNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewActivities()
+                        }) {
+                            Text(stringResource(R.string.import_these_activities))
+                        }
+                    }
+                }
+            }
+
+            // step 3c - templates
+            stickyHeader {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_template_activities),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    listOfTemplateActivitiesNew.forEach {
+                        Text(text = it.title)
+                    }
+                }
+            }
+            item {
+                if (listOfTemplateActivitiesNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewTemplateActivities()
+                        }) {
+                            Text(stringResource(R.string.import_these_template_activities))
+                        }
+                    }
+                }
+            }
+
+            // done
+            // or are we?
+            item {
+                if (listOfBikesClashing.isNotEmpty() || listOfActivitiesClashing.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = stringResource(R.string.overwrite_any),
+                        checked = showOverrides
+                    ) {
+                        importDataViewModel.setShowOverrideControls(it)
+                    }
+                }
+            }
+
+            // overwrite bikes?
+            item {
+                if (showOverrides && listOfBikesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = stringResource(R.string.overwrite_bikes),
+                        checked = overrideClashingBikes
+                    ) {
+                        importDataViewModel.setOverrideClashingBikes(it)
+                    }
+                }
+            }
+
+            // overwrite activities?
+            item {
+                if (showOverrides && listOfActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = stringResource(R.string.overwrite_activities),
+                        checked = overrideClashingActivities
+                    ) {
+                        importDataViewModel.setOverrideClashingActivities(it)
+                    }
+                }
+            }
+
+            // overwrite template activities?
+            item {
+                if (showOverrides && listOfTemplateActivitiesClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = stringResource(R.string.overwrite_template_activities),
+                        checked = overrideClashingTemplateActivities
+                    ) {
+                        importDataViewModel.setOverrideClashingTemplateActivities(it)
+                    }
+                }
+            }
+
+            // button
+            item {
+                if (overrideClashingActivities || overrideClashingTemplateActivities || overrideClashingBikes) {
+                    Button(onClick = {
+                        // overwrite!
+                        importDataViewModel.overwriteData()
+                    }) {
+                        Text(stringResource(R.string.overwrite_data))
+                    }
+                }
+            }
         }
-    )
+    }
 }

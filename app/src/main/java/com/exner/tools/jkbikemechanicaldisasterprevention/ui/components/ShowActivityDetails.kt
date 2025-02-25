@@ -3,10 +3,12 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.components
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -55,7 +57,19 @@ fun ShowActivityDetails(activity: Activity?) {
 fun ShowTemplateActivityDetails(
     templateActivity: TemplateActivity?
 ) {
-    Text(text = "Ride Level: ${templateActivity?.rideLevel?.name}")
+    val context = LocalContext.current
+    val levelLabel = if (templateActivity?.rideLevel != null) {
+        buildString {
+            append(stringResource(R.string.ride_level_name))
+            append(RideLevel.getLabel(context, templateActivity.rideLevel))
+        }
+    } else {
+        buildString {
+            append(stringResource(R.string.ride_level_name))
+            append(stringResource(R.string.all_levels))
+        }
+    }
+    Text(text = levelLabel)
     DefaultSpacer()
     Text(
         text = templateActivity?.title ?: stringResource(R.string.no_activity_title),

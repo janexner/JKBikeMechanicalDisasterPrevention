@@ -17,6 +17,9 @@ import com.squareup.moshi.adapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +28,6 @@ class ExportDataViewModel @Inject constructor(
 ) : ViewModel() {
 
     val allBikes = repository.observeBikes
-    val allComponents = repository.observeComponents
-    val allAccessories = repository.observeAccessories
     val allActivities = repository.observeActivities
     val allTemplates = repository.observeTemplateActivity
 
@@ -43,29 +44,19 @@ class ExportDataViewModel @Inject constructor(
                     .add(InstantJsonAdapter())
                     .addLast(KotlinJsonAdapterFactory())
                     .build()
+                // load data
+                val data = bundleData()
                 val jsonAdapter: JsonAdapter<RootData> = moshi.adapter<RootData>()
-                // bikes first
-                val listOfAllBikes = repository.getAllBikes()
-                // components next
-                val listOfAllComponents = repository.getAllComponents()
-                // accessories next
-                val listOfAllAccessories = repository.getAllAccessories()
-                // activities next
-                val listOfAllActivities = repository.getAllActivities()
-                // template activities last
-                val listOfTemplateActivities = repository.getAllTemplateActivities()
-                // that is all
-                val data = RootData(
-                    bikes = listOfAllBikes,
-                    components = listOfAllComponents,
-                    accessories = listOfAllAccessories,
-                    templateActivities = listOfTemplateActivities
-                )
-                val overallJsonString: String = jsonAdapter.toJson(data)
+                val overallJsonString = jsonAdapter.toJson(data)
                 Log.d("ExportDateVM", "Collected data: $overallJsonString")
+                val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+                val timeComponentForExportFileName = now.toString()
                 // now write it to the Downloads folder
                 val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, "jkbike-export")
+                    put(
+                        MediaStore.MediaColumns.DISPLAY_NAME,
+                        "jkbike-export-$timeComponentForExportFileName"
+                    )
                     put(MediaStore.MediaColumns.MIME_TYPE, "application/json")
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
                 }
@@ -88,5 +79,13 @@ class ExportDataViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun bundleData(): RootData {
+        val listOfAllBikes = repository.getAllBikes()
+        val listOfAllActivities = repository.getAllActivities()
+        val listOfTemplateActivities = repository.getAllTemplateActivities()
+        val data = RootData(listOfAllBikes, listOfAllActivities, listOfTemplateActivities)
+        return data
     }
 }

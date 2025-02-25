@@ -1,0 +1,2 @@
+- Started working on French translation
+- Added views for tablet-sized Android devices
