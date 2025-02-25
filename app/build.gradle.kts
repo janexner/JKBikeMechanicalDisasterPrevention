@@ -100,7 +100,6 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
-    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
