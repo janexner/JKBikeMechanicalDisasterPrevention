@@ -9,3 +9,9 @@ As the authors, even though we take a certain pride in our own efforts in mainta
 'Where is that vibration coming from?', 'why is the rear end creaking?', 'What is that terrible knocking?' are so often result of something relatively simple being overlooked or forgotten. Recent favourites have been disc rotor bolts backing out, rear thru axles not done up properly, and headsets improperly tensioned.
 
 So, to prevent mechanical disasters happening on your rides, use this app to build better, new, habits and ensure your rides are (mechanically) glorious.
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.exner.tools.jkbikemechanicaldisasterprevention/)
+
+Or download the latest APK from the [Releases Section](https://github.com/janexner/JKBikeMechanicalDisasterPrevention/releases/latest).
