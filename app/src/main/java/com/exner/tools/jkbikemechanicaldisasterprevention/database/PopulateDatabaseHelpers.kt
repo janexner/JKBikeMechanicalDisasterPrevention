@@ -2,6 +2,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.datetime.Clock
@@ -89,6 +90,20 @@ suspend fun populateDatabaseWithSampleData(
         uid = 0
     )
     provider.get().insertBike(bike3)
+
+    // some brake pads
+    val padsDominion = Component(
+        name = "A4 sintered pads",
+        description = "Hayes sintered pads for Dominion A4 (100)",
+        acquisitionDate = LocalDate.parse("2024-09-01"),
+        firstUseDate = null,
+        lastCheckDate = null,
+        bikeUid = null,
+        checkIntervalMiles = 100,
+        checkIntervalDays = 30,
+        uid = 0L,
+    )
+    provider.get().insertComponent(padsDominion)
 
 }
 
