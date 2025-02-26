@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.exner.tools.jkbikemechanicaldisasterprevention"
-        minSdk = 30
+        minSdk = 29
         targetSdk = 35
         versionCode = 6
         versionName = "1.4.0"
