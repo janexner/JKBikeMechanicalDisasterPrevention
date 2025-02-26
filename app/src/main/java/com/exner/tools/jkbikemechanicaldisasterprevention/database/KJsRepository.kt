@@ -3,6 +3,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database
 import androidx.annotation.WorkerThread
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
@@ -25,6 +26,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
         kjsDAO.observeActivitiesWithBikeDataAndDueDateOrderedByDueDate()
 
     val observeTemplateActivity: Flow<List<TemplateActivity>> = kjsDAO.observeTemplateActivities()
+
+    val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedByName()
 
     @WorkerThread
     suspend fun getActivityByUid(activityUid: Long): Activity? {
@@ -146,4 +149,23 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
         return kjsDAO.getLatestRideUidByRideLevel(rideLevel)
     }
 
+    @WorkerThread
+    suspend fun insertComponent(component: Component): Long {
+        return kjsDAO.insertComponent(component)
+    }
+
+    @WorkerThread
+    suspend fun getAllComponents(): List<Component> {
+        return kjsDAO.getAllComponents()
+    }
+
+    @WorkerThread
+    suspend fun getComponentByUid( uid: Long) : Component? {
+        return kjsDAO.getComponentByUid(uid)
+    }
+
+    @WorkerThread
+    suspend fun deleteAllComponents() {
+        kjsDAO.deleteAllComponents()
+    }
 }

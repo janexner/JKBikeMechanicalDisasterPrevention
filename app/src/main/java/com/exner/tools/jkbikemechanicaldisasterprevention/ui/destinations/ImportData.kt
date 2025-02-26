@@ -71,6 +71,12 @@ fun ImportData(
         val listOfTemplateActivitiesClashing by importDataViewModel.listOfTemplateActivitiesClashing.collectAsStateWithLifecycle()
         val overrideClashingTemplateActivities by importDataViewModel.overrideClashingTemplateActivities.collectAsStateWithLifecycle()
 
+        val listOfComponentsInFile by importDataViewModel.listOfComponentsInFile.collectAsStateWithLifecycle()
+        val listOfComponentsOld by importDataViewModel.listOfComponentsOld.collectAsStateWithLifecycle()
+        val listOfComponentsNew by importDataViewModel.listOfComponentsNew.collectAsStateWithLifecycle()
+        val listOfComponentsClashing by importDataViewModel.listOfComponentsClashing.collectAsStateWithLifecycle()
+        val overrideClashingComponents by importDataViewModel.overrideClashingComponents.collectAsStateWithLifecycle()
+
         val launcher = rememberFilePickerLauncher(
             type = PickerType.File(
                 extensions = listOf("json")
@@ -154,12 +160,13 @@ fun ImportData(
                                 + " "
                                 + stringResource(R.string.activities)
                                 + ", "
-                                + stringResource(R.string.and)
-                                + " "
                                 + listOfTemplateActivitiesInFile.size
                                 + " "
                                 + stringResource(R.string.template_activities)
-                                + "."
+                                + ", "
+                                + listOfComponentsInFile.size
+                                + " "
+                                + stringResource(R.string.components)
                     )
                 }
             }
@@ -167,7 +174,10 @@ fun ImportData(
             // step 3 - stuff
             item {
                 if (listOfBikesOld.isNotEmpty() || listOfBikesClashing.isNotEmpty()) {
-                    var text = stringResource(R.string.hdr_bikes) + ": ${listOfBikesOld.size} " + stringResource(R.string.already_in_database)
+                    var text =
+                        stringResource(R.string.hdr_bikes) + ": ${listOfBikesOld.size} " + stringResource(
+                            R.string.already_in_database
+                        )
                     if (listOfBikesClashing.isNotEmpty()) {
                         text += ", ${listOfBikesClashing.size} " + stringResource(R.string.clashing)
                     }
@@ -182,7 +192,10 @@ fun ImportData(
                     )
                 }
                 if (listOfActivitiesOld.isNotEmpty() || listOfActivitiesClashing.isNotEmpty()) {
-                    var text = stringResource(R.string.hdr_activities) + ": ${listOfActivitiesOld.size} " + stringResource(R.string.already_in_database)
+                    var text =
+                        stringResource(R.string.hdr_activities) + ": ${listOfActivitiesOld.size} " + stringResource(
+                            R.string.already_in_database
+                        )
                     if (listOfActivitiesClashing.isNotEmpty()) {
                         text += ", ${listOfActivitiesClashing.size} " + stringResource(R.string.clashing)
                     }
@@ -198,11 +211,31 @@ fun ImportData(
                 }
                 if (listOfTemplateActivitiesOld.isNotEmpty() || listOfTemplateActivitiesClashing.isNotEmpty()) {
                     var text =
-                        stringResource(R.string.hdr_template_activities) + ": ${listOfTemplateActivitiesOld.size} " + stringResource(R.string.already_in_database)
+                        stringResource(R.string.hdr_template_activities) + ": ${listOfTemplateActivitiesOld.size} " + stringResource(
+                            R.string.already_in_database
+                        )
                     if (listOfTemplateActivitiesClashing.isNotEmpty()) {
                         text += ", ${listOfTemplateActivitiesClashing.size} " + stringResource(R.string.clashing)
                     }
                     text += if (listOfTemplateActivitiesNew.isEmpty()) {
+                        ". " + stringResource(R.string.nothing_to_import)
+                    } else {
+                        "."
+                    }
+                    Text(
+                        modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp),
+                        text = text
+                    )
+                }
+                if (listOfComponentsOld.isNotEmpty() || listOfComponentsClashing.isNotEmpty()) {
+                    var text =
+                        stringResource(R.string.hdr_components) + ": ${listOfComponentsOld.size} " + stringResource(
+                            R.string.already_in_database
+                        )
+                    if (listOfComponentsClashing.isNotEmpty()) {
+                        text += ", ${listOfComponentsClashing.size} " + stringResource(R.string.clashing)
+                    }
+                    text += if (listOfComponentsNew.isEmpty()) {
                         ". " + stringResource(R.string.nothing_to_import)
                     } else {
                         "."
@@ -316,6 +349,40 @@ fun ImportData(
                 }
             }
 
+            // step 3d - components
+            stickyHeader {
+                if (listOfComponentsNew.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_components),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+            item {
+                if (listOfComponentsNew.isNotEmpty()) {
+                    listOfComponentsNew.forEach {
+                        Text(text = it.name)
+                    }
+                }
+            }
+            item {
+                if (listOfComponentsNew.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = {
+                            importDataViewModel.importNewComponents()
+                        }) {
+                            Text(stringResource(R.string.import_these_components))
+                        }
+                    }
+                }
+            }
+
             // done
             // or are we?
             item {
@@ -365,9 +432,21 @@ fun ImportData(
                 }
             }
 
+            // overwrite components?
+            item {
+                if (showOverrides && listOfComponentsClashing.isNotEmpty()) {
+                    TextAndSwitch(
+                        text = stringResource(R.string.overwrite_components),
+                        checked = overrideClashingComponents
+                    ) {
+                        importDataViewModel.setOverrideClashingComponents(it)
+                    }
+                }
+            }
+
             // button
             item {
-                if (overrideClashingActivities || overrideClashingTemplateActivities || overrideClashingBikes) {
+                if (overrideClashingActivities || overrideClashingTemplateActivities || overrideClashingBikes || overrideClashingComponents) {
                     Button(onClick = {
                         // overwrite!
                         importDataViewModel.overwriteData()

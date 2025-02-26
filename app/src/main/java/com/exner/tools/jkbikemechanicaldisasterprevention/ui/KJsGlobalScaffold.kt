@@ -34,6 +34,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ExportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ImportDataDestination
@@ -164,6 +165,19 @@ private fun MainMenuAction(
             onClick = {
                 displayMainMenu = false
                 destinationsNavigator.navigate(BikeAddDestination)
+            }
+        )
+        DropdownMenuItem(
+            enabled = true,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_add_component),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ComponentAddDestination)
             }
         )
         DropdownMenuItem(

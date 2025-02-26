@@ -6,11 +6,13 @@ import androidx.room.TypeConverters
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.ActivityTags
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Tag
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ShelvedComponents
 
 @Database(
     entities = [
@@ -21,9 +23,10 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Activit
         Ride::class,
         RideUidByRideLevel::class,
         TemplateActivity::class,
+        Component::class,
     ],
-    views = [ActivityWithBikeData::class],
-    version = 2,
+    views = [ActivityWithBikeData::class, ShelvedComponents::class],
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(

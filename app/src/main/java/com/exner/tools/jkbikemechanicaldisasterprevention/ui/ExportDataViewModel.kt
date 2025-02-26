@@ -30,6 +30,7 @@ class ExportDataViewModel @Inject constructor(
     val allBikes = repository.observeBikes
     val allActivities = repository.observeActivities
     val allTemplates = repository.observeTemplateActivity
+    val allComponents = repository.observeComponents
 
     @OptIn(ExperimentalStdlibApi::class)
     fun commitExport(
@@ -85,7 +86,13 @@ class ExportDataViewModel @Inject constructor(
         val listOfAllBikes = repository.getAllBikes()
         val listOfAllActivities = repository.getAllActivities()
         val listOfTemplateActivities = repository.getAllTemplateActivities()
-        val data = RootData(listOfAllBikes, listOfAllActivities, listOfTemplateActivities)
+        val listOfComponents = repository.getAllComponents()
+        val data = RootData(
+            listOfAllBikes,
+            listOfAllActivities,
+            listOfTemplateActivities,
+            listOfComponents
+        )
         return data
     }
 }

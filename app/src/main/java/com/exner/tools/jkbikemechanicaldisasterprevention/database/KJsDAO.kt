@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
@@ -33,6 +34,9 @@ interface KJsDAO {
     @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     fun observeTemplateActivities(): Flow<List<TemplateActivity>>
 
+    @Query("SELECT * FROM component ORDER BY name")
+    fun observeComponentsOrderedByName(): Flow<List<Component>>
+
     //
     // GETTERS = return all lines
     //
@@ -45,6 +49,8 @@ interface KJsDAO {
     @Query("SELECT * FROM templateactivity ORDER BY ride_level, title")
     suspend fun getAllTemplateActivities(): List<TemplateActivity>
 
+    @Query("SELECT * FROM component ORDER BY name")
+    suspend fun getAllComponents(): List<Component>
 
     //
     // GETTERS - return individual lines
@@ -57,6 +63,9 @@ interface KJsDAO {
 
     @Query("SELECT * FROM templateactivity WHERE uid=:uid")
     suspend fun getTemplateActivityByUid(uid: Long): TemplateActivity?
+
+    @Query("SELECT * FROM component WHERE uid=:uid")
+    suspend fun getComponentByUid(uid: Long): Component?
 
     //
     // other helpers
@@ -125,4 +134,12 @@ interface KJsDAO {
 
     @Insert
     suspend fun insertRide(ride: Ride): Long
+
+    //
+
+    @Insert
+    suspend fun insertComponent(component: Component): Long
+
+    @Query("DELETE FROM component")
+    suspend fun deleteAllComponents()
 }

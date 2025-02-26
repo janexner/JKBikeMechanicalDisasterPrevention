@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.InstantJsonAdapter
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.LocalDateJsonAdapter
@@ -105,6 +106,22 @@ class ImportDataViewModel @Inject constructor(
     private val _overrideClashingTemplateActivities: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val overrideClashingTemplateActivities: StateFlow<Boolean> = _overrideClashingTemplateActivities
 
+    private val _listOfComponentsInFile: MutableStateFlow<List<Component>> = MutableStateFlow(
+        emptyList()
+    )
+    val listOfComponentsInFile: StateFlow<List<Component>> = _listOfComponentsInFile
+    private val _listOfComponentsOld: MutableStateFlow<List<Component>> =
+        MutableStateFlow(emptyList())
+    val listOfComponentsOld: StateFlow<List<Component>> = _listOfComponentsOld
+    private val _listOfComponentsNew: MutableStateFlow<List<Component>> =
+        MutableStateFlow(emptyList())
+    val listOfComponentsNew: StateFlow<List<Component>> = _listOfComponentsNew
+    private val _listOfComponentsClashing: MutableStateFlow<List<Component>> =
+        MutableStateFlow(emptyList())
+    val listOfComponentsClashing: StateFlow<List<Component>> = _listOfComponentsClashing
+    private val _overrideClashingComponents: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val overrideClashingComponents: StateFlow<Boolean> = _overrideClashingComponents
+
     fun setShowOverrideControls(show: Boolean) {
         _showOverrideControls.value = show
     }
@@ -119,6 +136,10 @@ class ImportDataViewModel @Inject constructor(
 
     fun setOverrideClashingTemplateActivities(override: Boolean) {
         _overrideClashingTemplateActivities.value = override
+    }
+
+    fun setOverrideClashingComponents(override: Boolean) {
+        _overrideClashingComponents.value = override
     }
 
     @OptIn(ExperimentalStdlibApi::class)
@@ -233,6 +254,38 @@ class ImportDataViewModel @Inject constructor(
                             }
                         }
                     }
+                    val newComponents = newData.components
+                    if (newComponents != null) {
+                        // compare with existing
+                        _listOfComponentsInFile.value = newComponents
+                        val oldComponents = repository.getAllComponents()
+                        val oldComponentUids: MutableList<Long> = mutableListOf()
+                        oldComponents.forEach { oldComponent ->
+                            oldComponentUids.add(oldComponent.uid)
+                        }
+                        _listOfComponentsOld.value = emptyList()
+                        _listOfComponentsClashing.value = emptyList()
+                        _listOfComponentsNew.value = emptyList()
+                        newComponents.forEach { newComponent ->
+                            if (oldComponentUids.contains(newComponent.uid)) {
+                                // is it the same?
+                                if (newComponent == repository.getComponentByUid(newComponent.uid)) {
+                                    // it is the same. No need to import
+                                    val temp = listOfComponentsOld.value.toMutableList()
+                                    temp.add(newComponent)
+                                    _listOfComponentsOld.value = temp
+                                } else {
+                                    val temp = listOfComponentsClashing.value.toMutableList()
+                                    temp.add(newComponent)
+                                    _listOfComponentsClashing.value = temp
+                                }
+                            } else {
+                                val temp = listOfComponentsNew.value.toMutableList()
+                                temp.add(newComponent)
+                                _listOfComponentsNew.value = temp
+                            }
+                        }
+                    }
                 }
                 // done
                 _importStateFlow.value = ImportState(ImportStateConstants.FILE_ANALYSED)
@@ -283,6 +336,19 @@ class ImportDataViewModel @Inject constructor(
                 _listOfTemplateActivitiesNew.value = emptyList()
             }
             Log.d(TAG, "New template activities imported.")
+        }
+    }
+
+    fun importNewComponents() {
+        if (listOfComponentsNew.value.isNotEmpty()) {
+            Log.d(TAG, "Importing ${listOfComponentsNew.value.size} new components...")
+            viewModelScope.launch {
+                listOfComponentsNew.value.forEach { newComponent ->
+                    repository.insertComponent(newComponent)
+                }
+                _listOfComponentsNew.value = emptyList()
+            }
+            Log.d(TAG, "New components imported.")
         }
     }
 
@@ -340,6 +406,24 @@ class ImportDataViewModel @Inject constructor(
                 _overrideClashingTemplateActivities.value = false
             }
             Log.d(TAG, "Done overwriting template activities.")
+        }
+        if (overrideClashingComponents.value && listOfComponentsClashing.value.isNotEmpty()) {
+            Log.d(TAG, "Overwrting ${listOfComponentsClashing.value.size} components...")
+            viewModelScope.launch {
+                repository.deleteAllComponents()
+                listOfComponentsOld.value.forEach { oldComponent ->
+                    repository.insertComponent(oldComponent)
+                }
+                listOfComponentsClashing.value.forEach { clashingComponent ->
+                    repository.insertComponent(clashingComponent)
+                }
+                val tempList = listOfComponentsOld.value.toMutableList()
+                tempList.addAll(_listOfComponentsClashing.value)
+                _listOfComponentsOld.value = tempList
+                _listOfComponentsClashing.value = emptyList()
+                _overrideClashingComponents.value = false
+            }
+            Log.d(TAG, "Done overwriting components")
         }
     }
 }
