@@ -61,6 +61,10 @@ fun ExportData(
             emptyList()
         )
 
+        val components by exportDataViewModel.allComponents.collectAsState(
+            emptyList()
+        )
+
         Column(
             modifier = Modifier
                 .padding(8.dp)
@@ -118,6 +122,20 @@ fun ExportData(
                             )
                         } - ${it.title}"
                     )
+                }
+
+                stickyHeader {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        text = stringResource(R.string.hdr_components),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+                items(items = components, key = { "component-${it.uid}" }) {
+                    Text(text = it.name)
                 }
             }
             DefaultSpacer()

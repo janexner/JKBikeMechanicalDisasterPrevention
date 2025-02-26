@@ -128,4 +128,15 @@
     <string name="about5">So, to prevent mechanical disasters happening on your rides, use this app to build better, new, habits and ensure your rides are (mechanically) glorious.</string>
     <string name="delete_a_bike">Delete bike</string>
     <string name="get_template_activities_in">Get template activities in:</string>
+    <string name="menu_item_add_component">Add Component</string>
+    <string name="a_new_component_brilliant">New Tech, cool!</string>
+    <string name="lbl_acquisition_date">Acquired on</string>
+    <string name="lbl_first_use_date">First used on</string>
+    <string name="lbl_last_checked_date">Last check was on</string>
+    <string name="lbl_check_interval_miles">Check every x km/miles</string>
+    <string name="lbl_check_interval_days">Check how often (days)</string>
+    <string name="hdr_components">Components</string>
+    <string name="components">components</string>
+    <string name="import_these_components">Import these components</string>
+    <string name="overwrite_components">Overwrite components?</string>
 </resources>
