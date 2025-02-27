@@ -162,5 +162,6 @@
     <string name="lbl_component_name">Nom du composant</string>
     <string name="save_the_component">Enregistrer le composant</string>
     <string name="delete_a_component">Supprimer un composant</string>
+    <string name="we_can_not_find_this_component">Nous ne trouvont pas ce composant</string>
     <string name="delete_the_component">Supprimer le composant</string>
 </resources>
