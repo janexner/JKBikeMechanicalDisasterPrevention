@@ -18,6 +18,7 @@ class HomeViewModel @Inject constructor(
     fun updateActivity(activity: Activity) {
         viewModelScope.launch {
             repository.updateActivity(activity)
+            // TODO also update component, if there is one attached
         }
     }
 }

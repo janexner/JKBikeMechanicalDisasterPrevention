@@ -1,15 +1,16 @@
-package com.exner.tools.jkbikemechanicaldisasterprevention.database.entities
+package com.exner.tools.jkbikemechanicaldisasterprevention.database.views
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.DatabaseView
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
-import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDate
 
-@Entity
-@JsonClass(generateAdapter = true)
-data class Component(
+@DatabaseView(
+    "SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days, " +
+            " uid " +
+            "FROM Component WHERE bike_uid = NULL AND retirement_date NOT NULL ORDER BY retirement_date DESC;"
+)
+data class RetiredComponents(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "acquisition_date") val acquisitionDate: LocalDate?,
@@ -28,5 +29,5 @@ data class Component(
     @ColumnInfo(name = "check_interval_miles") val checkIntervalMiles: Int?,
     @ColumnInfo(name = "check_interval_days") val checkIntervalDays: Int?,
 
-    @PrimaryKey(autoGenerate = true) val uid: Long = 0
+    @ColumnInfo(name = "uid") val uid: Long
 )

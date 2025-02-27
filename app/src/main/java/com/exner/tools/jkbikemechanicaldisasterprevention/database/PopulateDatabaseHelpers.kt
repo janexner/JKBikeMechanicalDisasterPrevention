@@ -4,6 +4,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Acti
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -31,13 +32,14 @@ suspend fun populateDatabaseWithSampleData(
         title = "Replace Lou",
         description = "Replace worn rear tyre using fatty stripper",
         isCompleted = false,
-        bikeUid =taigaUid,
+        bikeUid = taigaUid,
         isEBikeSpecific = false,
         rideLevel = RideLevel.getRideLevelQuickRide(),
         rideUid = null,
         createdInstant = Clock.System.now(),
         dueDate = LocalDate(2024, 11, 30),
         doneInstant = null,
+        componentUid = null,
         uid = 0
     )
     provider.get().insertActivity(replaceLouActivity)
@@ -52,6 +54,7 @@ suspend fun populateDatabaseWithSampleData(
         createdInstant = Clock.System.now(),
         dueDate = LocalDate(2025, 6, 30),
         doneInstant = null,
+        componentUid = null,
         uid = 0
     )
     provider.get().insertActivity(replaceBBActivity)
@@ -76,6 +79,7 @@ suspend fun populateDatabaseWithSampleData(
         rideUid = null, createdInstant = Clock.System.now(),
         dueDate = null,
         doneInstant = null,
+        componentUid = null,
         uid = 0
     )
     provider.get().insertActivity(basketActivity)
@@ -101,6 +105,11 @@ suspend fun populateDatabaseWithSampleData(
         bikeUid = null,
         checkIntervalMiles = 100,
         checkIntervalDays = 30,
+        lastCheckMileage = null,
+        currentMileage = null,
+        titleForAutomaticActivities = "Check brake pads for signs of wear",
+        wearLevel = WearLevel.NEW,
+        retirementDate = null,
         uid = 0L,
     )
     provider.get().insertComponent(padsDominion)

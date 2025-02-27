@@ -12,6 +12,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Tag
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.RetiredComponents
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ShelvedComponents
 
 @Database(
@@ -25,7 +26,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Shelved
         TemplateActivity::class,
         Component::class,
     ],
-    views = [ActivityWithBikeData::class, ShelvedComponents::class],
+    views = [ActivityWithBikeData::class, ShelvedComponents::class, RetiredComponents::class],
     version = 3,
     exportSchema = true
 )

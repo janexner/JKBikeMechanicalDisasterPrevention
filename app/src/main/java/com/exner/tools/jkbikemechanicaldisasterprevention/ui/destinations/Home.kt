@@ -100,12 +100,14 @@ fun Home(
                         dueDate = activityByBike.activityDueDate,
                         bikeUid = activityByBike.bikeUid ?: 0,
                         doneInstant = activityByBike.activityDoneDateInstant,
+                        componentUid = activityByBike.activityComponentUid,
                         uid = activityByBike.activityUid
                     )
                     TodoListItem(
                         activity = activityByBike,
                         destinationsNavigator = destinationsNavigator,
                         onCheckboxCallback = { result ->
+                            // TODO ask for state of component
                             homeViewModel.updateActivity(
                                 activity = activity.copy(
                                     isCompleted = result,

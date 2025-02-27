@@ -12,6 +12,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.RetiredComponents
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -36,6 +37,9 @@ interface KJsDAO {
 
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedByName(): Flow<List<Component>>
+
+    @Query("SELECT * FROM retiredcomponents ORDER BY retirement_date DESC")
+    fun observeRetiredComponents(): Flow<List<RetiredComponents>>
 
     //
     // GETTERS = return all lines

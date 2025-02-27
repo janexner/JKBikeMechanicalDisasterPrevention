@@ -181,6 +181,7 @@ fun PrepareBikeHolidays(
                         bikeUid = activityByBike.bikeUid!!,
                         isEBikeSpecific = activityByBike.isEBikeSpecific,
                         rideLevel = activityByBike.activityRideLevel,
+                        componentUid = activityByBike.activityComponentUid,
                         uid = activityByBike.activityUid
                     )
                     TodoListItem(

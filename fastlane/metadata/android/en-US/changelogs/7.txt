@@ -1,0 +1,2 @@
+- Added "Components"
+    - Components can be used to create "scheduled" activities

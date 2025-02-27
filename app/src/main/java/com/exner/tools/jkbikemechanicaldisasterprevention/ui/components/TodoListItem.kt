@@ -69,6 +69,7 @@ fun TodoListItem(
             },
             supportingContent = {
                 Text(text = activity.activityDescription)
+                // TODO add component information
             },
             trailingContent = {
                 Checkbox(

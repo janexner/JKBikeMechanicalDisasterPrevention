@@ -13,6 +13,8 @@ class ComponentAddViewModel @Inject constructor(
     val repository: KJsRepository
 ) : ViewModel() {
 
+    val allBikes = repository.observeBikes
+
     fun saveNewComponent(component: Component) {
         viewModelScope.launch {
             repository.insertComponent(component)
