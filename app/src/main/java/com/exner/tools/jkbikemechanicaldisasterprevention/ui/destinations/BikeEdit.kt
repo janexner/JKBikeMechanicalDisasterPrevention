@@ -121,7 +121,7 @@ fun BikeEdit(
                     }
                 )
                 DefaultNumberFieldWithSpacer(
-                    value = bike?.mileage.toString(),
+                    value = (bike?.mileage ?: "").toString(),
                     onValueChange = { value ->
                         bikeEditViewModel.updateMileage(value.toIntOrNull() ?: 0)
                         modified = true

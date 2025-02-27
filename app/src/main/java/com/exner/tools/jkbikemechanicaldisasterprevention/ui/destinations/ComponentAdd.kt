@@ -140,7 +140,7 @@ fun ComponentAdd(
                     }
                 )
                 DefaultNumberFieldWithSpacer(
-                    value = (lastCheckMileage ?: 0).toString(),
+                    value = (lastCheckMileage ?: "").toString(),
                     label = stringResource(R.string.lbl_last_checked_mileage),
                     placeholder = "0",
                     onValueChange = {
@@ -149,7 +149,7 @@ fun ComponentAdd(
                     }
                 )
                 DefaultNumberFieldWithSpacer(
-                    value = (checkIntervalMiles ?: 0).toString(),
+                    value = (checkIntervalMiles ?: "").toString(),
                     label = stringResource(R.string.lbl_check_interval_miles),
                     placeholder = "0",
                     onValueChange = {
@@ -158,7 +158,7 @@ fun ComponentAdd(
                     }
                 )
                 DefaultNumberFieldWithSpacer(
-                    value = (checkIntervalDays ?: 0).toString(),
+                    value = (checkIntervalDays ?: "").toString(),
                     label = stringResource(R.string.lbl_check_interval_days),
                     placeholder = "0",
                     onValueChange = {
@@ -184,7 +184,7 @@ fun ComponentAdd(
                 }
                 DefaultSpacer()
                 DefaultNumberFieldWithSpacer(
-                    value = (currentMileage ?: 0).toString(),
+                    value = (currentMileage ?: "").toString(),
                     label = stringResource(R.string.lbl_current_mileage),
                     placeholder = "0",
                     onValueChange = {

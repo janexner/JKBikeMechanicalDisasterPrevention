@@ -37,6 +37,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHead
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ComponentAnalysisDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentEditDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -87,7 +88,7 @@ fun ManageComponents(
                         modifier = Modifier
                             .combinedClickable(
                                 onClick = {
-                                    // destinationsNavigator.navigate(BikeEditDestination(bike.uid))
+                                    destinationsNavigator.navigate(ComponentEditDestination(component.uid))
                                 },
                             )
                             .padding(4.dp),
