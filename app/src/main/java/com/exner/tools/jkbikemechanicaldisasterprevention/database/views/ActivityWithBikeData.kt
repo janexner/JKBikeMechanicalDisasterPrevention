@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDate
 @DatabaseView(
     "SELECT " +
             "b.name as bike_name, b.uid as bike_uid, " +
-            "a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, " +
+            "a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, a.component_uid as activity_component_uid, " +
             "a.uid as activity_uid " +
             "FROM Activity a " +
             "LEFT JOIN Bike b ON b.uid = a.bike_uid " +
@@ -26,5 +26,6 @@ data class ActivityWithBikeData(
     @ColumnInfo(name = "activity_done_instant") val activityDoneDateInstant: Instant?,
     @ColumnInfo(name = "activity_is_ebike_specific") val isEBikeSpecific: Boolean,
     @ColumnInfo(name = "activity_ride_level") val activityRideLevel: Int?,
+    @ColumnInfo(name = "activity_component_uid") val activityComponentUid: Long?,
     @ColumnInfo(name = "activity_uid") val activityUid: Long
 )

@@ -35,10 +35,12 @@ import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
+import com.ramcosta.composedestinations.generated.destinations.ComponentAnalysisDestination
 import com.ramcosta.composedestinations.generated.destinations.ExportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
 import com.ramcosta.composedestinations.generated.destinations.ImportDataDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
@@ -155,7 +157,7 @@ private fun MainMenuAction(
         onDismissRequest = { displayMainMenu = false }
     ) {
         DropdownMenuItem(
-            enabled = true,
+            enabled = destination != BikeAddDestination,
             text = {
                 Text(
                     text = stringResource(R.string.menu_item_add_bike),
@@ -168,7 +170,21 @@ private fun MainMenuAction(
             }
         )
         DropdownMenuItem(
-            enabled = true,
+            enabled = destination != ManageBikesDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_manage_bikes_components),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ManageBikesDestination)
+            }
+        )
+        HorizontalDivider()
+        DropdownMenuItem(
+            enabled = destination != ComponentAddDestination,
             text = {
                 Text(
                     text = stringResource(R.string.menu_item_add_component),
@@ -181,16 +197,29 @@ private fun MainMenuAction(
             }
         )
         DropdownMenuItem(
-            enabled = true,
+            enabled = destination != ManageComponentsDestination,
             text = {
                 Text(
-                    text = stringResource(R.string.menu_item_manage_bikes_components),
+                    text = stringResource(R.string.menu_item_manage_components),
                     style = MaterialTheme.typography.bodyLarge
                 )
             },
             onClick = {
                 displayMainMenu = false
-                destinationsNavigator.navigate(ManageBikesDestination)
+                destinationsNavigator.navigate(ManageComponentsDestination)
+            }
+        )
+        DropdownMenuItem(
+            enabled = destination != ComponentAnalysisDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_analyse_components),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(ComponentAnalysisDestination)
             }
         )
         HorizontalDivider()

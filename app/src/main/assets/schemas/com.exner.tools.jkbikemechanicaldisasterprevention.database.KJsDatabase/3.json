@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d7eafce25ef91a9e5d4a922afa671a6e",
+    "identityHash": "b8f9bc05f2d4c7248db3b1fff35c451d",
     "entities": [
       {
         "tableName": "Activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER, `is_ebike_specific` INTEGER NOT NULL, `ride_level` INTEGER, `ride_uid` INTEGER, `created_instant` INTEGER NOT NULL, `due_date` TEXT, `done_instant` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `bike_uid` INTEGER, `is_ebike_specific` INTEGER NOT NULL, `ride_level` INTEGER, `component_uid` INTEGER, `ride_uid` INTEGER, `created_instant` INTEGER NOT NULL, `due_date` TEXT, `done_instant` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -41,6 +41,12 @@
           {
             "fieldPath": "rideLevel",
             "columnName": "ride_level",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "componentUid",
+            "columnName": "component_uid",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -314,7 +320,7 @@
       },
       {
         "tableName": "Component",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `acquisition_date` TEXT, `first_use_date` TEXT, `last_check_date` TEXT, `bike_uid` INTEGER, `check_interval_miles` INTEGER, `check_interval_days` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `acquisition_date` TEXT, `first_use_date` TEXT, `last_check_date` TEXT, `last_check_mileage` INTEGER, `current_mileage` INTEGER, `bike_uid` INTEGER, `title_for_automatic_activities` TEXT, `wear_level` TEXT, `retirement_date` TEXT, `check_interval_miles` INTEGER, `check_interval_days` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
@@ -347,9 +353,39 @@
             "notNull": false
           },
           {
+            "fieldPath": "lastCheckMileage",
+            "columnName": "last_check_mileage",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currentMileage",
+            "columnName": "current_mileage",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
             "fieldPath": "bikeUid",
             "columnName": "bike_uid",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "titleForAutomaticActivities",
+            "columnName": "title_for_automatic_activities",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wearLevel",
+            "columnName": "wear_level",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "retirementDate",
+            "columnName": "retirement_date",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -384,16 +420,20 @@
     "views": [
       {
         "viewName": "ActivityWithBikeData",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, a.component_uid as activity_component_uid, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;"
       },
       {
         "viewName": "ShelvedComponents",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, bike_uid, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL ORDER BY acquisition_date DESC;"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL AND retirement_date = NULL ORDER BY acquisition_date DESC;"
+      },
+      {
+        "viewName": "RetiredComponents",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL AND retirement_date NOT NULL ORDER BY retirement_date DESC;"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7eafce25ef91a9e5d4a922afa671a6e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8f9bc05f2d4c7248db3b1fff35c451d')"
     ]
   }
 }

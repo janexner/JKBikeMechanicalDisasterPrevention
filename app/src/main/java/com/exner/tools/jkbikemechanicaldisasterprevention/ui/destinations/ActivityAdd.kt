@@ -194,6 +194,7 @@ fun ActivityAdd(
                                 null
                             },
                             doneInstant = null,
+                            componentUid = null,
                             bikeUid = currentBike?.uid
                         )
                         activityAddViewModel.saveActivity(activity)

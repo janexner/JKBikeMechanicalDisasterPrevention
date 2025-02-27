@@ -9,12 +9,19 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.exner.tools.jkbikemechanicaldisasterprevention.preferences.UserPreferencesManager
+import com.exner.tools.jkbikemechanicaldisasterprevention.scheduler.CheckComponentsIntervalsAndCreateActivitiesWorker
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffold
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.MainViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.KJsBikeMaintenanceCheckerTheme
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.Theme
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,9 +32,31 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    // launch the scheduler unless it is running already
+    private val constraints = Constraints.Builder()
+        .setRequiresBatteryNotLow(true)
+        .setRequiresStorageNotLow(true)
+        .build()
+    private val schedulerWorkRequest: PeriodicWorkRequest =
+        PeriodicWorkRequestBuilder<CheckComponentsIntervalsAndCreateActivitiesWorker>(
+            repeatInterval = 1,
+            repeatIntervalTimeUnit = TimeUnit.DAYS,
+            flexTimeInterval = 13,
+            flexTimeIntervalUnit = TimeUnit.HOURS
+        ).setConstraints(constraints).build()
+
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val workManager = WorkManager.getInstance(this)
+        // see whether there is a running scheduler
+        // if not, launch one
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = "CheckComponentsIntervalsAndCreateActivities",
+            request = schedulerWorkRequest,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
+        )
 
         enableEdgeToEdge()
         setContent {

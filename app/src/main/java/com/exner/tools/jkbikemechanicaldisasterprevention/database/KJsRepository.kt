@@ -8,6 +8,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.RideUidByRideLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.RetiredComponents
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -28,6 +29,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     val observeTemplateActivity: Flow<List<TemplateActivity>> = kjsDAO.observeTemplateActivities()
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedByName()
+
+    val observeRetiredComponents: Flow<List<RetiredComponents>> = kjsDAO.observeRetiredComponents()
 
     @WorkerThread
     suspend fun getActivityByUid(activityUid: Long): Activity? {

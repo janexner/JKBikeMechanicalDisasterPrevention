@@ -17,6 +17,7 @@ data class Activity(
     @ColumnInfo(name = "bike_uid") val bikeUid: Long?,
     @ColumnInfo(name = "is_ebike_specific") val isEBikeSpecific: Boolean = false,
     @ColumnInfo(name = "ride_level") val rideLevel: Int?,
+    @ColumnInfo(name = "component_uid") val componentUid: Long?,
 
     @ColumnInfo(name = "ride_uid") val rideUid: Long?,
     @ColumnInfo(name = "created_instant") val createdInstant: Instant,

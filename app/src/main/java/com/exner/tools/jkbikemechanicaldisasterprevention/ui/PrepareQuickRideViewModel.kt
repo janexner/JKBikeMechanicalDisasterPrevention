@@ -136,6 +136,7 @@ class PrepareQuickRideViewModel @Inject constructor(
                         createdInstant = Clock.System.now(),
                         dueDate = null,
                         doneInstant = null,
+                        componentUid = null,
                         uid = 0,
                     )
                     Log.d(TAG, "Adding activity ${activity.title}...")
