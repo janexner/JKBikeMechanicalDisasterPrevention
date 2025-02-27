@@ -177,4 +177,10 @@
     <string name="select_components_for_analysis">Select components, then press \"Analyze\"</string>
     <string name="analyze">Analyze</string>
     <string name="there_are_no_retired_components_to_analyse">There are no retired components to analyse</string>
+    <string name="edit_a_component">Edit component</string>
+    <string name="lbl_component_name">Component name</string>
+    <string name="save_the_component">Save component</string>
+    <string name="delete_a_component">Delete component</string>
+    <string name="we_can_not_find_this_component">We can not find this component</string>
+    <string name="delete_the_component">Delete component</string>
 </resources>

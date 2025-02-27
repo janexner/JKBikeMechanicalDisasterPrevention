@@ -1,15 +1,20 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.ComponentAnalysisResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.datetime.daysUntil
+import kotlinx.datetime.minus
 import javax.inject.Inject
 
 @HiltViewModel
 class ComponentAnalysisViewModel @Inject constructor(
-    repository: KJsRepository
+    val repository: KJsRepository
 ) : ViewModel() {
 
     val retiredComponents = repository.observeRetiredComponents
@@ -31,7 +36,30 @@ class ComponentAnalysisViewModel @Inject constructor(
         _listOfComponentUidsForAnalysis.value = tempList
     }
 
-    fun runAnalysis() {
+    private val _componentAnalysisResults: MutableStateFlow<ComponentAnalysisResults?> = MutableStateFlow(null)
+    val componentAnalysisResults: StateFlow<ComponentAnalysisResults?> = _componentAnalysisResults
 
+    fun runAnalysis() {
+        var totalComponents = 0
+        var totalMiles = 0
+        var totalUsageDays = 0
+        viewModelScope.launch {
+            listOfComponentUidsForAnalysis.value.forEach { componentUid ->
+                totalComponents++
+                val component = repository.getComponentByUid(componentUid)
+                if (component != null) {
+                    totalMiles += component.currentMileage ?: 0
+                    if (component.retirementDate != null && component.firstUseDate != null) {
+                        val lifetimeInDays = component.firstUseDate.daysUntil(component.retirementDate)
+                        totalUsageDays += lifetimeInDays
+                    }
+                }
+            }
+            val result = ComponentAnalysisResults(
+                totalUsageMiles = totalMiles,
+                totalUsageDays = totalUsageDays,
+            )
+            _componentAnalysisResults.value = result
+        }
     }
 }

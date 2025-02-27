@@ -158,4 +158,9 @@
     <string name="wear_level_new">Nouveau</string>
     <string name="select_a_wear_level">Selectionner un niveu d\'utilisation</string>
     <string name="there_are_no_retired_components_to_analyse">Il n\'y a pas encore de composants a analyser</string>
+    <string name="edit_a_component">Modifier composant</string>
+    <string name="lbl_component_name">Nom du composant</string>
+    <string name="save_the_component">Enregistrer le composant</string>
+    <string name="delete_a_component">Supprimer un composant</string>
+    <string name="delete_the_component">Supprimer le composant</string>
 </resources>

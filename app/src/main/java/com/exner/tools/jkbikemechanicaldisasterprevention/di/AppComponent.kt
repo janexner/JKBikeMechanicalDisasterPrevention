@@ -34,6 +34,7 @@ object AppComponent {
         name = "kjs_database"
     )
         .addMigrations(MIGRATION_1_2)
+        .addMigrations(MIGRATION_2_3)
         .fallbackToDestructiveMigration()
         .addCallback(KJsDatabaseCallback(provider))
         .build()
@@ -71,5 +72,17 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         // and the view!
         db.execSQL("DROP VIEW IF EXISTS `ActivityWithBikeData`")
         db.execSQL("CREATE VIEW `ActivityWithBikeData` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC")
+    }
+}
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        // tables
+        db.execSQL("CREATE TABLE IF NOT EXISTS `Component` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `acquisition_date` TEXT, `first_use_date` TEXT, `last_check_date` TEXT, `last_check_mileage` INTEGER, `current_mileage` INTEGER, `bike_uid` INTEGER, `title_for_automatic_activities` TEXT, `wear_level` TEXT, `retirement_date` TEXT, `check_interval_miles` INTEGER, `check_interval_days` INTEGER, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
+        // views
+        db.execSQL("CREATE VIEW `ShelvedComponents` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL AND retirement_date = NULL ORDER BY acquisition_date DESC;")
+        db.execSQL("CREATE VIEW `RetiredComponents` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL AND retirement_date NOT NULL ORDER BY retirement_date DESC;")
+        db.execSQL("DROP VIEW IF EXISTS `ActivityWithBikeData`")
+        db.execSQL("CREATE VIEW `ActivityWithBikeData` AS SELECT b.name as bike_name, b.uid as bike_uid, a.title as activity_title, a.description as activity_description, a.is_completed as activity_is_completed, a.ride_uid as activity_ride_uid, a.created_instant as activity_created_instant, a.due_date as activity_due_date, a.done_instant as activity_done_instant, a.is_ebike_specific as activity_is_ebike_specific, a.ride_level as activity_ride_level, a.component_uid as activity_component_uid, a.uid as activity_uid FROM Activity a LEFT JOIN Bike b ON b.uid = a.bike_uid ORDER BY a.due_date DESC;")
     }
 }

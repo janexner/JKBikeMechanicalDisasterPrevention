@@ -160,4 +160,9 @@
     <string name="select_components_for_analysis">Komponenten auswählen</string>
     <string name="analyze">Analysieren</string>
     <string name="there_are_no_retired_components_to_analyse">Keine alten Komponenten zu analysieren</string>
+    <string name="edit_a_component">Komponente bearbeiten</string>
+    <string name="lbl_component_name">Beschreibung</string>
+    <string name="save_the_component">Komponente speichern</string>
+    <string name="delete_a_component">Komponente löschen</string>
+    <string name="delete_the_component">Komponente löschen</string>
 </resources>

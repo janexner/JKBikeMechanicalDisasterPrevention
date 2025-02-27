@@ -171,4 +171,14 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     suspend fun deleteAllComponents() {
         kjsDAO.deleteAllComponents()
     }
+
+    @WorkerThread
+    suspend fun updateComponent(component: Component) {
+        kjsDAO.updateComponent(component)
+    }
+
+    @WorkerThread
+    suspend fun deleteComponent(component: Component) {
+        kjsDAO.deleteComponent(component)
+    }
 }

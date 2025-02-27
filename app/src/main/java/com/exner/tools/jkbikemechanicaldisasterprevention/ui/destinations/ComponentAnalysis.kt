@@ -49,6 +49,10 @@ fun ComponentAnalysis(
             emptyList()
         )
 
+        val analysisResults by componentAnalysisViewModel.componentAnalysisResults.collectAsState(
+            null
+        )
+
         Column(
             modifier = Modifier
                 .padding(8.dp)
@@ -88,6 +92,15 @@ fun ComponentAnalysis(
                     componentAnalysisViewModel.runAnalysis()
                 }) {
                     Text(text = stringResource(R.string.analyze))
+                }
+                DefaultSpacer()
+                if (analysisResults != null) {
+                    Text(text = "Results:")
+                    DefaultSpacer()
+                    Text(text = "Total mileage ${analysisResults!!.totalUsageMiles}")
+                    DefaultSpacer()
+                    Text(text = "Total days in use ${analysisResults!!.totalUsageDays}")
+                    DefaultSpacer()
                 }
             } else { // there are no retired components to analyse
                 Text(text = stringResource(R.string.there_are_no_retired_components_to_analyse))

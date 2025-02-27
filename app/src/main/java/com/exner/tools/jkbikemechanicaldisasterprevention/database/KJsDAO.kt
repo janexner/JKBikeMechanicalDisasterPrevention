@@ -146,4 +146,10 @@ interface KJsDAO {
 
     @Query("DELETE FROM component")
     suspend fun deleteAllComponents()
+
+    @Update
+    suspend fun updateComponent(component: Component)
+
+    @Delete
+    suspend fun deleteComponent(component: Component)
 }
