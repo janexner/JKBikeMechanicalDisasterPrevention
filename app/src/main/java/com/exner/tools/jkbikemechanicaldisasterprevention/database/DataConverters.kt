@@ -45,6 +45,6 @@ object DataConverter {
 
     @TypeConverter
     fun wearLevelToString(wearLevel: WearLevel?): String? {
-        return wearLevel?.toString()
+        return wearLevel?.toString() // good for the database, do not localise!
     }
 }

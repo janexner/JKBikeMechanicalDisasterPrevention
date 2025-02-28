@@ -20,12 +20,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.toLocalisedString
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations.pxToDp
 
 @Composable
@@ -40,6 +42,7 @@ fun WearLevelSelector(
     var wearLevelsExpanded by remember {
         mutableStateOf(false)
     }
+    val context = LocalContext.current
     Box(
         modifier = modifier
             .padding(8.dp, 0.dp)
@@ -60,7 +63,7 @@ fun WearLevelSelector(
                 onClick = { wearLevelsExpanded = true }
             ) {
                 if (currentWearLevel != null) {
-                    Text(text = currentWearLevel.toString())
+                    Text(text = toLocalisedString(currentWearLevel, context))
                 } else {
                     Text(text = stringResource(R.string.select_a_wear_level))
                 }
