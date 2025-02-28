@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "b8f9bc05f2d4c7248db3b1fff35c451d",
+    "identityHash": "cc18c8db6a3c2f8a080cfdfcec69a2e1",
     "entities": [
       {
         "tableName": "Activity",
@@ -415,6 +415,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "AutomaticActivitiesGenerationLog",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`created_instant` INTEGER NOT NULL, `created_component_uid` INTEGER NOT NULL, `activity_uid` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "createdInstant",
+            "columnName": "created_instant",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdComponentUid",
+            "columnName": "created_component_uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activityUid",
+            "columnName": "activity_uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [
@@ -428,12 +466,12 @@
       },
       {
         "viewName": "RetiredComponents",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE bike_uid = NULL AND retirement_date NOT NULL ORDER BY retirement_date DESC;"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days,  uid FROM Component WHERE retirement_date IS NOT NULL ORDER BY retirement_date DESC;"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8f9bc05f2d4c7248db3b1fff35c451d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc18c8db6a3c2f8a080cfdfcec69a2e1')"
     ]
   }
 }

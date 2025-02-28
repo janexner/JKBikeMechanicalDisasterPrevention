@@ -6,10 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ManageComponentsViewModel @Inject constructor(
-    repository: KJsRepository
+class AutomaticActivitiesGenerationLogListViewModel @Inject constructor(
+    val repository: KJsRepository
 ) : ViewModel() {
 
-    val components = repository.observeNonRetiredComponents
-
+    val logEntries = repository.observeAutomaticActivitiesGenerationLog
 }

@@ -183,4 +183,9 @@
     <string name="delete_a_component">Delete component</string>
     <string name="we_can_not_find_this_component">We can not find this component</string>
     <string name="delete_the_component">Delete component</string>
+    <string name="menu_item_log_list">View log</string>
+    <string name="manage_log_entries">Log entries</string>
+    <string name="no_log_entries_so_far">No log entries so far.</string>
+    <string name="lbl_add_bike">Add bike</string>
+    <string name="lbl_add_component">Add component</string>
 </resources>

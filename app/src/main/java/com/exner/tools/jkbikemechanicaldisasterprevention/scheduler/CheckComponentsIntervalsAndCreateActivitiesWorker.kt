@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.AutomaticActivitiesGenerationLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,6 +76,14 @@ class CheckComponentsIntervalsAndCreateActivitiesWorker(
                             )
                             Log.d(TAG, "Creating activity $activity for component $component...")
                             repository.insertActivity(activity)
+
+                            Log.d(TAG, "Log creation of activity...")
+                            val logEntry = AutomaticActivitiesGenerationLog(
+                                Clock.System.now(),
+                                component.uid,
+                                activity.uid
+                            )
+                            repository.insertAutomaticActivitiesCreationLog(logEntry)
                         }
                     }
                 }

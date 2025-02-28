@@ -164,4 +164,9 @@
     <string name="delete_a_component">Komponente löschen</string>
     <string name="we_can_not_find_this_component">Komponente nicht gefunden</string>
     <string name="delete_the_component">Komponente löschen</string>
+    <string name="menu_item_log_list">Log ansehen</string>
+    <string name="manage_log_entries">Logdaten</string>
+    <string name="no_log_entries_so_far">Keine Logdaten gefunden</string>
+    <string name="lbl_add_bike">Neues Fahrrad</string>
+    <string name="lbl_add_component">Neue Komponente</string>
 </resources>

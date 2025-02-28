@@ -33,6 +33,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.NavigationS
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
+import com.ramcosta.composedestinations.generated.destinations.AutomaticActivitiesGenerationLogListDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ComponentAnalysisDestination
@@ -58,7 +59,8 @@ fun KJsGlobalScaffold(
     val destinationsNavigator = navController.rememberDestinationsNavigator()
     val destination = navController.currentDestinationAsState().value
 
-    val navigationStyle = NavigationStyle.getNavigationStyleForWidthSizeClass(windowSizeClass.widthSizeClass)
+    val navigationStyle =
+        NavigationStyle.getNavigationStyleForWidthSizeClass(windowSizeClass.widthSizeClass)
 
     Scaffold(
         topBar = {
@@ -260,6 +262,20 @@ private fun MainMenuAction(
             onClick = {
                 displayMainMenu = false
                 destinationsNavigator.navigate(ExportDataDestination)
+            }
+        )
+        HorizontalDivider()
+        DropdownMenuItem(
+            enabled = destination != AutomaticActivitiesGenerationLogListDestination,
+            text = {
+                Text(
+                    text = stringResource(R.string.menu_item_log_list),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            onClick = {
+                displayMainMenu = false
+                destinationsNavigator.navigate(AutomaticActivitiesGenerationLogListDestination)
             }
         )
         HorizontalDivider()

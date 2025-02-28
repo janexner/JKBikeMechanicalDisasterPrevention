@@ -7,7 +7,7 @@
     <string name="not">nicht</string>
     <string name="completed">erledigt</string>
     <string name="add_activity">Neue Aktivität</string>
-    <string name="all_bikes">Alle Velos</string>
+    <string name="all_bikes">Alle Vélos</string>
     <string name="back">Zurück</string>
     <string name="bike">Velo</string>
     <string name="cancel">Abbrechen</string>
@@ -34,7 +34,7 @@
     <string name="lbl_theme">Theme</string>
     <string name="menu">Menü</string>
     <string name="menu_item_about">Über J-K Bike - Mechanical Disaster Prevention</string>
-    <string name="menu_item_add_bike">Neues Velo</string>
+    <string name="menu_item_add_bike">Neues Vélo</string>
     <string name="menu_item_manage_bikes_components">Vélos bearbeiten</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="no_activity_title">Kein Titel</string>
@@ -166,4 +166,9 @@
     <string name="delete_a_component">Komponente löschen</string>
     <string name="we_can_not_find_this_component">Komponente nicht gefunden</string>
     <string name="delete_the_component">Komponente löschen</string>
+    <string name="menu_item_log_list">Log ansehen</string>
+    <string name="manage_log_entries">Logdaten</string>
+    <string name="no_log_entries_so_far">Keine Logdaten gefunden</string>
+    <string name="lbl_add_bike">Neues Vélo</string>
+    <string name="lbl_add_component">Neue Komponente</string>
 </resources>

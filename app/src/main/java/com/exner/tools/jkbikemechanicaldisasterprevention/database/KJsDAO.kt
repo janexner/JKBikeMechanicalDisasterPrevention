@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.AutomaticActivitiesGenerationLog
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
@@ -38,8 +39,14 @@ interface KJsDAO {
     @Query("SELECT * FROM component ORDER BY name")
     fun observeComponentsOrderedByName(): Flow<List<Component>>
 
+    @Query("SELECT * FROM component WHERE retirement_date IS NULL ORDER BY name")
+    fun observeNonRetiredComponentsOrderedByName(): Flow<List<Component>>
+
     @Query("SELECT * FROM retiredcomponents ORDER BY retirement_date DESC")
     fun observeRetiredComponents(): Flow<List<RetiredComponents>>
+
+    @Query("SELECT * FROM automaticactivitiesgenerationlog ORDER BY created_instant DESC")
+    fun observeAutomaticActivitiesGenerationLog(): Flow<List<AutomaticActivitiesGenerationLog>>
 
     //
     // GETTERS = return all lines
@@ -152,4 +159,10 @@ interface KJsDAO {
 
     @Delete
     suspend fun deleteComponent(component: Component)
+
+    //
+
+    @Insert
+    suspend fun insertAAGLogEntry(logEntry: AutomaticActivitiesGenerationLog)
+
 }
