@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.daysUntil
-import kotlinx.datetime.minus
 import javax.inject.Inject
 
 @HiltViewModel

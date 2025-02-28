@@ -145,7 +145,7 @@
     <string name="lbl_current_mileage">Current mileage</string>
     <string name="lbl_title_for_automatic_activities">Title for activities that are auto-created for this component</string>
     <string name="lbl_retirement_date">Date when component was retired</string>
-    <string name="which_wear_level">How does it look like?</string>
+    <string name="which_wear_level">How does it look?</string>
     <string name="select_a_wear_level">Select an option</string>
     <string name="unspecified_wear_level">unspecified</string>
     <string name="wear_level_new">New</string>
