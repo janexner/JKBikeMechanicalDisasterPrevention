@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsRespo
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
 import com.ramcosta.composedestinations.generated.destinations.BikeEditDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -132,6 +134,16 @@ fun ManageBikes(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
                     )
+                }
+                Button(onClick = {
+                    destinationsNavigator.navigate(BikeAddDestination)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.lbl_add_bike)
+                    )
+                    IconSpacer()
+                    Text(text = stringResource(R.string.lbl_add_bike))
                 }
             }
         }

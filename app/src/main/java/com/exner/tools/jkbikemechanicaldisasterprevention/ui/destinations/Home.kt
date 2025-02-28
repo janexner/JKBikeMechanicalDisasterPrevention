@@ -22,6 +22,9 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,6 +34,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.HomeViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ComponentWearLevelDialog
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
@@ -60,6 +64,8 @@ fun Home(
             .observeActivityWithBikeData.collectAsState(
                 initial = emptyList()
             )
+        var showDialog by remember { mutableStateOf(false) }
+
         Column(
             modifier = Modifier
                 .padding(PaddingValues(8.dp))
@@ -107,7 +113,6 @@ fun Home(
                         activity = activityByBike,
                         destinationsNavigator = destinationsNavigator,
                         onCheckboxCallback = { result ->
-                            // TODO ask for state of component
                             homeViewModel.updateActivity(
                                 activity = activity.copy(
                                     isCompleted = result,
@@ -118,8 +123,29 @@ fun Home(
                                     }
                                 )
                             )
+                            // popup in case this has a component attached
+                            if (activityByBike.activityComponentUid != null) {
+                                showDialog = true
+                            }
                         },
                     )
+                    if (showDialog) {
+                        ComponentWearLevelDialog(
+                            onDismissRequest = {
+                                showDialog = false
+                            },
+                            onConfirmation = { wearLevel ->
+                                showDialog = false
+                                // write stuff
+                                if (activityByBike.activityComponentUid != null) {
+                                    homeViewModel.logComponentWearLevel(
+                                        componentUid = activityByBike.activityComponentUid,
+                                        wearLevel = wearLevel
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
             }
 

@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDate
 @DatabaseView(
     "SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days, " +
             " uid " +
-            "FROM Component WHERE bike_uid = NULL AND retirement_date NOT NULL ORDER BY retirement_date DESC;"
+            "FROM Component WHERE retirement_date IS NOT NULL ORDER BY retirement_date DESC;"
 )
 data class RetiredComponents(
     @ColumnInfo(name = "name") val name: String,

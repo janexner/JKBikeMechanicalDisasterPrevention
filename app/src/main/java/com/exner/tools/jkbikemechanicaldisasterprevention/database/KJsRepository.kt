@@ -2,6 +2,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
 import androidx.annotation.WorkerThread
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.AutomaticActivitiesGenerationLog
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Ride
@@ -30,7 +31,11 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
 
     val observeComponents: Flow<List<Component>> = kjsDAO.observeComponentsOrderedByName()
 
+    val observeNonRetiredComponents: Flow<List<Component>> = kjsDAO.observeNonRetiredComponentsOrderedByName()
+
     val observeRetiredComponents: Flow<List<RetiredComponents>> = kjsDAO.observeRetiredComponents()
+
+    val observeAutomaticActivitiesGenerationLog: Flow<List<AutomaticActivitiesGenerationLog>> = kjsDAO.observeAutomaticActivitiesGenerationLog()
 
     @WorkerThread
     suspend fun getActivityByUid(activityUid: Long): Activity? {
@@ -180,5 +185,10 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
     @WorkerThread
     suspend fun deleteComponent(component: Component) {
         kjsDAO.deleteComponent(component)
+    }
+
+    @WorkerThread
+    suspend fun insertAutomaticActivitiesCreationLog(logEntry: AutomaticActivitiesGenerationLog) {
+        kjsDAO.insertAAGLogEntry(logEntry)
     }
 }

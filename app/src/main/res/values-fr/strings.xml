@@ -164,4 +164,9 @@
     <string name="delete_a_component">Supprimer un composant</string>
     <string name="we_can_not_find_this_component">Nous ne trouvont pas ce composant</string>
     <string name="delete_the_component">Supprimer le composant</string>
+    <string name="menu_item_log_list">Regarder le log</string>
+    <string name="manage_log_entries">Entrée log</string>
+    <string name="no_log_entries_so_far">Aucune entrée log</string>
+    <string name="lbl_add_bike">Ajouter un vélo</string>
+    <string name="lbl_add_component">Ajouter un composant</string>
 </resources>
