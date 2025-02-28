@@ -1,6 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
             flexTimeInterval = 13,
             flexTimeIntervalUnit = TimeUnit.HOURS
         ).setConstraints(constraints).build()
+    // see what's cooking
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +59,10 @@ class MainActivity : ComponentActivity() {
             request = schedulerWorkRequest,
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
         )
+        workManager.getWorkInfosForUniqueWorkLiveData("CheckComponentsIntervalsAndCreateActivities")
+            .observe(this) { workInfo ->
+                Log.d("MainActivity", "WorkInfo: ${workInfo.toString()}")
+            }
 
         enableEdgeToEdge()
         setContent {

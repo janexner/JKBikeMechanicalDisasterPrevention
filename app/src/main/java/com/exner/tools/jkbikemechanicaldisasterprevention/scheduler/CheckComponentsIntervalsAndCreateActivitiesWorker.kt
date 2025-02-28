@@ -23,6 +23,7 @@ class CheckComponentsIntervalsAndCreateActivitiesWorker(
     workerParams: WorkerParameters,
     val repository: KJsRepository
 ) : Worker(appContext, workerParams) {
+
     override fun doWork(): Result {
         Log.d(TAG, "Starting periodic check...")
 

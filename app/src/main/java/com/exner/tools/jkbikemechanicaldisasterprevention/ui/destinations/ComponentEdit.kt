@@ -34,6 +34,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentEditViewMo
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
@@ -115,6 +116,7 @@ fun ComponentEdit(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .weight(0.7f)
             ) {
                 DefaultTextFieldWithSpacer(
                     value = component?.name ?: stringResource(R.string.placehldr_name),
@@ -242,7 +244,7 @@ fun ComponentEdit(
                     }
                 )
             }
-            Spacer(modifier = Modifier.weight(0.7f))
+            DefaultSpacer()
             Row(
                 modifier = Modifier.fillMaxWidth(),
             ) {
