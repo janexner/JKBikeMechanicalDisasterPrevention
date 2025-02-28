@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -23,8 +24,10 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
@@ -78,7 +81,7 @@ fun ManageComponents(
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(8.dp),
-                        text = stringResource(R.string.hdr_bikes),
+                        text = stringResource(R.string.hdr_components),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -103,11 +106,14 @@ fun ManageComponents(
                             IconSpacer()
                             Text(
                                 text = component.name,
-                                modifier = Modifier.weight(1f)
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                             DefaultSpacer()
                             Text(
                                 text = component.description,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         }
                     }

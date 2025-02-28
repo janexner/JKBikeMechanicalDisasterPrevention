@@ -3,7 +3,6 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -45,6 +44,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
+import com.ramcosta.composedestinations.generated.destinations.ManageComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -95,6 +95,7 @@ fun ComponentAdd(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .weight(0.7f)
             ) {
                 DefaultTextFieldWithSpacer(
                     value = name,
@@ -209,7 +210,7 @@ fun ComponentAdd(
                     }
                 )
             }
-            Spacer(modifier = Modifier.weight(0.7f))
+            DefaultSpacer()
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -228,18 +229,30 @@ fun ComponentAdd(
                         val component = Component(
                             name = name,
                             description = description,
-                            acquisitionDate = Instant.fromEpochMilliseconds(acquisitionDate!!)
-                                .toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).date,
-                            firstUseDate = Instant.fromEpochMilliseconds(firstUseDate!!)
-                                .toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).date,
-                            lastCheckDate = Instant.fromEpochMilliseconds(lastCheckDate!!)
-                                .toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).date,
+                            acquisitionDate = if (acquisitionDate != null) {
+                                Instant.fromEpochMilliseconds(acquisitionDate!!)
+                                    .toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).date
+                            } else {
+                                null
+                            },
+                            firstUseDate = if (firstUseDate != null) {
+                                Instant.fromEpochMilliseconds(firstUseDate!!)
+                                    .toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).date
+                            } else {
+                                null
+                            },
+                            lastCheckDate = if (lastCheckDate != null) {
+                                Instant.fromEpochMilliseconds(lastCheckDate!!)
+                                    .toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).date
+                            } else {
+                                null
+                            },
                             bikeUid = bike?.uid,
                             checkIntervalMiles = checkIntervalMiles,
                             checkIntervalDays = checkIntervalDays,
@@ -247,10 +260,14 @@ fun ComponentAdd(
                             currentMileage = currentMileage,
                             titleForAutomaticActivities = titleForAutomaticActivities,
                             wearLevel = wearLevel,
-                            retirementDate = Instant.fromEpochMilliseconds(retirementDate!!)
-                                .toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).date,
+                            retirementDate = if (retirementDate != null) {
+                                Instant.fromEpochMilliseconds(retirementDate!!)
+                                    .toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).date
+                            } else {
+                                null
+                            },
                             uid = 0L
                         )
                         componentAddViewModel.saveNewComponent(
@@ -259,7 +276,7 @@ fun ComponentAdd(
                         modified = false
                         created = true
                         destinationsNavigator.popBackStack(
-                            ManageBikesDestination, inclusive = false
+                            ManageComponentsDestination, inclusive = false
                         )
                     },
                     enabled = name.isNotBlank() && acquisitionDate != null,
