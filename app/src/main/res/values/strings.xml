@@ -15,6 +15,7 @@
     <string name="import_data">Import data</string>
     <string name="lbl_add_bike">Add bike</string>
     <string name="lbl_add_component">Add component</string>
+    <string name="analyze">Analyze</string>
 
     // dropdown menu items
     <string name="all_bikes">All bikes</string>
@@ -110,6 +111,10 @@
     <string name="hdr_holidays">Holidays</string>
     <string name="hdr_activities">Activities</string>
     <string name="hdr_template_activities">Template activities</string>
+    <string name="select_components_for_analysis">Select components, then press \"Analyze\"</string>
+    <string name="there_are_no_retired_components_to_analyse">There are no retired components to analyse</string>
+    <string name="we_can_not_find_this_component">We can not find this component</string>
+    <string name="no_log_entries_so_far">No log entries so far.</string>
 
     // about screen
     <string name="about1">J-K Bike - Mechanical Disaster Prevention is a free, open source app that helps build positive bike maintenance behaviours, for rides quick, big or epic.</string>
@@ -177,15 +182,10 @@
     <string name="manage_components">Manage components</string>
     <string name="tap_component_to_edit">Tap component to edit</string>
     <string name="analyse_components">Analyse components</string>
-    <string name="select_components_for_analysis">Select components, then press \"Analyze\"</string>
-    <string name="analyze">Analyze</string>
-    <string name="there_are_no_retired_components_to_analyse">There are no retired components to analyse</string>
     <string name="edit_a_component">Edit component</string>
     <string name="lbl_component_name">Component name</string>
     <string name="save_the_component">Save component</string>
     <string name="delete_a_component">Delete component</string>
-    <string name="we_can_not_find_this_component">We can not find this component</string>
     <string name="delete_the_component">Delete component</string>
     <string name="manage_log_entries">Log entries</string>
-    <string name="no_log_entries_so_far">No log entries so far.</string>
 </resources>
