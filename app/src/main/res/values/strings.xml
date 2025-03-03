@@ -13,6 +13,8 @@
     <string name="clear_and_start_anew">Clear and start anew</string>
     <string name="export_data">Export data</string>
     <string name="import_data">Import data</string>
+    <string name="lbl_add_bike">Add bike</string>
+    <string name="lbl_add_component">Add component</string>
 
     // dropdown menu items
     <string name="all_bikes">All bikes</string>
@@ -23,6 +25,10 @@
     <string name="menu_item_add_bike">Add Bike</string>
     <string name="menu_item_manage_bikes_components">Manage Bikes</string>
     <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_manage_components">Manage Components</string>
+    <string name="menu_item_analyse_components">Analyse components</string>
+    <string name="menu_item_log_list">View log</string>
+    <string name="menu_item_add_component">Add Component</string>
 
     // labels for form fields
     <string name="lbl_activity_title">Activity title</string>
@@ -40,6 +46,15 @@
     <string name="lbl_mileage">Mileage</string>
     <string name="lbl_name">Name</string>
     <string name="lbl_theme">Theme</string>
+    <string name="lbl_last_checked_mileage">Mileage at last check</string>
+    <string name="lbl_current_mileage">Current mileage</string>
+    <string name="lbl_title_for_automatic_activities">Title for activities that are auto-created for this component</string>
+    <string name="lbl_retirement_date">Date when component was retired</string>
+    <string name="lbl_acquisition_date">Acquired on</string>
+    <string name="lbl_first_use_date">First used on</string>
+    <string name="lbl_last_checked_date">Last check was on</string>
+    <string name="lbl_check_interval_miles">Check every x km/miles</string>
+    <string name="lbl_check_interval_days">Check every x days</string>
 
     // placeholders for form fields
     <string name="placehldr_description">Description</string>
@@ -145,34 +160,22 @@
     <string name="overwrite_data">Overwrite data</string>
     <string name="delete_a_bike">Delete bike</string>
     <string name="get_template_activities_in">Get template activities in:</string>
-    <string name="menu_item_add_component">Add Component</string>
     <string name="a_new_component_brilliant">New Tech, cool!</string>
-    <string name="lbl_acquisition_date">Acquired on</string>
-    <string name="lbl_first_use_date">First used on</string>
-    <string name="lbl_last_checked_date">Last check was on</string>
-    <string name="lbl_check_interval_miles">Check every x km/miles</string>
-    <string name="lbl_check_interval_days">Check every x days</string>
     <string name="hdr_components">Components</string>
     <string name="components">components</string>
     <string name="import_these_components">Import these components</string>
     <string name="overwrite_components">Overwrite components?</string>
     <string name="check_component">Check component</string>
     <string name="check_brake_pads_for_signs_of_wear">Check brake pads for signs of wear</string>
-    <string name="lbl_last_checked_mileage">Mileage at last check</string>
-    <string name="lbl_current_mileage">Current mileage</string>
-    <string name="lbl_title_for_automatic_activities">Title for activities that are auto-created for this component</string>
-    <string name="lbl_retirement_date">Date when component was retired</string>
     <string name="which_wear_level">How does it look?</string>
     <string name="select_a_wear_level">Select an option</string>
     <string name="unspecified_wear_level">unspecified</string>
     <string name="wear_level_new">New</string>
     <string name="wear_level_used">Used</string>
     <string name="wear_level_due_for_replacement">Due for replacement</string>
-    <string name="menu_item_manage_components">Manage Components</string>
     <string name="component">Component</string>
     <string name="manage_components">Manage components</string>
     <string name="tap_component_to_edit">Tap component to edit</string>
-    <string name="menu_item_analyse_components">Analyse components</string>
     <string name="analyse_components">Analyse components</string>
     <string name="select_components_for_analysis">Select components, then press \"Analyze\"</string>
     <string name="analyze">Analyze</string>
@@ -183,9 +186,6 @@
     <string name="delete_a_component">Delete component</string>
     <string name="we_can_not_find_this_component">We can not find this component</string>
     <string name="delete_the_component">Delete component</string>
-    <string name="menu_item_log_list">View log</string>
     <string name="manage_log_entries">Log entries</string>
     <string name="no_log_entries_so_far">No log entries so far.</string>
-    <string name="lbl_add_bike">Add bike</string>
-    <string name="lbl_add_component">Add component</string>
 </resources>
