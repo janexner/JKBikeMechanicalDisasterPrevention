@@ -3,9 +3,7 @@
     <string name="a_new_bike_brilliant">Ein neues Rad! Super!</string>
     <string name="activities_for_a_quick_ride">Aktivitäten vor einer kurzen Tour:</string>
     <string name="activities_that_are_due_anyway">Anstehende Aktivitäten:</string>
-    <string name="activity_is">Aktivität</string>
     <string name="not">nicht</string>
-    <string name="completed">erledigt</string>
     <string name="add_activity">Neue Aktivität</string>
     <string name="all_bikes">Alle Fahrräder</string>
     <string name="back">Zurück</string>
@@ -56,6 +54,7 @@
     <string name="tab_home">Home</string>
     <string name="tab_quick_ride">kurze Tour</string>
     <string name="title">Titel</string>
+    <string name="activity_is_not_completed">Aktivität nicht erledigt</string>
     <string name="we_can_not_find_this_activity">Aktivität nicht gefunden</string>
     <string name="we_can_not_find_this_bike">Fahrrad nicht gefunden</string>
     <string name="which_bike">Welches Fahrrad</string>
@@ -126,4 +125,5 @@
     <string name="about4">„Woher kommt diese Vibration?“, „Warum knarrt das Hinterrad?“, „Was ist das für ein schreckliches Klopfen?“ sind so oft das Ergebnis von relativ einfachen Dingen, die übersehen oder vergessen werden. Zu den häufigsten Problemen in letzter Zeit zählen lockere Bremsscheibenschrauben, nicht richtig befestigte Hinterrad-Steckachsen und falsch gespannte Steuersätze.</string>
     <string name="about5">Um mechanische Katastrophen auf Ihren Fahrten zu verhindern, verwenden Sie diese App, um bessere, neue Gewohnheiten zu entwickeln und sicherzustellen, dass Ihre Fahrten (mechanisch) hervorragend sind.</string>
     <string name="get_template_activities_in">Vorlagen übersetzen:</string>
+    <string name="activity_is_completed">Aktivität erledigt</string>
 </resources>

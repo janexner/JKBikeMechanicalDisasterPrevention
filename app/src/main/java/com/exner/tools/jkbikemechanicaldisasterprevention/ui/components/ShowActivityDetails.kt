@@ -23,11 +23,11 @@ fun ShowActivityDetails(activity: Activity?) {
     Text(text = activity?.description ?: stringResource(R.string.placehldr_no_description))
     DefaultSpacer()
     Text(
-        text = stringResource(R.string.activity_is) + if (activity?.isCompleted == true) {
-            ""
+        text = if (activity?.isCompleted == true) {
+            stringResource(R.string.activity_is_completed)
         } else {
-            stringResource(R.string.not)
-        } + stringResource(R.string.completed)
+            stringResource(R.string.activity_is_not_completed)
+        }
     )
     DefaultSpacer()
     val createdLocalDateTime =

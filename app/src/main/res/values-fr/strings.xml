@@ -4,9 +4,7 @@
     <string name="a_new_bike_brilliant">Un nouveau vélo ! Génial !</string>
     <string name="activities_for_a_quick_ride">Activités pour une sortie rapide :</string>
     <string name="activities_that_are_due_anyway">Activités qui sont dues de toute façon :</string>
-    <string name="activity_is">"L'activité est "</string>
     <string name="not">"non "</string>
-    <string name="completed">terminée.</string>
     <string name="add_activity">Ajouter une activité</string>
     <string name="back">Retour</string>
     <string name="bike">Vélo</string>
@@ -56,6 +54,7 @@
     <string name="tab_home">accueil</string>
     <string name="tab_quick_ride">sortie rapide</string>
     <string name="title">Titre</string>
+    <string name="activity_is_not_completed">Activité non terminée</string>
     <string name="we_can_not_find_this_activity">Nous ne trouvons pas cette activité.</string>
     <string name="we_can_not_find_this_bike">Nous n\'avons pas trouvé ce vélo.</string>
     <string name="which_bike">Quel vélo</string>
@@ -126,4 +125,5 @@
     <string name="about4">« D\'où viennent ces vibrations ? », « Pourquoi l\'arrière grince-t-il ? », « Qu\'est-ce que c\'est que ce terrible cognement ? » sont souvent le résultat d\'un problème relativement simple qui a été négligé ou oublié. Les questions les plus fréquemment posées ces derniers temps sont les boulons de rotor de disque qui se desserrent, les axes traversants arrière mal serrés et les jeux de direction mal tendus.</string>
     <string name="about5">Alors, pour éviter que des catastrophes mécaniques ne se produisent lors de vos balades, utilisez cette application pour créer de meilleures et nouvelles habitudes et garantir que vos balades soient (mécaniquement) glorieuses.</string>
     <string name="get_template_activities_in">Récupérer les activités modèles en :</string>
+    <string name="activity_is_completed">Activité terminée</string>
 </resources>
