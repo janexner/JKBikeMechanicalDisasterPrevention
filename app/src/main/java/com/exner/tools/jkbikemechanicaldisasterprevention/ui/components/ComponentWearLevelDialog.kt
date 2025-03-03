@@ -20,17 +20,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.toLocalisedString
 
 @Composable
 fun ComponentWearLevelDialog(
     onDismissRequest: () -> Unit,
     onConfirmation: (WearLevel) -> Unit,
+    startIndex: Int = 0
 ) {
-    var selectedIndex by remember { mutableIntStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(startIndex) }
     val options = listOf(WearLevel.NEW, WearLevel.USED, WearLevel.DUE_FOR_REPLACEMENT)
+
+    val context = LocalContext.current
 
     Dialog(onDismissRequest = {
         onDismissRequest()
@@ -50,7 +55,10 @@ fun ComponentWearLevelDialog(
                             ),
                             onClick = { selectedIndex = index },
                             selected = index == selectedIndex,
-                            label = { Text(text = label.toString()) }
+                            label = { Text(text = toLocalisedString(
+                                wearLevel = label,
+                                context = context
+                            )) }
                         )
                     }
                 }

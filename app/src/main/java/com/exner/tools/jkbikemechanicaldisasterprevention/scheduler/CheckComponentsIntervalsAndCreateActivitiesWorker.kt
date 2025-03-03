@@ -29,66 +29,7 @@ class CheckComponentsIntervalsAndCreateActivitiesWorker(
         Log.d(TAG, "Starting periodic check...")
 
         // Do the work here
-        CoroutineScope(Dispatchers.IO).launch {
-            val allComponents = repository.getAllComponents()
-            val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-            allComponents.forEach { component ->
-                if (component.bikeUid != null) { // is attached to a bike
-                    if (0 < (component.firstUseDate?.compareTo(today) ?: 0)) {
-                        // first_use_date is in the past! This component is being used!
-                        var isItTime = false
-                        // check mileage
-                        val bike = repository.getBikeByUid(component.bikeUid)
-                        if (bike != null) {
-                            if (component.checkIntervalMiles != null) {
-                                if (bike.mileage > (component.checkIntervalMiles + (component.currentMileage ?: 0))) {
-                                    isItTime = true
-                                }
-                            }
-                        }
-                        // check time
-                        if (component.checkIntervalDays != null && component.lastCheckDate != null) {
-                            if (component.lastCheckDate.plus(
-                                    component.checkIntervalDays,
-                                    DateTimeUnit.DAY
-                                ) < today
-                            ) {
-                                isItTime = true
-                            }
-                        }
-                        // if either of them were due, do it
-                        if (isItTime) {
-                            val title = component.titleForAutomaticActivities
-                                ?: (appContext.getString(R.string.check_component) + " " + component.name)
-                            val activity = Activity(
-                                title = title,
-                                description = component.description,
-                                isCompleted = false,
-                                bikeUid = component.bikeUid,
-                                isEBikeSpecific = bike?.isElectric ?: false,
-                                rideLevel = null,
-                                rideUid = null,
-                                createdInstant = Clock.System.now(),
-                                dueDate = today.plus(3, DateTimeUnit.DAY),
-                                doneInstant = null,
-                                componentUid = component.uid,
-                                uid = 0L,
-                            )
-                            Log.d(TAG, "Creating activity $activity for component $component...")
-                            repository.insertActivity(activity)
-
-                            Log.d(TAG, "Log creation of activity...")
-                            val logEntry = AutomaticActivitiesGenerationLog(
-                                Clock.System.now(),
-                                component.uid,
-                                activity.uid
-                            )
-                            repository.insertAutomaticActivitiesCreationLog(logEntry)
-                        }
-                    }
-                }
-            }
-        }
+        checkAndCreate(appContext, repository)
 
         // Indicate whether the work finished successfully with the Result
         return Result.success()
@@ -104,3 +45,78 @@ class CheckComponentsIntervalsAndCreateActivitiesWorker(
  * - component wear is updated (UI needed!)
  * - is taken off bike and retireDate updated when wear is "dead"
  */
+
+fun checkAndCreate(
+    appContext: Context,
+    repository: KJsRepository
+) {
+    CoroutineScope(Dispatchers.IO).launch {
+        val allComponents = repository.getAllComponents()
+        Log.d(TAG, "Found ${allComponents.size} components.")
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        allComponents.forEach { component ->
+            Log.d(TAG, "Component ${component.name}")
+            if (component.bikeUid != null) { // is attached to a bike
+                Log.d(TAG, "  is attached to bike ${component.bikeUid}")
+                if (0 > (component.firstUseDate?.compareTo(today) ?: 0)) {
+                    Log.d(TAG, "  is being or has been used.")
+                    // first_use_date is in the past! This component is being used!
+                    var isItTime = false
+                    // check mileage
+                    val bike = repository.getBikeByUid(component.bikeUid)
+                    if (bike != null) {
+                        Log.d(TAG, "  bike ${bike.name}")
+                        if (component.checkIntervalMiles != null) {
+                            if (bike.mileage > (component.checkIntervalMiles + (component.currentMileage
+                                    ?: 0))
+                            ) {
+                                Log.d(TAG, "  mileage test positive.")
+                                isItTime = true
+                            }
+                        }
+                    }
+                    // check time
+                    if (component.checkIntervalDays != null && component.lastCheckDate != null) {
+                        if (component.lastCheckDate.plus(
+                                component.checkIntervalDays,
+                                DateTimeUnit.DAY
+                            ) < today
+                        ) {
+                            Log.d(TAG, "  date test positive.")
+                            isItTime = true
+                        }
+                    }
+                    // if either of them were due, do it
+                    if (isItTime) {
+                        val title = component.titleForAutomaticActivities
+                            ?: (appContext.getString(R.string.check_component) + " " + component.name)
+                        val activity = Activity(
+                            title = title,
+                            description = component.description,
+                            isCompleted = false,
+                            bikeUid = component.bikeUid,
+                            isEBikeSpecific = bike?.isElectric ?: false,
+                            rideLevel = null,
+                            rideUid = null,
+                            createdInstant = Clock.System.now(),
+                            dueDate = today.plus(3, DateTimeUnit.DAY),
+                            doneInstant = null,
+                            componentUid = component.uid,
+                            uid = 0L,
+                        )
+                        Log.d(TAG, "Creating activity $activity for component $component...")
+                        repository.insertActivity(activity)
+
+                        Log.d(TAG, "Log creation of activity...")
+                        val logEntry = AutomaticActivitiesGenerationLog(
+                            Clock.System.now(),
+                            component.uid,
+                            activity.uid
+                        )
+                        repository.insertAutomaticActivitiesCreationLog(logEntry)
+                    }
+                }
+            }
+        }
+    }
+}
