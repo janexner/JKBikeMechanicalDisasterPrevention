@@ -27,9 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.BuildConfig
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
@@ -125,7 +127,15 @@ fun Home(
                             )
                             // popup in case this has a component attached
                             if (activityByBike.activityComponentUid != null) {
-                                showDialog = true
+                                // update component
+                                homeViewModel.updateAttachedComponent(
+                                    componentUid = activityByBike.activityComponentUid,
+                                    bikeUid = activityByBike.bikeUid
+                                )
+                                if (result) {
+                                    // show UI for component wearlevel
+                                    showDialog = true
+                                }
                             }
                         },
                     )
@@ -143,13 +153,27 @@ fun Home(
                                         wearLevel = wearLevel
                                     )
                                 }
-                            }
+                            },
                         )
                     }
                 }
             }
 
             Spacer(modifier = Modifier.weight(0.1f))
+
+            if (BuildConfig.DEBUG) {
+                val context = LocalContext.current
+
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(onClick = {
+                        homeViewModel.debugCheckAndCreate(context = context)
+                    }) {
+                        Text(text = "Debug")
+                    }
+                }
+            }
 
             // more static UI
             Row(
@@ -177,4 +201,3 @@ fun Home(
         }
     }
 }
-

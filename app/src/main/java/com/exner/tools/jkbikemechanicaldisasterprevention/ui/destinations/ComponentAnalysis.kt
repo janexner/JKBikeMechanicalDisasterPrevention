@@ -14,6 +14,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -59,7 +60,7 @@ fun ComponentAnalysis(
                 .fillMaxSize()
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.analyse_components))
-            if (listOfComponentUidsForAnalysis.isNotEmpty()) {
+            if (retiredComponents.isNotEmpty()) {
                 Text(text = stringResource(R.string.select_components_for_analysis))
                 DefaultSpacer()
                 LazyColumn(
@@ -69,7 +70,8 @@ fun ComponentAnalysis(
                 ) {
                     items(retiredComponents, key = { it.uid }) { retiredComponent ->
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Checkbox(
                                 checked = listOfComponentUidsForAnalysis.contains(retiredComponent.uid),
