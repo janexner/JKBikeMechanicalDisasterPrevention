@@ -89,12 +89,18 @@
     <string name="title_day_out">Day out</string>
     <string name="title_holidays">Holidays</string>
     <string name="about">About</string>
+    <string name="hdr_bikes">Bikes</string>
+    <string name="hdr_quick_ride">Quick ride</string>
+    <string name="hdr_day_out">Day out</string>
+    <string name="hdr_holidays">Holidays</string>
+    <string name="hdr_activities">Activities</string>
+    <string name="hdr_template_activities">Template activities</string>
 
     // about screen
     <string name="about1">J-K Bike - Mechanical Disaster Prevention is a free, open source app that helps build positive bike maintenance behaviours, for rides quick, big or epic.</string>
     <string name="about2">We have all experienced those rides where something mechanical happens that really was preventable.</string>
     <string name="about3">As the authors, even though we take a certain pride in our own efforts in maintaining smooth running MTBs, and a disdain for our riding buddies who never give a passing thought until something goes \'CRUNCH!\' in a ride-ending manner, there are still innumerate situations where something that should have been checked, or usually never needs checked after proper installation, has not been.</string>
-    <string name="about4">\'Where is that vibration coming from?\', \'why is the rear end creaking?\', \'What is that terrible knocking?\' are so often result of something relatively simple being overlooked or forgotten. Recent favourites have been disc rotor bolts backing out, rear thru axles not done up properly, and headsets improperly tensioned.</string>
+    <string name="about4">\'Where is that vibration coming from?\', \'why is the rear end creaking?\', \'What is that terrible knocking?\' are so often result of something relatively simple being overlooked or forgotten. Recent favourites have been disc rotor bolts backing out, rear through axles not done up properly, and headsets improperly tensioned.</string>
     <string name="about5">So, to prevent mechanical disasters happening on your rides, use this app to build better, new, habits and ensure your rides are (mechanically) glorious.</string>
 
     // untranslatable text
@@ -107,8 +113,6 @@
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="edit_the_activity">Edit the activity</string>
-    <string name="hdr_bikes">Bikes</string>
-    <string name="hdr_quick_ride">Quick ride</string>
     <string name="no_activity_title">No activity title</string>
     <string name="no_due_date">No due date</string>
     <string name="none">None</string>
@@ -131,12 +135,8 @@
     <string name="delete_an_activity">Delete activity</string>
     <string name="activity_details">Activity details</string>
     <string name="edit_an_activity">Edit activity</string>
-    <string name="hdr_day_out">Day out</string>
-    <string name="hdr_holidays">Holidays</string>
     <string name="tap_bike_to_edit">Tap bike to edit</string>
     <string name="template_for_ride_level">Template for ride level</string>
-    <string name="hdr_activities">Activities</string>
-    <string name="hdr_template_activities">Template activities</string>
     <string name="dash_ebike_specific">" - eBike-specific"</string>
     <string name="overwrite_any">Overwrite any?</string>
     <string name="overwrite_bikes">Overwrite bikes?</string>
