@@ -49,7 +49,7 @@ fun AutomaticActivitiesGenerationLogList(
                 .padding(8.dp)
                 .fillMaxSize()
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.manage_log_entries))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_log_entries))
             DefaultSpacer()
             if (logEntries.isEmpty()) {
                 Text(text = stringResource(R.string.no_log_entries_so_far))

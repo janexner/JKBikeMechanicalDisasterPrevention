@@ -57,7 +57,7 @@ fun ComponentDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.delete_a_component))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_a_component))
             if (component != null) {
                 Text(text = "You are about to delete the component ${component!!.name}.")
             } else {
@@ -87,7 +87,7 @@ fun ComponentDelete(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.delete_the_component)
+                        contentDescription = stringResource(R.string.btn_desc_delete_the_component)
                     )
                     Text(text = stringResource(R.string.btn_text_delete))
                 }

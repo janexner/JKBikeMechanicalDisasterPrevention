@@ -88,7 +88,7 @@ fun ActivityAdd(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.add_activity))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_add_activity))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

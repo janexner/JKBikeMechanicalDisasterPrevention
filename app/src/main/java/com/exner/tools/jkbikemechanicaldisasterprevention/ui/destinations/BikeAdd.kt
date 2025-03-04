@@ -73,7 +73,7 @@ fun BikeAdd(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.menu_item_add_bike))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_add_bike))
             Text(text = stringResource(R.string.a_new_bike_brilliant))
             DefaultSpacer()
             Column(
@@ -150,7 +150,7 @@ fun BikeAdd(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.save_the_bike)
+                        contentDescription = stringResource(R.string.btn_desc_save_the_bike)
                     )
                     Text(text = stringResource(R.string.btn_text_save))
                 }

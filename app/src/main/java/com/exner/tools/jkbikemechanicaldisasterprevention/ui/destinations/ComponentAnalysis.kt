@@ -59,7 +59,7 @@ fun ComponentAnalysis(
                 .padding(8.dp)
                 .fillMaxSize()
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.analyse_components))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_analyse_components))
             if (retiredComponents.isNotEmpty()) {
                 Text(text = stringResource(R.string.select_components_for_analysis))
                 DefaultSpacer()
@@ -93,7 +93,7 @@ fun ComponentAnalysis(
                 Button(onClick = {
                     componentAnalysisViewModel.runAnalysis()
                 }) {
-                    Text(text = stringResource(R.string.analyze))
+                    Text(text = stringResource(R.string.btn_text_analyse))
                 }
                 DefaultSpacer()
                 if (analysisResults != null) {

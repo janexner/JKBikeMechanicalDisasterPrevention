@@ -112,7 +112,7 @@ fun ComponentEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.edit_a_component))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_a_component))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

@@ -104,7 +104,7 @@ fun ImportData(
                             Button(onClick = {
                                 launcher.launch()
                             }) {
-                                Text(text = stringResource(R.string.select_file))
+                                Text(text = stringResource(R.string.btn_text_select_file))
                             }
                         }
 
@@ -118,7 +118,7 @@ fun ImportData(
                             Button(onClick = {
                                 launcher.launch()
                             }) {
-                                Text(text = stringResource(R.string.select_different_file))
+                                Text(text = stringResource(R.string.btn_text_select_different_file))
                             }
                         }
 
@@ -128,17 +128,17 @@ fun ImportData(
                             Button(onClick = {
                                 launcher.launch()
                             }) {
-                                Text(text = stringResource(R.string.select_different_file))
+                                Text(text = stringResource(R.string.btn_text_select_different_file))
                             }
                         }
 
                         ImportStateConstants.IMPORT_FINISHED -> {
-                            Text(text = stringResource(R.string.import_data))
+                            Text(text = stringResource(R.string.btn_text_import_data))
                             DefaultSpacer()
                             Button(onClick = {
                                 launcher.launch()
                             }) {
-                                Text(text = stringResource(R.string.select_different_file))
+                                Text(text = stringResource(R.string.btn_text_select_different_file))
                             }
                         }
                     }
@@ -275,7 +275,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewBikes()
                         }) {
-                            Text(stringResource(R.string.import_these_bikes))
+                            Text(stringResource(R.string.btn_text_import_these_bikes))
                         }
                     }
                 }
@@ -309,7 +309,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewActivities()
                         }) {
-                            Text(stringResource(R.string.import_these_activities))
+                            Text(stringResource(R.string.btn_text_import_these_activities))
                         }
                     }
                 }
@@ -343,7 +343,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewTemplateActivities()
                         }) {
-                            Text(stringResource(R.string.import_these_template_activities))
+                            Text(stringResource(R.string.btn_text_import_these_template_activities))
                         }
                     }
                 }
@@ -377,7 +377,7 @@ fun ImportData(
                         Button(onClick = {
                             importDataViewModel.importNewComponents()
                         }) {
-                            Text(stringResource(R.string.import_these_components))
+                            Text(stringResource(R.string.btn_text_import_these_components))
                         }
                     }
                 }
@@ -451,7 +451,7 @@ fun ImportData(
                         // overwrite!
                         importDataViewModel.overwriteData()
                     }) {
-                        Text(stringResource(R.string.overwrite_data))
+                        Text(stringResource(R.string.btn_text_overwrite_data))
                     }
                 }
             }

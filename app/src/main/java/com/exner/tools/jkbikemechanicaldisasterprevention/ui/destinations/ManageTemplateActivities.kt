@@ -67,14 +67,14 @@ fun ManageTemplateActivities(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.lbl_manage_template_activities))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_template_activities))
             RideLevelSelectorForLists(
                 currentRideLevel,
             ) {
                 currentRideLevel = it
             }
             DefaultSpacer()
-            Text(text = stringResource(R.string.get_template_activities_in))
+            Text(text = stringResource(R.string.lbl_get_template_activities_in_language))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -144,10 +144,10 @@ fun ManageTemplateActivities(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.lbl_add_template_activity)
+                        contentDescription = stringResource(R.string.btn_desc_add_template_activity)
                     )
                     IconSpacer()
-                    Text(text = stringResource(R.string.lbl_add_template_activity))
+                    Text(text = stringResource(R.string.btn_text_add_template_activity))
                 }
             }
         }

@@ -92,14 +92,14 @@ fun ActivityEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.edit_an_activity))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_an_activity))
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 DefaultTextFieldWithSpacer(
                     value = activity?.title ?: "",
                     label = stringResource(R.string.lbl_activity_title),
-                    placeholder = stringResource(R.string.title),
+                    placeholder = stringResource(R.string.placehldr_title),
                     onValueChange = {
                         activityEditViewModel.updateTitle(it)
                         modified = true

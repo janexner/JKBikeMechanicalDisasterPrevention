@@ -90,7 +90,7 @@ fun Home(
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(8.dp),
-                        text = stringResource(R.string.todos)
+                        text = stringResource(R.string.hdr_todos)
                     )
                 }
 
@@ -190,10 +190,10 @@ fun Home(
                     ) {
                         Icon(
                             imageVector = Icons.Default.AddTask,
-                            contentDescription = stringResource(R.string.add_activity)
+                            contentDescription = stringResource(R.string.btn_desc_add_activity)
                         )
                         IconSpacer()
-                        Text(text = stringResource(R.string.add_activity))
+                        Text(text = stringResource(R.string.btn_text_add_activity))
                     }
                 }
             }

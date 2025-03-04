@@ -62,7 +62,7 @@ fun ActivityDetails(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.activity_details))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_activity_details))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
@@ -82,7 +82,7 @@ fun ActivityDetails(
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back)
+                        contentDescription = stringResource(R.string.btn_desc_back)
                     )
                 }
                 IconSpacer()
@@ -102,9 +102,9 @@ fun ActivityDetails(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.edit_the_activity)
+                        contentDescription = stringResource(R.string.btn_desc_edit_the_activity)
                     )
-                    Text(text = stringResource(R.string.edit))
+                    Text(text = stringResource(R.string.btn_text_edit))
                 }
             }
         }

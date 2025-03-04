@@ -65,7 +65,7 @@ fun ManageBikes(
                 .padding(8.dp)
                 .fillMaxSize()
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.manage_bikes_components))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_bikes))
             Text(text = stringResource(R.string.tap_bike_to_edit))
             DefaultSpacer()
             LazyColumn(
@@ -140,10 +140,10 @@ fun ManageBikes(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.lbl_add_bike)
+                        contentDescription = stringResource(R.string.btn_desc_add_bike)
                     )
                     IconSpacer()
-                    Text(text = stringResource(R.string.lbl_add_bike))
+                    Text(text = stringResource(R.string.btn_text_add_bike))
                 }
             }
         }

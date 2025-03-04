@@ -217,10 +217,10 @@ fun PrepareQuickRide(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.clear_and_start_anew)
+                        contentDescription = stringResource(R.string.btn_desc_clear_and_start_anew)
                     )
                     IconSpacer()
-                    Text(text = stringResource(R.string.lbl_start_new_quick_ride))
+                    Text(text = stringResource(R.string.btn_text_start_new_quick_ride))
                 }
             }
         }

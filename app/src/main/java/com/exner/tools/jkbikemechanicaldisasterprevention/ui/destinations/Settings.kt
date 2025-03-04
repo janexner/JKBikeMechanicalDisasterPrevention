@@ -53,7 +53,7 @@ fun Settings(
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.menu_item_settings))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_settings))
             TextAndTriStateToggle(
                 text = stringResource(R.string.lbl_theme),
                 currentTheme = userSelectedTheme,
@@ -79,10 +79,10 @@ fun Settings(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Dataset,
-                        contentDescription = stringResource(R.string.lbl_manage_template_activities)
+                        contentDescription = stringResource(R.string.btn_desc_manage_template_activities)
                     )
                     IconSpacer()
-                    Text(text = stringResource(R.string.lbl_manage_template_activities))
+                    Text(text = stringResource(R.string.btn_text_manage_template_activities))
                 }
             }
         }

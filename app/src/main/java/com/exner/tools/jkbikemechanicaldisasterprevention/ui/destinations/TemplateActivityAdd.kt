@@ -69,7 +69,7 @@ fun TemplateActivityAdd(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.lbl_add_template_activity))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_add_template_activity))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
@@ -84,7 +84,7 @@ fun TemplateActivityAdd(
                 DefaultTextFieldWithSpacer(
                     value = title,
                     label = stringResource(R.string.lbl_activity_title),
-                    placeholder = stringResource(R.string.title),
+                    placeholder = stringResource(R.string.placehldr_title),
                     onValueChange = {
                         title = it
                         modified = true

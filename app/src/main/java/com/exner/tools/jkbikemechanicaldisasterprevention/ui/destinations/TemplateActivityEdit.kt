@@ -72,7 +72,7 @@ fun TemplateActivityEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.edit_template_activity))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_template_activity))
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
@@ -86,7 +86,7 @@ fun TemplateActivityEdit(
                 DefaultTextFieldWithSpacer(
                     value = templateActivity?.title ?: "",
                     label = stringResource(R.string.lbl_activity_title),
-                    placeholder = stringResource(R.string.title),
+                    placeholder = stringResource(R.string.placehldr_title),
                     onValueChange = {
                         templateActivityEditViewModel.updateTitle(it)
                         modified = true

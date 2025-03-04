@@ -89,7 +89,7 @@ fun BikeEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.edit_a_bike))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_a_bike))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
@@ -172,7 +172,7 @@ fun BikeEdit(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.save_the_bike)
+                        contentDescription = stringResource(R.string.btn_desc_save_the_bike)
                     )
                     Text(text = stringResource(R.string.btn_text_save))
                 }

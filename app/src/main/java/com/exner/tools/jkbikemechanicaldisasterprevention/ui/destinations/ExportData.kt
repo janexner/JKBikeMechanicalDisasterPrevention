@@ -29,6 +29,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ExportDataViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -70,10 +71,13 @@ fun ExportData(
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_export_data))
             Text(text = stringResource(R.string.data_that_will_be_exported))
             DefaultSpacer()
             LazyColumn(
-                modifier = Modifier.fillMaxWidth().weight(0.7f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.7f)
             ) {
                 stickyHeader {
                     Text(
@@ -157,13 +161,13 @@ fun ExportData(
                         successCallback = {
                             Toast.makeText(
                                 context,
-                                "Data exported to Downloads folder!",
+                                context.getString(R.string.msg_data_exported_to_downloads_folder),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
                     )
                 }) {
-                    Text(text = stringResource(R.string.export_data))
+                    Text(text = stringResource(R.string.btn_text_export_data))
                 }
             }
         }

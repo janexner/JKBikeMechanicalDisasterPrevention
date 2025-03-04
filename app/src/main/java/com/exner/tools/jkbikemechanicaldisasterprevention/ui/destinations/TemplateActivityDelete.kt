@@ -59,7 +59,7 @@ fun TemplateActivityDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.delete_template_activity))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_template_activity))
             if (activity != null) {
                 Text(text = "You are about to delete template activity ${activity?.title}!")
                 DefaultSpacer()
@@ -91,7 +91,7 @@ fun TemplateActivityDelete(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.delete_the_activity)
+                        contentDescription = stringResource(R.string.btn_desc_delete_the_activity)
                     )
                     Text(text = stringResource(R.string.btn_text_delete))
                 }

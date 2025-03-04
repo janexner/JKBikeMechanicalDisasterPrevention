@@ -57,7 +57,7 @@ fun BikeDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.delete_a_bike))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_a_bike))
             if (bike != null) {
                 Text(text = "You are about to delete the bike ${bike!!.name}.")
             } else {
@@ -87,7 +87,7 @@ fun BikeDelete(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.delete_the_bike)
+                        contentDescription = stringResource(R.string.btn_desc_delete_the_bike)
                     )
                     Text(text = stringResource(R.string.btn_text_delete))
                 }

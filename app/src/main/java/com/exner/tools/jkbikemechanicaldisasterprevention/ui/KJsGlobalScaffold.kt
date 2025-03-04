@@ -111,7 +111,7 @@ private fun KJsTopBar(
                             IconButton(onClick = { destinationsNavigator.navigateUp() }) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                    contentDescription = stringResource(R.string.back)
+                                    contentDescription = stringResource(R.string.btn_desc_back)
                                 )
                             }
                         }
@@ -242,7 +242,7 @@ private fun MainMenuAction(
             enabled = destination != ImportDataDestination,
             text = {
                 Text(
-                    text = stringResource(R.string.import_data),
+                    text = stringResource(R.string.btn_text_import_data),
                     style = MaterialTheme.typography.bodyLarge
                 )
             },
@@ -255,7 +255,7 @@ private fun MainMenuAction(
             enabled = destination != ExportDataDestination,
             text = {
                 Text(
-                    text = stringResource(R.string.export_data),
+                    text = stringResource(R.string.btn_text_export_data),
                     style = MaterialTheme.typography.bodyLarge
                 )
             },

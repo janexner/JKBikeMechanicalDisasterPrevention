@@ -68,7 +68,7 @@ fun ManageComponents(
                 .padding(8.dp)
                 .fillMaxSize()
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.manage_components))
+            PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_components))
             Text(text = stringResource(R.string.tap_component_to_edit))
             DefaultSpacer()
             LazyColumn(
@@ -141,7 +141,7 @@ fun ManageComponents(
                     destinationsNavigator.navigate(ComponentAnalysisDestination)
                 }) {
                     Text(
-                        text = stringResource(R.string.analyse_components)
+                        text = stringResource(R.string.hdr_analyse_components)
                     )
                 }
                 if (windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact) {
@@ -150,10 +150,10 @@ fun ManageComponents(
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(R.string.lbl_add_component)
+                            contentDescription = stringResource(R.string.btn_desc_add_component)
                         )
                         IconSpacer()
-                        Text(text = stringResource(R.string.lbl_add_component))
+                        Text(text = stringResource(R.string.btn_text_add_component))
                     }
                 }
             }

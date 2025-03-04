@@ -1,20 +1,19 @@
 <resources>
     // button texts and contentDescriptions
-    <string name="import_these_bikes">Import these bikes</string>
-    <string name="import_these_activities">Import these activities</string>
-    <string name="import_these_template_activities">Import these template activities</string>
-    <string name="back">Back</string>
-    <string name="delete_the_activity">Delete the activity</string>
-    <string name="delete_the_bike">Delete the bike</string>
-    <string name="lbl_start_new_quick_ride">Start new quick ride</string>
-    <string name="lbl_start_new_day_out">Start new day out</string>
-    <string name="lbl_start_new_holidays">Start new holidays</string>
-    <string name="clear_and_start_anew">Clear and start anew</string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import data</string>
-    <string name="lbl_add_bike">Add bike</string>
-    <string name="lbl_add_component">Add component</string>
-    <string name="analyze">Analyze</string>
+    <string name="btn_text_import_these_bikes">Import these bikes</string>
+    <string name="btn_text_import_these_activities">Import these activities</string>
+    <string name="btn_text_import_these_template_activities">Import these template activities</string>
+    <string name="btn_text_import_these_components">Import these components</string>
+    <string name="btn_desc_back">Back</string>
+    <string name="btn_desc_delete_the_activity">Delete the activity</string>
+    <string name="btn_desc_delete_the_bike">Delete the bike</string>
+    <string name="btn_text_start_new_quick_ride">Start new quick ride</string>
+    <string name="btn_text_start_new_day_out">Start new day out</string>
+    <string name="btn_text_start_new_holidays">Start new holidays</string>
+    <string name="btn_desc_clear_and_start_anew">Clear and start anew</string>
+    <string name="btn_text_export_data">Export data</string>
+    <string name="btn_text_import_data">Import data</string>
+    <string name="btn_text_analyse">Analyse</string>
     <string name="dialog_btn_text_done">OK</string>
     <string name="dialog_btn_text_cancel">Cancel</string>
     <string name="dialog_trigger_select_date">Select date</string>
@@ -23,6 +22,23 @@
     <string name="btn_text_save">Save</string>
     <string name="btn_desc_save_the_activity">Save the activity</string>
     <string name="btn_desc_save_the_component">Save component</string>
+    <string name="btn_text_edit">Edit</string>
+    <string name="btn_desc_edit_the_activity">Edit the activity</string>
+    <string name="btn_desc_save_the_bike">Save the bike</string>
+    <string name="btn_desc_delete_the_component">Delete component</string>
+    <string name="btn_desc_add_activity">Add the activity</string>
+    <string name="btn_text_add_activity">Add activity</string>
+    <string name="btn_text_select_file">Select file</string>
+    <string name="btn_text_select_different_file">Select different file</string>
+    <string name="btn_text_overwrite_data">Overwrite data</string>
+    <string name="btn_desc_add_bike">Add the bike</string>
+    <string name="btn_text_add_bike">Add bike</string>
+    <string name="btn_desc_add_component">Add the component</string>
+    <string name="btn_text_add_component">Add component</string>
+    <string name="btn_desc_add_template_activity">Add this template activity</string>
+    <string name="btn_text_add_template_activity">Add template activity</string>
+    <string name="btn_desc_manage_template_activities">Manage template activities</string>
+    <string name="btn_text_manage_template_activities">Manage template activities</string>
 
     // dropdown menu items
     <string name="dropdown_lbl_which_bike">Which bike</string>
@@ -45,6 +61,13 @@
     <string name="tab_holidays">holidays</string>
     <string name="tab_home">home</string>
     <string name="tab_quick_ride">quick ride</string>
+
+    // ride levels
+    <string name="ride_level_all_levels">All levels</string>
+    <string name="ride_level_quick_ride">Quick ride</string>
+    <string name="ride_level_day_out">Day out</string>
+    <string name="ride_level_holidays">Holidays</string>
+    <string name="ride_level_unknown">Unknown</string>
 
     // menu items
     <string name="menu">Menu</string>
@@ -84,6 +107,7 @@
     <string name="lbl_check_interval_days">Check every x days</string>
     <string name="lbl_ride_level_name">Ride level</string>
     <string name="item_all_levels">All levels</string>
+    <string name="lbl_get_template_activities_in_language">Get template activities in:</string>
 
     // placeholders for form fields and details screens
     <string name="placehldr_description">Description</string>
@@ -91,16 +115,53 @@
     <string name="placehldr_no_description">No description</string>
     <string name="placehldr_yyyy_mm_dd">YYYY-MM-DD</string>
     <string name="placehldr_yyyy_mm_dd_hh_mm_ss">YYYY-MM-DD hh:mm:ss</string>
-    <string name="title">Title</string>
+    <string name="placehldr_title">Title</string>
     <string name="placehldr_no_activity_title">No activity title</string>
     <string name="placehldr_no_due_date">No due date</string>
     <string name="placehldr_not_yet_used">not yet used</string>
+
+    // page and list headers
+    <string name="hdr_about">About</string>
+    <string name="hdr_add_activity">Add activity</string>
+    <string name="hdr_delete_an_activity">Delete activity</string>
+    <string name="hdr_activity_details">Activity details</string>
+    <string name="hdr_edit_an_activity">Edit activity</string>
+    <string name="hdr_log_entries">Log entries</string>
+    <string name="hdr_delete_a_bike">Delete bike</string>
+    <string name="hdr_edit_a_bike">Edit bike</string>
+    <string name="hdr_add_bike">Add bike</string>
+    <string name="hdr_add_component">Add component</string>
+    <string name="hdr_analyse_components">Analyse components</string>
+    <string name="hdr_delete_a_component">Delete component</string>
+    <string name="hdr_edit_a_component">Edit component</string>
+    <string name="hdr_export_data">Export data</string>
+    <string name="hdr_todos">TODOs</string>
+    <string name="hdr_bikes">Bikes</string>
+    <string name="hdr_quick_ride">Quick ride</string>
+    <string name="hdr_day_out">Day out</string>
+    <string name="hdr_holidays">Holidays</string>
+    <string name="hdr_activities">Activities</string>
+    <string name="hdr_template_activities">Template activities</string>
+    <string name="hdr_manage_bikes">Manage bikes</string>
+    <string name="hdr_manage_components">Manage components</string>
+    <string name="hdr_manage_template_activities">Manage template activities</string>
+    <string name="hdr_components">Components</string>
+    <string name="hdr_settings">Settings</string>
+    <string name="hdr_add_template_activity">Add template activity</string>
+    <string name="hdr_delete_template_activity">Delete template activity</string>
+    <string name="hdr_edit_template_activity">Edit template activity</string>
+
+    // on/off switches
+    <string name="overwrite_any">Overwrite any?</string>
+    <string name="overwrite_bikes">Overwrite bikes?</string>
+    <string name="overwrite_activities">Overwrite activities?</string>
+    <string name="overwrite_template_activities">Overwrite template activities?</string>
+    <string name="overwrite_components">Overwrite components?</string>
 
     // other screen text
     <string name="quick_ride_when_todo">Best do these the night before!</string>
     <string name="day_out_when_todo">Best do these the night before or a couple of days earlier!</string>
     <string name="holidays_when_todo">Best do these a couple of weeks in advance!</string>
-    <string name="a_new_bike_brilliant">A new bike! Brilliant!</string>
     <string name="activities_for_a_quick_ride">Activities for a quick ride:</string>
     <string name="activities_for_a_day_out">Activities for a day out:</string>
     <string name="activities_for_holidays">Activities for holidays:</string>
@@ -112,9 +173,7 @@
     <string name="welcome_to_kj_do_it_now">Welcome to J-K Bike - Mechanical Disaster Prevention!</string>
     <string name="data_that_will_be_exported">Here is all the data that will be exported</string>
     <string name="start_by_selecting_a_file_to_import_from">Start by selecting a file to import from</string>
-    <string name="select_file">Select file</string>
     <string name="something_went_wrong">Something went wrong!</string>
-    <string name="select_different_file">Select different file</string>
     <string name="you_could_try_importing_a_different_file">You could try importing a different file?</string>
     <string name="file_selected">"File selected: "</string>
     <string name="pick_a_json_file">Pick a JSON file</string>
@@ -129,17 +188,23 @@
     <string name="title_quick_ride">Quick ride</string>
     <string name="title_day_out">Day out</string>
     <string name="title_holidays">Holidays</string>
-    <string name="about">About</string>
-    <string name="hdr_bikes">Bikes</string>
-    <string name="hdr_quick_ride">Quick ride</string>
-    <string name="hdr_day_out">Day out</string>
-    <string name="hdr_holidays">Holidays</string>
-    <string name="hdr_activities">Activities</string>
-    <string name="hdr_template_activities">Template activities</string>
     <string name="select_components_for_analysis">Select components, then press \"Analyze\"</string>
     <string name="there_are_no_retired_components_to_analyse">There are no retired components to analyse</string>
     <string name="we_can_not_find_this_component">We can not find this component</string>
     <string name="no_log_entries_so_far">No log entries so far.</string>
+    <string name="msg_data_exported_to_downloads_folder">Data exported to Downloads folder!</string>
+    <string name="bike">Bike</string>
+    <string name="is_ebike_specific">eBike-specific</string>
+    <string name="tap_bike_to_edit">Tap bike to edit</string>
+    <string name="dash_ebike_specific">" - eBike-specific"</string>
+    <string name="a_new_bike_brilliant">A new bike! Brilliant!</string>
+    <string name="a_new_component_brilliant">New Tech, cool!</string>
+    <string name="components">components</string>
+    <string name="check_component">Check component</string>
+    <string name="check_brake_pads_for_signs_of_wear">Check brake pads for signs of wear</string>
+    <string name="component">Component</string>
+    <string name="tap_component_to_edit">Tap component to edit</string>
+    <string name="lbl_component_name">Component name</string>
 
     // about screen
     <string name="about1">J-K Bike - Mechanical Disaster Prevention is a free, open source app that helps build positive bike maintenance behaviours, for rides quick, big or epic.</string>
@@ -152,44 +217,4 @@
     <string name="app_name" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
     <string name="top_bar_title" translatable="false">J-K Bike - MDP</string>
     <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
-
-    <string name="add_activity">Add activity</string>
-    <string name="bike">Bike</string>
-    <string name="edit">Edit</string>
-    <string name="edit_the_activity">Edit the activity</string>
-    <string name="save_the_bike">Save the bike</string>
-    <string name="is_ebike_specific">eBike-specific</string>
-    <string name="edit_a_bike">Edit bike</string>
-    <string name="todos">TODOs</string>
-    <string name="manage_bikes_components">Manage bikes</string>
-    <string name="delete_template_activity">Delete template activity</string>
-    <string name="edit_template_activity">Edit template activity</string>
-    <string name="delete_an_activity">Delete activity</string>
-    <string name="activity_details">Activity details</string>
-    <string name="edit_an_activity">Edit activity</string>
-    <string name="tap_bike_to_edit">Tap bike to edit</string>
-    <string name="dash_ebike_specific">" - eBike-specific"</string>
-    <string name="overwrite_any">Overwrite any?</string>
-    <string name="overwrite_bikes">Overwrite bikes?</string>
-    <string name="overwrite_activities">Overwrite activities?</string>
-    <string name="overwrite_template_activities">Overwrite template activities?</string>
-    <string name="overwrite_data">Overwrite data</string>
-    <string name="delete_a_bike">Delete bike</string>
-    <string name="get_template_activities_in">Get template activities in:</string>
-    <string name="a_new_component_brilliant">New Tech, cool!</string>
-    <string name="hdr_components">Components</string>
-    <string name="components">components</string>
-    <string name="import_these_components">Import these components</string>
-    <string name="overwrite_components">Overwrite components?</string>
-    <string name="check_component">Check component</string>
-    <string name="check_brake_pads_for_signs_of_wear">Check brake pads for signs of wear</string>
-    <string name="component">Component</string>
-    <string name="manage_components">Manage components</string>
-    <string name="tap_component_to_edit">Tap component to edit</string>
-    <string name="analyse_components">Analyse components</string>
-    <string name="edit_a_component">Edit component</string>
-    <string name="lbl_component_name">Component name</string>
-    <string name="delete_a_component">Delete component</string>
-    <string name="delete_the_component">Delete component</string>
-    <string name="manage_log_entries">Log entries</string>
 </resources>
