@@ -43,7 +43,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLeve
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
-import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageComponentsDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.datetime.Instant
@@ -220,7 +219,7 @@ fun ComponentAdd(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 DefaultSpacer()
@@ -285,7 +284,7 @@ fun ComponentAdd(
                         imageVector = Icons.Filled.Done,
                         contentDescription = stringResource(R.string.save_the_bike)
                     )
-                    Text(text = stringResource(R.string.save))
+                    Text(text = stringResource(R.string.btn_text_save))
                 }
             }
         }

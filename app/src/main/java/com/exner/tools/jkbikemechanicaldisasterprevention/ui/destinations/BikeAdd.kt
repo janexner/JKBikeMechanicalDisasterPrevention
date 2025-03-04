@@ -120,7 +120,7 @@ fun BikeAdd(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 DefaultSpacer()
@@ -152,7 +152,7 @@ fun BikeAdd(
                         imageVector = Icons.Filled.Done,
                         contentDescription = stringResource(R.string.save_the_bike)
                     )
-                    Text(text = stringResource(R.string.save))
+                    Text(text = stringResource(R.string.btn_text_save))
                 }
             }
         }

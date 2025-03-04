@@ -1,16 +1,11 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,11 +50,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.convertMillisToDate
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.convertMillisToDateAndTime
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.Theme
-import com.exner.tools.jkbikemechanicaldisasterprevention.R
 
 @Composable
 fun DefaultTextFieldWithSpacer(
@@ -220,12 +215,12 @@ fun DatePickerModal(
                 onDateSelected(datePickerState.selectedDateMillis)
                 onDismiss()
             }) {
-                Text("OK")
+                Text(stringResource(R.string.dialog_btn_text_done))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+                Text(stringResource(R.string.dialog_btn_text_cancel))
             }
         }
     ) {
@@ -273,7 +268,7 @@ fun DefaultBikeSelectorWithSpacer(
             expanded = bikeSelectorExpanded,
             onDismissRequest = { bikeSelectorExpanded = false }) {
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.none)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_none)) },
                 onClick = {
                     onMenuItemClick(null)
                     bikeSelectorExpanded = false
@@ -310,7 +305,10 @@ fun DefaultDateSelectorWithSpacer(
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },
         trailingIcon = {
-            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
+            Icon(
+                Icons.Default.DateRange,
+                contentDescription = stringResource(R.string.dialog_trigger_select_date)
+            )
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -357,7 +355,10 @@ fun DefaultDateSelectorNullableWithSpacer(
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },
         trailingIcon = {
-            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
+            Icon(
+                Icons.Default.DateRange,
+                contentDescription = stringResource(R.string.dialog_trigger_select_date)
+            )
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -404,7 +405,10 @@ fun DefaultInstantSelectorWithSpacer(
         label = { Text(text = label) },
         placeholder = { Text(text = realPlaceholder) },
         trailingIcon = {
-            Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.select_date))
+            Icon(
+                Icons.Default.DateRange,
+                contentDescription = stringResource(R.string.dialog_trigger_select_date)
+            )
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -434,27 +438,6 @@ fun DefaultInstantSelectorWithSpacer(
         )
     }
     DefaultSpacer()
-}
-
-@Composable
-fun ShowAnimatedText(
-    show: Boolean,
-    content: @Composable () -> Unit
-) {
-
-    AnimatedVisibility(
-        visible = show,
-        enter = fadeIn(animationSpec = tween(500)),
-        exit = fadeOut(animationSpec = tween(500))
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceVariant)
-        ) {
-            content()
-        }
-    }
 }
 
 @Composable

@@ -54,7 +54,7 @@ fun BikeSelector(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (displayLabel) {
-                Text(text = stringResource(R.string.which_bike))
+                Text(text = stringResource(R.string.dropdown_lbl_which_bike))
                 DefaultSpacer()
             }
             Button(
@@ -63,7 +63,7 @@ fun BikeSelector(
                 if (currentBike != null) {
                     Text(text = currentBike.name)
                 } else {
-                    Text(text = stringResource(R.string.select_a_bike))
+                    Text(text = stringResource(R.string.dropdown_trigger_select_a_bike))
                 }
             }
         }
@@ -73,7 +73,7 @@ fun BikeSelector(
             offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
             onDismissRequest = { bikesExpanded = false }) {
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.all_bikes)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_all_bikes)) },
                 onClick = {
                     onBikeSelected(null)
                     bikesExpanded = false

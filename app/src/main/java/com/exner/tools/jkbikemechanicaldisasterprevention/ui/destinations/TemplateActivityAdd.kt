@@ -123,7 +123,7 @@ fun TemplateActivityAdd(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 Button(
@@ -148,9 +148,9 @@ fun TemplateActivityAdd(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.save_the_activity)
+                        contentDescription = stringResource(R.string.btn_desc_save_the_activity)
                     )
-                    Text(text = stringResource(R.string.save))
+                    Text(text = stringResource(R.string.btn_text_save))
 
                 }
 

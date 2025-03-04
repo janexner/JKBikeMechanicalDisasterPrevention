@@ -24,7 +24,7 @@ class RideLevel {
 
         fun getLabel(context: Context, level: Int?): String {
             when (level) {
-                null -> return context.getString(R.string.all_levels)
+                null -> return context.getString(R.string.dropdown_item_all_levels)
 
                 1 -> return context.getString(R.string.title_quick_ride)
 

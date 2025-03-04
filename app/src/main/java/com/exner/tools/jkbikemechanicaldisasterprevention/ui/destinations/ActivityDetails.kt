@@ -91,7 +91,7 @@ fun ActivityDetails(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.delete)
+                        contentDescription = stringResource(R.string.btn_text_delete)
                     )
                 }
                 Spacer(modifier = Modifier.weight(0.7f))

@@ -4,7 +4,6 @@
     <string name="import_these_activities">Import these activities</string>
     <string name="import_these_template_activities">Import these template activities</string>
     <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
     <string name="delete_the_activity">Delete the activity</string>
     <string name="delete_the_bike">Delete the bike</string>
     <string name="lbl_start_new_quick_ride">Start new quick ride</string>
@@ -16,9 +15,36 @@
     <string name="lbl_add_bike">Add bike</string>
     <string name="lbl_add_component">Add component</string>
     <string name="analyze">Analyze</string>
+    <string name="dialog_btn_text_done">OK</string>
+    <string name="dialog_btn_text_cancel">Cancel</string>
+    <string name="dialog_trigger_select_date">Select date</string>
+    <string name="btn_text_cancel">Cancel</string>
+    <string name="btn_text_delete">Delete</string>
+    <string name="btn_text_save">Save</string>
+    <string name="btn_desc_save_the_activity">Save the activity</string>
+    <string name="btn_desc_save_the_component">Save component</string>
 
     // dropdown menu items
-    <string name="all_bikes">All bikes</string>
+    <string name="dropdown_lbl_which_bike">Which bike</string>
+    <string name="dropdown_trigger_select_a_bike">Select a bike</string>
+    <string name="dropdown_item_all_bikes">All bikes</string>
+    <string name="dropdown_item_none">None</string>
+    <string name="dropdown_lbl_select_a_level">Select a ride level</string>
+    <string name="dropdown_lbl_template_for_ride_level">Template for ride level</string>
+    <string name="dropdown_item_all_levels">All levels</string>
+    <string name="dropdown_lbl_ride_level_name">Ride Level</string>
+    <string name="dropdown_lbl_which_wear_level">How does it look?</string>
+    <string name="dropdown_trigger_select_a_wear_level">Select an option</string>
+    <string name="dropdown_item_unspecified_wear_level">unspecified</string>
+    <string name="dropdown_item_wear_level_new">New</string>
+    <string name="dropdown_item_wear_level_used">Used</string>
+    <string name="dropdown_item_wear_level_due_for_replacement">Due for replacement</string>
+
+    // tab titles
+    <string name="tab_day_out">day out</string>
+    <string name="tab_holidays">holidays</string>
+    <string name="tab_home">home</string>
+    <string name="tab_quick_ride">quick ride</string>
 
     // menu items
     <string name="menu">Menu</string>
@@ -56,20 +82,19 @@
     <string name="lbl_last_checked_date">Last check was on</string>
     <string name="lbl_check_interval_miles">Check every x km/miles</string>
     <string name="lbl_check_interval_days">Check every x days</string>
+    <string name="lbl_ride_level_name">Ride level</string>
+    <string name="item_all_levels">All levels</string>
 
-    // placeholders for form fields
+    // placeholders for form fields and details screens
     <string name="placehldr_description">Description</string>
     <string name="placehldr_name">Name</string>
     <string name="placehldr_no_description">No description</string>
     <string name="placehldr_yyyy_mm_dd">YYYY-MM-DD</string>
     <string name="placehldr_yyyy_mm_dd_hh_mm_ss">YYYY-MM-DD hh:mm:ss</string>
     <string name="title">Title</string>
-
-    // tab titles
-    <string name="tab_day_out">day out</string>
-    <string name="tab_holidays">holidays</string>
-    <string name="tab_home">home</string>
-    <string name="tab_quick_ride">quick ride</string>
+    <string name="placehldr_no_activity_title">No activity title</string>
+    <string name="placehldr_no_due_date">No due date</string>
+    <string name="placehldr_not_yet_used">not yet used</string>
 
     // other screen text
     <string name="quick_ride_when_todo">Best do these the night before!</string>
@@ -130,22 +155,9 @@
 
     <string name="add_activity">Add activity</string>
     <string name="bike">Bike</string>
-    <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="edit_the_activity">Edit the activity</string>
-    <string name="no_activity_title">No activity title</string>
-    <string name="no_due_date">No due date</string>
-    <string name="none">None</string>
-    <string name="not_yet_used">not yet used</string>
-    <string name="save">Save</string>
-    <string name="save_the_activity">Save the activity</string>
     <string name="save_the_bike">Save the bike</string>
-    <string name="select_a_bike">Select a bike</string>
-    <string name="select_date">Select date</string>
-    <string name="which_bike">Which bike</string>
-    <string name="ride_level_name">Ride Level</string>
-    <string name="select_a_level">Select a ride level</string>
-    <string name="all_levels">All levels</string>
     <string name="is_ebike_specific">eBike-specific</string>
     <string name="edit_a_bike">Edit bike</string>
     <string name="todos">TODOs</string>
@@ -156,7 +168,6 @@
     <string name="activity_details">Activity details</string>
     <string name="edit_an_activity">Edit activity</string>
     <string name="tap_bike_to_edit">Tap bike to edit</string>
-    <string name="template_for_ride_level">Template for ride level</string>
     <string name="dash_ebike_specific">" - eBike-specific"</string>
     <string name="overwrite_any">Overwrite any?</string>
     <string name="overwrite_bikes">Overwrite bikes?</string>
@@ -172,19 +183,12 @@
     <string name="overwrite_components">Overwrite components?</string>
     <string name="check_component">Check component</string>
     <string name="check_brake_pads_for_signs_of_wear">Check brake pads for signs of wear</string>
-    <string name="which_wear_level">How does it look?</string>
-    <string name="select_a_wear_level">Select an option</string>
-    <string name="unspecified_wear_level">unspecified</string>
-    <string name="wear_level_new">New</string>
-    <string name="wear_level_used">Used</string>
-    <string name="wear_level_due_for_replacement">Due for replacement</string>
     <string name="component">Component</string>
     <string name="manage_components">Manage components</string>
     <string name="tap_component_to_edit">Tap component to edit</string>
     <string name="analyse_components">Analyse components</string>
     <string name="edit_a_component">Edit component</string>
     <string name="lbl_component_name">Component name</string>
-    <string name="save_the_component">Save component</string>
     <string name="delete_a_component">Delete component</string>
     <string name="delete_the_component">Delete component</string>
     <string name="manage_log_entries">Log entries</string>

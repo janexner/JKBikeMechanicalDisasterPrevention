@@ -16,7 +16,7 @@ import kotlinx.datetime.toLocalDateTime
 @Composable
 fun ShowActivityDetails(activity: Activity?) {
     Text(
-        text = activity?.title ?: stringResource(R.string.no_activity_title),
+        text = activity?.title ?: stringResource(R.string.placehldr_no_activity_title),
         style = MaterialTheme.typography.headlineMedium
     )
     DefaultSpacer()
@@ -37,7 +37,7 @@ fun ShowActivityDetails(activity: Activity?) {
     if (activity?.dueDate != null) {
         Text(text = "Due on ${activity.dueDate}")
     } else {
-        Text(text = stringResource(R.string.no_due_date))
+        Text(text = stringResource(R.string.placehldr_no_due_date))
     }
     if (activity?.isEBikeSpecific == true) {
         DefaultSpacer()
@@ -60,19 +60,19 @@ fun ShowTemplateActivityDetails(
     val context = LocalContext.current
     val levelLabel = if (templateActivity?.rideLevel != null) {
         buildString {
-            append(stringResource(R.string.ride_level_name))
+            append(stringResource(R.string.lbl_ride_level_name))
             append(RideLevel.getLabel(context, templateActivity.rideLevel))
         }
     } else {
         buildString {
-            append(stringResource(R.string.ride_level_name))
-            append(stringResource(R.string.all_levels))
+            append(stringResource(R.string.lbl_ride_level_name))
+            append(stringResource(R.string.item_all_levels))
         }
     }
     Text(text = levelLabel)
     DefaultSpacer()
     Text(
-        text = templateActivity?.title ?: stringResource(R.string.no_activity_title),
+        text = templateActivity?.title ?: stringResource(R.string.placehldr_no_activity_title),
         style = MaterialTheme.typography.headlineMedium
     )
     DefaultSpacer()

@@ -147,7 +147,7 @@ fun BikeEdit(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 IconSpacer()
@@ -156,7 +156,7 @@ fun BikeEdit(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.delete)
+                        contentDescription = stringResource(R.string.btn_text_delete)
                     )
                 }
                 Spacer(modifier = Modifier.weight(0.7f))
@@ -174,7 +174,7 @@ fun BikeEdit(
                         imageVector = Icons.Filled.Done,
                         contentDescription = stringResource(R.string.save_the_bike)
                     )
-                    Text(text = stringResource(R.string.save))
+                    Text(text = stringResource(R.string.btn_text_save))
                 }
             }
         }

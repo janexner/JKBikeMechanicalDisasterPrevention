@@ -73,7 +73,7 @@ fun BikeDelete(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 Button(
@@ -89,7 +89,7 @@ fun BikeDelete(
                         imageVector = Icons.Filled.Done,
                         contentDescription = stringResource(R.string.delete_the_bike)
                     )
-                    Text(text = stringResource(R.string.delete))
+                    Text(text = stringResource(R.string.btn_text_delete))
                 }
             }
         }

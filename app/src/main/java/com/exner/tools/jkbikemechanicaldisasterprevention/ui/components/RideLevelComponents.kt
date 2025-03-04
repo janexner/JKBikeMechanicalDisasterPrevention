@@ -33,7 +33,7 @@ fun DefaultRideLevelSelectorActivity(
     DefaultRideLevelSelectorWithSpacer(
         rideLevel,
         onItemSelected,
-        stringResource(R.string.select_a_level)
+        stringResource(R.string.dropdown_lbl_select_a_level)
     )
 }
 
@@ -45,7 +45,7 @@ fun DefaultRideLevelSelectorTemplate(
     DefaultRideLevelSelectorWithSpacer(
         rideLevel,
         onItemSelected,
-        stringResource(R.string.template_for_ride_level)
+        stringResource(R.string.dropdown_lbl_template_for_ride_level)
     )
 }
 
@@ -80,14 +80,14 @@ fun DefaultRideLevelSelectorWithSpacer(
                     if (currentRideLevel != null) {
                         Text(text = RideLevel.getLabel(context, currentRideLevel))
                     } else {
-                        Text(text = stringResource(R.string.select_a_level))
+                        Text(text = stringResource(R.string.dropdown_lbl_select_a_level))
                     }
                 }
                 DropdownMenu(
                     expanded = levelsExpanded,
                     onDismissRequest = { levelsExpanded = false }) {
                     DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.all_levels)) },
+                        text = { Text(text = stringResource(R.string.dropdown_item_all_levels)) },
                         onClick = {
                             onItemSelected(null)
                             levelsExpanded = false
@@ -131,7 +131,7 @@ fun RideLevelSelectorForLists(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = stringResource(R.string.ride_level_name))
+            Text(text = stringResource(R.string.dropdown_lbl_ride_level_name))
             DefaultSpacer()
             Box {
                 Button(
@@ -140,14 +140,14 @@ fun RideLevelSelectorForLists(
                     if (currentRideLevel != null) {
                         Text(text = RideLevel.getLabel(context, currentRideLevel))
                     } else {
-                        Text(text = stringResource(R.string.all_levels))
+                        Text(text = stringResource(R.string.dropdown_item_all_levels))
                     }
                 }
                 DropdownMenu(
                     expanded = levelsExpanded,
                     onDismissRequest = { levelsExpanded = false }) {
                     DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.all_levels)) },
+                        text = { Text(text = stringResource(R.string.dropdown_item_all_levels)) },
                         onClick = {
                             onItemSelected(null)
                             levelsExpanded = false

@@ -56,7 +56,7 @@ fun WearLevelSelector(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (displayLabel) {
-                Text(text = stringResource(R.string.which_wear_level))
+                Text(text = stringResource(R.string.dropdown_lbl_which_wear_level))
                 DefaultSpacer()
             }
             Button(
@@ -65,7 +65,7 @@ fun WearLevelSelector(
                 if (currentWearLevel != null) {
                     Text(text = toLocalisedString(currentWearLevel, context))
                 } else {
-                    Text(text = stringResource(R.string.select_a_wear_level))
+                    Text(text = stringResource(R.string.dropdown_trigger_select_a_wear_level))
                 }
             }
         }
@@ -75,7 +75,7 @@ fun WearLevelSelector(
             offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
             onDismissRequest = { wearLevelsExpanded = false }) {
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.unspecified_wear_level)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_unspecified_wear_level)) },
                 onClick = {
                     onWearLevelSelected(null)
                     wearLevelsExpanded = false
@@ -83,7 +83,7 @@ fun WearLevelSelector(
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.wear_level_new)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_new)) },
                 onClick = {
                     onWearLevelSelected(WearLevel.NEW)
                     wearLevelsExpanded = false
@@ -91,7 +91,7 @@ fun WearLevelSelector(
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.wear_level_used)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_used)) },
                 onClick = {
                     onWearLevelSelected(WearLevel.USED)
                     wearLevelsExpanded = false
@@ -99,7 +99,7 @@ fun WearLevelSelector(
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.wear_level_due_for_replacement)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_due_for_replacement)) },
                 onClick = {
                     onWearLevelSelected(WearLevel.DUE_FOR_REPLACEMENT)
                     wearLevelsExpanded = false

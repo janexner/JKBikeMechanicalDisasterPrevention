@@ -21,8 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.toLocalisedString
 
@@ -69,7 +71,7 @@ fun ComponentWearLevelDialog(
                     },
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text(text = "Done")
+                    Text(text = stringResource(R.string.dialog_btn_text_done))
                 }
                 TextButton(
                     onClick = {
@@ -78,7 +80,7 @@ fun ComponentWearLevelDialog(
                     modifier = Modifier.padding(8.dp)
                 ) {
                     Text(
-                        text = "Cancel",
+                        text = stringResource(R.string.dialog_btn_text_cancel),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

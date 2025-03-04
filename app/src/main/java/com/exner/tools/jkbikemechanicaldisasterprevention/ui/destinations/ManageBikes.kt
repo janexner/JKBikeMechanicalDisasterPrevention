@@ -115,7 +115,7 @@ fun ManageBikes(
                                 text = if (bike.lastUsedDate != null) {
                                     bike.lastUsedDate.toString()
                                 } else {
-                                    stringResource(R.string.not_yet_used)
+                                    stringResource(R.string.placehldr_not_yet_used)
                                 },
                             )
                         }

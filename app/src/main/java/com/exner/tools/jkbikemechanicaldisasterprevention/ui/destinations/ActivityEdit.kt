@@ -138,7 +138,7 @@ fun ActivityEdit(
                     value = if (currentBike != null) {
                         currentBike!!.name
                     } else {
-                        stringResource(R.string.none)
+                        stringResource(R.string.dropdown_item_none)
                     },
                     label = stringResource(R.string.lbl_attached_to_bike),
                     onMenuItemClick = {
@@ -176,7 +176,7 @@ fun ActivityEdit(
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.cancel)
+                        contentDescription = stringResource(R.string.btn_text_cancel)
                     )
                 }
                 IconSpacer()
@@ -185,7 +185,7 @@ fun ActivityEdit(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.delete)
+                        contentDescription = stringResource(R.string.btn_text_delete)
                     )
                 }
                 Spacer(modifier = Modifier.weight(0.7f))
@@ -199,9 +199,9 @@ fun ActivityEdit(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.save_the_activity)
+                        contentDescription = stringResource(R.string.btn_desc_save_the_activity)
                     )
-                    Text(text = stringResource(R.string.save))
+                    Text(text = stringResource(R.string.btn_text_save))
                 }
             }
         }
