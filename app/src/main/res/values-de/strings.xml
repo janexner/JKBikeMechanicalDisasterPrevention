@@ -40,7 +40,7 @@
     <string name="dropdown_item_none">nichts ausgewählt</string>
     <string name="placehldr_not_yet_used">Bisher nicht benutzt</string>
     <string name="lbl_check_interval_days">Alle x Tage überprüfen</string>
-    <string name="item_all_levels">Alle Level</string>
+    <string name="placehldr_item_all_levels">Alle Level</string>
     <string name="placehldr_description">Beschreibung</string>
     <string name="placehldr_name">Name</string>
     <string name="placehldr_no_description">Keine Beschreibung</string>

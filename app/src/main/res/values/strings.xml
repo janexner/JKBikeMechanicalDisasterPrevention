@@ -106,7 +106,6 @@
     <string name="lbl_check_interval_miles">Check every x km/miles</string>
     <string name="lbl_check_interval_days">Check every x days</string>
     <string name="lbl_ride_level_name">Ride level</string>
-    <string name="item_all_levels">All levels</string>
     <string name="lbl_get_template_activities_in_language">Get template activities in:</string>
 
     // placeholders for form fields and details screens
@@ -119,6 +118,7 @@
     <string name="placehldr_no_activity_title">No activity title</string>
     <string name="placehldr_no_due_date">No due date</string>
     <string name="placehldr_not_yet_used">not yet used</string>
+    <string name="placehldr_item_all_levels">All levels</string>
 
     // page and list headers
     <string name="hdr_about">About</string>

@@ -66,7 +66,7 @@ fun ShowTemplateActivityDetails(
     } else {
         buildString {
             append(stringResource(R.string.lbl_ride_level_name))
-            append(stringResource(R.string.item_all_levels))
+            append(stringResource(R.string.placehldr_item_all_levels))
         }
     }
     Text(text = levelLabel)
