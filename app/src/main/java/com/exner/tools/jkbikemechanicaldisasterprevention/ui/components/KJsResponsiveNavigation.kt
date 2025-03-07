@@ -222,12 +222,11 @@ fun KJsResponsiveNavigation(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp, 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .padding(8.dp, 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Row(
                             modifier = Modifier
-                                .weight(0.5f)
                                 .requiredHeight(IntrinsicSize.Min),
                             horizontalArrangement = Arrangement.Start
                         ) {
@@ -245,7 +244,6 @@ fun KJsResponsiveNavigation(
                         if (myFloatingActionButton != null && myFloatingActionButton.enabled) {
                             Row(
                                 modifier = Modifier
-                                    .weight(0.5f)
                                     .requiredHeight(IntrinsicSize.Min),
                                 horizontalArrangement = Arrangement.End
                             ) {
@@ -328,12 +326,11 @@ fun KJsResponsiveNavigation(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(0.dp, 16.dp),
+                                .padding(8.dp, 16.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Row(
                                 modifier = Modifier
-                                    .weight(0.5f)
                                     .requiredHeight(IntrinsicSize.Min),
                                 horizontalArrangement = Arrangement.Start
                             ) {
@@ -351,7 +348,6 @@ fun KJsResponsiveNavigation(
                             if (myFloatingActionButton != null && myFloatingActionButton.enabled) {
                                 Row(
                                     modifier = Modifier
-                                        .weight(0.5f)
                                         .requiredHeight(IntrinsicSize.Min),
                                     horizontalArrangement = Arrangement.End
                                 ) {
