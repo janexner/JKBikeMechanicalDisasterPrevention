@@ -77,8 +77,8 @@ fun ManageBikes(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxSize()
+                .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_bikes))
             Text(text = stringResource(R.string.tap_bike_to_edit))

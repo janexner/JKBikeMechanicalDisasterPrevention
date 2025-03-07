@@ -90,8 +90,8 @@ fun ExportData(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxWidth()
+                .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.hdr_export_data))
             Text(text = stringResource(R.string.data_that_will_be_exported))

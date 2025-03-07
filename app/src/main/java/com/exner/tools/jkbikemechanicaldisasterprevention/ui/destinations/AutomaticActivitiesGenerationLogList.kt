@@ -58,8 +58,8 @@ fun AutomaticActivitiesGenerationLogList(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxSize()
+                .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.hdr_log_entries))
             DefaultSpacer()

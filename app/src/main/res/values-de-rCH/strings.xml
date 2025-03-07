@@ -39,6 +39,7 @@
     <string name="dropdown_item_none">nichts ausgewählt</string>
     <string name="placehldr_not_yet_used">Bisher nicht benutzt</string>
     <string name="placehldr_item_all_levels">Alle Level</string>
+    <string name="lbl_todo_lists_rides_expire_after_2_days">Listen und Touren laufen nach 2 Tagen ab</string>
     <string name="placehldr_description">Beschreibung</string>
     <string name="placehldr_name">Name</string>
     <string name="placehldr_no_description">Keine Beschreibung</string>

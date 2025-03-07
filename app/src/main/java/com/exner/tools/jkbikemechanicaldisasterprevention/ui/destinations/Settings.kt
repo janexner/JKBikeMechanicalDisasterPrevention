@@ -1,6 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -61,6 +62,7 @@ fun Settings(
         val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.hdr_settings))
@@ -73,7 +75,7 @@ fun Settings(
             )
             DefaultSpacer()
             TextAndSwitch(
-                text = "TODO lists / rides expire after 2 days",
+                text = stringResource(R.string.lbl_todo_lists_rides_expire_after_2_days),
                 checked = todoListsExpire
             ) {
                 settingsViewModel.updateTodoListsExpire(it)

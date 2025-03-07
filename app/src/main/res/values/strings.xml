@@ -107,6 +107,7 @@
     <string name="lbl_check_interval_days">Check every x days</string>
     <string name="lbl_ride_level_name">Ride level</string>
     <string name="lbl_get_template_activities_in_language">Get template activities in:</string>
+    <string name="lbl_todo_lists_rides_expire_after_2_days">TODO lists / rides expire after 2 days</string>
 
     // placeholders for form fields and details screens
     <string name="placehldr_description">Description</string>

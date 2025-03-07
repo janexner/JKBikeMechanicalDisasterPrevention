@@ -58,11 +58,11 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.Theme
 
 @Composable
 fun DefaultTextFieldWithSpacer(
+    modifier: Modifier = Modifier,
     value: String = "",
     label: String = "",
     placeholder: String? = null,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     val usablePlaceholder = placeholder ?: label
 
@@ -83,11 +83,11 @@ fun DefaultTextFieldWithSpacer(
 
 @Composable
 fun DefaultNumberFieldWithSpacer(
+    modifier: Modifier = Modifier,
     value: String = "",
     label: String = "",
     placeholder: String? = null,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     val usablePlaceholder = placeholder ?: label
 

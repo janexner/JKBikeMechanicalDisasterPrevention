@@ -1,12 +1,16 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Hail
@@ -16,6 +20,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -164,10 +169,11 @@ fun KJsResponsiveNavigation(
             )
         }
 
-        NavigationStyle.LEFT_RAIL -> {
+        NavigationStyle.LEFT_RAIL -> { // medium screen width
             Row(
                 modifier = Modifier
                     .imePadding()
+                    .fillMaxWidth()
             ) {
                 NavigationRail(
                     containerColor = NavigationBarDefaults.containerColor
@@ -206,20 +212,64 @@ fun KJsResponsiveNavigation(
 
                 }
                 DefaultSpacer()
-                Box(
-                    modifier = Modifier.padding(
-                        start = 0.dp,
-                        top = 0.dp,
-                        end = 0.dp,
-                        bottom = 32.dp
-                    )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(0.dp, 0.dp, 0.dp, 76.dp)
                 ) {
                     content()
+                    DefaultSpacer()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(0.dp, 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .requiredHeight(IntrinsicSize.Min),
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            myActions.forEach { kjsAction ->
+                                IconButton(onClick = {
+                                    kjsAction.onClick()
+                                }) {
+                                    Icon(
+                                        imageVector = kjsAction.imageVector,
+                                        contentDescription = kjsAction.contentDescription
+                                    )
+                                }
+                            }
+                        }
+                        if (myFloatingActionButton != null && myFloatingActionButton.enabled) {
+                            Row(
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .requiredHeight(IntrinsicSize.Min),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                Button(
+                                    onClick = {
+                                        myFloatingActionButton.onClick()
+                                    },
+                                    enabled = myFloatingActionButton.enabled
+                                ) {
+                                    Icon(
+                                        imageVector = myFloatingActionButton.imageVector,
+                                        contentDescription = myFloatingActionButton.contentDescription
+                                    )
+                                    IconSpacer()
+                                    Text(text = myFloatingActionButton.contentDescription)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        NavigationStyle.LEFT_DRAWER -> {
+        NavigationStyle.LEFT_DRAWER -> { // wide screen
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -268,13 +318,59 @@ fun KJsResponsiveNavigation(
                         }
                     },
                 ) {
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 32.dp)
-
+                            .padding(0.dp, 0.dp, 0.dp, 76.dp)
                     ) {
                         content()
+                        DefaultSpacer()
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(0.dp, 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .requiredHeight(IntrinsicSize.Min),
+                                horizontalArrangement = Arrangement.Start
+                            ) {
+                                myActions.forEach { kjsAction ->
+                                    IconButton(onClick = {
+                                        kjsAction.onClick()
+                                    }) {
+                                        Icon(
+                                            imageVector = kjsAction.imageVector,
+                                            contentDescription = kjsAction.contentDescription
+                                        )
+                                    }
+                                }
+                            }
+                            if (myFloatingActionButton != null && myFloatingActionButton.enabled) {
+                                Row(
+                                    modifier = Modifier
+                                        .weight(0.5f)
+                                        .requiredHeight(IntrinsicSize.Min),
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            myFloatingActionButton.onClick()
+                                        },
+                                        enabled = myFloatingActionButton.enabled
+                                    ) {
+                                        Icon(
+                                            imageVector = myFloatingActionButton.imageVector,
+                                            contentDescription = myFloatingActionButton.contentDescription
+                                        )
+                                        IconSpacer()
+                                        Text(text = myFloatingActionButton.contentDescription)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

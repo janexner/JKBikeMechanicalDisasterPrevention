@@ -68,8 +68,8 @@ fun ComponentAnalysis(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxSize()
+                .padding(8.dp)
         ) {
             PageHeaderTextWithSpacer(stringResource(R.string.hdr_analyse_components))
             if (retiredComponents.isNotEmpty()) {

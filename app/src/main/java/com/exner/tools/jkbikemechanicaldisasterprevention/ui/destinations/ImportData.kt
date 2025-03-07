@@ -103,8 +103,8 @@ fun ImportData(
 
         LazyColumn(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxWidth()
+                .padding(8.dp)
         ) {
             // step 1 - select a file
             stickyHeader {
