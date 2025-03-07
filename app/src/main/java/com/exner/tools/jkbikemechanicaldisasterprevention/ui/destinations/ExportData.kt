@@ -3,17 +3,14 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -30,6 +27,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ExportDataViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.RideLevel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -44,14 +42,38 @@ fun ExportData(
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    val context = LocalContext.current
 
     KJsResponsiveNavigation(
         ExportDataDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.ImportExport,
+            contentDescription = stringResource(R.string.btn_text_export_data),
+            onClick = {
+                exportDataViewModel.commitExport(
+                    context = context,
+                    successCallback = {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.msg_data_exported_to_downloads_folder),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                )
+            }
+        )
     ) {
-        val context = LocalContext.current
-
         val bikes by exportDataViewModel.allBikes.collectAsState(
             emptyList()
         )
@@ -140,34 +162,6 @@ fun ExportData(
                 }
                 items(items = components, key = { "component-${it.uid}" }) {
                     Text(text = it.name)
-                }
-            }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-                Button(onClick = {
-                    exportDataViewModel.commitExport(
-                        context = context,
-                        successCallback = {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.msg_data_exported_to_downloads_folder),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    )
-                }) {
-                    Text(text = stringResource(R.string.btn_text_export_data))
                 }
             }
         }

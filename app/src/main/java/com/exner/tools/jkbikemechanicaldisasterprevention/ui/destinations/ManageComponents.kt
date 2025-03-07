@@ -21,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +36,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultS
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ComponentAddDestination
@@ -57,7 +57,23 @@ fun ManageComponents(
     KJsResponsiveNavigation(
         ManageComponentsDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.btn_text_add_component),
+            onClick = {
+                destinationsNavigator.navigate(ComponentAddDestination)
+            }
+        )
     ) {
         val components: List<Component> by manageComponentsViewModel.components.collectAsState(
             initial = emptyList()
@@ -127,34 +143,14 @@ fun ManageComponents(
             DefaultSpacer()
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
-                Button(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
                 Button(onClick = {
                     destinationsNavigator.navigate(ComponentAnalysisDestination)
                 }) {
                     Text(
                         text = stringResource(R.string.hdr_analyse_components)
                     )
-                }
-                if (windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact) {
-                    Button(onClick = {
-                        destinationsNavigator.navigate(ComponentAddDestination)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(R.string.btn_desc_add_component)
-                        )
-                        IconSpacer()
-                        Text(text = stringResource(R.string.btn_text_add_component))
-                    }
                 }
             }
         }

@@ -14,8 +14,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.DrawerDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
@@ -32,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsMenuItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.NavigationStyle
 import com.ramcosta.composedestinations.generated.destinations.HomeDestination
@@ -47,6 +53,8 @@ fun KJsResponsiveNavigation(
     currentDestination: BaseRoute,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass,
+    myActions: List<KJsAction> = emptyList(),
+    myFloatingActionButton: KJsAction? = null,
     content: @Composable () -> Unit
 ) {
     val listOfMenuItems: List<KJsMenuItem> = listOf(
@@ -118,6 +126,39 @@ fun KJsResponsiveNavigation(
                                 )
                             }
                         }
+                    } else if (myActions.isNotEmpty() || myFloatingActionButton != null) {
+                        BottomAppBar(
+                            actions = {
+                                myActions.forEach { kjsAction ->
+                                    IconButton(onClick = {
+                                        kjsAction.onClick()
+                                    }) {
+                                        Icon(
+                                            imageVector = kjsAction.imageVector,
+                                            contentDescription = kjsAction.contentDescription
+                                        )
+                                    }
+                                }
+                            },
+                            floatingActionButton = {
+                                if (myFloatingActionButton != null && myFloatingActionButton.enabled) {
+                                    ExtendedFloatingActionButton(
+                                        text = { Text(text = myFloatingActionButton.contentDescription) },
+                                        icon = {
+                                            Icon(
+                                                imageVector = myFloatingActionButton.imageVector,
+                                                contentDescription = myFloatingActionButton.contentDescription
+                                            )
+                                        },
+                                        onClick = {
+                                            myFloatingActionButton.onClick()
+                                        },
+                                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                                    )
+                                }
+                            }
+                        )
                     }
                 }
             )

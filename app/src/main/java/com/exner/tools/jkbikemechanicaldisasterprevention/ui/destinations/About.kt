@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AboutDestination
@@ -30,7 +33,16 @@ fun About(
     KJsResponsiveNavigation(
         AboutDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
     ) {
         Column(
             modifier = Modifier

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.AutomaticActivities
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.AutomaticActivitiesGenerationLogListDestination
@@ -38,7 +41,16 @@ fun AutomaticActivitiesGenerationLogList(
     KJsResponsiveNavigation(
         AutomaticActivitiesGenerationLogListDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
     ) {
         val logEntries: List<AutomaticActivitiesGenerationLog> by automaticActivitiesGenerationLogListViewModel.logEntries.collectAsState(
             initial = emptyList()

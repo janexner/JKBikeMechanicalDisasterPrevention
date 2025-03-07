@@ -1,20 +1,13 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -37,6 +30,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultT
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
@@ -54,19 +48,56 @@ fun BikeAdd(
     windowSizeClass: WindowSizeClass
 ) {
 
+    // input fields
+    var name by remember { mutableStateOf("") }
+    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var mileage by remember { mutableIntStateOf(0) }
+    var isElectric by remember { mutableStateOf(false) }
+
+    var modified by remember { mutableStateOf(false) }
+    var created by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         BikeAddDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.Default.Clear,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Save,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                val bike = Bike(
+                    name = name,
+                    buildDate = Instant.fromEpochMilliseconds(selectedDate!!)
+                        .toLocalDateTime(
+                            TimeZone.currentSystemDefault()
+                        ).date,
+                    mileage = mileage,
+                    lastUsedDate = null,
+                    isElectric = isElectric,
+                    uid = 0 // autogenerate
+                )
+                bikeAddViewModel.saveNewBike(
+                    bike = bike,
+                )
+                modified = false
+                created = true
+                destinationsNavigator.navigateUp()
+                destinationsNavigator.popBackStack(
+                    ManageBikesDestination, inclusive = false
+                )
+            },
+            enabled = modified && name.isNotBlank() && selectedDate != null
+        )
     ) {
-        // input fields
-        var name by remember { mutableStateOf("") }
-        var selectedDate by remember { mutableStateOf<Long?>(null) }
-        var mileage by remember { mutableIntStateOf(0) }
-        var isElectric by remember { mutableStateOf(false) }
-
-        var modified by remember { mutableStateOf(false) }
-        var created by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -109,51 +140,6 @@ fun BikeAdd(
                     },
                     label = stringResource(R.string.lbl_mileage),
                 )
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                DefaultSpacer()
-                Button(
-                    onClick = {
-                        val bike = Bike(
-                            name = name,
-                            buildDate = Instant.fromEpochMilliseconds(selectedDate!!)
-                                .toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).date,
-                            mileage = mileage,
-                            lastUsedDate = null,
-                            isElectric = isElectric,
-                            uid = 0 // autogenerate
-                        )
-                        bikeAddViewModel.saveNewBike(
-                            bike = bike,
-                        )
-                        modified = false
-                        created = true
-                        destinationsNavigator.popBackStack(
-                            ManageBikesDestination, inclusive = false
-                        )
-                    },
-                    enabled = name.isNotBlank() && selectedDate != null,
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_bike)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-                }
             }
         }
     }

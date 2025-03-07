@@ -1,21 +1,14 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,10 +26,10 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeDeleteDestination
@@ -56,16 +49,48 @@ fun BikeEdit(
     windowSizeClass: WindowSizeClass
 ) {
 
+    val bikeEditViewModel =
+        hiltViewModel<BikeEditViewModel, BikeEditViewModel.BikeEditViewModelFactory> { factory ->
+            factory.create(bikeUid = bikeUid)
+        }
+
+    var modified by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         BikeEditDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            ),
+            KJsAction(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.btn_text_delete),
+                onClick = {
+                    destinationsNavigator.navigate(
+                        BikeDeleteDestination(bikeUid = bikeUid)
+                    )
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Done,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                bikeEditViewModel.commitBike()
+                modified = false
+                destinationsNavigator.popBackStack(
+                    ManageBikesDestination, inclusive = false
+                )
+            },
+            enabled = modified
+        )
     ) {
-        val bikeEditViewModel =
-            hiltViewModel<BikeEditViewModel, BikeEditViewModel.BikeEditViewModelFactory> { factory ->
-                factory.create(bikeUid = bikeUid)
-            }
-
         val bike by bikeEditViewModel.bike.observeAsState()
         val buildDateInstant = bike?.let {
             LocalDateTime(it.buildDate, LocalTime(12, 0, 0)).toInstant(
@@ -81,8 +106,6 @@ fun BikeEdit(
             }
         }
         var selectedLastUsedDate = lastUsedDateInstant?.toEpochMilliseconds()
-
-        var modified by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -137,45 +160,6 @@ fun BikeEdit(
                         bikeEditViewModel.updateLastUsedDate(it)
                     }
                 )
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                IconSpacer()
-                IconButton(onClick = {
-                    destinationsNavigator.navigate(BikeDeleteDestination(bikeUid = bikeUid))
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.btn_text_delete)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.7f))
-                Button(
-                    onClick = {
-                        bikeEditViewModel.commitBike()
-                        modified = false
-                        destinationsNavigator.popBackStack(
-                            ManageBikesDestination, inclusive = false
-                        )
-                    },
-                    enabled = modified
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_bike)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-                }
             }
         }
     }

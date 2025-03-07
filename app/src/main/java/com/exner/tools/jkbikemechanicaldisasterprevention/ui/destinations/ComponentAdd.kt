@@ -1,19 +1,13 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -40,6 +34,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultT
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
@@ -57,32 +52,101 @@ fun ComponentAdd(
     windowSizeClass: WindowSizeClass
 ) {
 
+    // input fields
+    var name by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var acquisitionDate by remember { mutableStateOf<Long?>(null) }
+    var firstUseDate by remember { mutableStateOf<Long?>(null) }
+    var lastCheckDate by remember { mutableStateOf<Long?>(null) }
+    var bike: Bike? by remember { mutableStateOf(null) }
+    var checkIntervalMiles: Int? by remember { mutableStateOf(null) }
+    var checkIntervalDays: Int? by remember { mutableStateOf(null) }
+    var lastCheckMileage: Int? by remember { mutableStateOf(null) }
+    var currentMileage: Int? by remember { mutableStateOf(null) }
+    var titleForAutomaticActivities: String? by remember { mutableStateOf(null) }
+    var wearLevel: WearLevel? by remember { mutableStateOf(null) }
+    var retirementDate by remember { mutableStateOf<Long?>(null) }
+    // TODO put those into the UI
+
+    val allBikes by componentAddViewModel.allBikes.collectAsStateWithLifecycle(emptyList())
+
+    var modified by remember { mutableStateOf(false) }
+    var created by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         BikeAddDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.Default.Clear,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Save,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                val component = Component(
+                    name = name,
+                    description = description,
+                    acquisitionDate = if (acquisitionDate != null) {
+                        Instant.fromEpochMilliseconds(acquisitionDate!!)
+                            .toLocalDateTime(
+                                TimeZone.currentSystemDefault()
+                            ).date
+                    } else {
+                        null
+                    },
+                    firstUseDate = if (firstUseDate != null) {
+                        Instant.fromEpochMilliseconds(firstUseDate!!)
+                            .toLocalDateTime(
+                                TimeZone.currentSystemDefault()
+                            ).date
+                    } else {
+                        null
+                    },
+                    lastCheckDate = if (lastCheckDate != null) {
+                        Instant.fromEpochMilliseconds(lastCheckDate!!)
+                            .toLocalDateTime(
+                                TimeZone.currentSystemDefault()
+                            ).date
+                    } else {
+                        null
+                    },
+                    bikeUid = bike?.uid,
+                    checkIntervalMiles = checkIntervalMiles,
+                    checkIntervalDays = checkIntervalDays,
+                    lastCheckMileage = lastCheckMileage,
+                    currentMileage = currentMileage,
+                    titleForAutomaticActivities = titleForAutomaticActivities,
+                    wearLevel = wearLevel,
+                    retirementDate = if (retirementDate != null) {
+                        Instant.fromEpochMilliseconds(retirementDate!!)
+                            .toLocalDateTime(
+                                TimeZone.currentSystemDefault()
+                            ).date
+                    } else {
+                        null
+                    },
+                    uid = 0L
+                )
+                componentAddViewModel.saveNewComponent(
+                    component = component,
+                )
+                modified = false
+                created = true
+                destinationsNavigator.navigateUp()
+                destinationsNavigator.popBackStack(
+                    ManageComponentsDestination, inclusive = false
+                )
+            },
+            enabled = modified && name.isNotBlank() && acquisitionDate != null
+        )
     ) {
-        // input fields
-        var name by remember { mutableStateOf("") }
-        var description by remember { mutableStateOf("") }
-        var acquisitionDate by remember { mutableStateOf<Long?>(null) }
-        var firstUseDate by remember { mutableStateOf<Long?>(null) }
-        var lastCheckDate by remember { mutableStateOf<Long?>(null) }
-        var bike: Bike? by remember { mutableStateOf(null) }
-        var checkIntervalMiles: Int? by remember { mutableStateOf(null) }
-        var checkIntervalDays: Int? by remember { mutableStateOf(null) }
-        var lastCheckMileage: Int? by remember { mutableStateOf(null) }
-        var currentMileage: Int? by remember { mutableStateOf(null) }
-        var titleForAutomaticActivities: String? by remember { mutableStateOf(null) }
-        var wearLevel: WearLevel? by remember { mutableStateOf(null) }
-        var retirementDate by remember { mutableStateOf<Long?>(null) }
-        // TODO put those into the UI
-
-        val allBikes by componentAddViewModel.allBikes.collectAsStateWithLifecycle(emptyList())
-
-        var modified by remember { mutableStateOf(false) }
-        var created by remember { mutableStateOf(false) }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -208,84 +272,6 @@ fun ComponentAdd(
                         retirementDate = it
                     }
                 )
-            }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                DefaultSpacer()
-                Button(
-                    onClick = {
-                        val component = Component(
-                            name = name,
-                            description = description,
-                            acquisitionDate = if (acquisitionDate != null) {
-                                Instant.fromEpochMilliseconds(acquisitionDate!!)
-                                    .toLocalDateTime(
-                                        TimeZone.currentSystemDefault()
-                                    ).date
-                            } else {
-                                null
-                            },
-                            firstUseDate = if (firstUseDate != null) {
-                                Instant.fromEpochMilliseconds(firstUseDate!!)
-                                    .toLocalDateTime(
-                                        TimeZone.currentSystemDefault()
-                                    ).date
-                            } else {
-                                null
-                            },
-                            lastCheckDate = if (lastCheckDate != null) {
-                                Instant.fromEpochMilliseconds(lastCheckDate!!)
-                                    .toLocalDateTime(
-                                        TimeZone.currentSystemDefault()
-                                    ).date
-                            } else {
-                                null
-                            },
-                            bikeUid = bike?.uid,
-                            checkIntervalMiles = checkIntervalMiles,
-                            checkIntervalDays = checkIntervalDays,
-                            lastCheckMileage = lastCheckMileage,
-                            currentMileage = currentMileage,
-                            titleForAutomaticActivities = titleForAutomaticActivities,
-                            wearLevel = wearLevel,
-                            retirementDate = if (retirementDate != null) {
-                                Instant.fromEpochMilliseconds(retirementDate!!)
-                                    .toLocalDateTime(
-                                        TimeZone.currentSystemDefault()
-                                    ).date
-                            } else {
-                                null
-                            },
-                            uid = 0L
-                        )
-                        componentAddViewModel.saveNewComponent(
-                            component = component,
-                        )
-                        modified = false
-                        created = true
-                        destinationsNavigator.popBackStack(
-                            ManageComponentsDestination, inclusive = false
-                        )
-                    },
-                    enabled = name.isNotBlank() && acquisitionDate != null,
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_bike)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-                }
             }
         }
     }

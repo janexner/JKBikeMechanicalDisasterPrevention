@@ -1,6 +1,5 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,8 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -31,11 +28,11 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ManageTemplateActivitiesViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.RideLevelSelectorForLists
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TemplateActivityListItem
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ManageTemplateActivitiesDestination
@@ -54,7 +51,23 @@ fun ManageTemplateActivities(
     KJsResponsiveNavigation(
         ManageTemplateActivitiesDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.btn_text_add_template_activity),
+            onClick = {
+                destinationsNavigator.navigate(TemplateActivityAddDestination)
+            }
+        )
     ) {
         var currentRideLevel: Int? by remember { mutableStateOf(null) }
 
@@ -124,30 +137,6 @@ fun ManageTemplateActivities(
                             )
                         )
                     }
-                }
-            }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-                Button(onClick = {
-                    destinationsNavigator.navigate(TemplateActivityAddDestination)
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.btn_desc_add_template_activity)
-                    )
-                    IconSpacer()
-                    Text(text = stringResource(R.string.btn_text_add_template_activity))
                 }
             }
         }

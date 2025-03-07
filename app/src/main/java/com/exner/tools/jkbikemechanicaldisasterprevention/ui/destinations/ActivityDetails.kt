@@ -1,20 +1,14 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -26,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityDetailsViewModel
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowActivityDetails
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ActivityDeleteDestination
@@ -48,7 +42,30 @@ fun ActivityDetails(
     KJsResponsiveNavigation(
         ActivityDetailsDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            ),
+            KJsAction(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.btn_text_delete),
+                onClick = {
+                    destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Edit,
+            contentDescription = stringResource(R.string.btn_text_edit),
+            onClick = {
+                destinationsNavigator.navigate(ActivityEditDestination(activityUid))
+            }
+        )
     ) {
         val activityDetailsViewModel =
             hiltViewModel<ActivityDetailsViewModel, ActivityDetailsViewModel.ActivityDetailsViewModelFactory> { factory ->
@@ -71,40 +88,6 @@ fun ActivityDetails(
                     ShowActivityDetails(activity)
                 } else {
                     Text(text = stringResource(R.string.we_can_not_find_this_activity))
-                }
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.btn_desc_back)
-                    )
-                }
-                IconSpacer()
-                IconButton(onClick = {
-                    destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.btn_text_delete)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.7f))
-                Button(
-                    onClick = {
-                        destinationsNavigator.navigate(ActivityEditDestination(activityUid))
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_edit_the_activity)
-                    )
-                    Text(text = stringResource(R.string.btn_text_edit))
                 }
             }
         }

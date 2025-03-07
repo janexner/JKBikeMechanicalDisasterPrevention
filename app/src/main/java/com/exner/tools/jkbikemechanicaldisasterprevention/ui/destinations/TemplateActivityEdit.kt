@@ -1,8 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,9 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -35,10 +30,10 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityEdi
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorTemplate
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.TemplateActivityDeleteDestination
@@ -53,19 +48,49 @@ fun TemplateActivityEdit(
     windowSizeClass: WindowSizeClass
 ) {
 
+    val templateActivityEditViewModel =
+        hiltViewModel<TemplateActivityEditViewModel, TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory> { factory ->
+            factory.create(templateActivityUid = templateActivityUid)
+        }
+
+    var modified by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         TemplateActivityEditDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            ),
+            KJsAction(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.btn_text_delete),
+                onClick = {
+                    destinationsNavigator.navigate(
+                        TemplateActivityDeleteDestination(
+                            templateActivityUid
+                        )
+                    )
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Done,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                templateActivityEditViewModel.commitActivity()
+                modified = false
+                destinationsNavigator.navigateUp()
+            },
+            enabled = modified
+        )
     ) {
-        val templateActivityEditViewModel =
-            hiltViewModel<TemplateActivityEditViewModel, TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory> { factory ->
-                factory.create(templateActivityUid = templateActivityUid)
-            }
-
         val templateActivity by templateActivityEditViewModel.templateActivity.observeAsState()
-
-        var modified by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -113,48 +138,6 @@ fun TemplateActivityEdit(
                 ) {
                     templateActivityEditViewModel.updateIsEBikeSpecific(it)
                     modified = true
-                }
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                IconSpacer()
-                IconButton(onClick = {
-                    destinationsNavigator.navigate(
-                        TemplateActivityDeleteDestination(
-                            templateActivityUid
-                        )
-                    )
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.btn_text_delete)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.7f))
-                Button(
-                    onClick = {
-                        templateActivityEditViewModel.commitActivity()
-                        modified = false
-                        destinationsNavigator.navigateUp()
-                    },
-                    enabled = modified
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_activity)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-
                 }
             }
         }

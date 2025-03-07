@@ -1,10 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,10 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -39,6 +33,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultT
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.TemplateActivityAddDestination
@@ -52,18 +47,49 @@ fun TemplateActivityAdd(
     windowSizeClass: WindowSizeClass
 ) {
 
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var rideLevel: Int? by remember { mutableStateOf(null) }
+    var isEbikeSpecific by remember { mutableStateOf(false) }
+
+    var modified by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         TemplateActivityAddDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.Default.Clear,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Save,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                val templateActivity = TemplateActivity(
+                    rideLevel = rideLevel,
+                    title = title,
+                    description = description,
+                    isEBikeSpecific = isEbikeSpecific
+                )
+                Log.d(
+                    "TemplateActivityAdd",
+                    "Saving template activity $templateActivity"
+                )
+                templateActivityAddViewModel.saveTemplateActivity(
+                    templateActivity
+                )
+                modified = false
+                destinationsNavigator.navigateUp()
+            },
+            enabled = modified && title.isNotBlank()
+        )
     ) {
-        var title by remember { mutableStateOf("") }
-        var description by remember { mutableStateOf("") }
-        var rideLevel: Int? by remember { mutableStateOf(null) }
-        var isEbikeSpecific by remember { mutableStateOf(false) }
-
-        var modified by remember { mutableStateOf(false) }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -112,48 +138,6 @@ fun TemplateActivityAdd(
                     isEbikeSpecific = it
                     modified = true
                 }
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                Button(
-                    onClick = {
-                        val templateActivity = TemplateActivity(
-                            rideLevel = rideLevel,
-                            title = title,
-                            description = description,
-                            isEBikeSpecific = isEbikeSpecific
-                        )
-                        Log.d(
-                            "TemplateActivityAdd",
-                            "Saving template activity $templateActivity"
-                        )
-                        templateActivityAddViewModel.saveTemplateActivity(
-                            templateActivity
-                        )
-                        modified = false
-                        destinationsNavigator.navigateUp()
-                    },
-                    enabled = modified
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_activity)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-
-                }
-
             }
         }
     }

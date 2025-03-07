@@ -1,10 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,10 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,10 +29,10 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultInstantSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorActivity
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.ActivityDeleteDestination
@@ -57,16 +50,44 @@ fun ActivityEdit(
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    val activityEditViewModel =
+        hiltViewModel<ActivityEditViewModel, ActivityEditViewModel.ActivityEditViewModelFactory> { factory ->
+            factory.create(activityUid = activityUid)
+        }
+
+    var modified by remember { mutableStateOf(false) }
 
     KJsResponsiveNavigation(
         ActivityEditDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            ),
+            KJsAction(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.btn_text_delete),
+                onClick = {
+                    destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Done,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                activityEditViewModel.commitActivity()
+                modified = false
+                destinationsNavigator.navigateUp()
+            },
+            enabled = modified
+        )
     ) {
-        val activityEditViewModel =
-            hiltViewModel<ActivityEditViewModel, ActivityEditViewModel.ActivityEditViewModelFactory> { factory ->
-                factory.create(activityUid = activityUid)
-            }
 
         val activity by activityEditViewModel.activity.observeAsState()
         var selectedCreatedDate = activity?.createdInstant?.toEpochMilliseconds()
@@ -84,8 +105,6 @@ fun ActivityEdit(
         val currentBike: Bike? by activityEditViewModel.currentBike.collectAsStateWithLifecycle(
             initialValue = null
         )
-
-        var modified by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -166,43 +185,6 @@ fun ActivityEdit(
                         activityEditViewModel.updateDueDate(it)
                     }
                 )
-            }
-            Spacer(modifier = Modifier.weight(0.7f))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                IconSpacer()
-                IconButton(onClick = {
-                    destinationsNavigator.navigate(ActivityDeleteDestination(activityUid = activityUid))
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.btn_text_delete)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.7f))
-                Button(
-                    onClick = {
-                        activityEditViewModel.commitActivity()
-                        modified = false
-                        destinationsNavigator.navigateUp()
-                    },
-                    enabled = modified
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_activity)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-                }
             }
         }
     }

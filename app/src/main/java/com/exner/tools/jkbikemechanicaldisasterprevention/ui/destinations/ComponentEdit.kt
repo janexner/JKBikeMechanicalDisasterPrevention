@@ -1,21 +1,14 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,12 +27,11 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentEditViewMo
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeEditDestination
@@ -59,16 +51,48 @@ fun ComponentEdit(
     windowSizeClass: WindowSizeClass
 ) {
 
+    val componentEditViewModel =
+        hiltViewModel<ComponentEditViewModel, ComponentEditViewModel.ComponentEditViewModelFactory> { factory ->
+            factory.create(componentUid = componentUid)
+        }
+
+    var modified by remember { mutableStateOf(false) }
+
     KJsResponsiveNavigation(
         BikeEditDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_text_cancel),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            ),
+            KJsAction(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.btn_text_delete),
+                onClick = {
+                    destinationsNavigator.navigate(
+                        ComponentDeleteDestination(componentUid)
+                    )
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Done,
+            contentDescription = stringResource(R.string.btn_text_save),
+            onClick = {
+                componentEditViewModel.commitComponent()
+                modified = false
+                destinationsNavigator.popBackStack(
+                    ManageComponentsDestination, inclusive = false
+                )
+            },
+            enabled = modified
+        )
     ) {
-        val componentEditViewModel =
-            hiltViewModel<ComponentEditViewModel, ComponentEditViewModel.ComponentEditViewModelFactory> { factory ->
-                factory.create(componentUid = componentUid)
-            }
-
         val component by componentEditViewModel.component.observeAsState()
 
         val acquisitionDateInstant = component?.let {
@@ -104,8 +128,6 @@ fun ComponentEdit(
         val currentBike: Bike? by componentEditViewModel.currentBike.collectAsStateWithLifecycle(
             initialValue = null
         )
-
-        var modified by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -243,45 +265,6 @@ fun ComponentEdit(
                         modified = true
                     }
                 )
-            }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.btn_text_cancel)
-                    )
-                }
-                IconSpacer()
-                IconButton(onClick = {
-                    destinationsNavigator.navigate(ComponentDeleteDestination(componentUid))
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.btn_text_delete)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(0.7f))
-                Button(
-                    onClick = {
-                        componentEditViewModel.commitComponent()
-                        modified = false
-                        destinationsNavigator.popBackStack(
-                            ManageComponentsDestination, inclusive = false
-                        )
-                    },
-                    enabled = modified
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Done,
-                        contentDescription = stringResource(R.string.btn_desc_save_the_component)
-                    )
-                    Text(text = stringResource(R.string.btn_text_save))
-                }
             }
         }
     }

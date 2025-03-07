@@ -3,7 +3,6 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,6 +33,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultS
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.BikeAddDestination
@@ -52,9 +51,25 @@ fun ManageBikes(
 ) {
 
     KJsResponsiveNavigation(
-        ManageBikesDestination,
-        destinationsNavigator,
-        windowSizeClass
+        currentDestination = ManageBikesDestination,
+        destinationsNavigator = destinationsNavigator,
+        windowSizeClass = windowSizeClass,
+        myActions = listOf(
+            KJsAction(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.btn_desc_back),
+                onClick = {
+                    destinationsNavigator.navigateUp()
+                }
+            )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.btn_text_add_bike),
+            onClick = {
+                destinationsNavigator.navigate(BikeAddDestination)
+            }
+        )
     ) {
         val bikes: List<Bike> by manageBikesViewModel.bikes.collectAsState(
             initial = emptyList()
@@ -120,30 +135,6 @@ fun ManageBikes(
                             )
                         }
                     }
-                }
-            }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(onClick = {
-                    destinationsNavigator.navigateUp()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-                Button(onClick = {
-                    destinationsNavigator.navigate(BikeAddDestination)
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.btn_desc_add_bike)
-                    )
-                    IconSpacer()
-                    Text(text = stringResource(R.string.btn_text_add_bike))
                 }
             }
         }
