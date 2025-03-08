@@ -21,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityDetailsViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowActivityDetails
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -65,7 +64,8 @@ fun ActivityDetails(
             onClick = {
                 destinationsNavigator.navigate(ActivityEditDestination(activityUid))
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_activity_details)
     ) {
         val activityDetailsViewModel =
             hiltViewModel<ActivityDetailsViewModel, ActivityDetailsViewModel.ActivityDetailsViewModelFactory> { factory ->
@@ -79,7 +79,6 @@ fun ActivityDetails(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_activity_details))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

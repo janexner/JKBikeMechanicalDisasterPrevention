@@ -27,7 +27,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -89,7 +88,8 @@ fun BikeEdit(
                 )
             },
             enabled = modified
-        )
+        ),
+        headline = stringResource(R.string.hdr_edit_a_bike)
     ) {
         val bike by bikeEditViewModel.bike.observeAsState()
         val buildDateInstant = bike?.let {
@@ -112,7 +112,6 @@ fun BikeEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_a_bike))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

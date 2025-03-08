@@ -19,7 +19,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityDeleteViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowTemplateActivityDetails
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -64,7 +63,8 @@ fun TemplateActivityDelete(
                     inclusive = false
                 )
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_delete_template_activity)
     ) {
         val activity by templateActivityDeleteViewModel.activity.observeAsState()
 
@@ -73,7 +73,6 @@ fun TemplateActivityDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_template_activity))
             if (activity != null) {
                 Text(text = "You are about to delete template activity ${activity?.title}!")
                 DefaultSpacer()

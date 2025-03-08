@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +33,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultN
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -145,16 +145,18 @@ fun ComponentAdd(
                 )
             },
             enabled = modified && name.isNotBlank() && acquisitionDate != null
-        )
+        ),
+        headline = stringResource(R.string.hdr_add_component)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_add_component))
-            Text(text = stringResource(R.string.a_new_component_brilliant))
-            DefaultSpacer()
+            if (windowSizeClass.heightSizeClass != WindowHeightSizeClass.Compact) {
+                Text(text = stringResource(R.string.a_new_component_brilliant))
+                DefaultSpacer()
+            }
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

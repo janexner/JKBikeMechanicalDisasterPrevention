@@ -18,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentDeleteViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -62,7 +61,8 @@ fun ComponentDelete(
                     inclusive = false
                 )
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_delete_a_component)
     ) {
         val component by componentDeleteViewModel.component.observeAsState()
 
@@ -71,7 +71,6 @@ fun ComponentDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_a_component))
             if (component != null) {
                 Text(text = "You are about to delete the component ${component!!.name}.")
             } else {

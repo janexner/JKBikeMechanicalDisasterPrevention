@@ -17,7 +17,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.BuildConfig
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -43,6 +42,7 @@ fun About(
                 }
             )
         ),
+        headline = stringResource(R.string.hdr_about)
     ) {
         Column(
             modifier = Modifier
@@ -50,7 +50,6 @@ fun About(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_about))
             Text(text = "Version " + BuildConfig.VERSION_NAME)
             DefaultSpacer()
             Text(text = stringResource(R.string.about1))

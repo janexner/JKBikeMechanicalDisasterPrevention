@@ -108,6 +108,7 @@
     <string name="lbl_name">Name</string>
     <string name="hdr_add_bike">Neues Fahrrad</string>
     <string name="hdr_add_component">Neue Komponente</string>
+    <string name="hdr_import_data">Daten importieren</string>
     <string name="hdr_export_data">Daten exportieren</string>
     <string name="quick_ride_when_todo">Am Vorabend erledigen!</string>
     <string name="day_out_when_todo">Am Vorabend oder ein paar Tage vorher erledigen!</string>

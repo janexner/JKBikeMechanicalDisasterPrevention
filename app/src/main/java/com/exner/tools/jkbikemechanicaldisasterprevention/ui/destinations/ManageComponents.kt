@@ -35,7 +35,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ManageComponentsVie
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -73,7 +72,8 @@ fun ManageComponents(
             onClick = {
                 destinationsNavigator.navigate(ComponentAddDestination)
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_manage_components)
     ) {
         val components: List<Component> by manageComponentsViewModel.components.collectAsState(
             initial = emptyList()
@@ -84,7 +84,6 @@ fun ManageComponents(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_components))
             Text(text = stringResource(R.string.tap_component_to_edit))
             DefaultSpacer()
             LazyColumn(

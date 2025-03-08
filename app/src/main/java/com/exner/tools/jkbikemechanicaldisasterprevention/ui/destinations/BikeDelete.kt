@@ -18,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.BikeDeleteViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -62,7 +61,8 @@ fun BikeDelete(
                     inclusive = false
                 )
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_delete_a_bike)
     ) {
         val bike by bikeDeleteViewModel.bike.observeAsState()
 
@@ -71,7 +71,6 @@ fun BikeDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_a_bike))
             if (bike != null) {
                 Text(text = "You are about to delete the bike ${bike!!.name}.")
             } else {

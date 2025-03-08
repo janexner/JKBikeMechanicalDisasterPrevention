@@ -39,7 +39,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.BikeSele
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TodoListItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TransientTodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
@@ -62,7 +61,8 @@ fun PrepareDayOut(
     KJsResponsiveNavigation(
         PrepareDayOutDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        headline = stringResource(R.string.hdr_day_out)
     ) {
         val bikes: List<Bike> by prepareDayOutViewModel.observeBikesRaw.collectAsStateWithLifecycle(
             initialValue = emptyList()
@@ -79,18 +79,16 @@ fun PrepareDayOut(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(0.dp, 8.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Top,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier.weight(0.6f)
                 ) {
-                    PageHeaderTextWithSpacer(stringResource(R.string.hdr_day_out))
-                    DefaultSpacer()
                     Text(text = stringResource(R.string.day_out_when_todo))
                 }
                 // the bike selector

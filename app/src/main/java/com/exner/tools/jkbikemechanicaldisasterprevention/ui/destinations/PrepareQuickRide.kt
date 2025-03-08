@@ -41,7 +41,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.BikeSele
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TodoListItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TransientTodoListItem
 import com.ramcosta.composedestinations.annotation.Destination
@@ -64,7 +63,8 @@ fun PrepareQuickRide(
     KJsResponsiveNavigation(
         PrepareQuickRideDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        headline = stringResource(R.string.hdr_quick_ride)
     ) {
         val bikes: List<Bike> by prepareQuickRideViewModel.observeBikesRaw.collectAsStateWithLifecycle(
             initialValue = emptyList()
@@ -81,19 +81,17 @@ fun PrepareQuickRide(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(0.dp, 8.dp)
         ) {
             // on wide screens, we'll put header and bike selector next to each other
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Top,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier.weight(0.6f)
                 ) {
-                    PageHeaderTextWithSpacer(stringResource(R.string.hdr_quick_ride))
-                    DefaultSpacer()
                     Text(text = stringResource(R.string.quick_ride_when_todo))
                 }
                 // the bike selector

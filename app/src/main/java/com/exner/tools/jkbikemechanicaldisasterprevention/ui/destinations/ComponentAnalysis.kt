@@ -26,7 +26,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.Retired
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentAnalysisViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -54,6 +53,7 @@ fun ComponentAnalysis(
                 }
             )
         ),
+        headline = stringResource(R.string.hdr_analyse_components)
     ) {
         val retiredComponents: List<RetiredComponents> by componentAnalysisViewModel.retiredComponents.collectAsState(
             emptyList()
@@ -71,7 +71,6 @@ fun ComponentAnalysis(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_analyse_components))
             if (retiredComponents.isNotEmpty()) {
                 Text(text = stringResource(R.string.select_components_for_analysis))
                 DefaultSpacer()

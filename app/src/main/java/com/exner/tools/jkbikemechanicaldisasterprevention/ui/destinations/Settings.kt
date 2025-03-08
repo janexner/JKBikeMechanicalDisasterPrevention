@@ -18,7 +18,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.SettingsViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndTriStateToggle
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
@@ -56,7 +55,8 @@ fun Settings(
             onClick = {
                 destinationsNavigator.navigate(ManageTemplateActivitiesDestination)
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_settings)
     ) {
         val userSelectedTheme by settingsViewModel.userSelectedTheme.collectAsStateWithLifecycle()
         val todoListsExpire by settingsViewModel.todoListsExpire.collectAsStateWithLifecycle()
@@ -65,7 +65,6 @@ fun Settings(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_settings))
             TextAndTriStateToggle(
                 text = stringResource(R.string.lbl_theme),
                 currentTheme = userSelectedTheme,

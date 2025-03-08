@@ -31,7 +31,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultR
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -88,7 +87,8 @@ fun TemplateActivityEdit(
                 destinationsNavigator.navigateUp()
             },
             enabled = modified
-        )
+        ),
+        headline = stringResource(R.string.hdr_edit_template_activity)
     ) {
         val templateActivity by templateActivityEditViewModel.templateActivity.observeAsState()
 
@@ -97,7 +97,6 @@ fun TemplateActivityEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_template_activity))
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {

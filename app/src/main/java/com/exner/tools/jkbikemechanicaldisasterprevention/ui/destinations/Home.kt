@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -60,7 +60,8 @@ fun Home(
     KJsResponsiveNavigation(
         HomeDestination,
         destinationsNavigator,
-        windowSizeClass
+        windowSizeClass,
+        headline = ""
     ) {
         val activitiesByBikes: List<ActivityWithBikeData> by homeViewModel
             .observeActivityWithBikeData.collectAsState(
@@ -70,7 +71,6 @@ fun Home(
 
         Column(
             modifier = Modifier
-                .padding(PaddingValues(8.dp))
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
@@ -85,13 +85,15 @@ fun Home(
                     .fillMaxWidth()
             ) {
                 stickyHeader {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primaryContainer)
-                            .padding(8.dp),
-                        text = stringResource(R.string.hdr_todos)
-                    )
+                    if (windowSizeClass.heightSizeClass != WindowHeightSizeClass.Compact) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(8.dp),
+                            text = stringResource(R.string.hdr_todos)
+                        )
+                    }
                 }
 
                 items(

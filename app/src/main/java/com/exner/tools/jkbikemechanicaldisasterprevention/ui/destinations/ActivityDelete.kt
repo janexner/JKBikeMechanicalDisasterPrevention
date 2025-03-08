@@ -19,7 +19,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityDeleteViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowActivityDetails
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -60,7 +59,8 @@ fun ActivityDelete(
                 activityDeleteViewModel.commitDelete()
                 destinationsNavigator.navigateUp()
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_delete_an_activity)
     ) {
         val activity by activityDeleteViewModel.activity.observeAsState()
 
@@ -69,7 +69,6 @@ fun ActivityDelete(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_delete_an_activity))
             if (activity != null) {
                 Text(text = "You are about to delete activity ${activity?.title}!")
                 DefaultSpacer()

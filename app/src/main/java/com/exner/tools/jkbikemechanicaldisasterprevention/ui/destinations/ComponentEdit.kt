@@ -29,7 +29,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -91,7 +90,8 @@ fun ComponentEdit(
                 )
             },
             enabled = modified
-        )
+        ),
+        headline = stringResource(R.string.hdr_edit_a_component)
     ) {
         val component by componentEditViewModel.component.observeAsState()
 
@@ -134,7 +134,6 @@ fun ComponentEdit(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_edit_a_component))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

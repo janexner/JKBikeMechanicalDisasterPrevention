@@ -36,6 +36,7 @@ import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -60,6 +61,7 @@ fun KJsResponsiveNavigation(
     windowSizeClass: WindowSizeClass,
     myActions: List<KJsAction> = emptyList(),
     myFloatingActionButton: KJsAction? = null,
+    headline: String,
     content: @Composable () -> Unit
 ) {
     val listOfMenuItems: List<KJsMenuItem> = listOf(
@@ -109,6 +111,9 @@ fun KJsResponsiveNavigation(
                     Box(
                         modifier = Modifier.padding(innerPadding)
                     ) {
+                        if (windowSizeClass.heightSizeClass != WindowHeightSizeClass.Compact && headline.isNotBlank()) {
+                            PageHeaderTextWithSpacer(headline)
+                        }
                         content()
                     }
                 },

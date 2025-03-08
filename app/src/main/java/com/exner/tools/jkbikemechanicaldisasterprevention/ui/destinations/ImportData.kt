@@ -3,6 +3,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,6 +58,7 @@ fun ImportData(
                 }
             )
         ),
+        headline = stringResource(R.string.hdr_import_data)
     ) {
         val importState by importDataViewModel.importStateFlow.collectAsStateWithLifecycle(
             ImportState()
@@ -103,7 +105,7 @@ fun ImportData(
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(8.dp)
         ) {
             // step 1 - select a file

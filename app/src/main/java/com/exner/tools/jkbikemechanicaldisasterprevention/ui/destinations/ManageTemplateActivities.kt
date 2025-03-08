@@ -29,7 +29,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Temp
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ManageTemplateActivitiesViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.RideLevelSelectorForLists
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TemplateActivityListItem
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
@@ -67,7 +66,8 @@ fun ManageTemplateActivities(
             onClick = {
                 destinationsNavigator.navigate(TemplateActivityAddDestination)
             }
-        )
+        ),
+        headline = stringResource(R.string.hdr_manage_template_activities)
     ) {
         var currentRideLevel: Int? by remember { mutableStateOf(null) }
 
@@ -80,7 +80,6 @@ fun ManageTemplateActivities(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_manage_template_activities))
             RideLevelSelectorForLists(
                 currentRideLevel,
             ) {

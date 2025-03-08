@@ -135,6 +135,7 @@
     <string name="hdr_analyse_components">Analyse components</string>
     <string name="hdr_delete_a_component">Delete component</string>
     <string name="hdr_edit_a_component">Edit component</string>
+    <string name="hdr_import_data">Import data</string>
     <string name="hdr_export_data">Export data</string>
     <string name="hdr_todos">TODOs</string>
     <string name="hdr_bikes">Bikes</string>

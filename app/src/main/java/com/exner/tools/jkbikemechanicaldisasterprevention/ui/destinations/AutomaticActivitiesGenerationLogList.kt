@@ -23,7 +23,6 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Auto
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.AutomaticActivitiesGenerationLogListViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
-import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.PageHeaderTextWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -51,6 +50,7 @@ fun AutomaticActivitiesGenerationLogList(
                 }
             )
         ),
+        headline = stringResource(R.string.hdr_log_entries)
     ) {
         val logEntries: List<AutomaticActivitiesGenerationLog> by automaticActivitiesGenerationLogListViewModel.logEntries.collectAsState(
             initial = emptyList()
@@ -61,7 +61,6 @@ fun AutomaticActivitiesGenerationLogList(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            PageHeaderTextWithSpacer(stringResource(R.string.hdr_log_entries))
             DefaultSpacer()
             if (logEntries.isEmpty()) {
                 Text(text = stringResource(R.string.no_log_entries_so_far))
