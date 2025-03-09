@@ -53,7 +53,7 @@ object DataConverter {
     fun fromRetirementReasonString(value: String?): RetirementReason? {
         when(value) {
             "WORN" -> return RetirementReason.WORN
-            "CRASH" -> return RetirementReason.CRASH
+            "IRREPARABLE" -> return RetirementReason.IRREPARABLE
             "UPGRADE" -> return RetirementReason.UPGRADE
             "NO_LONGER_NEEDED" -> return RetirementReason.NO_LONGER_NEEDED
         }

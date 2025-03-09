@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -18,10 +18,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.toLocalisedString
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.RetiredComponents
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentAnalysisViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
@@ -43,6 +45,8 @@ fun ComponentAnalysis(
 ) {
     kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_analyse_components))
 
+    val context = LocalContext.current
+
     KJsResponsiveNavigation(
         ManageComponentsDestination,
         destinationsNavigator,
@@ -55,6 +59,13 @@ fun ComponentAnalysis(
                     destinationsNavigator.navigateUp()
                 }
             )
+        ),
+        myFloatingActionButton = KJsAction(
+            imageVector = Icons.Default.Analytics,
+            contentDescription = stringResource(R.string.btn_text_analyse),
+            onClick = {
+                componentAnalysisViewModel.runAnalysis()
+            }
         ),
         headline = stringResource(R.string.hdr_analyse_components)
     ) {
@@ -99,15 +110,18 @@ fun ComponentAnalysis(
                                     }
                                 }
                             )
-                            Text(text = retiredComponent.name + " / " + retiredComponent.description)
+                            Text(
+                                text = retiredComponent.name + if (retiredComponent.retirementReason != null) {
+                                    " / " + toLocalisedString(
+                                        retiredComponent.retirementReason,
+                                        context
+                                    )
+                                } else {
+                                    ""
+                                }
+                            )
                         }
                     }
-                }
-                DefaultSpacer()
-                Button(onClick = {
-                    componentAnalysisViewModel.runAnalysis()
-                }) {
-                    Text(text = stringResource(R.string.btn_text_analyse))
                 }
                 DefaultSpacer()
                 if (analysisResults != null) {
