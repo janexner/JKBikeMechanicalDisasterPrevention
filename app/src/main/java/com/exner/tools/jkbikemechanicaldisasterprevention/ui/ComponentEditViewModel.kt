@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -154,6 +155,14 @@ class ComponentEditViewModel @AssistedInject constructor(
                     retirementDate = null
                 )
             }
+        }
+    }
+
+    fun updateRetirementReason(reason: RetirementReason?) {
+        if (component.value != null) {
+            _component.value = component.value!!.copy(
+                retirementReason = reason
+            )
         }
     }
 

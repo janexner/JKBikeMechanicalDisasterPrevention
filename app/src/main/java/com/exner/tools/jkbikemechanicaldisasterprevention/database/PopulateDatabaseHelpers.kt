@@ -110,12 +110,16 @@ suspend fun populateDatabaseWithSampleData(
         titleForAutomaticActivities = "Check brake pads for signs of wear",
         wearLevel = WearLevel.NEW,
         retirementDate = null,
+        retirementReason = null,
         uid = 0L,
     )
     provider.get().insertComponent(padsDominion)
 
 }
 
+// this function is a fallback
+// usually, template activities should be loaded from github, in the selected language of the device
+// if we do not have that language, then this code will be used
 suspend fun generatePreparationTemplateActivities(provider: Provider<KJsDAO>) {
     // create activities for quick ride
     createQuickRideTemplateActivity(

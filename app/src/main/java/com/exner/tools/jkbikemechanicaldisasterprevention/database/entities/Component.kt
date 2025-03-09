@@ -3,6 +3,7 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDate
@@ -24,6 +25,7 @@ data class Component(
 
     @ColumnInfo(name = "wear_level") val wearLevel: WearLevel?,
     @ColumnInfo(name = "retirement_date") val retirementDate: LocalDate?,
+    @ColumnInfo(name = "retirement_reason") val retirementReason: RetirementReason?,
 
     @ColumnInfo(name = "check_interval_miles") val checkIntervalMiles: Int?,
     @ColumnInfo(name = "check_interval_days") val checkIntervalDays: Int?,

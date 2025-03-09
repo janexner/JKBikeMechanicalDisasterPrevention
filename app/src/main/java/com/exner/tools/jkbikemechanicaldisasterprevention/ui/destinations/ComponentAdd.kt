@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Component
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ComponentAddViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
@@ -34,6 +35,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultN
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.RetirementReasonSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -69,7 +71,7 @@ fun ComponentAdd(
     var titleForAutomaticActivities: String? by remember { mutableStateOf(null) }
     var wearLevel: WearLevel? by remember { mutableStateOf(null) }
     var retirementDate by remember { mutableStateOf<Long?>(null) }
-    // TODO put those into the UI
+    var retirementReason: RetirementReason? by remember { mutableStateOf(null) }
 
     val allBikes by componentAddViewModel.allBikes.collectAsStateWithLifecycle(emptyList())
 
@@ -135,6 +137,7 @@ fun ComponentAdd(
                     } else {
                         null
                     },
+                    retirementReason = retirementReason,
                     uid = 0L
                 )
                 componentAddViewModel.saveNewComponent(
@@ -275,6 +278,13 @@ fun ComponentAdd(
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         retirementDate = it
+                    }
+                )
+                RetirementReasonSelector(
+                    currentRetirementReason = retirementReason,
+                    onRetirementReasonSelected = {
+                        retirementReason = it
+                        modified = true
                     }
                 )
             }

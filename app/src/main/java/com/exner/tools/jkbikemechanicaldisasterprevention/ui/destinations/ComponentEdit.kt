@@ -30,6 +30,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultD
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultTextFieldWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.RetirementReasonSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.WearLevelSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
 import com.ramcosta.composedestinations.annotation.Destination
@@ -165,9 +166,7 @@ fun ComponentEdit(
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedAcquisitionDate = it
-                        if (it != null) {
-                            componentEditViewModel.updateAcquisitionDate(it)
-                        }
+                        componentEditViewModel.updateAcquisitionDate(it)
                         modified = true
                     }
                 )
@@ -177,9 +176,7 @@ fun ComponentEdit(
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedFirstUseDate = it
-                        if (it != null) {
-                            componentEditViewModel.updateFirstUsedDate(it)
-                        }
+                        componentEditViewModel.updateFirstUsedDate(it)
                         modified = true
                     }
                 )
@@ -189,9 +186,7 @@ fun ComponentEdit(
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedLastCheckDate = it
-                        if (it != null) {
-                            componentEditViewModel.updateLastCheckDate(it)
-                        }
+                        componentEditViewModel.updateLastCheckDate(it)
                         modified = true
                     }
                 )
@@ -245,9 +240,14 @@ fun ComponentEdit(
                     placeholder = stringResource(R.string.placehldr_yyyy_mm_dd),
                     onDateSelected = {
                         selectedRetirementDate = it
-                        if (it != null) {
-                            componentEditViewModel.updateRetirementDate(it)
-                        }
+                        componentEditViewModel.updateRetirementDate(it)
+                        modified = true
+                    }
+                )
+                RetirementReasonSelector(
+                    currentRetirementReason = component?.retirementReason,
+                    onRetirementReasonSelected = {
+                        componentEditViewModel.updateRetirementReason(it)
                         modified = true
                     }
                 )

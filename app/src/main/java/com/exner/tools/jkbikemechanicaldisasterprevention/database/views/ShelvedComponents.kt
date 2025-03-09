@@ -2,11 +2,12 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.database.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import kotlinx.datetime.LocalDate
 
 @DatabaseView(
-    "SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, check_interval_miles, check_interval_days, " +
+    "SELECT name, description, acquisition_date, first_use_date, last_check_date, last_check_mileage, current_mileage, bike_uid, title_for_automatic_activities, wear_level, retirement_date, retirement_reason, check_interval_miles, check_interval_days, " +
             " uid " +
             "FROM Component WHERE bike_uid = NULL AND retirement_date = NULL ORDER BY acquisition_date DESC;"
 )
@@ -25,6 +26,7 @@ data class ShelvedComponents(
 
     @ColumnInfo(name = "wear_level") val wearLevel: WearLevel?,
     @ColumnInfo(name = "retirement_date") val retirementDate: LocalDate?,
+    @ColumnInfo(name = "retirement_reason") val retirementReason: RetirementReason?,
 
     @ColumnInfo(name = "check_interval_miles") val checkIntervalMiles: Int?,
     @ColumnInfo(name = "check_interval_days") val checkIntervalDays: Int?,

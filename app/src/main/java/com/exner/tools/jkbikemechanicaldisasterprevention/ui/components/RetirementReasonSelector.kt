@@ -26,20 +26,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
-import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.toLocalisedString
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations.pxToDp
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
-fun WearLevelSelector(
+fun RetirementReasonSelector(
     modifier: Modifier = Modifier,
-    currentWearLevel: WearLevel?,
+    currentRetirementReason: RetirementReason?,
     displayLabel: Boolean = true,
-    onWearLevelSelected: (WearLevel?) -> Unit
+    onRetirementReasonSelected: (RetirementReason?) -> Unit
 ) {
     var offset = Offset.Zero
-    var wearLevelsExpanded by remember {
+    var retirementReasonsExpanded by remember {
         mutableStateOf(false)
     }
     val context = LocalContext.current
@@ -56,14 +56,14 @@ fun WearLevelSelector(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (displayLabel) {
-                Text(text = stringResource(R.string.dropdown_lbl_which_wear_level))
+                Text(text = stringResource(R.string.dropdown_lbl_which_retirement_reason))
                 DefaultSpacer()
             }
             Button(
-                onClick = { wearLevelsExpanded = true }
+                onClick = { retirementReasonsExpanded = true }
             ) {
-                if (currentWearLevel != null) {
-                    Text(text = toLocalisedString(currentWearLevel, context))
+                if (currentRetirementReason != null) {
+                    Text(text = toLocalisedString(currentRetirementReason, context))
                 } else {
                     Text(text = stringResource(R.string.dropdown_trigger_select_a_wear_level))
                 }
@@ -71,38 +71,46 @@ fun WearLevelSelector(
         }
         val density = LocalDensity.current
         DropdownMenu(
-            expanded = wearLevelsExpanded,
+            expanded = retirementReasonsExpanded,
             offset = DpOffset(pxToDp(offset.x, density), pxToDp(offset.y, density)),
-            onDismissRequest = { wearLevelsExpanded = false }) {
+            onDismissRequest = { retirementReasonsExpanded = false }) {
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.dropdown_item_unspecified_wear_level)) },
                 onClick = {
-                    onWearLevelSelected(null)
-                    wearLevelsExpanded = false
+                    onRetirementReasonSelected(null)
+                    retirementReasonsExpanded = false
                 },
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_new)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_worn)) },
                 onClick = {
-                    onWearLevelSelected(WearLevel.NEW)
-                    wearLevelsExpanded = false
+                    onRetirementReasonSelected(RetirementReason.WORN)
+                    retirementReasonsExpanded = false
                 },
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_used)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_crash)) },
                 onClick = {
-                    onWearLevelSelected(WearLevel.USED)
-                    wearLevelsExpanded = false
+                    onRetirementReasonSelected(RetirementReason.CRASH)
+                    retirementReasonsExpanded = false
                 },
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.dropdown_item_wear_level_due_for_replacement)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_upgrade)) },
                 onClick = {
-                    onWearLevelSelected(WearLevel.DUE_FOR_REPLACEMENT)
-                    wearLevelsExpanded = false
+                    onRetirementReasonSelected(RetirementReason.UPGRADE)
+                    retirementReasonsExpanded = false
+                },
+                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+            )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_no_longer_needed)) },
+                onClick = {
+                    onRetirementReasonSelected(RetirementReason.NO_LONGER_NEEDED)
+                    retirementReasonsExpanded = false
                 },
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )

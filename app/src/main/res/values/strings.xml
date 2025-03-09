@@ -39,6 +39,7 @@
     <string name="btn_text_add_template_activity">Add template activity</string>
     <string name="btn_desc_manage_template_activities">Manage template activities</string>
     <string name="btn_text_manage_template_activities">Manage template activities</string>
+    <string name="btn_text_analyse_components">Analyse retired components</string>
 
     // dropdown menu items
     <string name="dropdown_lbl_which_bike">Which bike</string>
@@ -55,6 +56,11 @@
     <string name="dropdown_item_wear_level_new">New</string>
     <string name="dropdown_item_wear_level_used">Used</string>
     <string name="dropdown_item_wear_level_due_for_replacement">Due for replacement</string>
+    <string name="dropdown_lbl_which_retirement_reason">Why did you retire this?</string>
+    <string name="dropdown_item_retirement_reason_worn">Worn out or broken</string>
+    <string name="dropdown_item_retirement_reason_crash">Broken due to crash</string>
+    <string name="dropdown_item_retirement_reason_upgrade">Replaced with upgrade</string>
+    <string name="dropdown_item_retirement_reason_no_longer_needed">No longer needed</string>
 
     // tab titles
     <string name="tab_day_out">day out</string>
@@ -219,5 +225,4 @@
     <string name="app_name" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
     <string name="top_bar_title" translatable="false">J-K Bike - MDP</string>
     <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
-    <string name="btn_text_analyse_components">Analyse retired components</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.database
 
 import androidx.room.TypeConverter
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.RetirementReason
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.WearLevel
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -46,5 +47,21 @@ object DataConverter {
     @TypeConverter
     fun wearLevelToString(wearLevel: WearLevel?): String? {
         return wearLevel?.toString() // good for the database, do not localise!
+    }
+
+    @TypeConverter
+    fun fromRetirementReasonString(value: String?): RetirementReason? {
+        when(value) {
+            "WORN" -> return RetirementReason.WORN
+            "CRASH" -> return RetirementReason.CRASH
+            "UPGRADE" -> return RetirementReason.UPGRADE
+            "NO_LONGER_NEEDED" -> return RetirementReason.NO_LONGER_NEEDED
+        }
+        return null
+    }
+
+    @TypeConverter
+    fun retirementReasonToString(reason: RetirementReason?): String? {
+        return reason?.toString() // good for the database, do not localise!
     }
 }

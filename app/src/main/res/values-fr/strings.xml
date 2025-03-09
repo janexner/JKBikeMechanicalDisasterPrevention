@@ -50,6 +50,7 @@
     <string name="btn_desc_save_the_bike">Enregistrer le vélo</string>
     <string name="dropdown_trigger_select_a_bike">Sélectionner vélo</string>
     <string name="dialog_trigger_select_date">Sélectionner une date</string>
+    <string name="dropdown_item_retirement_reason_no_longer_needed">Plus utilisé</string>
     <string name="tab_day_out">sortie journée</string>
     <string name="tab_holidays">vacances</string>
     <string name="tab_home">accueil</string>
@@ -195,4 +196,8 @@
     <string name="ride_level_day_out">Sortie journée</string>
     <string name="ride_level_holidays">Vacances</string>
     <string name="btn_text_analyse_components">Analyser les composants retirés</string>
+    <string name="dropdown_lbl_which_retirement_reason">Retiré pour quelle raison?</string>
+    <string name="dropdown_item_retirement_reason_worn">Usé ou cassé</string>
+    <string name="dropdown_item_retirement_reason_crash">Cassé dans un crash</string>
+    <string name="dropdown_item_retirement_reason_upgrade">Remplacé</string>
 </resources>

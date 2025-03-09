@@ -52,6 +52,7 @@
     <string name="btn_desc_save_the_bike">Fahrrad speichern</string>
     <string name="dropdown_trigger_select_a_bike">Rad wählen</string>
     <string name="dialog_trigger_select_date">Datum wählen</string>
+    <string name="dropdown_item_retirement_reason_no_longer_needed">Nicht mehr benutzt</string>
     <string name="tab_day_out">Tagestour</string>
     <string name="tab_holidays">Ferien</string>
     <string name="tab_home">Home</string>
@@ -195,4 +196,8 @@
     <string name="ride_level_day_out">Tagestour</string>
     <string name="ride_level_holidays">Ferien</string>
     <string name="btn_text_analyse_components">Alte Komponenten analysieren</string>
+    <string name="dropdown_lbl_which_retirement_reason">Warum ausgebaut?</string>
+    <string name="dropdown_item_retirement_reason_worn">Abgenutzt oder kaputt</string>
+    <string name="dropdown_item_retirement_reason_crash">Kaputt nach Crash</string>
+    <string name="dropdown_item_retirement_reason_upgrade">Mit besserer Komponente ersetzt</string>
 </resources>
