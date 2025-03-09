@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.BikeEditViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultNumberFieldWithSpacer
@@ -44,9 +45,11 @@ import kotlinx.datetime.toInstant
 @Composable
 fun BikeEdit(
     bikeUid: Long,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_edit_a_bike))
 
     val bikeEditViewModel =
         hiltViewModel<BikeEditViewModel, BikeEditViewModel.BikeEditViewModelFactory> { factory ->

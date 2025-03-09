@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityDetailsViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ShowActivityDetails
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
@@ -34,9 +35,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun ActivityDetails(
     activityUid: Long,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_activity_details))
 
     KJsResponsiveNavigation(
         ActivityDetailsDestination,

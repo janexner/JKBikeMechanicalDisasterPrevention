@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ExportDataViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
@@ -38,9 +39,12 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun ExportData(
     exportDataViewModel: ExportDataViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_export_data))
+
     val context = LocalContext.current
 
     KJsResponsiveNavigation(

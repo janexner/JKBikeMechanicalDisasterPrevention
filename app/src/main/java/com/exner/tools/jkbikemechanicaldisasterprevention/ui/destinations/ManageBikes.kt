@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ManageBikesViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
@@ -45,9 +46,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun ManageBikes(
     manageBikesViewModel: ManageBikesViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_manage_bikes))
 
     KJsResponsiveNavigation(
         currentDestination = ManageBikesDestination,

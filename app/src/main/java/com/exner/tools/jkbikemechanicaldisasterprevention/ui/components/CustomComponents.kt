@@ -443,6 +443,7 @@ fun DefaultInstantSelectorWithSpacer(
 @Composable
 fun PageHeaderTextWithSpacer(text: String) {
     Text(
+        modifier = Modifier.padding(8.dp, 0.dp),
         text = text,
         style = MaterialTheme.typography.headlineSmall
     )

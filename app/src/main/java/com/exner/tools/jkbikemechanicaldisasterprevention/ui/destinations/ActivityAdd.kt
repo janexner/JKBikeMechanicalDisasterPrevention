@@ -24,6 +24,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityAddViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorWithSpacer
@@ -45,9 +46,11 @@ import kotlinx.datetime.toLocalDateTime
 @Composable
 fun ActivityAdd(
     activityAddViewModel: ActivityAddViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_add_activity))
 
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }

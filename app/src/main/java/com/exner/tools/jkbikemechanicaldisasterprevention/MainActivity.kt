@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
         )
         workManager.getWorkInfosForUniqueWorkLiveData("CheckComponentsIntervalsAndCreateActivities")
             .observe(this) { workInfo ->
-                Log.d("MainActivity", "WorkInfo: ${workInfo.toString()}")
+                Log.d("MainActivity", "WorkInfo: $workInfo")
             }
 
         enableEdgeToEdge()
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
             KJsBikeMaintenanceCheckerTheme(
                 darkTheme = userTheme.value == Theme.Dark || (userTheme.value == Theme.Auto && isSystemInDarkTheme())
             ) {
-                KJsGlobalScaffold(windowSizeClass)
+                KJsGlobalScaffold(activity = this, windowSizeClass = windowSizeClass)
             }
         }
     }

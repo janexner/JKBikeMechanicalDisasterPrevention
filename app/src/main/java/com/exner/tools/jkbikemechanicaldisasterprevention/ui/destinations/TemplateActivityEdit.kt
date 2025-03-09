@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityEditViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorTemplate
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
@@ -43,9 +44,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun TemplateActivityEdit(
     templateActivityUid: Long,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_edit_template_activity))
 
     val templateActivityEditViewModel =
         hiltViewModel<TemplateActivityEditViewModel, TemplateActivityEditViewModel.TemplateActivityEditViewModelFactory> { factory ->

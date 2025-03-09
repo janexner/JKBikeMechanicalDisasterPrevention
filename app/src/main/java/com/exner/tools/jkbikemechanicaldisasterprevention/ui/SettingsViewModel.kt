@@ -2,6 +2,8 @@ package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.KJsRepository
+import com.exner.tools.jkbikemechanicaldisasterprevention.database.tools.loadTemplateActivitiesJsonAndImport
 import com.exner.tools.jkbikemechanicaldisasterprevention.preferences.UserPreferencesManager
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.theme.Theme
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val userPreferencesManager: UserPreferencesManager,
+    val repository: KJsRepository
 ) : ViewModel() {
 
     val userSelectedTheme: StateFlow<Theme> = userPreferencesManager.theme().stateIn(
@@ -39,4 +42,19 @@ class SettingsViewModel @Inject constructor(
             userPreferencesManager.setTodoListsExpire(newExpire)
         }
     }
+
+    fun replaceTemplateActivitiesWithNewLanguage(language: String) {
+        // check whether that language is OK
+        loadTemplateActivitiesJsonAndImport(language) { newTemplateActivities ->
+            viewModelScope.launch {
+                // clear out templates
+                repository.deleteAllTemplateActivities()
+                // import List
+                newTemplateActivities.forEach { templateActivity ->
+                    repository.insertTemplateActivity(templateActivity)
+                }
+            }
+        }
+    }
+
 }

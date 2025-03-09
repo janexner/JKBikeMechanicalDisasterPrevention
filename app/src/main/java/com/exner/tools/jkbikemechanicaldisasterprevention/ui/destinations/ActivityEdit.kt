@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ActivityEditViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultBikeSelectorWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultDateSelectorNullableWithSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultInstantSelectorWithSpacer
@@ -46,9 +47,12 @@ import kotlinx.datetime.toInstant
 @Composable
 fun ActivityEdit(
     activityUid: Long,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_edit_an_activity))
+
     val activityEditViewModel =
         hiltViewModel<ActivityEditViewModel, ActivityEditViewModel.ActivityEditViewModelFactory> { factory ->
             factory.create(activityUid = activityUid)

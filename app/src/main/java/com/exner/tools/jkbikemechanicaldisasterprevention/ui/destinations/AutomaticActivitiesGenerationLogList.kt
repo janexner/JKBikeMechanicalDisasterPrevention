@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.AutomaticActivitiesGenerationLog
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.AutomaticActivitiesGenerationLogListViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.KJsAction
@@ -33,9 +34,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun AutomaticActivitiesGenerationLogList(
     automaticActivitiesGenerationLogListViewModel: AutomaticActivitiesGenerationLogListViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_log_entries))
 
     KJsResponsiveNavigation(
         AutomaticActivitiesGenerationLogListDestination,

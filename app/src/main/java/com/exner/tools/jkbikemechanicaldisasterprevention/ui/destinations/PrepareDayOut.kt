@@ -34,6 +34,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Bike
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.PrepareDayOutViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.BikeSelector
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
@@ -54,9 +55,11 @@ import kotlinx.datetime.Clock
 @Composable
 fun PrepareDayOut(
     prepareDayOutViewModel: PrepareDayOutViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_day_out))
 
     KJsResponsiveNavigation(
         PrepareDayOutDestination,

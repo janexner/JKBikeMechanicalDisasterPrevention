@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.helpers.NavigationStyle
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -52,7 +55,9 @@ import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 
 @Composable
 fun KJsGlobalScaffold(
-    windowSizeClass: WindowSizeClass
+    activity: ComponentActivity,
+    windowSizeClass: WindowSizeClass,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel = hiltViewModel(),
 ) {
     val engine = rememberNavHostEngine()
     val navController = engine.rememberNavController()
@@ -62,9 +67,11 @@ fun KJsGlobalScaffold(
     val navigationStyle =
         NavigationStyle.getNavigationStyleForWidthSizeClass(windowSizeClass.widthSizeClass)
 
+    val destinationTitle by kJsGlobalScaffoldViewModel.destinationTitle.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
-            KJsTopBar(destination, destinationsNavigator, navigationStyle)
+            KJsTopBar(destination, destinationsNavigator, navigationStyle, destinationTitle)
         },
         content = { innerPadding ->
             val newPadding = PaddingValues.Absolute(
@@ -78,6 +85,8 @@ fun KJsGlobalScaffold(
                 navGraph = NavGraphs.root,
                 dependenciesContainerBuilder = { //this: DependenciesContainerBuilder<*>
                     dependency(windowSizeClass)
+                    // make this ViewModel available to all destinations, and scoped on the Activity
+                    dependency(hiltViewModel<KJsGlobalScaffoldViewModel>(activity))
                 },
                 modifier = Modifier
                     .fillMaxSize()
@@ -94,11 +103,12 @@ fun KJsGlobalScaffold(
 private fun KJsTopBar(
     destination: DestinationSpec?,
     destinationsNavigator: DestinationsNavigator,
-    navigationStyle: NavigationStyle
+    navigationStyle: NavigationStyle,
+    destinationTitle: String
 ) {
 
     when (navigationStyle) {
-        NavigationStyle.BOTTOM_BAR -> {
+        NavigationStyle.BOTTOM_BAR -> { // compact
             TopAppBar(
                 title = { Text(text = stringResource(R.string.top_bar_title)) },
                 navigationIcon = {
@@ -123,10 +133,32 @@ private fun KJsTopBar(
             )
         }
 
-        NavigationStyle.LEFT_RAIL, NavigationStyle.LEFT_DRAWER -> {
+        NavigationStyle.LEFT_RAIL -> { // medium
+            val title = if (destinationTitle.isNotBlank()) {
+                stringResource(R.string.top_bar_title) + " - " + destinationTitle
+            } else {
+                stringResource(R.string.top_bar_title_long)
+            }
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.top_bar_title_long))
+                    Text(text = title)
+                },
+                actions = {
+                    MainMenuAction(destination, destinationsNavigator)
+                },
+            )
+        }
+
+        NavigationStyle.LEFT_DRAWER -> { // expanded
+            val title =
+                stringResource(R.string.top_bar_title_long) + if (destinationTitle.isNotBlank()) {
+                    " - $destinationTitle"
+                } else {
+                    ""
+                }
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(text = title)
                 },
                 actions = {
                     MainMenuAction(destination, destinationsNavigator)

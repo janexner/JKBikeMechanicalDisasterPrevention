@@ -108,7 +108,7 @@ fun KJsResponsiveNavigation(
                 modifier = Modifier
                     .imePadding(),
                 content = { innerPadding ->
-                    Box(
+                    Column(
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         if (windowSizeClass.heightSizeClass != WindowHeightSizeClass.Compact && headline.isNotBlank()) {

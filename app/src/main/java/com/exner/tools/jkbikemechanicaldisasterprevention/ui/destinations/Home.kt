@@ -36,6 +36,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.Activity
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.views.ActivityWithBikeData
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.HomeViewModel
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.ComponentWearLevelDialog
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.IconSpacer
@@ -53,9 +54,11 @@ import kotlinx.datetime.Clock
 @Composable
 fun Home(
     homeViewModel: HomeViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle("") // Home doesn't have a title
 
     KJsResponsiveNavigation(
         HomeDestination,

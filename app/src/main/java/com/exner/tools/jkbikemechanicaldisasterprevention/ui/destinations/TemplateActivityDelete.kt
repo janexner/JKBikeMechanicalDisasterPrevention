@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityDeleteViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
@@ -31,9 +32,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun TemplateActivityDelete(
     templateActivityUid: Long,
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_delete_template_activity))
 
     val templateActivityDeleteViewModel =
         hiltViewModel<TemplateActivityDeleteViewModel, TemplateActivityDeleteViewModel.TemplateActivityDeleteViewModelFactory> { factory ->

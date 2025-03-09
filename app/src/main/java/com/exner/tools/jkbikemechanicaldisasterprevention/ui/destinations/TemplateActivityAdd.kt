@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.database.entities.TemplateActivity
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.TemplateActivityAddViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultRideLevelSelectorTemplate
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
@@ -42,9 +43,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun TemplateActivityAdd(
     templateActivityAddViewModel: TemplateActivityAddViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_add_template_activity))
 
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }

@@ -1,20 +1,26 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dataset
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.SettingsViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
@@ -32,9 +38,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun Settings(
     settingsViewModel: SettingsViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_settings))
 
     KJsResponsiveNavigation(
         SettingsDestination,
@@ -79,6 +87,37 @@ fun Settings(
             ) {
                 settingsViewModel.updateTodoListsExpire(it)
             }
+            DefaultSpacer()
+            Text(
+                modifier = Modifier.padding(16.dp, 0.dp),
+                text = stringResource(R.string.lbl_get_template_activities_in_language)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(onClick = {
+                    settingsViewModel.replaceTemplateActivitiesWithNewLanguage("en")
+                }) {
+                    Text(text = "English")
+                }
+                TextButton(onClick = {
+                    settingsViewModel.replaceTemplateActivitiesWithNewLanguage("fr")
+                }) {
+                    Text(text = "Français")
+                }
+                TextButton(onClick = {
+                    settingsViewModel.replaceTemplateActivitiesWithNewLanguage("de")
+                }) {
+                    Text(text = "Deutsch")
+                }
+                TextButton(onClick = {
+                    settingsViewModel.replaceTemplateActivitiesWithNewLanguage("de-rCH")
+                }) {
+                    Text(text = "Deutsch (Schweiz)")
+                }
+            }
+            DefaultSpacer()
         }
     }
 }

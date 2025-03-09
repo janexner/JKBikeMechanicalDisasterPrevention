@@ -24,6 +24,7 @@ import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportDataViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportState
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.ImportStateConstants
+import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.DefaultSpacer
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.KJsResponsiveNavigation
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.components.TextAndSwitch
@@ -41,9 +42,11 @@ import io.github.vinceglb.filekit.core.PickerType
 @Composable
 fun ImportData(
     importDataViewModel: ImportDataViewModel = hiltViewModel(),
+    kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel,
     destinationsNavigator: DestinationsNavigator,
     windowSizeClass: WindowSizeClass
 ) {
+    kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_import_data))
 
     KJsResponsiveNavigation(
         ImportDataDestination,
