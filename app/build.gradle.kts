@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +8,11 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
+
+// for strava auth
+val apikeyPropertiesFile = rootProject.file("strava.apikey.properties")
+val apikeyProperties = Properties()
+apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
 
 android {
     namespace = "com.exner.tools.jkbikemechanicaldisasterprevention"
@@ -16,6 +24,9 @@ android {
         targetSdk = 35
         versionCode = 8
         versionName = "2.0.0"
+
+        buildConfigField("String", "STRAVA_CLIENT_ID", '"' + apikeyProperties["STRAVA_CLIENT_ID"].toString() + '"')
+        buildConfigField("String", "STRAVA_CLIENT_SECRET", '"' + apikeyProperties["STRAVA_CLIENT_SECRET"].toString() + '"')
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

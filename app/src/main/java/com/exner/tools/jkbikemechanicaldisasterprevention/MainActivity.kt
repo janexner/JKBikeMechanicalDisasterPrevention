@@ -25,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+private const val TAG = "MainActivity"
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -61,7 +63,7 @@ class MainActivity : ComponentActivity() {
         )
         workManager.getWorkInfosForUniqueWorkLiveData("CheckComponentsIntervalsAndCreateActivities")
             .observe(this) { workInfo ->
-                Log.d("MainActivity", "WorkInfo: $workInfo")
+                Log.d(TAG, "WorkInfo: $workInfo")
             }
 
         enableEdgeToEdge()
@@ -77,7 +79,15 @@ class MainActivity : ComponentActivity() {
             KJsBikeMaintenanceCheckerTheme(
                 darkTheme = userTheme.value == Theme.Dark || (userTheme.value == Theme.Auto && isSystemInDarkTheme())
             ) {
-                KJsGlobalScaffold(activity = this, windowSizeClass = windowSizeClass)
+                KJsGlobalScaffold(activity = this, intent = intent, windowSizeClass = windowSizeClass)
+
+                if (intent?.action == "android.intent.action.VIEW") {
+                    if (intent?.data?.host == "jkbike.net") {
+                        // TODO
+                        Log.d(TAG, "This should have been a deeplink!")
+                        Log.d(TAG, "  intent data query ${intent.data?.query}")
+                    }
+                }
             }
         }
     }

@@ -19,3 +19,4 @@ local.properties
 .idea/dictionaries
 # Android Studio 3 in .gitignore file.
 .idea/caches
+/strava.apikey.properties

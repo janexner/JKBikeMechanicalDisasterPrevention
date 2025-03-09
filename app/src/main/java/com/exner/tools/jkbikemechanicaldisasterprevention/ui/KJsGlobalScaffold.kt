@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui
 
+import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -46,6 +47,7 @@ import com.ramcosta.composedestinations.generated.destinations.ImportDataDestina
 import com.ramcosta.composedestinations.generated.destinations.ManageBikesDestination
 import com.ramcosta.composedestinations.generated.destinations.ManageComponentsDestination
 import com.ramcosta.composedestinations.generated.destinations.SettingsDestination
+import com.ramcosta.composedestinations.generated.destinations.StravaAuthResultDeepLinkTargetDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
@@ -57,6 +59,7 @@ import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 fun KJsGlobalScaffold(
     activity: ComponentActivity,
     windowSizeClass: WindowSizeClass,
+    intent: Intent,
     kJsGlobalScaffoldViewModel: KJsGlobalScaffoldViewModel = hiltViewModel(),
 ) {
     val engine = rememberNavHostEngine()
@@ -103,6 +106,19 @@ fun KJsGlobalScaffold(
                     .consumeWindowInsets(newPadding)
                     .padding(newPadding)
             ) {
+            }
+            // how about that intent?
+            if (intent.action == "android.intent.action.VIEW" && intent.data?.host == "jkbike.net") {
+                val code : String? = intent.data?.getQueryParameter("code")
+                val scope: String? = intent.data?.getQueryParameter("scope")
+                if (!code.isNullOrBlank() && !scope.isNullOrBlank()) {
+                    destinationsNavigator.navigate(
+                        StravaAuthResultDeepLinkTargetDestination(
+                            code,
+                            scope
+                        )
+                    )
+                }
             }
         }
     )

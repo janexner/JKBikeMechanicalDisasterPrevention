@@ -1,5 +1,6 @@
 package com.exner.tools.jkbikemechanicaldisasterprevention.ui.destinations
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dataset
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -15,10 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exner.tools.jkbikemechanicaldisasterprevention.BuildConfig
 import com.exner.tools.jkbikemechanicaldisasterprevention.R
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.KJsGlobalScaffoldViewModel
 import com.exner.tools.jkbikemechanicaldisasterprevention.ui.SettingsViewModel
@@ -43,6 +48,8 @@ fun Settings(
     windowSizeClass: WindowSizeClass
 ) {
     kJsGlobalScaffoldViewModel.setDestinationTitle(stringResource(R.string.hdr_settings))
+
+    val context = LocalContext.current
 
     KJsResponsiveNavigation(
         SettingsDestination,
@@ -118,7 +125,26 @@ fun Settings(
                 }
             }
             DefaultSpacer()
+            // strava login
+            Button(onClick = {
+                val intentUri = "https://www.strava.com/oauth/mobile/authorize".toUri()
+                    .buildUpon()
+                    .appendQueryParameter("client_id", BuildConfig.STRAVA_CLIENT_ID)
+                    .appendQueryParameter("redirect_uri", "https://jkbike.net")
+                    .appendQueryParameter("response_type", "code")
+                    .appendQueryParameter("approval_prompt", "auto")
+                    .appendQueryParameter("scope", "profile:read_all,read")
+                    .build()
+
+                val intent = Intent(Intent.ACTION_VIEW, intentUri)
+                context.startActivity(intent)
+            }) {
+                Text(text = "Connect with Strava")
+            }
         }
     }
 }
 
+// release / debug
+// 07:A8:9B:9B:74:E8:D9:80:67:36:71:91:21:66:AC:E2:04:C2:F7:35:23:CD:63:1B:93:3C:B4:F7:7A:C4:A2:CF
+// 58:AE:E5:17:DF:7C:C4:F5:EC:FA:80:1F:5B:5A:E0:7B:63:E8:3B:E4:84:07:AC:2B:10:75:2E:FC:D4:2A:CD:A1
