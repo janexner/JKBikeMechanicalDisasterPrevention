@@ -91,9 +91,9 @@ fun RetirementReasonSelector(
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_crash)) },
+                text = { Text(text = stringResource(R.string.dropdown_item_retirement_reason_irreparable)) },
                 onClick = {
-                    onRetirementReasonSelected(RetirementReason.CRASH)
+                    onRetirementReasonSelected(RetirementReason.IRREPARABLE)
                     retirementReasonsExpanded = false
                 },
                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,

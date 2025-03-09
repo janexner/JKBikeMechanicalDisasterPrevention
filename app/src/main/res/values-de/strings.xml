@@ -197,7 +197,7 @@
     <string name="ride_level_holidays">Ferien</string>
     <string name="btn_text_analyse_components">Alte Komponenten analysieren</string>
     <string name="dropdown_lbl_which_retirement_reason">Warum ausgebaut?</string>
-    <string name="dropdown_item_retirement_reason_worn">Abgenutzt oder kaputt</string>
-    <string name="dropdown_item_retirement_reason_crash">Kaputt nach Crash</string>
+    <string name="dropdown_item_retirement_reason_worn">Abgenutzt</string>
+    <string name="dropdown_item_retirement_reason_irreparable">Kaputt</string>
     <string name="dropdown_item_retirement_reason_upgrade">Mit besserer Komponente ersetzt</string>
 </resources>

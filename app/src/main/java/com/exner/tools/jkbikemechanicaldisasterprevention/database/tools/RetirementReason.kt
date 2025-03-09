@@ -7,7 +7,7 @@ import com.squareup.moshi.ToJson
 
 enum class RetirementReason {
     WORN,
-    CRASH,
+    IRREPARABLE,
     UPGRADE,
     NO_LONGER_NEEDED,
 }
@@ -17,8 +17,8 @@ fun toLocalisedString(retirementReason: RetirementReason, context: Context): Str
         RetirementReason.WORN -> {
             context.getString(R.string.dropdown_item_retirement_reason_worn)
         }
-        RetirementReason.CRASH -> {
-            context.getString(R.string.dropdown_item_retirement_reason_crash)
+        RetirementReason.IRREPARABLE -> {
+            context.getString(R.string.dropdown_item_retirement_reason_irreparable)
         }
         RetirementReason.UPGRADE -> {
             context.getString(R.string.dropdown_item_retirement_reason_upgrade)
@@ -40,7 +40,7 @@ class RetirementReasonJsonAdapter {
     fun fromJson(json: String): RetirementReason {
         when(json) {
             "WORN" -> return RetirementReason.WORN
-            "CRASH" -> return RetirementReason.CRASH
+            "IRREPARABLE" -> return RetirementReason.IRREPARABLE
             "UPGRADE" -> return RetirementReason.UPGRADE
             "NO_LONGER_NEEDED" -> return RetirementReason.NO_LONGER_NEEDED
         }

@@ -57,8 +57,8 @@
     <string name="dropdown_item_wear_level_used">Used</string>
     <string name="dropdown_item_wear_level_due_for_replacement">Due for replacement</string>
     <string name="dropdown_lbl_which_retirement_reason">Why did you retire this?</string>
-    <string name="dropdown_item_retirement_reason_worn">Worn out or broken</string>
-    <string name="dropdown_item_retirement_reason_crash">Broken due to crash</string>
+    <string name="dropdown_item_retirement_reason_worn">Worn</string>
+    <string name="dropdown_item_retirement_reason_irreparable">Irreparable</string>
     <string name="dropdown_item_retirement_reason_upgrade">Replaced with upgrade</string>
     <string name="dropdown_item_retirement_reason_no_longer_needed">No longer needed</string>
 

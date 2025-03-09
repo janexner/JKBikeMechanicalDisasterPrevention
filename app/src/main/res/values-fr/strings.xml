@@ -197,7 +197,7 @@
     <string name="ride_level_holidays">Vacances</string>
     <string name="btn_text_analyse_components">Analyser les composants retirés</string>
     <string name="dropdown_lbl_which_retirement_reason">Retiré pour quelle raison?</string>
-    <string name="dropdown_item_retirement_reason_worn">Usé ou cassé</string>
-    <string name="dropdown_item_retirement_reason_crash">Cassé dans un crash</string>
+    <string name="dropdown_item_retirement_reason_worn">Usé</string>
+    <string name="dropdown_item_retirement_reason_irreparable">Irréparable</string>
     <string name="dropdown_item_retirement_reason_upgrade">Remplacé</string>
 </resources>
