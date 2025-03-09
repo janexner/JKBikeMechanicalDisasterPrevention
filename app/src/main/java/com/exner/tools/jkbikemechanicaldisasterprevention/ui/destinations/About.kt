@@ -50,21 +50,25 @@ fun About(
     ) {
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            Text(text = "Version " + BuildConfig.VERSION_NAME)
-            DefaultSpacer()
-            Text(text = stringResource(R.string.about1))
-            DefaultSpacer()
-            Text(text = stringResource(R.string.about2))
-            DefaultSpacer()
-            Text(text = stringResource(R.string.about3))
-            DefaultSpacer()
-            Text(text = stringResource(R.string.about4))
-            DefaultSpacer()
-            Text(text = stringResource(R.string.about5))
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(text = "Version " + BuildConfig.VERSION_NAME)
+                DefaultSpacer()
+                Text(text = stringResource(R.string.about1))
+                DefaultSpacer()
+                Text(text = stringResource(R.string.about2))
+                DefaultSpacer()
+                Text(text = stringResource(R.string.about3))
+                DefaultSpacer()
+                Text(text = stringResource(R.string.about4))
+                DefaultSpacer()
+                Text(text = stringResource(R.string.about5))
+            }
         }
     }
 }

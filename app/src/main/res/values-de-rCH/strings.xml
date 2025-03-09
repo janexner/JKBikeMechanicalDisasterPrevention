@@ -173,8 +173,8 @@
     <string name="a_new_component_brilliant">Eine neue Komponente!</string>
     <string name="dropdown_trigger_select_a_wear_level">Abnutzungsgrad wählen</string>
     <string name="tap_component_to_edit">Tap component to edit</string>
-    <string name="menu_item_analyse_components">Komponenten analysieren</string>
-    <string name="hdr_analyse_components">Komponenten analysieren</string>
+    <string name="menu_item_analyse_components">Alte Komponenten analysieren</string>
+    <string name="hdr_analyse_components">Alte Komponenten analysieren</string>
     <string name="select_components_for_analysis">Komponenten auswählen</string>
     <string name="btn_text_analyse">Analysieren</string>
     <string name="there_are_no_retired_components_to_analyse">Keine alten Komponenten zu analysieren</string>
@@ -194,4 +194,5 @@
     <string name="ride_level_quick_ride">Kurze Tour</string>
     <string name="ride_level_day_out">Tagestour</string>
     <string name="ride_level_holidays">Ferien</string>
+    <string name="btn_text_analyse_components">Alte Komponenten analysieren</string>
 </resources>

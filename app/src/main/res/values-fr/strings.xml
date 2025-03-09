@@ -151,8 +151,8 @@
     <string name="a_new_component_brilliant">Ah! Un nouveau composant!</string>
     <string name="lbl_acquisition_date">Date d\'acquisition</string>
     <string name="menu_item_add_component">Ajouter un composant</string>
-    <string name="menu_item_analyse_components">Analyser les composants</string>
-    <string name="hdr_analyse_components">Analyser les composants</string>
+    <string name="menu_item_analyse_components">Analyser les composants retirés</string>
+    <string name="hdr_analyse_components">Analyser les composants retirés</string>
     <string name="select_components_for_analysis">Sélectionner des composants</string>
     <string name="btn_text_analyse">Analysez</string>
     <string name="overwrite_components">Remplacer les composants?</string>
@@ -194,4 +194,5 @@
     <string name="ride_level_quick_ride">Sortie rapide</string>
     <string name="ride_level_day_out">Sortie journée</string>
     <string name="ride_level_holidays">Vacances</string>
+    <string name="btn_text_analyse_components">Analyser les composants retirés</string>
 </resources>

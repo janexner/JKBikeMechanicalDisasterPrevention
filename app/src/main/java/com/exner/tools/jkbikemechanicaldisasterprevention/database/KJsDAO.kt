@@ -45,6 +45,9 @@ interface KJsDAO {
     @Query("SELECT * FROM retiredcomponents ORDER BY retirement_date DESC")
     fun observeRetiredComponents(): Flow<List<RetiredComponents>>
 
+    @Query("SELECT COUNT('uuid') FROM retiredcomponents")
+    fun observeNumberOfRetiredComponents(): Flow<Int>
+
     @Query("SELECT * FROM automaticactivitiesgenerationlog ORDER BY created_instant DESC")
     fun observeAutomaticActivitiesGenerationLog(): Flow<List<AutomaticActivitiesGenerationLog>>
 

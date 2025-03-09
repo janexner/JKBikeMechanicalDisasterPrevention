@@ -81,6 +81,7 @@ fun ManageComponents(
         val components: List<Component> by manageComponentsViewModel.components.collectAsState(
             initial = emptyList()
         )
+        val numberOfRetiredComponents by manageComponentsViewModel.numberOfRetiredComponents.collectAsState(0)
 
         Column(
             modifier = Modifier
@@ -142,17 +143,19 @@ fun ManageComponents(
                     }
                 }
             }
-            DefaultSpacer()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Button(onClick = {
-                    destinationsNavigator.navigate(ComponentAnalysisDestination)
-                }) {
-                    Text(
-                        text = stringResource(R.string.hdr_analyse_components)
-                    )
+            if (numberOfRetiredComponents > 0) {
+                DefaultSpacer()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(onClick = {
+                        destinationsNavigator.navigate(ComponentAnalysisDestination)
+                    }) {
+                        Text(
+                            text = stringResource(R.string.btn_text_analyse_components)
+                        )
+                    }
                 }
             }
         }

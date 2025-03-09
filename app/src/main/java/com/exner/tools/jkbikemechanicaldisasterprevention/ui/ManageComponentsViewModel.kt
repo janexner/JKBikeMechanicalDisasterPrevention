@@ -12,4 +12,6 @@ class ManageComponentsViewModel @Inject constructor(
 
     val components = repository.observeNonRetiredComponents
 
+    val numberOfRetiredComponents = repository.observeNumberOfRetiredComponents
+
 }

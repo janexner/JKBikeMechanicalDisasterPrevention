@@ -69,9 +69,19 @@ fun KJsGlobalScaffold(
 
     val destinationTitle by kJsGlobalScaffoldViewModel.destinationTitle.collectAsStateWithLifecycle()
 
+    val numberOfRetiredComponents by kJsGlobalScaffoldViewModel.numberOfRetiredComponents.collectAsStateWithLifecycle(
+        0
+    )
+
     Scaffold(
         topBar = {
-            KJsTopBar(destination, destinationsNavigator, navigationStyle, destinationTitle)
+            KJsTopBar(
+                destination,
+                destinationsNavigator,
+                navigationStyle,
+                destinationTitle,
+                numberOfRetiredComponents
+            )
         },
         content = { innerPadding ->
             val newPadding = PaddingValues.Absolute(
@@ -104,7 +114,8 @@ private fun KJsTopBar(
     destination: DestinationSpec?,
     destinationsNavigator: DestinationsNavigator,
     navigationStyle: NavigationStyle,
-    destinationTitle: String
+    destinationTitle: String,
+    numberOfRetiredComponents: Int
 ) {
 
     when (navigationStyle) {
@@ -128,7 +139,7 @@ private fun KJsTopBar(
                     }
                 },
                 actions = {
-                    MainMenuAction(destination, destinationsNavigator)
+                    MainMenuAction(destination, destinationsNavigator, numberOfRetiredComponents)
                 }
             )
         }
@@ -144,7 +155,7 @@ private fun KJsTopBar(
                     Text(text = title)
                 },
                 actions = {
-                    MainMenuAction(destination, destinationsNavigator)
+                    MainMenuAction(destination, destinationsNavigator, numberOfRetiredComponents)
                 },
             )
         }
@@ -161,7 +172,7 @@ private fun KJsTopBar(
                     Text(text = title)
                 },
                 actions = {
-                    MainMenuAction(destination, destinationsNavigator)
+                    MainMenuAction(destination, destinationsNavigator, numberOfRetiredComponents)
                 },
             )
         }
@@ -172,6 +183,7 @@ private fun KJsTopBar(
 private fun MainMenuAction(
     destination: DestinationSpec?,
     destinationsNavigator: DestinationsNavigator,
+    numberOfRetiredComponents: Int
 ) {
 
     var displayMainMenu by remember { mutableStateOf(false) }
@@ -243,19 +255,21 @@ private fun MainMenuAction(
                 destinationsNavigator.navigate(ManageComponentsDestination)
             }
         )
-        DropdownMenuItem(
-            enabled = destination != ComponentAnalysisDestination,
-            text = {
-                Text(
-                    text = stringResource(R.string.menu_item_analyse_components),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            },
-            onClick = {
-                displayMainMenu = false
-                destinationsNavigator.navigate(ComponentAnalysisDestination)
-            }
-        )
+        if (numberOfRetiredComponents > 0) {
+            DropdownMenuItem(
+                enabled = destination != ComponentAnalysisDestination,
+                text = {
+                    Text(
+                        text = stringResource(R.string.menu_item_analyse_components),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
+                onClick = {
+                    displayMainMenu = false
+                    destinationsNavigator.navigate(ComponentAnalysisDestination)
+                }
+            )
+        }
         HorizontalDivider()
         DropdownMenuItem(
             enabled = destination != SettingsDestination,

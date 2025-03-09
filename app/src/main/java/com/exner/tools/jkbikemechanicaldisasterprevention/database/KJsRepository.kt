@@ -35,6 +35,8 @@ class KJsRepository @Inject constructor(private val kjsDAO: KJsDAO) {
 
     val observeRetiredComponents: Flow<List<RetiredComponents>> = kjsDAO.observeRetiredComponents()
 
+    val observeNumberOfRetiredComponents: Flow<Int> = kjsDAO.observeNumberOfRetiredComponents()
+
     val observeAutomaticActivitiesGenerationLog: Flow<List<AutomaticActivitiesGenerationLog>> = kjsDAO.observeAutomaticActivitiesGenerationLog()
 
     @WorkerThread

@@ -76,7 +76,7 @@
     <string name="menu_item_manage_bikes_components">Manage Bikes</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_manage_components">Manage Components</string>
-    <string name="menu_item_analyse_components">Analyse components</string>
+    <string name="menu_item_analyse_components">Analyse retired components</string>
     <string name="menu_item_log_list">View log</string>
     <string name="menu_item_add_component">Add Component</string>
 
@@ -132,7 +132,7 @@
     <string name="hdr_edit_a_bike">Edit bike</string>
     <string name="hdr_add_bike">Add bike</string>
     <string name="hdr_add_component">Add component</string>
-    <string name="hdr_analyse_components">Analyse components</string>
+    <string name="hdr_analyse_components">Analyse retired components</string>
     <string name="hdr_delete_a_component">Delete component</string>
     <string name="hdr_edit_a_component">Edit component</string>
     <string name="hdr_import_data">Import data</string>
@@ -219,4 +219,5 @@
     <string name="app_name" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
     <string name="top_bar_title" translatable="false">J-K Bike - MDP</string>
     <string name="top_bar_title_long" translatable="false">J-K Bike - Mechanical Disaster Prevention</string>
+    <string name="btn_text_analyse_components">Analyse retired components</string>
 </resources>
