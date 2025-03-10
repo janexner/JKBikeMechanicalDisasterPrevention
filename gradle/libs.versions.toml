@@ -21,6 +21,7 @@ kotlinx-datetime = "0.6.2"
 workRuntimeKtx = "2.10.0"
 moshi = "1.15.2"
 fileKit = "0.8.8"
+squareupRetrofit = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +57,8 @@ moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.re
 moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "fileKit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "fileKit" }
+squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "squareupRetrofit" }
+squareup-retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "squareupRetrofit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -124,6 +124,10 @@ dependencies {
     implementation(libs.moshi.kotlin)
     ksp(libs.moshi.codegen)
 
+    // retrofit
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.moshi)
+
     // filekit
     implementation(libs.filekit.core)
     implementation(libs.filekit.compose)
