@@ -1,3 +1,5 @@
+I moved this repository to https://codeberg.org/jexner/JKBikeMechanicalDisasterPrevention
+
 # J-K Bike Mechanical Disaster Prevention
 
 J-K Bike - Mechanical Disaster Prevention is a free, open source app that helps build positive bike maintenance behaviours, for rides quick, big or epic.
